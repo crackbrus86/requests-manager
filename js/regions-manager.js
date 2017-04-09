@@ -40,8 +40,14 @@
             $('#regionsModal').modal('hide');
         });
 
-        $('.' + regions.removeButtonClass).live('click', function() {
+        $('.' + regions.removeButtonClass).live('click', function(e) {
+            $('#confirmRegionDialog').modal('show');
+            $('#confirmRegionDialog form input[type=hidden]').val(e.target.dataset['item']);
+        });
 
+        $('#deleteRegion').live('click', function() {
+            removeRegion(regions);
+            $('#confirmRegionDialog').modal('hide');
         });
     });
 
@@ -141,6 +147,27 @@
         setTimeout(function() {
             $(region.form + ' .alert-success').fadeOut(500);
         }, 3000);
+    }
+
+    function removeRegion(region) {
+        var data = $(region.removingModalFormId).serialize();
+        showPreloader(region.wrapper);
+        $.ajax({
+            type: 'POST',
+            url: region.removeRegionController + '.php',
+            data: data,
+            success: function(data) {
+                if (data == 'true') {
+                    region.alertText = 'Змагання було успішно видалено!';
+                    refreshGrid(region);
+                }
+            },
+            error: function() {
+                hidePreloader(region.wrapper);
+                showErrorAlert(region);
+                return false;
+            }
+        });
     }
 
     function showErrorAlert(region) {
