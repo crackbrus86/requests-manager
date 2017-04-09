@@ -39,6 +39,10 @@
             updateRegion(regions);
             $('#regionsModal').modal('hide');
         });
+
+        $('.' + regions.removeButtonClass).live('click', function() {
+
+        });
     });
 
     function mapData(data, regions) {
