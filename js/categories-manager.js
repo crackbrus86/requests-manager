@@ -35,14 +35,30 @@
             removeCategoryController: dir + 'DeleteWeightCategory',
             wrapper: '.weight-categories-section'
         }
+        var ageCategoriesList, weightCategoriesList;
+        if ($('#categories').hasClass('active')) {
+            initCategories();
+        }
 
-        var ageCategoriesList = getCategories(ageCategories);
-        mapData(ageCategoriesList, ageCategories);
-        var weightCategoriesList = getCategories(weightCategories);
-        mapData(weightCategoriesList, weightCategories);
+        $('a[href="#categories"]').live('click', function() {
+            if (!ageCategoriesList && !weightCategoriesList) {
+                showTotalPreloader();
+                setTimeout(function() {
+                    initCategories();
+                    hideTotalPreloader();
+                }, 1000);
+            }
+        });
 
-        if (ageCategoriesList) {
-            fillAgeCategoriesSelect(ageCategoriesList);
+        function initCategories() {
+            ageCategoriesList = getCategories(ageCategories);
+            mapData(ageCategoriesList, ageCategories);
+            weightCategoriesList = getCategories(weightCategories);
+            mapData(weightCategoriesList, weightCategories);
+
+            if (ageCategoriesList) {
+                fillAgeCategoriesSelect(ageCategoriesList);
+            }
         }
 
         $(ageCategories.submit).live('click', function() {
@@ -130,7 +146,7 @@
             data: data,
             success: function(data) {
                 if (data === 'true') {
-                    category.alertText = 'Вікову категорію було успішно додано!';
+                    category.alertText = 'Категорію було успішно додано!';
                     refreshGrid(category);
                 }
             },
@@ -208,7 +224,7 @@
                 if (data == 'true') {
                     category.alertText = "Категорію було успішно видалено!";
                     refreshGrid(category);
-                    if (category.form = '#ageCategories') {
+                    if (category.form == '#ageCategories') {
                         secondCategory.alertText = category.alertText;
                         refreshGrid(secondCategory);
                     }
@@ -305,6 +321,16 @@
         $insertSelect += '</select></div>';
         $insertSelect += '</div>';
         return $insertSelect;
+    }
+
+    function showTotalPreloader() {
+        $('.categories-wrapper').css("opacity", "0.3");
+        $('#categories').append('<span class="fa-spin fa fa-circle-o-notch" style="position: absolute; top: 50%; left: 50%;"></span>');
+    }
+
+    function hideTotalPreloader() {
+        $('.categories-wrapper').css("opacity", "1");
+        $('#categories .fa-spin').remove();
     }
 
 })(jQuery)

@@ -83,14 +83,14 @@ class RequestManager{
 
             <!-- Nav tabs -->
             <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation"><a href="#games" aria-controls="games" role="tab" data-toggle="tab">Змагання</a></li>
+                <li role="presentation" class="active"><a href="#games" aria-controls="games" role="tab" data-toggle="tab">Змагання</a></li>
                 <li role="presentation"><a href="#categories" aria-controls="categories" role="tab" data-toggle="tab">Категорії</a></li>
-                <li role="presentation" class="active"><a href="#regions" aria-controls="regions" role="tab" data-toggle="tab">Області</a></li>
+                <li role="presentation"><a href="#regions" aria-controls="regions" role="tab" data-toggle="tab">Області</a></li>
             </ul>
 
             <!-- Tab panes -->
             <div class="tab-content">
-                <div role="tabpanel" class="tab-pane" id="games">
+                <div role="tabpanel" class="tab-pane active" id="games">
                 <?php   
                     if(file_exists(RM__PLUGIN_DIR."/templates/games-manager.php")){
                         require_once(RM__PLUGIN_DIR."/templates/games-manager.php");
@@ -104,7 +104,7 @@ class RequestManager{
                     }
                 ?>                
                 </div>
-                <div role="tabpanel" class="tab-pane active" id="regions">
+                <div role="tabpanel" class="tab-pane" id="regions">
                 <?php 
                     if(file_exists(RM__PLUGIN_DIR."/templates/regions-manager.php")){
                         require_once(RM__PLUGIN_DIR."/templates/regions-manager.php");

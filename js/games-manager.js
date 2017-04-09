@@ -36,11 +36,39 @@
             wrapper: '.actual-games-section'
         };
 
-        var beforeGamesList = getGames(beforeGames);
-        mapData(beforeGamesList, beforeGames);
+        var beforeGamesList, actualGamesList;
 
-        var actualGamesList = getGames(actualGames);
-        mapData(actualGamesList, actualGames);
+        if ($('#games').hasClass('active')) {
+            initGames();
+        }
+
+        $('a[href="#games"]').live('click', function() {
+            if (!beforeGamesList && !actualGamesList) {
+                showTotalPreloader();
+                setTimeout(function() {
+                    initGames();
+                    hideTotalPreloader();
+                }, 1000);
+            }
+        });
+
+        function initGames() {
+            showPreloader(beforeGames.wrapper);
+            showPreloader(actualGames.wrapper);
+            setTimeout(function() {
+                beforeGamesList = getGames(beforeGames);
+                mapData(beforeGamesList, beforeGames);
+                hidePreloader(beforeGames.wrapper);
+            }, 1000);
+
+            setTimeout(function() {
+                actualGamesList = getGames(actualGames);
+                mapData(actualGamesList, actualGames);
+                hidePreloader(actualGames.wrapper);
+            }, 1000);
+
+        }
+
 
         $(beforeGames.submit).live('click', function() {
             if (validateInput(beforeGames)) {
@@ -269,5 +297,13 @@
         $(selector + " .fa-spin").remove();
     }
 
+    function showTotalPreloader() {
+        $('.games-wrapper').css("opacity", "0.3");
+        $('#games').append('<span class="fa-spin fa fa-circle-o-notch" style="position: absolute; top: 50%; left: 50%;"></span>');
+    }
 
+    function hideTotalPreloader() {
+        $('.games-wrapper').css("opacity", "1");
+        $('#games .fa-spin').remove();
+    }
 })(jQuery);

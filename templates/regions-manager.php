@@ -15,7 +15,7 @@
     }
 </style> 
 
-<div class="row">
+<div class="row regions-wrapper">
     <div class="col-md-12 regions-section">
         <h4>Області України</h4>
         <table class="table table-striped">
@@ -44,7 +44,7 @@
             <div class="modal-body">
                 <form id="editRegion">
                     <div class="form-group">
-                        <label for="editRegionName">Назва змагань</label>
+                        <label for="editRegionName">Назва області</label>
                         <input type="text" class="form-control" name="region" id="editRegionName">
                     </div>
                     <input type="hidden" class="form-control" name="id" id="editRegionId">                                     

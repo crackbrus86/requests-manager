@@ -17,9 +17,26 @@
             removeRegionController: dir + 'DeleteRegion',
             wrapper: '.regions-section'
         }
+        var regionsList;
 
-        var regionsList = getRegions(regions);
-        mapData(regionsList, regions);
+        if ($('#regions').hasClass('active')) {
+            initRegions();
+        }
+
+        $('a[href="#regions"]').live('click', function() {
+            if (!regionsList) {
+                showTotalPreloader();
+                setTimeout(function() {
+                    initRegions();
+                    hideTotalPreloader();
+                }, 1000);
+            }
+        });
+
+        function initRegions() {
+            regionsList = getRegions(regions);
+            mapData(regionsList, regions);
+        }
 
         $(regions.submit).live('click', function() {
             if (validateInput(regions)) {
@@ -197,5 +214,15 @@
     function hidePreloader(selector) {
         $(selector + " table").css("opacity", "1");
         $(selector + " .fa-spin").remove();
+    }
+
+    function showTotalPreloader() {
+        $('.regions-wrapper').css("opacity", "0.3");
+        $('#regions').append('<span class="fa-spin fa fa-circle-o-notch" style="position: absolute; top: 50%; left: 50%;"></span>');
+    }
+
+    function hideTotalPreloader() {
+        $('.regions-wrapper').css("opacity", "1");
+        $('#regions .fa-spin').remove();
     }
 })(jQuery);

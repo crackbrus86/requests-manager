@@ -2,7 +2,7 @@
     wp_register_script( 'categories_manager_script', plugins_url( '../js/categories-manager.js', __FILE__ ) );
     wp_enqueue_script(  'categories_manager_script');
 ?> 
- <div class="row">
+ <div class="row categories-wrapper">
                 <div class="col-md-6 weight-categories-section">
                     <h4>Вагові категорії</h4>
                     <table class="table table-striped">

@@ -14,7 +14,7 @@ table{
     display: block;
 }
 </style>    
-            <div class="row">
+            <div class="row games-wrapper">
                 <div class="col-md-6 before-games-section">
                     <h4>Відбіркові змагання</h4>
                     <table class="table table-striped">
