@@ -13,6 +13,14 @@ add_action("admin_init", array("RequestManager", "InitDB"));
 wp_register_style('font-awesome', plugins_url( '/css/font-awesome.min.css', __FILE__ ));
 wp_enqueue_style( 'font-awesome');
 
+function buildRequestsForm(){   
+    if(file_exists(RM__PLUGIN_DIR."/templates/request-form.php")){
+        require_once(RM__PLUGIN_DIR."/templates/request-form.php");
+    }
+}
+
+add_shortcode('RequestsForm', 'buildRequestsForm');
+
 class RequestManager{
     
     function initSettings(){
