@@ -2,32 +2,89 @@
     <form>
         <div class="form-group">
             <label for="surname">Прівзвище</label>
-            <input type="text" class="form-control" id="surname" placeholder="Прізвище">
+            <input type="text" class="form-control" id="surname" placeholder="Прізвище" maxlength="50">
         </div>
         <div class="form-group">
             <label for="firstName">Ім'я</label>
-            <input type="text" class="form-control" id="firstName" placeholder="Ім'я">
+            <input type="text" class="form-control" id="firstName" placeholder="Ім'я" maxlength="30">
         </div>
         <div class="form-group">
             <label for="middleName">По-батькові</label>
-            <input type="text" class="form-control" id="middleName" placeholder="По-батькові">
+            <input type="text" class="form-control" id="middleName" placeholder="По-батькові" maxlength="30">
         </div>
         <div class="form-group">
             <label for="birthDate">Дата народження</label>
             <input type="text" id="birthDate">
         </div>
         <div class="form-group">
-            <label>Серія та номер паспорта</label>
-            <div class="row">
-                <div class="col-md-4">
-                    <input type="text" class="form-control" id="seriaOfpass" placeholder="НН">
-                </div>
-                <div class="col-md-8">
-                    <input type="text" class="form-control" id="numberOfPass" placeholder="ХХХХХХ">
+            <button type="button" class="btn btn-primary" id="showNext">Далі</button>
+        </div>
+        <div class="anotherData" style="display: none">
+            <div class="form-group">
+                <label>Серія та номер закордонного паспорту</label>
+                <div class="row">
+                    <div class="col-md-4">
+                        <input type="text" class="form-control" id="seriaOfpass" placeholder="НН" maxlength="4">
+                    </div>
+                    <div class="col-md-8">
+                        <input type="text" class="form-control" id="numberOfPass" placeholder="ХХХХХХ" maxlength="8">
+                    </div>
                 </div>
             </div>
-        </div>
+            <div class="form-group">
+                <label for="termOfPass">Термін дії паспорту</label>
+                <input type="text" id="termOfPass">
+            </div>
+            <div class="form-group">
+                <label for="indNumber">Ідентифікаційний номер</label>
+                <input type="text" class="form-control" id="indNumber" maxlength="10">
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div><label for="ageCategory">Вікова категорія</label></div>
+                        <div><select id="ageCategory">
+                            <option></option>
+                        </select></div>
+                    </div>
+                    <div class="col-md-6">
+                        <div><label for="weightCategory">Вагова категорія</label></div>
+                        <div><select id="weightCategory">
+                            <option></option>
+                        </select></div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div><label for="currentCompetition">Змагання, на які подаєте заявку</label></div>
+                <div><select id="currentCompetition">
+                    <option></option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <h5>Результат</h5>
+                <div class="row">
+                    <div class="col-md-3">
+                        <label for="squat">Присідання</label>
+                        <input type="text" name="squat" id="squat" maxlength="6" value="00.00">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="benchPress">Жим лежачи</label>
+                        <input type="text" name="benchPress" id="benchPress" maxlength="6" value="00.00">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="deadLift">Станова тяга</label>
+                        <input type="text" name="deadLift" id="deadLift" maxlength="6" value="00.00">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="total">Сума</label>
+                        <input type="text" name="total" id="total" maxlength="6" value="00.00" readonly>
+                    </div>
+                </div>
+            </div>
 
-        <button type="submit" class="btn btn-default">Надіслати</button>
+            <button type="submit" class="btn btn-default">Надіслати</button>
+        </div>
     </form>
 </div>
