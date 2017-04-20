@@ -5,7 +5,8 @@
 
         var ageCategories = [],
             weightCategories = [],
-            currentCompetition = [];
+            currentCompetition = [],
+            preCompetition = [];
         var typeOfCompetition;
 
         $.ajax({
@@ -40,7 +41,15 @@
             getExercises(getTypeOfCompetition("#currentCompetition", currentCompetition));
         });
 
-
+        $.ajax({
+            type: "POST",
+            url: dir + "Games-Manager/GetBeforeGames.php",
+            success: function(data) {
+                preCompetition = JSON.parse(data);
+            }
+        }).then(function() {
+            appendOptions("#preCompetition", preCompetition);
+        });
 
         $("#birthDate").datepicker({
             altFormat: "dd-mm-yy",
@@ -68,7 +77,17 @@
 
         $("#currentCompetition").on("change", function(e) {
             getExercises(getTypeOfCompetition("#currentCompetition", currentCompetition));
+            $(".discipline").val(0.00);
+            calculateTotal();
         });
+
+        calculateTotal();
+
+        $(".discipline").on("change", function() {
+            calculateTotal();
+        });
+
+        $("#phone").mask("+38 (999) 999-99-99");
     });
 
     function appendOptions(select, data) {
@@ -95,5 +114,14 @@
             $("#squat").attr("disabled", true);
             $("#deadLift").attr("disabled", true);
         }
+    }
+
+    function calculateTotal() {
+        var disciplines = ["squat", "benchPress", "deadLift"];
+        var total = 0;
+        for (var i = 0; i < disciplines.length; i++) {
+            total += parseFloat($("#" + disciplines[i]).val());
+        }
+        $("#total").val(total);
     }
 })(jQuery)
