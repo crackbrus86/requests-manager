@@ -212,8 +212,9 @@
                 <input type="text" class="form-control" id="dopingControlDate" />
             </div>
             <div class="form-group">
-                <label for="photoOfNatPass">Фото першої сторінки національного паспорту</label>
-                <input type="file" class="form-control" name="photoOfNatPass" id="photoOfNatPass" accept="image/jpeg,image/png" />
+                <p><label for="photoOfNatPass">Фото першої сторінки національного паспорту</label></p>
+                <button type="button" class="btn btn-default" id="uploadPhotoOfNatPass">Завантажити фото</button>
+                <input type="hidden" name="photoOfNatPassId" id="photoOfNatPassId" />
             </div>
             <div class="form-group">
                 <label for="photoOfForPass">Фото першої сторінки закордонного паспорту</label>
@@ -249,4 +250,19 @@
             <button type="submit" class="btn btn-default">Надіслати</button>
         </div>
     </form>
+</div>
+
+<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" id="uploadPhotoModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h6 class="modal-title"></h6>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
 </div>

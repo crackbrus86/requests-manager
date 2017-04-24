@@ -1,7 +1,8 @@
+var dir = "../wp-content/plugins/requests-manager/api/";
 (function($, undefined) {
     $(document).ready(function() {
 
-        var dir = "../wp-content/plugins/requests-manager/api/";
+
 
         var ageCategories = [],
             weightCategories = [],
@@ -109,6 +110,29 @@
         $("input[name='activeVisa']").on("change", function() {
             $("#visaFeatures").toggle();
         });
+
+        var nationalPass = {
+            fileInput: "#photoOfNatPass",
+            photoId: "#photoOfNatPassId",
+            uplButton: "#uploadPhotoOfNatPass",
+            showPhoto: "#showPhotoOfNatPass",
+            delPhoto: "#removePhotoOfNatPass"
+        }
+
+        $("#uploadPhotoOfNatPass").on("click", function() {
+            $("#uploadPhotoModal .modal-header h6").html("Завантажити фото національного паспорта");
+            $("#uploadPhotoModal .modal-body").append("<form><input type='file' class='form-control' name='photoOfNatPass' id='photoOfNatPass' accept='image/jpeg,image/png' /></form>");
+            $("#uploadPhotoModal .modal-footer").append("<button type='button' class='btn btn-primary' id='uploadNatPassPhoto' >Завантажити</button>");
+            $("#uploadPhotoModal").modal();
+        });
+
+        $("#uploadNatPassPhoto").live("click", function() {
+            uploadPhoto(nationalPass);
+        });
+
+        $("#uploadPhotoModal .close").on("click", function() {
+            clearUploadModal();
+        });
     });
 
     function appendOptions(select, data) {
@@ -186,4 +210,42 @@
         });
 
     }
+
+    function uploadPhoto(obj) {
+        var $input = $(obj.fileInput);
+        var fd = new FormData;
+        if ($input[0].files.length) {
+            fd.append('img', $input[0].files[0]);
+            showPreloader("#uploadPhotoModal");
+            $.ajax({
+                url: dir + "UploadPhoto.php",
+                data: fd,
+                processData: false,
+                contentType: false,
+                type: 'POST',
+                success: function(data) {
+                    $(obj.photoId).val(data);
+                    clearUploadModal();
+                    $(obj.uplButton).remove();
+                    $(obj.photoId).after("<button type='button' id='" + obj.showPhoto + "' class='btn btn-default' data-show = '" + data + "' style='margin-right: 5px' >Показати</button>" +
+                        "<button type='button' id='" + obj.delPhoto + "' class='btn btn-default' data-remove = '" + data + "'>Видалити</button>");
+                }
+            });
+        } else {
+            alert("Оберіть файл!");
+        }
+    }
+
+    function clearUploadModal() {
+        $("#uploadPhotoModal .modal-header h6").html("");
+        $("#uploadPhotoModal .modal-body").html("");
+        $("#uploadPhotoModal .modal-footer").html("");
+        $("#uploadPhotoModal .fa-spinner").remove();
+        $("#uploadPhotoModal").modal("hide");
+    }
+
+    function showPreloader(selector) {
+        $(selector).append('<span class="fa fa-spinner fa-spin fa-3x fa-fw" style="position: absolute; top: 150px; left: 50%; color: slategrey;"></span>');
+    }
+
 })(jQuery)
