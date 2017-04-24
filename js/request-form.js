@@ -215,22 +215,28 @@ var dir = "../wp-content/plugins/requests-manager/api/";
         var $input = $(obj.fileInput);
         var fd = new FormData;
         if ($input[0].files.length) {
-            fd.append('img', $input[0].files[0]);
-            showPreloader("#uploadPhotoModal");
-            $.ajax({
-                url: dir + "UploadPhoto.php",
-                data: fd,
-                processData: false,
-                contentType: false,
-                type: 'POST',
-                success: function(data) {
-                    $(obj.photoId).val(data);
-                    clearUploadModal();
-                    $(obj.uplButton).remove();
-                    $(obj.photoId).after("<button type='button' id='" + obj.showPhoto + "' class='btn btn-default' data-show = '" + data + "' style='margin-right: 5px' >Показати</button>" +
-                        "<button type='button' id='" + obj.delPhoto + "' class='btn btn-default' data-remove = '" + data + "'>Видалити</button>");
-                }
-            });
+            if ($input[0].files[0].type == "image/jpeg" || $input[0].files[0].type == "image/png") {
+                fd.append('img', $input[0].files[0]);
+                showPreloader("#uploadPhotoModal");
+                $.ajax({
+                    url: dir + "UploadPhoto.php",
+                    data: fd,
+                    processData: false,
+                    contentType: false,
+                    type: 'POST',
+                    success: function(data) {
+                        $(obj.photoId).val(data);
+                        clearUploadModal();
+                        $(obj.uplButton).remove();
+                        $(obj.photoId).after("<button type='button' id='" + obj.showPhoto + "' class='btn btn-default' data-show = '" + data + "' style='margin-right: 5px' >Показати</button>" +
+                            "<button type='button' id='" + obj.delPhoto + "' class='btn btn-default' data-remove = '" + data + "'>Видалити</button>");
+                    }
+                });
+            } else {
+                alert("Недопустимий тип файлу!");
+                $(obj.fileInput).val("");
+            }
+
         } else {
             alert("Оберіть файл!");
         }
