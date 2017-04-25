@@ -112,26 +112,37 @@ var dir = "../wp-content/plugins/requests-manager/api/";
         });
 
         var nationalPass = {
+            title: "Завантажити фото національного паспорта",
             fileInput: "#photoOfNatPass",
+            fileUplBut: "#uploadNatPassPhoto",
             photoId: "#photoOfNatPassId",
             uplButton: "#uploadPhotoOfNatPass",
-            showPhoto: "#showPhotoOfNatPass",
-            delPhoto: "#removePhotoOfNatPass"
+            showPhoto: "showPhotoOfNatPass",
+            delPhoto: "removePhotoOfNatPass"
         }
 
-        $("#uploadPhotoOfNatPass").on("click", function() {
-            $("#uploadPhotoModal .modal-header h6").html("Завантажити фото національного паспорта");
-            $("#uploadPhotoModal .modal-body").append("<form><input type='file' class='form-control' name='photoOfNatPass' id='photoOfNatPass' accept='image/jpeg,image/png' /></form>");
-            $("#uploadPhotoModal .modal-footer").append("<button type='button' class='btn btn-primary' id='uploadNatPassPhoto' >Завантажити</button>");
-            $("#uploadPhotoModal").modal();
+        $(nationalPass.uplButton).live("click", function() {
+            showUploadModal(nationalPass);
         });
 
-        $("#uploadNatPassPhoto").live("click", function() {
+        $(nationalPass.fileUplBut).live("click", function() {
             uploadPhoto(nationalPass);
         });
 
-        $("#uploadPhotoModal .close").on("click", function() {
+        $("#showPhotoOfNatPass").live("click", function(e) {
+            loadPhoto(e);
+        });
+
+        $("#" + nationalPass.delPhoto).live("click", function() {
+            deletePhoto(nationalPass);
+        });
+
+        $("#uploadPhotoModal").on("hide.bs.modal", function() {
             clearUploadModal();
+        });
+
+        $('#showPhotoModal').on('hide.bs.modal', function(e) {
+            $("#showPhotoModal .modal-body").html("");
         });
     });
 
@@ -217,7 +228,7 @@ var dir = "../wp-content/plugins/requests-manager/api/";
         if ($input[0].files.length) {
             if ($input[0].files[0].type == "image/jpeg" || $input[0].files[0].type == "image/png") {
                 fd.append('img', $input[0].files[0]);
-                showPreloader("#uploadPhotoModal");
+                showPreloader("#uploadPhotoModal", "150px");
                 $.ajax({
                     url: dir + "UploadPhoto.php",
                     data: fd,
@@ -226,7 +237,7 @@ var dir = "../wp-content/plugins/requests-manager/api/";
                     type: 'POST',
                     success: function(data) {
                         $(obj.photoId).val(data);
-                        clearUploadModal();
+                        $("#uploadPhotoModal").modal("hide");
                         $(obj.uplButton).remove();
                         $(obj.photoId).after("<button type='button' id='" + obj.showPhoto + "' class='btn btn-default' data-show = '" + data + "' style='margin-right: 5px' >Показати</button>" +
                             "<button type='button' id='" + obj.delPhoto + "' class='btn btn-default' data-remove = '" + data + "'>Видалити</button>");
@@ -247,11 +258,43 @@ var dir = "../wp-content/plugins/requests-manager/api/";
         $("#uploadPhotoModal .modal-body").html("");
         $("#uploadPhotoModal .modal-footer").html("");
         $("#uploadPhotoModal .fa-spinner").remove();
-        $("#uploadPhotoModal").modal("hide");
     }
 
-    function showPreloader(selector) {
-        $(selector).append('<span class="fa fa-spinner fa-spin fa-3x fa-fw" style="position: absolute; top: 150px; left: 50%; color: slategrey;"></span>');
+    function showPreloader(selector, top) {
+        $(selector).append('<span class="fa fa-spinner fa-spin fa-3x fa-fw" style="position: absolute; top: ' + top + '; left: 50%; color: slategrey;"></span>');
+    }
+
+    function showPhoto(img) {
+        $("#showPhotoModal .modal-body").append(img);
+        $("#showPhotoModal").modal();
+    }
+
+    function showUploadModal(obj) {
+        $("#uploadPhotoModal .modal-header h6").html(obj.title);
+        $("#uploadPhotoModal .modal-body").append("<form><input type='file' class='form-control' name='" + obj.fileInput.slice(1) + "' id='" + obj.fileInput.slice(1) + "' accept='image/jpeg,image/png' /></form>");
+        $("#uploadPhotoModal .modal-footer").append("<button type='button' class='btn btn-primary' id='" + obj.fileUplBut.slice(1) + "' >Завантажити</button>");
+        $("#uploadPhotoModal").modal();
+    }
+
+    function loadPhoto(e) {
+        var photoId = e.target.dataset.show;
+        showPreloader("body", e.target.offsetTop + "px");
+        $.ajax({
+            url: dir + "GetPhoto.php",
+            type: "POST",
+            data: "photoId=" + photoId,
+            success: function(data) {
+                $(".fa-spinner").remove();
+                showPhoto(data);
+            }
+        });
+    }
+
+    function deletePhoto(obj) {
+        $(obj.photoId).val('');
+        $("#" + obj.showPhoto).remove();
+        $("#" + obj.delPhoto).remove();
+        $(obj.photoId).after("<button type='button' class='btn btn-default' id='" + obj.uplButton.slice(1) + "'>Завантажити фото</button>");
     }
 
 })(jQuery)
