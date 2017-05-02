@@ -181,8 +181,9 @@
                             <input type="email" class="form-control" id="coachEmail" placeholder="email.adress@gmail.com" maxlength="50" />
                         </div>
                         <div class="form-group">
-                            <label for="coachPhotoOfNatPass">Фото першої сторінки національного паспорту</label>
-                            <input type="file" class="form-control" name="coachPhotoOfNatPass" id="coachPhotoOfNatPass" accept="image/jpeg,image/png" />
+                            <p><label>Фото першої сторінки національного паспорту</label></p>
+                            <button type="button" class="btn btn-default" id="uploadCoachPhotoOfNatPass" data-no="1">Завантажити фото</button>
+                            <input type="hidden" name="coachPhotoOfNatPassId" id="coachPhotoOfNatPassId" />
                         </div>
                         <div class="form-group">
                             <label for="coachPhotoOfForPass">Фото першої сторінки закордонного паспорту</label>
@@ -212,17 +213,19 @@
                 <input type="text" class="form-control" id="dopingControlDate" />
             </div>
             <div class="form-group">
-                <p><label for="photoOfNatPass">Фото першої сторінки національного паспорту</label></p>
+                <p><label>Фото першої сторінки національного паспорту</label></p>
                 <button type="button" class="btn btn-default" id="uploadPhotoOfNatPass">Завантажити фото</button>
                 <input type="hidden" name="photoOfNatPassId" id="photoOfNatPassId" />
             </div>
             <div class="form-group">
-                <label for="photoOfForPass">Фото першої сторінки закордонного паспорту</label>
-                <input type="file" class="form-control" name="photoOfForPass" id="photoOfForPass" accept="image/jpeg,image/png" />
+                <p><label>Фото першої сторінки закордонного паспорту</label></p>
+                <button type="button" class="btn btn-default" id="uploadPhotoOfForPass">Завантажити фото</button>
+                <input type="hidden" name="photoOfNatPassId" id="photoOfForPassId" />
             </div>
             <div class="form-group">
-                <label for="accreditationPhoto">Фото для акредитації</label>
-                <input type="file" class="form-control" name="accreditationPhoto" id="accreditationPhoto" accept="image/jpeg,image/png" />
+                <p><label>Фото для акредитації</label></p>
+                <button type="button" class="btn btn-default" id="uploadAccreditationPhoto">Завантажити фото</button>
+                <input type="hidden" name="photoOfNatPassId" id="accreditationPhotoId" />
             </div>
             <div class="form-group">
                 <div><label>Чи маєте Ви діючу візу?</label></div>

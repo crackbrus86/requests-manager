@@ -129,12 +129,90 @@ var dir = "../wp-content/plugins/requests-manager/api/";
             uploadPhoto(nationalPass);
         });
 
-        $("#showPhotoOfNatPass").live("click", function(e) {
+        $("#" + nationalPass.showPhoto).live("click", function(e) {
             loadPhoto(e);
         });
 
         $("#" + nationalPass.delPhoto).live("click", function() {
             deletePhoto(nationalPass);
+        });
+
+        var foreignPass = {
+            title: "Завантажити фото закордонного паспорта",
+            fileInput: "#photoOfForPass",
+            fileUplBut: "#uploadForPassPhoto",
+            photoId: "#photoOfForPassId",
+            uplButton: "#uploadPhotoOfForPass",
+            showPhoto: "showPhotoOfForPass",
+            delPhoto: "removePhotoOfForPass"
+        }
+
+        $(foreignPass.uplButton).live("click", function() {
+            showUploadModal(foreignPass);
+        });
+
+        $(foreignPass.fileUplBut).live("click", function() {
+            uploadPhoto(foreignPass);
+        });
+
+        $("#" + foreignPass.showPhoto).live("click", function(e) {
+            loadPhoto(e);
+        });
+
+        $("#" + foreignPass.delPhoto).live("click", function() {
+            deletePhoto(foreignPass);
+        });
+
+        var accreditPhoto = {
+            title: "Завантажити фото для акредитації",
+            fileInput: "#photoForAccreditation",
+            fileUplBut: "#uploadAccreditationPhotoGo",
+            photoId: "#accreditationPhotoId",
+            uplButton: "#uploadAccreditationPhoto",
+            showPhoto: "showPhotoForAccreditation",
+            delPhoto: "removePhotoForAccreditation"
+        }
+
+        $(accreditPhoto.uplButton).live("click", function() {
+            showUploadModal(accreditPhoto);
+        });
+
+        $(accreditPhoto.fileUplBut).live("click", function() {
+            uploadPhoto(accreditPhoto);
+        });
+
+        $("#" + accreditPhoto.showPhoto).live("click", function(e) {
+            loadPhoto(e);
+        });
+
+        $("#" + accreditPhoto.delPhoto).live("click", function() {
+            deletePhoto(accreditPhoto);
+        });
+
+        var coachNationalPass = {
+            title: "Завантажити фото національного паспорта",
+            fileInput: "#coachPhotoOfNatPass",
+            fileUplBut: "#uploadCoachNatPassPhoto",
+            photoId: "#coachPhotoOfNatPassId",
+            uplButton: "#uploadCoachPhotoOfNatPass",
+            showPhoto: "showCoachPhotoOfNatPass",
+            delPhoto: "removeCoachPhotoOfNatPass"
+        }
+
+        $(coachNationalPass.uplButton).live("click", function() {
+            showUploadModal(coachNationalPass);
+        });
+
+        $(coachNationalPass.fileUplBut).live("click", function() {
+            uploadPhoto(coachNationalPass);
+        });
+
+        $("#" + coachNationalPass.showPhoto).live("click", function(e) {
+            loadPhoto(e);
+        });
+
+        $("#" + coachNationalPass.delPhoto).live("click", function() {
+            deletePhoto(coachNationalPass);
         });
 
         $("#uploadPhotoModal").on("hide.bs.modal", function() {

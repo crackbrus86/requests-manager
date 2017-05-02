@@ -7,6 +7,11 @@ if (!file_exists(ABSPATH .'/wp-content/uploads/pictures/')) {
 
 foreach($_FILES as $file) {
 	if ($file['error'] === 0) {
+        $image = getimagesize($file['tmp_name']);
+        if($image['mime'] != 'image/jpeg' && $image['mime'] != 'image/png'){
+            echo "Sorry, we only accept JPEG and PNG images\n";
+            exit;
+        }
 		if (is_uploaded_file($file['tmp_name'])) {
 			if(!move_uploaded_file($file['tmp_name'], ABSPATH .'/wp-content/uploads/pictures/'.$file['name']))
 				die("Error");
