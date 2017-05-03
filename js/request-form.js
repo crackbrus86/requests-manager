@@ -215,6 +215,139 @@ var dir = "../wp-content/plugins/requests-manager/api/";
             deletePhoto(coachNationalPass);
         });
 
+        var coachForeignPass = {
+            title: "Завантажити фото закордонного паспорта",
+            fileInput: "#coachPhotoOfForPass",
+            fileUplBut: "#uploadCoachForPassPhoto",
+            photoId: "#coachPhotoOfForPassId",
+            uplButton: "#uploadCoachPhotoOfForPass",
+            showPhoto: "showCoachPhotoOfForPass",
+            delPhoto: "removeCoachPhotoOfForPass"
+        }
+
+        $(coachForeignPass.uplButton).live("click", function() {
+            showUploadModal(coachForeignPass);
+        });
+
+        $(coachForeignPass.fileUplBut).live("click", function() {
+            uploadPhoto(coachForeignPass);
+        });
+
+        $("#" + coachForeignPass.showPhoto).live("click", function(e) {
+            loadPhoto(e);
+        });
+
+        $("#" + coachForeignPass.delPhoto).live("click", function() {
+            deletePhoto(coachForeignPass);
+        });
+
+        var coachAccreditPhoto = {
+            title: "Завантажити фото для акредитації",
+            fileInput: "#coachPhotoForAccreditation",
+            fileUplBut: "#uploadCoachAccreditationPhotoGo",
+            photoId: "#coachAccreditationPhotoId",
+            uplButton: "#uploadCoachAccreditationPhoto",
+            showPhoto: "showCoachPhotoForAccreditation",
+            delPhoto: "removeCoachPhotoForAccreditation"
+        }
+
+        $(coachAccreditPhoto.uplButton).live("click", function() {
+            showUploadModal(coachAccreditPhoto);
+        });
+
+        $(coachAccreditPhoto.fileUplBut).live("click", function() {
+            uploadPhoto(coachAccreditPhoto);
+        });
+
+        $("#" + coachAccreditPhoto.showPhoto).live("click", function(e) {
+            loadPhoto(e);
+        });
+
+        $("#" + coachAccreditPhoto.delPhoto).live("click", function() {
+            deletePhoto(coachAccreditPhoto);
+        });
+
+        var coachNP = {
+            title: "Завантажити фото національного паспорта",
+            uplButton: ".upl-coach-np",
+            fileInput: "coach-np",
+            fileButton: "coach-np-upload",
+            photoIdPrefix: "#coachPhotoOfNatPassId",
+            loadButton: "load-photo-np",
+            delButton: "remove-photo-np"
+
+        }
+
+        $(coachNP.uplButton).live("click", function(e) {
+            showCoachUploadModal(coachNP, e);
+        });
+
+        $('#' + coachNP.fileButton).live("click", function(e) {
+            uploadCoachPhoto(coachNP, e);
+        });
+
+        $("." + coachNP.loadButton).live("click", function(e) {
+            loadPhoto(e);
+        });
+
+        $("." + coachNP.delButton).live("click", function(e) {
+            deleteCoachPhoto(coachNP, e)
+        });
+
+        var coachFP = {
+            title: "Завантажити фото закордонного паспорта",
+            uplButton: ".upl-coach-fp",
+            fileInput: "coach-fp",
+            fileButton: "coach-fp-upload",
+            photoIdPrefix: "#coachPhotoOfForPassId",
+            loadButton: "load-photo-fp",
+            delButton: "remove-photo-fp"
+
+        }
+
+        $(coachFP.uplButton).live("click", function(e) {
+            showCoachUploadModal(coachFP, e);
+        });
+
+        $('#' + coachFP.fileButton).live("click", function(e) {
+            uploadCoachPhoto(coachFP, e);
+        });
+
+        $("." + coachFP.loadButton).live("click", function(e) {
+            loadPhoto(e);
+        });
+
+        $("." + coachFP.delButton).live("click", function(e) {
+            deleteCoachPhoto(coachFP, e)
+        });
+
+        var coachAP = {
+            title: "Завантажити фото для акредитації",
+            uplButton: ".upl-coach-ap",
+            fileInput: "coach-ap",
+            fileButton: "coach-ap-upload",
+            photoIdPrefix: "#coachAccreditationPhotoId",
+            loadButton: "load-photo-ap",
+            delButton: "remove-photo-ap"
+
+        }
+
+        $(coachAP.uplButton).live("click", function(e) {
+            showCoachUploadModal(coachAP, e);
+        });
+
+        $('#' + coachAP.fileButton).live("click", function(e) {
+            uploadCoachPhoto(coachAP, e);
+        });
+
+        $("." + coachAP.loadButton).live("click", function(e) {
+            loadPhoto(e);
+        });
+
+        $("." + coachAP.delButton).live("click", function(e) {
+            deleteCoachPhoto(coachAP, e)
+        });
+
         $("#uploadPhotoModal").on("hide.bs.modal", function() {
             clearUploadModal();
         });
@@ -274,9 +407,9 @@ var dir = "../wp-content/plugins/requests-manager/api/";
                 .append('<div class="form-group"><label for="coachTermOfPass' + numberOfCoaches + '">Термін дії закордонного паспорту тренера</label><input type="text" class="form-control" id="coachTermOfPass' + numberOfCoaches + '"></div>')
                 .append('<div class="form-group"><label for="coachPhone' + numberOfCoaches + '">Номер телефону тренера</label><input type="tel" class="form-control" id="coachPhone' + numberOfCoaches + '" placeholder="+38 (999) 999-99-99" maxlength="20" /></div>')
                 .append('<div class="form-group"><label for="coachEmail' + numberOfCoaches + '">Електронна адреса тренера</label><input type="email" class="form-control" id="coachEmail' + numberOfCoaches + '" placeholder="email.adress@gmail.com" maxlength="50" /></div>')
-                .append('<div class="form-group"><label for="coachPhotoOfNatPass' + numberOfCoaches + '">Фото першої сторінки національного паспорту</label><input type="file" class="form-control" name="coachPhotoOfNatPass' + numberOfCoaches + '" id="coachPhotoOfNatPass' + numberOfCoaches + '" accept="image/jpeg,image/png" /></div>')
-                .append('<div class="form-group"><label for="coachPhotoOfForPass' + numberOfCoaches + '">Фото першої сторінки закордонного паспорту</label><input type="file" class="form-control" name="coachPhotoOfForPass' + numberOfCoaches + '" id="coachPhotoOfForPass' + numberOfCoaches + '" accept="image/jpeg,image/png" /></div>')
-                .append('<div class="form-group"><label for="coachAccreditationPhoto">Фото для акредитації</label><input type="file" class="form-control" name="coachAccreditationPhoto" id="coachAccreditationPhoto" accept="image/jpeg,image/png" /></div>')
+                .append('<div class="form-group"><p><label for="coachPhotoOfNatPass' + numberOfCoaches + '">Фото першої сторінки національного паспорту</label></p><button type="button" class="btn btn-default upl-coach-np" data-rel="' + numberOfCoaches + '">Завантажити</button><input type="hidden" name="coachPhotoOfNatPassId' + numberOfCoaches + '" id="coachPhotoOfNatPassId' + numberOfCoaches + '" /></div>')
+                .append('<div class="form-group"><p><label for="coachPhotoOfForPass' + numberOfCoaches + '">Фото першої сторінки закордонного паспорту</label></p><button type="button" class="btn btn-default upl-coach-fp" data-rel="' + numberOfCoaches + '">Завантажити</button><input type="hidden" name="coachPhotoOfForPassId' + numberOfCoaches + '" id="coachPhotoOfForPassId' + numberOfCoaches + '" /></div>')
+                .append('<div class="form-group"><p><label for="coachAccreditationPhoto">Фото для акредитації</label></p><button type="button" class="btn btn-default upl-coach-ap" data-rel="' + numberOfCoaches + '">Завантажити</button><input type="hidden" name="coachAccreditationPhotoId' + numberOfCoaches + '" id="coachAccreditationPhotoId' + numberOfCoaches + '" /></div>')
             )
         );
         $("#coachBirthDate" + numberOfCoaches + ", #coachTermOfPass" + numberOfCoaches).datepicker({
@@ -356,7 +489,7 @@ var dir = "../wp-content/plugins/requests-manager/api/";
 
     function loadPhoto(e) {
         var photoId = e.target.dataset.show;
-        showPreloader("body", e.target.offsetTop + "px");
+        $(e.target.parentElement).append('<span class="fa fa-spinner fa-spin fa-2x fa-fw" style="color: slategrey;"></span>');
         $.ajax({
             url: dir + "GetPhoto.php",
             type: "POST",
@@ -373,6 +506,54 @@ var dir = "../wp-content/plugins/requests-manager/api/";
         $("#" + obj.showPhoto).remove();
         $("#" + obj.delPhoto).remove();
         $(obj.photoId).after("<button type='button' class='btn btn-default' id='" + obj.uplButton.slice(1) + "'>Завантажити фото</button>");
+    }
+
+    function showCoachUploadModal(coach, e) {
+        var id = e.target.dataset["rel"];
+        $("#uploadPhotoModal .modal-header h6").html(coach.title);
+        $("#uploadPhotoModal .modal-body").append("<form><input type='file' class='form-control' name='" + coach.fileInput + "' id='" + coach.fileInput + "' accept='image/jpeg,image/png' /></form>");
+        $("#uploadPhotoModal .modal-footer").append("<button type='button' class='btn btn-primary' id='" + coach.fileButton + "' data-rel='" + id + "' >Завантажити</button>");
+        $("#uploadPhotoModal").modal();
+    }
+
+    function uploadCoachPhoto(coach, e) {
+        var id = e.target.dataset['rel'];
+        var $input = $("#" + coach.fileInput);
+        var fd = new FormData;
+        if ($input[0].files.length) {
+            if ($input[0].files[0].type == "image/jpeg" || $input[0].files[0].type == "image/png") {
+                fd.append('img', $input[0].files[0]);
+                showPreloader("#uploadPhotoModal", "150px");
+                $.ajax({
+                    url: dir + "UploadPhoto.php",
+                    data: fd,
+                    processData: false,
+                    contentType: false,
+                    type: 'POST',
+                    success: function(data) {
+                        $(coach.photoIdPrefix + id).val(data);
+                        $("#uploadPhotoModal").modal("hide");
+                        $("#coachForm" + id + " " + coach.uplButton).remove();
+                        $(coach.photoIdPrefix + id).after("<button type='button' class='btn btn-default " + coach.loadButton + "' data-show = '" + data + "' style='margin-right: 5px' >Показати</button>" +
+                            "<button type='button' class='btn btn-default " + coach.delButton + "' data-remove ='" + data + "' data-rel='" + id + "'>Видалити</button>");
+                    }
+                });
+            } else {
+                alert("Недопустимий тип файлу!");
+                $("#" + coach.fileInput).val("");
+            }
+
+        } else {
+            alert("Оберіть файл!");
+        }
+    }
+
+    function deleteCoachPhoto(coach, e) {
+        var id = e.target.dataset["rel"];
+        $(coach.photoIdPrefix + id).val('');
+        $("#coachForm" + id + " ." + coach.loadButton).remove();
+        $("#coachForm" + id + " ." + coach.delButton).remove();
+        $(coach.photoIdPrefix + id).after("<button type='button' class='btn btn-default " + coach.uplButton.slice(1) + "' data-rel='" + id + "'>Завантажити фото</button>");
     }
 
 })(jQuery)

@@ -186,12 +186,14 @@
                             <input type="hidden" name="coachPhotoOfNatPassId" id="coachPhotoOfNatPassId" />
                         </div>
                         <div class="form-group">
-                            <label for="coachPhotoOfForPass">Фото першої сторінки закордонного паспорту</label>
-                            <input type="file" class="form-control" name="coachPhotoOfForPass" id="coachPhotoOfForPass" accept="image/jpeg,image/png" />
+                            <p><label for="coachPhotoOfForPass">Фото першої сторінки закордонного паспорту</label></p>
+                            <button type="button" class="btn btn-default" id="uploadCoachPhotoOfForPass" data-no="1">Завантажити фото</button>
+                            <input type="hidden" name="coachPhotoOfForPassId" id="coachPhotoOfForPassId" />
                         </div>
                         <div class="form-group">
-                            <label for="coachAccreditationPhoto">Фото для акредитації</label>
-                            <input type="file" class="form-control" name="coachAccreditationPhoto" id="coachAccreditationPhoto" accept="image/jpeg,image/png" />
+                            <p><label for="coachAccreditationPhoto">Фото для акредитації</label></p>
+                            <button type="button" class="btn btn-default" id="uploadCoachAccreditationPhoto">Завантажити фото</button>
+                            <input type="hidden" name="coachAccreditationPhotoId" id="coachAccreditationPhotoId" />
                         </div>
                     </div>
                 </div>
@@ -220,12 +222,12 @@
             <div class="form-group">
                 <p><label>Фото першої сторінки закордонного паспорту</label></p>
                 <button type="button" class="btn btn-default" id="uploadPhotoOfForPass">Завантажити фото</button>
-                <input type="hidden" name="photoOfNatPassId" id="photoOfForPassId" />
+                <input type="hidden" name="photoOfForPassId" id="photoOfForPassId" />
             </div>
             <div class="form-group">
                 <p><label>Фото для акредитації</label></p>
                 <button type="button" class="btn btn-default" id="uploadAccreditationPhoto">Завантажити фото</button>
-                <input type="hidden" name="photoOfNatPassId" id="accreditationPhotoId" />
+                <input type="hidden" name="accreditationPhotoId" id="accreditationPhotoId" />
             </div>
             <div class="form-group">
                 <div><label>Чи маєте Ви діючу візу?</label></div>
