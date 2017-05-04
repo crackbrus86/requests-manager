@@ -94,15 +94,15 @@
                 <div class="row">
                     <div class="col-md-3">
                         <label for="squat">Присідання</label>
-                        <input type="text" class="form-control" name="squat" class="discipline" id="squat" maxlength="6" value="00.00" />
+                        <input type="text" class="form-control discipline" name="squat" id="squat" maxlength="6" value="00.00" />
                     </div>
                     <div class="col-md-3">
                         <label for="benchPress">Жим лежачи</label>
-                        <input type="text" class="form-control" name="benchPress" class="discipline" id="benchPress" maxlength="6" value="00.00" />
+                        <input type="text" class="form-control discipline" name="benchPress" id="benchPress" maxlength="6" value="00.00" />
                     </div>
                     <div class="col-md-3">
                         <label for="deadLift">Станова тяга</label>
-                        <input type="text" class="form-control" name="deadLift" class="discipline" id="deadLift" maxlength="6" value="00.00" />
+                        <input type="text" class="form-control discipline" name="deadLift" id="deadLift" maxlength="6" value="00.00" />
                     </div>
                     <div class="col-md-3">
                         <label for="total">Сума</label>
