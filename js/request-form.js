@@ -89,11 +89,43 @@ var dir = "../wp-content/plugins/requests-manager/api/";
             $("#coachForm").toggle();
         });
 
+        $("input[name='hasCoach']").on("change", function() {
+            if (this.value == "true") {
+                $(".coachForms input[type=text], #coachAdvancedData input[type=tel], #coachAdvancedData input[type=email]").each(function() {
+                    if ($(this).is(":visible")) $(this).addClass("required");
+                });
+            } else {
+                $(".coachForms input[type=text], #coachAdvancedData input[type=tel], #coachAdvancedData input[type=email]").each(function() {
+                    if ($(this.parentElement).hasClass("has-error")) $(this.parentElement).removeClass("has-error");
+                    if ($(this).hasClass("required")) $(this).removeClass("required");
+                });
+            }
+        });
+
         $(".coachNo1 input[name='following']").on("change", function(e) {
             $("#coachAdvancedData input").each(function(e) {
                 this.value = "";
             });
             $("#coachAdvancedData").toggle("800");
+        });
+
+        $(".coachNo1 input[name='following']").on("change", function() {
+            if (this.value == "true") {
+                $("#coachAdvancedData input[type=text], #coachAdvancedData input[type=tel], #coachAdvancedData input[type=email]").each(function() {
+                    if ($(this).is(":visible")) $(this).addClass("required");
+                });
+                $("#coachAdvancedData input[type=hidden]").each(function() {
+                    $(this).addClass("requiredId");
+                });
+            } else {
+                $("#coachAdvancedData input[type=text], #coachAdvancedData input[type=tel], #coachAdvancedData input[type=email]").each(function() {
+                    if ($(this.parentElement).hasClass("has-error")) $(this.parentElement).removeClass("has-error");
+                    if ($(this).hasClass("required")) $(this).removeClass("required");
+                });
+                $("#coachAdvancedData input[type=hidden]").each(function() {
+                    $(this).removeClass("requiredId");
+                });
+            }
         });
 
         $("#appendCoach").on("click", function() {
@@ -355,6 +387,16 @@ var dir = "../wp-content/plugins/requests-manager/api/";
         $('#showPhotoModal').on('hide.bs.modal', function(e) {
             $("#showPhotoModal .modal-body").html("");
         });
+
+        $("#submitRequest").on("click", function() {
+            if ( /*inputHasValue() &&*/ checkPhotos()) { alert('valid') } else { alert('not valid') }
+        });
+
+        $(".required").live("change", function(e) {
+            if (e.target.value.length && $(e.target.parentElement).hasClass("has-error")) {
+                $(e.target.parentElement).removeClass("has-error");
+            }
+        });
     });
 
     function appendOptions(select, data) {
@@ -448,6 +490,8 @@ var dir = "../wp-content/plugins/requests-manager/api/";
                     type: 'POST',
                     success: function(data) {
                         $(obj.photoId).val(data);
+                        var parent = $(obj.photoId)[0].parentElement;
+                        $(parent.lastElementChild).remove();
                         $("#uploadPhotoModal").modal("hide");
                         $(obj.uplButton).remove();
                         $(obj.photoId).after("<button type='button' id='" + obj.showPhoto + "' class='btn btn-default' data-show = '" + data + "' style='margin-right: 5px' >Показати</button>" +
@@ -554,6 +598,31 @@ var dir = "../wp-content/plugins/requests-manager/api/";
         $("#coachForm" + id + " ." + coach.loadButton).remove();
         $("#coachForm" + id + " ." + coach.delButton).remove();
         $(coach.photoIdPrefix + id).after("<button type='button' class='btn btn-default " + coach.uplButton.slice(1) + "' data-rel='" + id + "'>Завантажити фото</button>");
+    }
+
+    function inputHasValue() {
+        var isValid = true;
+        $("#RequestForm .required").each(function() {
+            if (this.value == "") {
+                $(this.parentElement).addClass('has-error');
+                isValid = false;
+            }
+        });
+        return isValid;
+    }
+
+    function checkPhotos() {
+        var isValid = true;
+        $("#RequestForm .photo-alert").each(function() {
+            $(this).remove();
+        });
+        $("#RequestForm .requiredId").each(function() {
+            if (this.value == "" || this.value == 0) {
+                $(this.parentElement).append("<p class='text-danger photo-alert'>Увага! Фото обов'язкове для завантаження.</p>");
+                isValid = false;
+            }
+        });
+        return isValid;
     }
 
 })(jQuery)

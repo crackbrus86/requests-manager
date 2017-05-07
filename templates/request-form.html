@@ -2,19 +2,19 @@
     <form>
         <div class="form-group">
             <label for="surname">Прізвище</label>
-            <input type="text" class="form-control" id="surname" placeholder="Прізвище" maxlength="50">
+            <input type="text" class="form-control required" id="surname" placeholder="Прізвище" maxlength="50">
         </div>
         <div class="form-group">
             <label for="firstName">Ім'я</label>
-            <input type="text" class="form-control" id="firstName" placeholder="Ім'я" maxlength="30">
+            <input type="text" class="form-control required" id="firstName" placeholder="Ім'я" maxlength="30">
         </div>
         <div class="form-group">
             <label for="middleName">По-батькові</label>
-            <input type="text" class="form-control" id="middleName" placeholder="По-батькові" maxlength="30">
+            <input type="text" class="form-control required" id="middleName" placeholder="По-батькові" maxlength="30">
         </div>
         <div class="form-group">
             <label for="birthDate">Дата народження</label>
-            <input type="text" class="form-control" id="birthDate">
+            <input type="text" class="form-control required" id="birthDate">
         </div>
         <div class="form-group">
             <button type="button" class="btn btn-primary" id="showNext">Далі</button>
@@ -22,30 +22,30 @@
         <div class="anotherData" style="display: none">
             <div class="form-group">
                 <label for="lastNameLikeInPass">Прізвище як у закордонному паспорті</label>
-                <input type="text" class="form-control" id="lastNameLikeInPass" placeholder="Last Name" maxlength="50" />
+                <input type="text" class="form-control required" id="lastNameLikeInPass" placeholder="Last Name" maxlength="50" />
             </div>
             <div class="form-group">
                 <label for="firstNameLikeInPass">Ім'я як у закордонному паспорті</label>
-                <input type="text" class="form-control" id="firstNameLikeInPass" placeholder="First Name" maxlength="30" />
+                <input type="text" class="form-control required" id="firstNameLikeInPass" placeholder="First Name" maxlength="30" />
             </div>
             <div class="form-group">
                 <label>Серія та номер закордонного паспорту</label>
                 <div class="row">
                     <div class="col-md-4">
-                        <input type="text" class="form-control" id="seriaOfpass" placeholder="НН" maxlength="4">
+                        <input type="text" class="form-control required" id="seriaOfpass" placeholder="НН" maxlength="4">
                     </div>
                     <div class="col-md-8">
-                        <input type="text" class="form-control" id="numberOfPass" placeholder="ХХХХХХ" maxlength="8">
+                        <input type="text" class="form-control required" id="numberOfPass" placeholder="ХХХХХХ" maxlength="8">
                     </div>
                 </div>
             </div>
             <div class="form-group">
                 <label for="termOfPass">Термін дії паспорту</label>
-                <input type="text" class="form-control" id="termOfPass">
+                <input type="text" class="form-control required" id="termOfPass">
             </div>
             <div class="form-group">
                 <label for="indNumber">Ідентифікаційний номер</label>
-                <input type="text" class="form-control" id="indNumber" maxlength="10">
+                <input type="text" class="form-control required" id="indNumber" maxlength="10">
             </div>
             <div class="form-group">
                 <div class="row">
@@ -103,11 +103,11 @@
             </div>
             <div class="form-group">
                 <label for="phone">Номер телефону</label>
-                <input type="tel" class="form-control" id="phone" placeholder="+38 (999) 999-99-99" maxlength="20" />
+                <input type="tel" class="form-control required" id="phone" placeholder="+38 (999) 999-99-99" maxlength="20" />
             </div>
             <div class="form-group">
                 <label for="email">Електронна адреса</label>
-                <input type="email" class="form-control" id="email" placeholder="email.adress@gmail.com" maxlength="50" />
+                <input type="email" class="form-control required" id="email" placeholder="email.adress@gmail.com" maxlength="50" />
             </div>
             <div class="form-group">
                 <p>Дані тренера</p>
@@ -217,17 +217,17 @@
             <div class="form-group">
                 <p><label>Фото першої сторінки національного паспорту</label></p>
                 <button type="button" class="btn btn-default" id="uploadPhotoOfNatPass">Завантажити фото</button>
-                <input type="hidden" name="photoOfNatPassId" id="photoOfNatPassId" />
+                <input type="hidden" class="requiredId" name="photoOfNatPassId" id="photoOfNatPassId" />
             </div>
             <div class="form-group">
                 <p><label>Фото першої сторінки закордонного паспорту</label></p>
                 <button type="button" class="btn btn-default" id="uploadPhotoOfForPass">Завантажити фото</button>
-                <input type="hidden" name="photoOfForPassId" id="photoOfForPassId" />
+                <input type="hidden" class="requiredId" name="photoOfForPassId" id="photoOfForPassId" />
             </div>
             <div class="form-group">
                 <p><label>Фото для акредитації</label></p>
                 <button type="button" class="btn btn-default" id="uploadAccreditationPhoto">Завантажити фото</button>
-                <input type="hidden" name="accreditationPhotoId" id="accreditationPhotoId" />
+                <input type="hidden" class="requiredId" name="accreditationPhotoId" id="accreditationPhotoId" />
             </div>
             <div class="form-group">
                 <div><label>Чи маєте Ви діючу візу?</label></div>
@@ -252,7 +252,7 @@
                 </div>
             </div>
 
-            <button type="submit" class="btn btn-default">Надіслати</button>
+            <button type="button" class="btn btn-primary" id="submitRequest">Надіслати</button>
         </div>
     </form>
 </div>
