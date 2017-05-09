@@ -56,7 +56,7 @@ var dir = "../wp-content/plugins/requests-manager/api/";
         $("#birthDate, #coachBirthDate, #termOfPass, #coachTermOfPass, #dopingControlDate, #termOfVisa").datepicker({
             altFormat: "dd-mm-yy",
             changeYear: true,
-            yearRange: "1990:2200",
+            yearRange: "1900:2200",
             regional: ["uk"]
         });
 
@@ -389,10 +389,18 @@ var dir = "../wp-content/plugins/requests-manager/api/";
         });
 
         $("#submitRequest").on("click", function() {
-            if ( /*inputHasValue() &&*/ checkPhotos()) { alert('valid') } else { alert('not valid') }
+            if (inputHasValue() && checkPhotos() && validateEmail() &&
+                checkOptionalDateField("#dopingControlDate") &&
+                checkOptionalDateField("#termOfVisa")) { alert('valid') } else { alert('not valid') }
         });
 
         $(".required").live("change", function(e) {
+            if (e.target.value.length && $(e.target.parentElement).hasClass("has-error")) {
+                $(e.target.parentElement).removeClass("has-error");
+            }
+        });
+
+        $("#dopingControlDate, #termOfVisa").live("change", function(e) {
             if (e.target.value.length && $(e.target.parentElement).hasClass("has-error")) {
                 $(e.target.parentElement).removeClass("has-error");
             }
@@ -440,18 +448,18 @@ var dir = "../wp-content/plugins/requests-manager/api/";
             .append('<div class="form-group"><label for="coachLastName' + numberOfCoaches + '">Прізвище тренера</label><input type="text" class="form-control" name="coachLastName' + numberOfCoaches + '" id="coachLastName' + numberOfCoaches + '" placeholder="Прізвище" maxlength="50" /></div>')
             .append('<div class="form-group"><label for="coachFirstName' + numberOfCoaches + '">Ім\'я тренера</label><input type="text" class="form-control" name="coachFirstName' + numberOfCoaches + '" id="coachFirstName' + numberOfCoaches + '" placeholder="Ім\'я" maxlength="30" /></div>')
             .append('<div class="form-group"><label for="coachMiddleName' + numberOfCoaches + '">По-батькові тренера</label><input type="text" class="form-control" name="coachMiddleName' + numberOfCoaches + '" id="coachMiddleName' + numberOfCoaches + '" placeholder="По-батькові" maxlength="30" /></div>')
-            .append('<div class="form-group"><label for="coachBirthDate' + numberOfCoaches + '">Дата народження</label><input type="text" class="form-control" id="coachBirthDate' + numberOfCoaches + '"></div>')
+            .append('<div class="form-group"><label for="coachBirthDate' + numberOfCoaches + '">Дата народження</label><input type="text" class="form-control" id="coachBirthDate' + numberOfCoaches + '" maxlength="10" /></div>')
             .append('<div class="form-group coachNo' + numberOfCoaches + '"><div><label>Чи супроводжує Вас на змагання?</label></div><label class="radio-inline"><input type="radio" name="following' + numberOfCoaches + '" value="false" checked /> Ні</label><label class="radio-inline"><input type="radio" name="following' + numberOfCoaches + '" value="true" /> Так</label></div>')
             .append($('<div id="coachAdvancedData' + numberOfCoaches + '" style="display: none" />')
                 .append('<div class="form-group"><label for="coachLastNameLikeInPass' + numberOfCoaches + '">Прізвище тренера як у закордонному паспорті</label><input type="text" class="form-control" name="coachLastNameLikeInPass' + numberOfCoaches + '" id="coachLastNameLikeInPass' + numberOfCoaches + '" placeholder="Surname" maxlength="50" /></div>')
                 .append('<div class="form-group"><label for="coachFirstNameLikeInPass' + numberOfCoaches + '">Ім\'я тренера як у закордонному паспорті</label><input type="text" class="form-control" name="coachFirstNameLikeInPass' + numberOfCoaches + '" id="coachFirstNameLikeInPass' + numberOfCoaches + '" placeholder="Name" maxlength="30" /></div>')
-                .append('<div class="form-group"><label>Серія та номер закордонного паспорту тренера</label><div class="row"><div class="col-sm-4"><input type="text" class="form-control" id="coachSeriaOfpass' + numberOfCoaches + '" placeholder="НН" maxlength="4"></div><div class="col-sm-8"><input type="text" class="form-control" id="coachNumberOfPass' + numberOfCoaches + '" placeholder="ХХХХХХ" maxlength="8"></div></div></div>')
-                .append('<div class="form-group"><label for="coachTermOfPass' + numberOfCoaches + '">Термін дії закордонного паспорту тренера</label><input type="text" class="form-control" id="coachTermOfPass' + numberOfCoaches + '"></div>')
+                .append('<div class="form-group"><label>Серія та номер закордонного паспорту тренера</label><div class="row"><div class="col-sm-4"><input type="text" class="form-control" id="coachSeriaOfpass' + numberOfCoaches + '" placeholder="НН" maxlength="4" /></div><div class="col-sm-8"><input type="text" class="form-control" id="coachNumberOfPass' + numberOfCoaches + '" placeholder="ХХХХХХ" maxlength="8" /></div></div></div>')
+                .append('<div class="form-group"><label for="coachTermOfPass' + numberOfCoaches + '">Термін дії закордонного паспорту тренера</label><input type="text" class="form-control" id="coachTermOfPass' + numberOfCoaches + '" maxlength="10" /></div>')
                 .append('<div class="form-group"><label for="coachPhone' + numberOfCoaches + '">Номер телефону тренера</label><input type="tel" class="form-control" id="coachPhone' + numberOfCoaches + '" placeholder="+38 (999) 999-99-99" maxlength="20" /></div>')
                 .append('<div class="form-group"><label for="coachEmail' + numberOfCoaches + '">Електронна адреса тренера</label><input type="email" class="form-control" id="coachEmail' + numberOfCoaches + '" placeholder="email.adress@gmail.com" maxlength="50" /></div>')
-                .append('<div class="form-group"><p><label for="coachPhotoOfNatPass' + numberOfCoaches + '">Фото першої сторінки національного паспорту</label></p><button type="button" class="btn btn-default upl-coach-np" data-rel="' + numberOfCoaches + '">Завантажити</button><input type="hidden" name="coachPhotoOfNatPassId' + numberOfCoaches + '" id="coachPhotoOfNatPassId' + numberOfCoaches + '" /></div>')
-                .append('<div class="form-group"><p><label for="coachPhotoOfForPass' + numberOfCoaches + '">Фото першої сторінки закордонного паспорту</label></p><button type="button" class="btn btn-default upl-coach-fp" data-rel="' + numberOfCoaches + '">Завантажити</button><input type="hidden" name="coachPhotoOfForPassId' + numberOfCoaches + '" id="coachPhotoOfForPassId' + numberOfCoaches + '" /></div>')
-                .append('<div class="form-group"><p><label for="coachAccreditationPhoto">Фото для акредитації</label></p><button type="button" class="btn btn-default upl-coach-ap" data-rel="' + numberOfCoaches + '">Завантажити</button><input type="hidden" name="coachAccreditationPhotoId' + numberOfCoaches + '" id="coachAccreditationPhotoId' + numberOfCoaches + '" /></div>')
+                .append('<div class="form-group"><p><label for="coachPhotoOfNatPass' + numberOfCoaches + '">Фото першої сторінки національного паспорту</label></p><button type="button" class="btn btn-default upl-coach-np" data-rel="' + numberOfCoaches + '">Завантажити</button><input type="hidden" name="coachPhotoOfNatPassId' + numberOfCoaches + '" id="coachPhotoOfNatPassId' + numberOfCoaches + '" maxlength="10" /></div>')
+                .append('<div class="form-group"><p><label for="coachPhotoOfForPass' + numberOfCoaches + '">Фото першої сторінки закордонного паспорту</label></p><button type="button" class="btn btn-default upl-coach-fp" data-rel="' + numberOfCoaches + '">Завантажити</button><input type="hidden" name="coachPhotoOfForPassId' + numberOfCoaches + '" id="coachPhotoOfForPassId' + numberOfCoaches + '" maxlength="10" /></div>')
+                .append('<div class="form-group"><p><label for="coachAccreditationPhoto">Фото для акредитації</label></p><button type="button" class="btn btn-default upl-coach-ap" data-rel="' + numberOfCoaches + '">Завантажити</button><input type="hidden" name="coachAccreditationPhotoId' + numberOfCoaches + '" id="coachAccreditationPhotoId' + numberOfCoaches + '" maxlength="10" /></div>')
             )
         );
         $("#coachBirthDate" + numberOfCoaches + ", #coachTermOfPass" + numberOfCoaches).datepicker({
@@ -625,4 +633,32 @@ var dir = "../wp-content/plugins/requests-manager/api/";
         return isValid;
     }
 
+    function isValidEmail(emailText) {
+        var pattern = new RegExp(/^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i);
+        return pattern.test(emailText);
+    };
+
+    function validateEmail() {
+        var isValid = true;
+        $("#RequestForm .email").each(function() {
+            if ($(this).is(":visible")) {
+                isValid = isValidEmail(this.value);
+                if (!isValid) {
+                    $(this.parentElement).addClass('has-error');
+                    return isValid;
+                }
+            }
+        });
+        return isValid;
+    }
+
+    function checkOptionalDateField(selector) {
+        var isValid = true;
+        var parent = $(selector)[0].parentElement;
+        if ($(selector).is(":visible") && !$(selector)[0].value) {
+            $(parent).addClass('has-error');
+            isValid = false;
+        }
+        return isValid;
+    }
 })(jQuery)

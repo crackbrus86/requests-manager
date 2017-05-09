@@ -21,19 +21,19 @@
     <form>
         <div class="form-group">
             <label for="surname">Прізвище</label>
-            <input type="text" class="form-control required" id="surname" placeholder="Прізвище" maxlength="50">
+            <input type="text" class="form-control required" id="surname" placeholder="Прізвище" maxlength="50" />
         </div>
         <div class="form-group">
             <label for="firstName">Ім'я</label>
-            <input type="text" class="form-control required" id="firstName" placeholder="Ім'я" maxlength="30">
+            <input type="text" class="form-control required" id="firstName" placeholder="Ім'я" maxlength="30" />
         </div>
         <div class="form-group">
             <label for="middleName">По-батькові</label>
-            <input type="text" class="form-control required" id="middleName" placeholder="По-батькові" maxlength="30">
+            <input type="text" class="form-control required" id="middleName" placeholder="По-батькові" maxlength="30" />
         </div>
         <div class="form-group">
             <label for="birthDate">Дата народження</label>
-            <input type="text" class="form-control required" id="birthDate">
+            <input type="text" class="form-control required" id="birthDate" maxlength="10" />
         </div>
         <div class="form-group">
             <button type="button" class="btn btn-primary" id="showNext">Далі</button>
@@ -51,20 +51,20 @@
                 <label>Серія та номер закордонного паспорту</label>
                 <div class="row">
                     <div class="col-md-4">
-                        <input type="text" class="form-control required" id="seriaOfpass" placeholder="НН" maxlength="4">
+                        <input type="text" class="form-control required" id="seriaOfpass" placeholder="НН" maxlength="4" />
                     </div>
                     <div class="col-md-8">
-                        <input type="text" class="form-control required" id="numberOfPass" placeholder="ХХХХХХ" maxlength="8">
+                        <input type="text" class="form-control required" id="numberOfPass" placeholder="ХХХХХХ" maxlength="8" />
                     </div>
                 </div>
             </div>
             <div class="form-group">
                 <label for="termOfPass">Термін дії паспорту</label>
-                <input type="text" class="form-control required" id="termOfPass">
+                <input type="text" class="form-control required" id="termOfPass" maxlength="10" />
             </div>
             <div class="form-group">
                 <label for="indNumber">Ідентифікаційний номер</label>
-                <input type="text" class="form-control required" id="indNumber" maxlength="10">
+                <input type="text" class="form-control required" id="indNumber" maxlength="10" />
             </div>
             <div class="form-group">
                 <div class="row">
@@ -126,7 +126,7 @@
             </div>
             <div class="form-group">
                 <label for="email">Електронна адреса</label>
-                <input type="email" class="form-control required" id="email" placeholder="email.adress@gmail.com" maxlength="50" />
+                <input type="email" class="form-control required email" id="email" placeholder="email.adress@gmail.com" maxlength="50" />
             </div>
             <div class="form-group">
                 <p>Дані тренера</p>
@@ -156,7 +156,7 @@
                     </div>
                     <div class="form-group">
                         <label for="coachBirthDate">Дата народження</label>
-                        <input type="text" class="form-control" id="coachBirthDate">
+                        <input type="text" class="form-control" id="coachBirthDate" maxlength="10" />
                     </div>
                     <div class="form-group coachNo1">
                         <div><label>Чи супроводжує Вас на змагання?</label></div>
@@ -180,16 +180,16 @@
                             <label>Серія та номер закордонного паспорту тренера</label>
                             <div class="row">
                                 <div class="col-sm-4">
-                                    <input type="text" class="form-control" id="coachSeriaOfpass" placeholder="НН" maxlength="4">
+                                    <input type="text" class="form-control" id="coachSeriaOfpass" placeholder="НН" maxlength="4" />
                                 </div>
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="coachNumberOfPass" placeholder="ХХХХХХ" maxlength="8">
+                                    <input type="text" class="form-control" id="coachNumberOfPass" placeholder="ХХХХХХ" maxlength="8" />
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="coachTermOfPass">Термін дії закордонного паспорту тренера</label>
-                            <input type="text" class="form-control" id="coachTermOfPass">
+                            <input type="text" class="form-control" id="coachTermOfPass" maxlength="10" />
                         </div>
                         <div class="form-group">
                             <label for="coachPhone">Номер телефону тренера</label>
@@ -197,22 +197,22 @@
                         </div>
                         <div class="form-group">
                             <label for="coachEmail">Електронна адреса тренера</label>
-                            <input type="email" class="form-control" id="coachEmail" placeholder="email.adress@gmail.com" maxlength="50" />
+                            <input type="email" class="form-control email" id="coachEmail" placeholder="email.adress@gmail.com" maxlength="50" />
                         </div>
                         <div class="form-group">
                             <p><label>Фото першої сторінки національного паспорту</label></p>
                             <button type="button" class="btn btn-default" id="uploadCoachPhotoOfNatPass" data-no="1">Завантажити фото</button>
-                            <input type="hidden" name="coachPhotoOfNatPassId" id="coachPhotoOfNatPassId" />
+                            <input type="hidden" name="coachPhotoOfNatPassId" id="coachPhotoOfNatPassId" maxlength="10" />
                         </div>
                         <div class="form-group">
                             <p><label for="coachPhotoOfForPass">Фото першої сторінки закордонного паспорту</label></p>
                             <button type="button" class="btn btn-default" id="uploadCoachPhotoOfForPass" data-no="1">Завантажити фото</button>
-                            <input type="hidden" name="coachPhotoOfForPassId" id="coachPhotoOfForPassId" />
+                            <input type="hidden" name="coachPhotoOfForPassId" id="coachPhotoOfForPassId" maxlength="10" />
                         </div>
                         <div class="form-group">
                             <p><label for="coachAccreditationPhoto">Фото для акредитації</label></p>
                             <button type="button" class="btn btn-default" id="uploadCoachAccreditationPhoto">Завантажити фото</button>
-                            <input type="hidden" name="coachAccreditationPhotoId" id="coachAccreditationPhotoId" />
+                            <input type="hidden" name="coachAccreditationPhotoId" id="coachAccreditationPhotoId" maxlength="10" />
                         </div>
                     </div>
                 </div>
@@ -231,22 +231,22 @@
             </div>
             <div class="form-group" id="wrapDopingControlDate" style="display: none">
                 <label for="dopingControlDate">Дата проходження допінг-контролю</label>
-                <input type="text" class="form-control" id="dopingControlDate" />
+                <input type="text" class="form-control" id="dopingControlDate" maxlength="10" />
             </div>
             <div class="form-group">
                 <p><label>Фото першої сторінки національного паспорту</label></p>
                 <button type="button" class="btn btn-default" id="uploadPhotoOfNatPass">Завантажити фото</button>
-                <input type="hidden" class="requiredId" name="photoOfNatPassId" id="photoOfNatPassId" />
+                <input type="hidden" class="requiredId" name="photoOfNatPassId" id="photoOfNatPassId" maxlength="10" />
             </div>
             <div class="form-group">
                 <p><label>Фото першої сторінки закордонного паспорту</label></p>
                 <button type="button" class="btn btn-default" id="uploadPhotoOfForPass">Завантажити фото</button>
-                <input type="hidden" class="requiredId" name="photoOfForPassId" id="photoOfForPassId" />
+                <input type="hidden" class="requiredId" name="photoOfForPassId" id="photoOfForPassId" maxlength="10" />
             </div>
             <div class="form-group">
                 <p><label>Фото для акредитації</label></p>
                 <button type="button" class="btn btn-default" id="uploadAccreditationPhoto">Завантажити фото</button>
-                <input type="hidden" class="requiredId" name="accreditationPhotoId" id="accreditationPhotoId" />
+                <input type="hidden" class="requiredId" name="accreditationPhotoId" id="accreditationPhotoId" maxlength="10" />
             </div>
             <div class="form-group">
                 <div><label>Чи маєте Ви діючу візу?</label></div>
@@ -267,7 +267,7 @@
                 </div>
                 <div class="form-group">
                     <label for="termOfVisa">Термін дії візи</label>
-                    <input type="text" class="form-control" id="termOfVisa" />
+                    <input type="text" class="form-control" id="termOfVisa" maxlength="10" />
                 </div>
             </div>
 
