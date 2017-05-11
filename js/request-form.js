@@ -389,9 +389,30 @@ var dir = "../wp-content/plugins/requests-manager/api/";
         });
 
         $("#submitRequest").on("click", function() {
-            if (inputHasValue() && checkPhotos() && validateEmail() &&
-                checkOptionalDateField("#dopingControlDate") &&
-                checkOptionalDateField("#termOfVisa")) { alert('valid') } else { alert('not valid') }
+            var validationText = "<p><strong>Форма заповнена не вірно!</strong></p>\n";
+            if (!inputHasValue()) {
+                validationText += "<p>не заповнені усі обов'язкові поля</p>";
+                showAlert("#RequestForm", validationText);
+                return;
+            } else if (!checkPhotos()) {
+                validationText += "<p>не завантажено всіх необхідних файлів</p>";
+                showAlert("#RequestForm", validationText);
+                return;
+            } else if (!validateEmail()) {
+                validationText += "<p>не правильно вказаний email</p>";
+                showAlert("#RequestForm", validationText);
+                return;
+            } else if (!checkOptionalDateField("#dopingControlDate")) {
+                validationText += "<p>не вказано дату проходження допіг-контролю</p>";
+                showAlert("#RequestForm", validationText);
+                return;
+            } else if (!checkOptionalDateField("#termOfVisa")) {
+                validationText += "<p>не вказано терміну дії візи</p>";
+                showAlert("#RequestForm", validationText);
+                return;
+            } else {
+                showAlert("#RequestForm", "valid")
+            }
         });
 
         $(".required").live("change", function(e) {
@@ -448,13 +469,13 @@ var dir = "../wp-content/plugins/requests-manager/api/";
             .append('<div class="form-group"><label for="coachLastName' + numberOfCoaches + '">Прізвище тренера</label><input type="text" class="form-control" name="coachLastName' + numberOfCoaches + '" id="coachLastName' + numberOfCoaches + '" placeholder="Прізвище" maxlength="50" /></div>')
             .append('<div class="form-group"><label for="coachFirstName' + numberOfCoaches + '">Ім\'я тренера</label><input type="text" class="form-control" name="coachFirstName' + numberOfCoaches + '" id="coachFirstName' + numberOfCoaches + '" placeholder="Ім\'я" maxlength="30" /></div>')
             .append('<div class="form-group"><label for="coachMiddleName' + numberOfCoaches + '">По-батькові тренера</label><input type="text" class="form-control" name="coachMiddleName' + numberOfCoaches + '" id="coachMiddleName' + numberOfCoaches + '" placeholder="По-батькові" maxlength="30" /></div>')
-            .append('<div class="form-group"><label for="coachBirthDate' + numberOfCoaches + '">Дата народження</label><input type="text" class="form-control" id="coachBirthDate' + numberOfCoaches + '" maxlength="10" /></div>')
+            .append('<div class="form-group"><label for="coachBirthDate' + numberOfCoaches + '">Дата народження</label><input type="text" class="form-control" id="coachBirthDate' + numberOfCoaches + '" maxlength="10" placeholder="дд.мм.рррр" /></div>')
             .append('<div class="form-group coachNo' + numberOfCoaches + '"><div><label>Чи супроводжує Вас на змагання?</label></div><label class="radio-inline"><input type="radio" name="following' + numberOfCoaches + '" value="false" checked /> Ні</label><label class="radio-inline"><input type="radio" name="following' + numberOfCoaches + '" value="true" /> Так</label></div>')
             .append($('<div id="coachAdvancedData' + numberOfCoaches + '" style="display: none" />')
                 .append('<div class="form-group"><label for="coachLastNameLikeInPass' + numberOfCoaches + '">Прізвище тренера як у закордонному паспорті</label><input type="text" class="form-control" name="coachLastNameLikeInPass' + numberOfCoaches + '" id="coachLastNameLikeInPass' + numberOfCoaches + '" placeholder="Surname" maxlength="50" /></div>')
                 .append('<div class="form-group"><label for="coachFirstNameLikeInPass' + numberOfCoaches + '">Ім\'я тренера як у закордонному паспорті</label><input type="text" class="form-control" name="coachFirstNameLikeInPass' + numberOfCoaches + '" id="coachFirstNameLikeInPass' + numberOfCoaches + '" placeholder="Name" maxlength="30" /></div>')
                 .append('<div class="form-group"><label>Серія та номер закордонного паспорту тренера</label><div class="row"><div class="col-sm-4"><input type="text" class="form-control" id="coachSeriaOfpass' + numberOfCoaches + '" placeholder="НН" maxlength="4" /></div><div class="col-sm-8"><input type="text" class="form-control" id="coachNumberOfPass' + numberOfCoaches + '" placeholder="ХХХХХХ" maxlength="8" /></div></div></div>')
-                .append('<div class="form-group"><label for="coachTermOfPass' + numberOfCoaches + '">Термін дії закордонного паспорту тренера</label><input type="text" class="form-control" id="coachTermOfPass' + numberOfCoaches + '" maxlength="10" /></div>')
+                .append('<div class="form-group"><label for="coachTermOfPass' + numberOfCoaches + '">Термін дії закордонного паспорту тренера</label><input type="text" class="form-control" id="coachTermOfPass' + numberOfCoaches + '" maxlength="10" placeholder="дд.мм.рррр" /></div>')
                 .append('<div class="form-group"><label for="coachPhone' + numberOfCoaches + '">Номер телефону тренера</label><input type="tel" class="form-control" id="coachPhone' + numberOfCoaches + '" placeholder="+38 (999) 999-99-99" maxlength="20" /></div>')
                 .append('<div class="form-group"><label for="coachEmail' + numberOfCoaches + '">Електронна адреса тренера</label><input type="email" class="form-control" id="coachEmail' + numberOfCoaches + '" placeholder="email.adress@gmail.com" maxlength="50" /></div>')
                 .append('<div class="form-group"><p><label for="coachPhotoOfNatPass' + numberOfCoaches + '">Фото першої сторінки національного паспорту</label></p><button type="button" class="btn btn-default upl-coach-np" data-rel="' + numberOfCoaches + '">Завантажити</button><input type="hidden" name="coachPhotoOfNatPassId' + numberOfCoaches + '" id="coachPhotoOfNatPassId' + numberOfCoaches + '" maxlength="10" /></div>')
@@ -507,12 +528,12 @@ var dir = "../wp-content/plugins/requests-manager/api/";
                     }
                 });
             } else {
-                alert("Недопустимий тип файлу!");
+                showAlert("#uploadPhotoModal .modal-content", "Недопустимий тип файлу!");
                 $(obj.fileInput).val("");
             }
 
         } else {
-            alert("Оберіть файл!");
+            showAlert("#uploadPhotoModal .modal-content", "Оберіть файл!");
         }
     }
 
@@ -591,12 +612,12 @@ var dir = "../wp-content/plugins/requests-manager/api/";
                     }
                 });
             } else {
-                alert("Недопустимий тип файлу!");
+                showAlert("#uploadPhotoModal .modal-content", "Недопустимий тип файлу!");
                 $("#" + coach.fileInput).val("");
             }
 
         } else {
-            alert("Оберіть файл!");
+            showAlert("#uploadPhotoModal .modal-content", "Оберіть файл!");
         }
     }
 
@@ -660,5 +681,13 @@ var dir = "../wp-content/plugins/requests-manager/api/";
             isValid = false;
         }
         return isValid;
+    }
+
+    function showAlert(parent, text) {
+        $(parent).append('<div class="alert alert-danger" style="margin: 10px" role="alert">' + text + '</div> ');
+        $(parent + " .alert-danger").fadeOut(4000);
+        setTimeout(function() {
+            $(parent + " .alert-danger").remove();
+        }, 4500);
     }
 })(jQuery)

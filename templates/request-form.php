@@ -33,7 +33,7 @@
         </div>
         <div class="form-group">
             <label for="birthDate">Дата народження</label>
-            <input type="text" class="form-control required" id="birthDate" maxlength="10" />
+            <input type="text" class="form-control required" id="birthDate" maxlength="10" placeholder="дд.мм.рррр" />
         </div>
         <div class="form-group">
             <button type="button" class="btn btn-primary" id="showNext">Далі</button>
@@ -60,7 +60,7 @@
             </div>
             <div class="form-group">
                 <label for="termOfPass">Термін дії паспорту</label>
-                <input type="text" class="form-control required" id="termOfPass" maxlength="10" />
+                <input type="text" class="form-control required" id="termOfPass" maxlength="10" placeholder="дд.мм.рррр" />
             </div>
             <div class="form-group">
                 <label for="indNumber">Ідентифікаційний номер</label>
@@ -156,7 +156,7 @@
                     </div>
                     <div class="form-group">
                         <label for="coachBirthDate">Дата народження</label>
-                        <input type="text" class="form-control" id="coachBirthDate" maxlength="10" />
+                        <input type="text" class="form-control" id="coachBirthDate" maxlength="10" placeholder="дд.мм.рррр" />
                     </div>
                     <div class="form-group coachNo1">
                         <div><label>Чи супроводжує Вас на змагання?</label></div>
@@ -189,7 +189,7 @@
                         </div>
                         <div class="form-group">
                             <label for="coachTermOfPass">Термін дії закордонного паспорту тренера</label>
-                            <input type="text" class="form-control" id="coachTermOfPass" maxlength="10" />
+                            <input type="text" class="form-control" id="coachTermOfPass" maxlength="10" placeholder="дд.мм.рррр" />
                         </div>
                         <div class="form-group">
                             <label for="coachPhone">Номер телефону тренера</label>
@@ -231,7 +231,7 @@
             </div>
             <div class="form-group" id="wrapDopingControlDate" style="display: none">
                 <label for="dopingControlDate">Дата проходження допінг-контролю</label>
-                <input type="text" class="form-control" id="dopingControlDate" maxlength="10" />
+                <input type="text" class="form-control" id="dopingControlDate" maxlength="10" placeholder="дд.мм.рррр" />
             </div>
             <div class="form-group">
                 <p><label>Фото першої сторінки національного паспорту</label></p>
@@ -267,7 +267,7 @@
                 </div>
                 <div class="form-group">
                     <label for="termOfVisa">Термін дії візи</label>
-                    <input type="text" class="form-control" id="termOfVisa" maxlength="10" />
+                    <input type="text" class="form-control" id="termOfVisa" maxlength="10" placeholder="дд.мм.рррр" />
                 </div>
             </div>
 
