@@ -411,7 +411,7 @@ var dir = "../wp-content/plugins/requests-manager/api/";
                 showAlert("#RequestForm", validationText);
                 return;
             } else {
-                showAlert("#RequestForm", "valid")
+                console.log(buildRequest());
             }
         });
 
@@ -486,7 +486,7 @@ var dir = "../wp-content/plugins/requests-manager/api/";
         $("#coachBirthDate" + numberOfCoaches + ", #coachTermOfPass" + numberOfCoaches).datepicker({
             altFormat: "dd-mm-yy",
             changeYear: true,
-            yearRange: "1990:2200",
+            yearRange: "1900:2200",
             regional: ["uk"]
         });
         $(".coachNo" + numberOfCoaches + " input[name='following" + numberOfCoaches + "']").on("change", function(e) {
@@ -520,7 +520,7 @@ var dir = "../wp-content/plugins/requests-manager/api/";
                     success: function(data) {
                         $(obj.photoId).val(data);
                         var parent = $(obj.photoId)[0].parentElement;
-                        $(parent.lastElementChild).remove();
+                        if ($(parent.lastElementChild).hasClass("photo-alert")) $(parent.lastElementChild).remove();
                         $("#uploadPhotoModal").modal("hide");
                         $(obj.uplButton).remove();
                         $(obj.photoId).after("<button type='button' id='" + obj.showPhoto + "' class='btn btn-default' data-show = '" + data + "' style='margin-right: 5px' >Показати</button>" +
@@ -689,5 +689,92 @@ var dir = "../wp-content/plugins/requests-manager/api/";
         setTimeout(function() {
             $(parent + " .alert-danger").remove();
         }, 4500);
+    }
+
+    function convertDate(dateString) {
+        if (!dateString) return null;
+        var dateArr = dateString.split(".");
+        return new Date(dateArr[1] + "." + dateArr[0] + "." + dateArr[2]);
+    }
+
+    function buildRequest() {
+        var request = {};
+        request.user = {
+            lastName: $("#surname").val().trim(),
+            firstName: $("#firstName").val().trim(),
+            middleName: $("#middleName").val().trim(),
+            birthDate: convertDate($("#birthDate").val().trim()),
+            lastNameLikeInPass: $("#lastNameLikeInPass").val().trim(),
+            firstNameLikeInPass: $("#firstNameLikeInPass").val().trim(),
+            seriaOfpass: $("#seriaOfpass").val().trim(),
+            numberOfPass: $("#numberOfPass").val().trim(),
+            termOfPass: convertDate($("#termOfPass").val().trim()),
+            indNumber: $("#indNumber").val().trim(),
+            phone: $("#phone").val().trim(),
+            email: $("#email").val().trim(),
+            photoOfNatPassId: $("#photoOfNatPassId").val().trim(),
+            photoOfForPassId: $("#photoOfForPassId").val().trim(),
+            accreditationPhotoId: $("#accreditationPhotoId").val().trim()
+        }
+        request.ageCategory = $("#ageCategory").val().trim();
+        request.weightCategory = $("#weightCategory").val().trim();
+        request.currentCompetition = $("#currentCompetition").val().trim();
+        request.disciplines = {
+            squat: $("#squat").val().trim() || null,
+            benchPress: $("#benchPress").val().trim() || null,
+            deadLift: $("#deadLift").val().trim() || null,
+            total: $("#total").val().trim()
+        }
+        request.preCompetition = $("#preCompetition").val().trim();
+        request.hasCoach = $("input[name=hasCoach]:checked").val();
+        if (JSON.parse(request.hasCoach)) {
+            var numberOfCoaches = $(".coachForms .bg-info").length;
+            request.coaches = [];
+            for (var i = 0; i < numberOfCoaches; i++) {
+                var n = (i) ? i + 1 : '';
+                var cN = i + 1;
+                var coach = {
+                    lastName: $("#coachLastName" + n).val().trim(),
+                    firstName: $("#coachFirstName" + n).val().trim(),
+                    middleName: $("#coachMiddleName" + n).val().trim(),
+                    coachBirthDate: convertDate($("#coachBirthDate" + n).val().trim()),
+                    isFollowing: $(".coachNo" + cN + " input[name=following" + n + "]:checked").val()
+                }
+                if (JSON.parse(coach.isFollowing)) {
+                    coach.coachLastNameLikeInPass = $("#coachLastNameLikeInPass" + n).val().trim();
+                    coach.coachFirstNameLikeInPass = $("#coachFirstNameLikeInPass" + n).val().trim();
+                    coach.coachSeriaOfpass = $("#coachSeriaOfpass" + n).val().trim();
+                    coach.coachNumberOfPass = $("#coachNumberOfPass" + n).val().trim();
+                    coach.coachTermOfPass = convertDate($("#coachTermOfPass" + n).val().trim());
+                    coach.coachPhone = $("#coachPhone" + n).val().trim();
+                    coach.coachEmail = $("#coachEmail" + n).val().trim();
+                    coach.coachPhotoOfNatPassId = $("#coachPhotoOfNatPassId" + n).val().trim();
+                    coach.coachPhotoOfForPassId = $("#coachPhotoOfForPassId" + n).val().trim();
+                    coach.coachAccreditationPhotoId = $("#coachAccreditationPhotoId" + n).val().trim();
+                } else {
+                    coach.coachLastNameLikeInPass = "";
+                    coach.coachFirstNameLikeInPass = "";
+                    coach.coachSeriaOfpass = "";
+                    coach.coachNumberOfPass = "";
+                    coach.coachTermOfPass = null;
+                    coach.coachPhone = "";
+                    coach.coachEmail = "";
+                    coach.coachPhotoOfNatPassId = "";
+                    coach.coachPhotoOfForPassId = "";
+                    coach.coachAccreditationPhotoId = "";
+                }
+                request.coaches.push(coach);
+            }
+        }
+        request.doping = {
+            dopingControl: $("input[name=dopingControl]:checked").val(),
+            dopingControlDate: convertDate($("#dopingControlDate").val().trim())
+        }
+        request.visa = {
+            hasActiveVisa: $("input[name=activeVisa]:checked").val(),
+            typeOfVisa: $("#typeOfVisa").val(),
+            termOfVisa: convertDate($("#termOfVisa").val().trim())
+        }
+        return request;
     }
 })(jQuery)
