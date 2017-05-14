@@ -411,7 +411,7 @@ var dir = "../wp-content/plugins/requests-manager/api/";
                 showAlert("#RequestForm", validationText);
                 return;
             } else {
-                console.log(buildRequest());
+                sendRequest(buildRequest());
             }
         });
 
@@ -694,7 +694,7 @@ var dir = "../wp-content/plugins/requests-manager/api/";
     function convertDate(dateString) {
         if (!dateString) return null;
         var dateArr = dateString.split(".");
-        return new Date(dateArr[1] + "." + dateArr[0] + "." + dateArr[2]);
+        return dateArr[2] + "." + dateArr[1] + "." + dateArr[0];
     }
 
     function buildRequest() {
@@ -776,5 +776,16 @@ var dir = "../wp-content/plugins/requests-manager/api/";
             termOfVisa: convertDate($("#termOfVisa").val().trim())
         }
         return request;
+    }
+
+    function sendRequest(request) {
+        $.ajax({
+            url: dir + "/Requests-Manager/SaveRequest.php",
+            type: "POST",
+            data: request,
+            success: function() {
+                alert("Заявку прийнято!");
+            }
+        });
     }
 })(jQuery)

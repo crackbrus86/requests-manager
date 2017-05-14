@@ -65,6 +65,26 @@ class RequestManager{
             `region` VARCHAR(200) NOT NULL
         ) {$charset_collate}";
         dbDelta($createRegionsTab);
+        $tb_users = $wpdb->get_blog_prefix().'rm_users';
+        $createUsersTab = "CREATE TABLE IF NOT EXISTS {$tb_users} (
+            `id` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+            `last_name` VARCHAR(50) NOT NULL,
+            `first_name` VARCHAR(30) NOT NULL,
+            `middle_name` VARCHAR(30) NOT NULL,
+            `birth_date` DATE NOT NULL,
+            `last_name_pass` VARCHAR(50) NOT NULL,
+            `first_name_pass` VARCHAR(30) NOT NULL,
+            `serial_number_pass` VARCHAR(4) NOT NULL,
+            `number_pass` INT NOT NULL,
+            `expiration_date_pass` DATE NOT NULL,
+            `individual_number` INT NOT NULL,
+            `phone` VARCHAR(20) NOT NULL,
+            `email` VARCHAR(50) NOT NULL,
+            `photo_national_pass_id` BIGINT NOT NULL,
+            `photo_international_pass_id` BIGINT NOT NULL,
+            `accreditation_photo_id` BIGINT NOT NULL
+        ) {$charset_collate}";
+        dbDelta($createUsersTab);
 	}
 
     function includeBootstrap(){
