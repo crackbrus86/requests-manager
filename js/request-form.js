@@ -61,7 +61,7 @@ var dir = "../wp-content/plugins/requests-manager/api/";
         });
 
         $("#showNext").on("click", function() {
-            $(".anotherData").fadeIn(800);
+            getUserData();
         });
 
         $("#ageCategory").on("change", function(e) {
@@ -697,6 +697,18 @@ var dir = "../wp-content/plugins/requests-manager/api/";
         return dateArr[2] + "." + dateArr[1] + "." + dateArr[0];
     }
 
+    function convertDateDashed(dateString) {
+        if (!dateString) return null;
+        var dateArr = dateString.split(".");
+        return dateArr[2] + "-" + dateArr[1] + "-" + dateArr[0];
+    }
+
+    function convertDateOposite(dateString) {
+        if (!dateString) return null;
+        var dateArr = dateString.split("-");
+        return dateArr[2] + "." + dateArr[1] + "." + dateArr[0];
+    }
+
     function buildRequest() {
         var request = {};
         request.user = {
@@ -787,5 +799,50 @@ var dir = "../wp-content/plugins/requests-manager/api/";
                 alert("Заявку прийнято!");
             }
         });
+    }
+
+    function getUserData() {
+        var user = {
+            surname: $("#surname").val(),
+            firstName: $("#firstName").val(),
+            middleName: $("#middleName").val(),
+            birthDate: convertDateDashed($("#birthDate").val())
+        }
+        $.ajax({
+            url: dir + "Requests-Manager/GetUser.php",
+            type: "POST",
+            data: user,
+            success: function(result) {
+                result = JSON.parse(result);
+                if (result) {
+                    setUserValues(result);
+                }
+            }
+        }).then(function() {
+            $(".anotherData").fadeIn(800);
+        });
+    }
+
+    function setUserValues(data) {
+        $("#lastNameLikeInPass").val(data.last_name_pass);
+        $("#firstNameLikeInPass").val(data.first_name_pass);
+        $("#seriaOfpass").val(data.serial_number_pass);
+        $("#numberOfPass").val(data.number_pass);
+        $("#termOfPass").val(convertDateOposite(data.expiration_date_pass));
+        $("#indNumber").val(data.individual_number);
+        $("#phone").val(data.phone);
+        $("#email").val(data.email);
+        $("#photoOfNatPassId").val(data.photo_national_pass_id);
+        $("#uploadPhotoOfNatPass").remove();
+        $("#photoOfNatPassId").after("<button type='button' id='showPhotoOfNatPass' class='btn btn-default' data-show = '" + data.photo_national_pass_id + "' style='margin-right: 5px' >Показати</button>" +
+            "<button type='button' id='removePhotoOfNatPass' class='btn btn-default' data-remove = '" + data.photo_national_pass_id + "'>Видалити</button>");
+        $("#photoOfForPassId").val(data.photo_international_pass_id);
+        $("#uploadPhotoOfForPass").remove();
+        $("#photoOfForPassId").after("<button type='button' id='showPhotoOfForPass' class='btn btn-default' data-show = '" + data.photo_international_pass_id + "' style='margin-right: 5px' >Показати</button>" +
+            "<button type='button' id='removePhotoOfForPass' class='btn btn-default' data-remove = '" + data.photo_international_pass_id + "'>Видалити</button>");
+        $("#accreditationPhotoId").val(data.accreditation_photo_id);
+        $("#uploadAccreditationPhoto").remove();
+        $("#accreditationPhotoId").after("<button type='button' id='showPhotoForAccreditation' class='btn btn-default' data-show = '" + data.accreditation_photo_id + "' style='margin-right: 5px' >Показати</button>" +
+            "<button type='button' id='removePhotoForAccreditation' class='btn btn-default' data-remove = '" + data.accreditation_photo_id + "'>Видалити</button>");
     }
 })(jQuery)
