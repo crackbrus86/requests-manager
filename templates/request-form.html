@@ -20,6 +20,7 @@
             <button type="button" class="btn btn-primary" id="showNext">Далі</button>
         </div>
         <div class="anotherData" style="display: none">
+            <input type="hidden" id="isKnownAs" />
             <div class="form-group">
                 <label for="lastNameLikeInPass">Прізвище як у закордонному паспорті</label>
                 <input type="text" class="form-control required" id="lastNameLikeInPass" placeholder="Last Name" maxlength="50" />
@@ -251,7 +252,7 @@
                     <input type="text" class="form-control" id="termOfVisa" maxlength="10" placeholder="дд.мм.рррр" />
                 </div>
             </div>
-
+            <input type="hidden" id="honeypot" value="" />
             <button type="button" class="btn btn-primary" id="submitRequest">Надіслати</button>
         </div>
     </form>

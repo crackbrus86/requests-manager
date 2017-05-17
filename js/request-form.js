@@ -1,9 +1,6 @@
 var dir = "../wp-content/plugins/requests-manager/api/";
 (function($, undefined) {
     $(document).ready(function() {
-
-
-
         var ageCategories = [],
             weightCategories = [],
             currentCompetition = [],
@@ -60,8 +57,8 @@ var dir = "../wp-content/plugins/requests-manager/api/";
             regional: ["uk"]
         });
 
-        $("#showNext").on("click", function() {
-            getUserData();
+        $("#showNext").on("click", function(e) {
+            getUserData(e);
         });
 
         $("#ageCategory").on("change", function(e) {
@@ -388,7 +385,7 @@ var dir = "../wp-content/plugins/requests-manager/api/";
             $("#showPhotoModal .modal-body").html("");
         });
 
-        $("#submitRequest").on("click", function() {
+        $("#submitRequest").on("click", function(e) {
             var validationText = "<p><strong>Форма заповнена не вірно!</strong></p>\n";
             if (!inputHasValue()) {
                 validationText += "<p>не заповнені усі обов'язкові поля</p>";
@@ -411,7 +408,7 @@ var dir = "../wp-content/plugins/requests-manager/api/";
                 showAlert("#RequestForm", validationText);
                 return;
             } else {
-                sendRequest(buildRequest());
+                sendRequest(buildRequest(), e);
             }
         });
 
@@ -691,6 +688,14 @@ var dir = "../wp-content/plugins/requests-manager/api/";
         }, 4500);
     }
 
+    function showAlertSuccess(parent, text) {
+        $(parent).append('<div class="alert alert-success" style="margin: 10px" role="alert">' + text + '</div> ');
+        $(parent + " .alert-success").fadeOut(4000);
+        setTimeout(function() {
+            $(parent + " .alert-success").remove();
+        }, 4500);
+    }
+
     function convertDate(dateString) {
         if (!dateString) return null;
         var dateArr = dateString.split(".");
@@ -728,9 +733,12 @@ var dir = "../wp-content/plugins/requests-manager/api/";
             photoOfForPassId: $("#photoOfForPassId").val().trim(),
             accreditationPhotoId: $("#accreditationPhotoId").val().trim()
         }
+        request.user.id = ($("#isKnownAs").val() != "") ? $("#isKnownAs").val() : null;
+        request.createDate = new Date();
         request.ageCategory = $("#ageCategory").val().trim();
         request.weightCategory = $("#weightCategory").val().trim();
         request.currentCompetition = $("#currentCompetition").val().trim();
+        request.spam = $("#honeypot").val();
         request.disciplines = {
             squat: $("#squat").val().trim() || null,
             benchPress: $("#benchPress").val().trim() || null,
@@ -790,24 +798,36 @@ var dir = "../wp-content/plugins/requests-manager/api/";
         return request;
     }
 
-    function sendRequest(request) {
+    function sendRequest(request, e) {
+        $(e.target.parentElement).append('<span class="fa fa-spinner fa-spin fa-2x fa-fw" style="color: slategrey;"></span>');
         $.ajax({
             url: dir + "/Requests-Manager/SaveRequest.php",
             type: "POST",
             data: request,
-            success: function() {
-                alert("Заявку прийнято!");
+            success: function(answer) {
+                if (answer === "Refused") {
+                    showAlert("#RequestForm", "Заявку відхилено!");
+                } else if (answer === "Error") {
+                    showAlert("#RequestForm", "Під час відправки заявки сталася помилка! Перевірте дані та спробуйте ще раз.");
+                } else {
+                    showAlertSuccess("#RequestForm", "Заявку прийнято!");
+                }
             }
+        }).then(function() {
+            $(".fa-spinner").remove();
+        }).then(function() {
+            window.location.reload();
         });
     }
 
-    function getUserData() {
+    function getUserData(e) {
         var user = {
             surname: $("#surname").val(),
             firstName: $("#firstName").val(),
             middleName: $("#middleName").val(),
             birthDate: convertDateDashed($("#birthDate").val())
         }
+        $(e.target.parentElement).append('<span class="fa fa-spinner fa-spin fa-2x fa-fw" style="color: slategrey;"></span>');
         $.ajax({
             url: dir + "Requests-Manager/GetUser.php",
             type: "POST",
@@ -819,6 +839,7 @@ var dir = "../wp-content/plugins/requests-manager/api/";
                 }
             }
         }).then(function() {
+            $(".fa-spinner").remove();
             $(".anotherData").fadeIn(800);
         });
     }
@@ -830,6 +851,7 @@ var dir = "../wp-content/plugins/requests-manager/api/";
         $("#numberOfPass").val(data.number_pass);
         $("#termOfPass").val(convertDateOposite(data.expiration_date_pass));
         $("#indNumber").val(data.individual_number);
+        $("#isKnownAs").val(data.id);
         $("#phone").val(data.phone);
         $("#email").val(data.email);
         $("#photoOfNatPassId").val(data.photo_national_pass_id);
