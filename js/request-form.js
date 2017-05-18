@@ -816,7 +816,7 @@ var dir = "../wp-content/plugins/requests-manager/api/";
         }).then(function() {
             $(".fa-spinner").remove();
         }).then(function() {
-            window.location.reload();
+            // window.location.reload();
         });
     }
 

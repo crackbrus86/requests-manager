@@ -3,7 +3,7 @@ include_once("../wpdb-connect.php");
 $tb_name = $wpdb->get_blog_prefix()."rm_users";
 if($_POST['spam'] === ''){
     $user = $_POST['user'];
-    prepareUser($user);
+    prepareItem($user);
     if($user['id']){
         if($wpdb->query("UPDATE $tb_name 
         SET last_name = '$user[lastName]', first_name = '$user[firstName]', middle_name = '$user[middleName]', birth_date = '$user[birthDate]', 
@@ -25,13 +25,32 @@ if($_POST['spam'] === ''){
             echo "Error";
         } 
     } 
+
+    $coaches = $_POST['coaches'];
+    if(count($coaches)){
+        $tb_coaches = $wpdb->get_blog_prefix()."rm_coaches";
+        for($i = 0; $i < count($coaches); $i++){
+            $coach = $coaches[$i];
+            prepareItem($coach);
+                if($wpdb->query("INSERT INTO $tb_coaches (accompanies, last_name, first_name, middle_name, birth_date, last_name_pass, first_name_pass, 
+                    serial_number_pass, number_pass, expiration_date_pass, phone, email, photo_national_pass_id, photo_international_pass_id, 
+                    accreditation_photo_id) 
+                    VALUES ('$coach[isFollowing]', '$coach[lastName]', '$coach[firstName]', '$coach[middleName]', '$coach[coachBirthDate]', '$coach[coachLastNameLikeInPass]', '$coach[coachFirstNameLikeInPass]', 
+                    '$coach[coachSeriaOfpass]', '$coach[coachNumberOfPass]', '$coach[coachTermOfPass]', '$coach[coachPhone]', '$coach[coachEmail]', '$coach[coachPhotoOfNatPassId]', 
+                    '$coach[coachPhotoOfForPassId]', '$coach[coachAccreditationPhotoId]')")){
+                        echo $wpdb->insert_id;
+                    }else{
+                        echo "Error";
+                    }
+        }
+    }
 }else{
     echo "Refused";
 }
 
-function prepareUser($user){
-    foreach ($user as $item => $value):
-        $user[$item] = stripslashes(trim($value));
+function prepareItem($item){
+    foreach ($item as $key => $value):
+        $item[$key] = stripslashes(trim($value));
     endforeach;
 }
 
