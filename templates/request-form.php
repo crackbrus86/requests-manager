@@ -142,6 +142,7 @@
                 <div class="col-sm-12 bg-info" id="coachForm" style="display: none">
                     <div class="form-group">
                         <label>Тренер #1</label>
+                        <input type="hidden" id="coachIsKnownAs" />
                     </div>
                     <div class="form-group">
                         <label for="coachLastName">Прізвище тренера</label>

@@ -100,10 +100,15 @@ var dir = "../wp-content/plugins/requests-manager/api/";
         });
 
         $(".coachNo1 input[name='following']").on("change", function(e) {
-            $("#coachAdvancedData input").each(function(e) {
-                this.value = "";
-            });
-            $("#coachAdvancedData").toggle("800");
+            if (e.target.value == "true") {
+                $("#coachAdvancedData input").each(function(e) {
+                    this.value = "";
+                });
+                setDefaultButtons("");
+                getCoachData(e);
+            } else {
+                $("#coachAdvancedData").fadeOut("800");
+            }
         });
 
         $(".coachNo1 input[name='following']").on("change", function() {
@@ -462,7 +467,7 @@ var dir = "../wp-content/plugins/requests-manager/api/";
 
     function renderCouchForm(selector, numberOfCoaches) {
         selector.append($('<div class="col-sm-12 bg-info" id="coachForm' + numberOfCoaches + '" />')
-            .append('<div class="form-group"><label>Тренер #' + numberOfCoaches + '</label></div>')
+            .append('<div class="form-group"><label>Тренер #' + numberOfCoaches + '</label><input type="hidden" id="coachIsKnownAs' + numberOfCoaches + '" /></div>')
             .append('<div class="form-group"><label for="coachLastName' + numberOfCoaches + '">Прізвище тренера</label><input type="text" class="form-control" name="coachLastName' + numberOfCoaches + '" id="coachLastName' + numberOfCoaches + '" placeholder="Прізвище" maxlength="50" /></div>')
             .append('<div class="form-group"><label for="coachFirstName' + numberOfCoaches + '">Ім\'я тренера</label><input type="text" class="form-control" name="coachFirstName' + numberOfCoaches + '" id="coachFirstName' + numberOfCoaches + '" placeholder="Ім\'я" maxlength="30" /></div>')
             .append('<div class="form-group"><label for="coachMiddleName' + numberOfCoaches + '">По-батькові тренера</label><input type="text" class="form-control" name="coachMiddleName' + numberOfCoaches + '" id="coachMiddleName' + numberOfCoaches + '" placeholder="По-батькові" maxlength="30" /></div>')
@@ -475,9 +480,9 @@ var dir = "../wp-content/plugins/requests-manager/api/";
                 .append('<div class="form-group"><label for="coachTermOfPass' + numberOfCoaches + '">Термін дії закордонного паспорту тренера</label><input type="text" class="form-control" id="coachTermOfPass' + numberOfCoaches + '" maxlength="10" placeholder="дд.мм.рррр" /></div>')
                 .append('<div class="form-group"><label for="coachPhone' + numberOfCoaches + '">Номер телефону тренера</label><input type="tel" class="form-control" id="coachPhone' + numberOfCoaches + '" placeholder="+38 (999) 999-99-99" maxlength="20" /></div>')
                 .append('<div class="form-group"><label for="coachEmail' + numberOfCoaches + '">Електронна адреса тренера</label><input type="email" class="form-control" id="coachEmail' + numberOfCoaches + '" placeholder="email.adress@gmail.com" maxlength="50" /></div>')
-                .append('<div class="form-group"><p><label for="coachPhotoOfNatPass' + numberOfCoaches + '">Фото першої сторінки національного паспорту</label></p><button type="button" class="btn btn-default upl-coach-np" data-rel="' + numberOfCoaches + '">Завантажити</button><input type="hidden" name="coachPhotoOfNatPassId' + numberOfCoaches + '" id="coachPhotoOfNatPassId' + numberOfCoaches + '" maxlength="10" /></div>')
-                .append('<div class="form-group"><p><label for="coachPhotoOfForPass' + numberOfCoaches + '">Фото першої сторінки закордонного паспорту</label></p><button type="button" class="btn btn-default upl-coach-fp" data-rel="' + numberOfCoaches + '">Завантажити</button><input type="hidden" name="coachPhotoOfForPassId' + numberOfCoaches + '" id="coachPhotoOfForPassId' + numberOfCoaches + '" maxlength="10" /></div>')
-                .append('<div class="form-group"><p><label for="coachAccreditationPhoto">Фото для акредитації</label></p><button type="button" class="btn btn-default upl-coach-ap" data-rel="' + numberOfCoaches + '">Завантажити</button><input type="hidden" name="coachAccreditationPhotoId' + numberOfCoaches + '" id="coachAccreditationPhotoId' + numberOfCoaches + '" maxlength="10" /></div>')
+                .append('<div class="form-group"><p><label for="coachPhotoOfNatPass' + numberOfCoaches + '">Фото першої сторінки національного паспорту</label></p><button type="button" class="btn btn-default upl-coach-np" id="uploadCoachPhotoOfNatPass' + numberOfCoaches + '" data-rel="' + numberOfCoaches + '">Завантажити</button><input type="hidden" name="coachPhotoOfNatPassId' + numberOfCoaches + '" id="coachPhotoOfNatPassId' + numberOfCoaches + '" maxlength="10" /></div>')
+                .append('<div class="form-group"><p><label for="coachPhotoOfForPass' + numberOfCoaches + '">Фото першої сторінки закордонного паспорту</label></p><button type="button" class="btn btn-default upl-coach-fp" id="uploadCoachPhotoOfForPass' + numberOfCoaches + '" data-rel="' + numberOfCoaches + '">Завантажити</button><input type="hidden" name="coachPhotoOfForPassId' + numberOfCoaches + '" id="coachPhotoOfForPassId' + numberOfCoaches + '" maxlength="10" /></div>')
+                .append('<div class="form-group"><p><label for="coachAccreditationPhoto">Фото для акредитації</label></p><button type="button" class="btn btn-default upl-coach-ap" id="uploadCoachAccreditationPhoto' + numberOfCoaches + '" data-rel="' + numberOfCoaches + '">Завантажити</button><input type="hidden" name="coachAccreditationPhotoId' + numberOfCoaches + '" id="coachAccreditationPhotoId' + numberOfCoaches + '" maxlength="10" /></div>')
             )
         );
         $("#coachBirthDate" + numberOfCoaches + ", #coachTermOfPass" + numberOfCoaches).datepicker({
@@ -487,10 +492,15 @@ var dir = "../wp-content/plugins/requests-manager/api/";
             regional: ["uk"]
         });
         $(".coachNo" + numberOfCoaches + " input[name='following" + numberOfCoaches + "']").on("change", function(e) {
-            $("#coachAdvancedData" + numberOfCoaches + " input").each(function(e) {
-                this.value = "";
-            });
-            $("#coachAdvancedData" + numberOfCoaches).toggle("800");
+            if (e.target.value == "true") {
+                $("#coachAdvancedData" + numberOfCoaches + " input").each(function(e) {
+                    this.value = "";
+                });
+                setDefaultButtons(numberOfCoaches);
+                getCoachData(e);
+            } else {
+                $("#coachAdvancedData" + numberOfCoaches).fadeOut("800");
+            }
         });
 
         $("#coachPhone" + numberOfCoaches).mask("+38 (999) 999-99-99");
@@ -758,7 +768,8 @@ var dir = "../wp-content/plugins/requests-manager/api/";
                     firstName: $("#coachFirstName" + n).val().trim(),
                     middleName: $("#coachMiddleName" + n).val().trim(),
                     coachBirthDate: convertDate($("#coachBirthDate" + n).val().trim()),
-                    isFollowing: $(".coachNo" + cN + " input[name=following" + n + "]:checked").val()
+                    isFollowing: $(".coachNo" + cN + " input[name=following" + n + "]:checked").val(),
+                    id: ($("#coachIsKnownAs" + n).val()) ? $("#coachIsKnownAs" + n).val() : null
                 }
                 if (JSON.parse(coach.isFollowing)) {
                     coach.coachLastNameLikeInPass = $("#coachLastNameLikeInPass" + n).val().trim();
@@ -866,5 +877,78 @@ var dir = "../wp-content/plugins/requests-manager/api/";
         $("#uploadAccreditationPhoto").remove();
         $("#accreditationPhotoId").after("<button type='button' id='showPhotoForAccreditation' class='btn btn-default' data-show = '" + data.accreditation_photo_id + "' style='margin-right: 5px' >Показати</button>" +
             "<button type='button' id='removePhotoForAccreditation' class='btn btn-default' data-remove = '" + data.accreditation_photo_id + "'>Видалити</button>");
+    }
+
+    function getCoachData(e) {
+        var coachNm = e.target.name.slice(9);
+        var coach = {
+            firstName: $("#coachFirstName" + coachNm).val(),
+            lastName: $("#coachLastName" + coachNm).val(),
+            middleName: $("#coachMiddleName" + coachNm).val(),
+            birthDate: convertDateDashed($("#coachBirthDate" + coachNm).val())
+        }
+        $(e.target.parentElement).append('<span class="fa fa-spinner fa-spin fa-2x fa-fw" style="color: slategrey;"></span>');
+        $.ajax({
+            url: dir + "Requests-Manager/GetCoach.php",
+            type: "POST",
+            data: coach,
+            success: function(result) {
+                result = JSON.parse(result);
+                if (result) {
+                    setCoachValues(result, coachNm);
+                }
+            }
+        }).then(function() {
+            $(".fa-spinner").remove();
+            $("#coachAdvancedData" + coachNm).fadeIn("800");
+        });
+    }
+
+    function setCoachValues(data, n) {
+        if (data.last_name_pass) $("#coachLastNameLikeInPass" + n).val(data.last_name_pass);
+        if (data.first_name_pass) $("#coachFirstNameLikeInPass" + n).val(data.first_name_pass);
+        if (data.serial_number_pass) $("#coachSeriaOfpass" + n).val(data.serial_number_pass);
+        if (data.number_pass > 0) $("#coachNumberOfPass" + n).val(data.number_pass);
+        if (data.expiration_date_pass !== "0000-00-00") $("#coachTermOfPass" + n).val(convertDateOposite(data.expiration_date_pass));
+        if (data.id) $("#coachIsKnownAs" + n).val(data.id);
+        if (data.phone) $("#coachPhone" + n).val(data.phone);
+        if (data.email) $("#coachEmail" + n).val(data.email);
+        if (data.photo_national_pass_id > 0) {
+            var classLoad = (n > 0) ? ' load-photo-np' : '';
+            var classDel = (n > 0) ? ' remove-photo-np' : '';
+            $("#coachPhotoOfNatPassId" + n).val(data.photo_national_pass_id);
+            $("#uploadCoachPhotoOfNatPass" + n).remove();
+            $("#coachPhotoOfNatPassId" + n).after("<button type='button' id='showCoachPhotoOfNatPass" + n + "' class='btn btn-default" + classLoad + "' data-show = '" + data.photo_national_pass_id + "' style='margin-right: 5px' >Показати</button>" +
+                "<button type='button' id='removeCoachPhotoOfNatPass" + n + "' class='btn btn-default" + classDel + "' data-remove = '" + data.photo_national_pass_id + "' data-rel='" + n + "'>Видалити</button>");
+        }
+        if (data.photo_international_pass_id > 0) {
+            var classLoad = (n > 0) ? ' load-photo-fp' : '';
+            var classDel = (n > 0) ? ' remove-photo-fp' : '';
+            $("#coachPhotoOfForPassId" + n).val(data.photo_international_pass_id);
+            $("#uploadCoachPhotoOfForPass" + n).remove();
+            $("#coachPhotoOfForPassId" + n).after("<button type='button' id='showCoachPhotoOfForPass" + n + "' class='btn btn-default" + classLoad + "' data-show = '" + data.photo_international_pass_id + "' style='margin-right: 5px' >Показати</button>" +
+                "<button type='button' id='removeCoachPhotoOfForPass" + n + "' class='btn btn-default" + classDel + "' data-remove = '" + data.photo_international_pass_id + "' data-rel='" + n + "'>Видалити</button>");
+        }
+        if (data.accreditation_photo_id > 0) {
+            var classLoad = (n > 0) ? ' load-photo-ap' : '';
+            var classDel = (n > 0) ? ' remove-photo-ap' : '';
+            $("#coachAccreditationPhotoId" + n).val(data.accreditation_photo_id);
+            $("#uploadCoachAccreditationPhoto" + n).remove();
+            $("#coachAccreditationPhotoId" + n).after("<button type='button' id='showCoachPhotoForAccreditation" + n + "' class='btn btn-default" + classLoad + "' data-show = '" + data.accreditation_photo_id + "' style='margin-right: 5px' >Показати</button>" +
+                "<button type='button' id='removeCoachPhotoForAccreditation" + n + "' class='btn btn-default" + classDel + "' data-remove = '" + data.accreditation_photo_id + "' data-rel='" + n + "'>Видалити</button>");
+        }
+
+    }
+
+    function setDefaultButtons(numberOfCoaches) {
+        var natPassParent = $("#coachPhotoOfNatPassId" + numberOfCoaches)[0].parentElement;
+        $(natPassParent).html('');
+        $(natPassParent).append('<p><label for="coachPhotoOfNatPass' + numberOfCoaches + '">Фото першої сторінки національного паспорту</label></p><button type="button" class="btn btn-default upl-coach-np" id="uploadCoachPhotoOfNatPass' + numberOfCoaches + '" data-rel="' + numberOfCoaches + '">Завантажити</button><input type="hidden" name="coachPhotoOfNatPassId' + numberOfCoaches + '" id="coachPhotoOfNatPassId' + numberOfCoaches + '" maxlength="10" />');
+        var forPassParent = $("#coachPhotoOfForPassId" + numberOfCoaches)[0].parentElement;
+        $(forPassParent).html('');
+        $(forPassParent).append('<p><label for="coachPhotoOfForPass' + numberOfCoaches + '">Фото першої сторінки закордонного паспорту</label></p><button type="button" class="btn btn-default upl-coach-fp" id="uploadCoachPhotoOfForPass' + numberOfCoaches + '" data-rel="' + numberOfCoaches + '">Завантажити</button><input type="hidden" name="coachPhotoOfForPassId' + numberOfCoaches + '" id="coachPhotoOfForPassId' + numberOfCoaches + '" maxlength="10" />');
+        var accrParent = $("#coachAccreditationPhotoId" + numberOfCoaches)[0].parentElement;
+        $(accrParent).html('');
+        $(accrParent).append('<p><label for="coachAccreditationPhoto">Фото для акредитації</label></p><button type="button" class="btn btn-default upl-coach-ap" id="uploadCoachAccreditationPhoto' + numberOfCoaches + '" data-rel="' + numberOfCoaches + '">Завантажити</button><input type="hidden" name="coachAccreditationPhotoId' + numberOfCoaches + '" id="coachAccreditationPhotoId' + numberOfCoaches + '" maxlength="10" />');
     }
 })(jQuery)

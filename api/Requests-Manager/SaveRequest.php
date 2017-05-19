@@ -32,6 +32,9 @@ if($_POST['spam'] === ''){
         for($i = 0; $i < count($coaches); $i++){
             $coach = $coaches[$i];
             prepareItem($coach);
+            if($coach["id"] && $coach["isFollowing"] == true){
+                echo "Update";
+            }elseif(!$coach["id"]){
                 if($wpdb->query("INSERT INTO $tb_coaches (accompanies, last_name, first_name, middle_name, birth_date, last_name_pass, first_name_pass, 
                     serial_number_pass, number_pass, expiration_date_pass, phone, email, photo_national_pass_id, photo_international_pass_id, 
                     accreditation_photo_id) 
@@ -42,6 +45,8 @@ if($_POST['spam'] === ''){
                     }else{
                         echo "Error";
                     }
+            }           
+
         }
     }
 }else{
