@@ -33,7 +33,13 @@ if($_POST['spam'] === ''){
             $coach = $coaches[$i];
             prepareItem($coach);
             if($coach["id"] && $coach["isFollowing"] == true){
-                echo "Update";
+                if($wpdb->query("UPDATE $tb_coaches
+                SET last_name_pass = '$coach[coachLastNameLikeInPass]', first_name_pass = '$coach[coachFirstNameLikeInPass]', 
+                    serial_number_pass = '$coach[coachSeriaOfpass]', number_pass = '$coach[coachNumberOfPass]', expiration_date_pass = '$coach[coachTermOfPass]', 
+                    phone = '$coach[coachPhone]', email = '$coach[coachEmail]', photo_national_pass_id = '$coach[coachPhotoOfNatPassId]', 
+                    photo_international_pass_id = '$coach[coachPhotoOfForPassId]', accreditation_photo_id = '$coach[coachAccreditationPhotoId]' WHERE id = '$coach[id]'")){
+                        echo "Coach data were updated";
+                    }
             }elseif(!$coach["id"]){
                 if($wpdb->query("INSERT INTO $tb_coaches (accompanies, last_name, first_name, middle_name, birth_date, last_name_pass, first_name_pass, 
                     serial_number_pass, number_pass, expiration_date_pass, phone, email, photo_national_pass_id, photo_international_pass_id, 
