@@ -75,3 +75,18 @@
             `accreditation_photo_id` BIGINT
         ) {$charset_collate}";
         dbDelta($createCoachesTab);
+        $tb_requests = $wpdb->get_blog_prefix().'rm_requests';
+        $createRequestsTab = "CREATE TABLE IF NOT EXISTS {$tb_requests} (
+            `id` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+            `user_id` BIGINT NOT NULL,
+            `create_date` DATE NOT NULL,
+            `age_category` INT NOT NULL,
+            `weight_category` INT NOT NULL,
+            `current_competition` INT NOT NULL,
+            `disciplines` VARCHAR(250) NOT NULL,
+            `pre_competition` INT NOT NULL,
+            `coaches` VARCHAR(500) NOT NULL,
+            `doping` VARCHAR(50) NOT NULL,
+            `visa` VARCHAR(50) NOT NULL
+        ) {$charset_collate}";
+        dbDelta($createRequestsTab);

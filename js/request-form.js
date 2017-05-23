@@ -941,6 +941,7 @@ var dir = "../wp-content/plugins/requests-manager/api/";
     }
 
     function setDefaultButtons(numberOfCoaches) {
+        if (numberOfCoaches <= 1) return;
         var natPassParent = $("#coachPhotoOfNatPassId" + numberOfCoaches)[0].parentElement;
         $(natPassParent).html('');
         $(natPassParent).append('<p><label for="coachPhotoOfNatPass' + numberOfCoaches + '">Фото першої сторінки національного паспорту</label></p><button type="button" class="btn btn-default upl-coach-np" id="uploadCoachPhotoOfNatPass' + numberOfCoaches + '" data-rel="' + numberOfCoaches + '">Завантажити</button><input type="hidden" name="coachPhotoOfNatPassId' + numberOfCoaches + '" id="coachPhotoOfNatPassId' + numberOfCoaches + '" maxlength="10" />');
