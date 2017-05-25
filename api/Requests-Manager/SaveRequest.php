@@ -35,7 +35,7 @@ if($_POST['spam'] === ''){
         for($i = 0; $i < count($coaches); $i++){
             $coach = $coaches[$i];
             prepareItem($coach);
-            if($coach["id"] && $coach["isFollowing"] == true){
+            if($coach["id"] && $coach["isFollowing"] === "true"){
                 array_push($request->coaches, array($coach['id'], $coach['isFollowing']));
                 if($wpdb->query("UPDATE $tb_coaches
                 SET last_name_pass = '$coach[coachLastNameLikeInPass]', first_name_pass = '$coach[coachFirstNameLikeInPass]', 
@@ -44,9 +44,9 @@ if($_POST['spam'] === ''){
                     photo_international_pass_id = '$coach[coachPhotoOfForPassId]', accreditation_photo_id = '$coach[coachAccreditationPhotoId]' WHERE id = '$coach[id]'")){
                         echo "Coach was successfully updated!";
                     }
-            }elseif(!$coach["id"]){
+            }elseif(!$coach["id"] || ($coach['id'] && $coach['isFollowing'] === "false")){
                 $clone = $wpdb->get_row("SELECT id FROM $tb_coaches WHERE  last_name = '$coach[lastName]' AND first_name = '$coach[firstName]'
-                AND middle_name = '$coach[middleName]' AND birth_date = '$coach[coachBirthDate]'");  
+                AND middle_name = '$coach[middleName]' AND birth_date = '$coach[coachBirthDate]'"); 
                 if(is_null($clone)){
                     if($wpdb->query("INSERT INTO $tb_coaches (accompanies, last_name, first_name, middle_name, birth_date, last_name_pass, first_name_pass, 
                         serial_number_pass, number_pass, expiration_date_pass, phone, email, photo_national_pass_id, photo_international_pass_id, 
@@ -69,6 +69,16 @@ if($_POST['spam'] === ''){
     }
     $dataObject = DateTime::createFromFormat('D M d Y H:i:s T +', stripcslashes(trim($_POST['createDate'])));
     $request->createDate = date_format($dataObject,"Y-m-d");
+    $request->ageCategory = stripslashes(trim($_POST['ageCategory']));
+    $request->weightCategory = stripcslashes(trim($_POST['weightCategory']));
+    $request->currentCompetition = stripslashes(trim($_POST['currentCompetition']));
+    $request->disciplines = serialize($_POST['disciplines']);
+    $request->preCompetition = stripslashes(trim($_POST['preCompetition']));
+    if(count($request->coaches)){
+        $request->coaches = serialize($request->coaches);
+    }else{
+        $request->coaches = 'individual';
+    }
     echo "<pre>";
     print_r($request);
     echo "</pre>";

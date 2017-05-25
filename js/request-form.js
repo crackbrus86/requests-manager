@@ -223,84 +223,6 @@ var dir = "../wp-content/plugins/requests-manager/api/";
             deletePhoto(accreditPhoto);
         });
 
-        var coachNationalPass = {
-            title: "Завантажити фото національного паспорта",
-            fileInput: "#coachPhotoOfNatPass",
-            fileUplBut: "#uploadCoachNatPassPhoto",
-            photoId: "#coachPhotoOfNatPassId",
-            uplButton: "#uploadCoachPhotoOfNatPass",
-            showPhoto: "showCoachPhotoOfNatPass",
-            delPhoto: "removeCoachPhotoOfNatPass"
-        }
-
-        $(coachNationalPass.uplButton).live("click", function() {
-            showUploadModal(coachNationalPass);
-        });
-
-        $(coachNationalPass.fileUplBut).live("click", function() {
-            uploadPhoto(coachNationalPass);
-        });
-
-        $("#" + coachNationalPass.showPhoto).live("click", function(e) {
-            loadPhoto(e);
-        });
-
-        $("#" + coachNationalPass.delPhoto).live("click", function() {
-            deletePhoto(coachNationalPass);
-        });
-
-        var coachForeignPass = {
-            title: "Завантажити фото закордонного паспорта",
-            fileInput: "#coachPhotoOfForPass",
-            fileUplBut: "#uploadCoachForPassPhoto",
-            photoId: "#coachPhotoOfForPassId",
-            uplButton: "#uploadCoachPhotoOfForPass",
-            showPhoto: "showCoachPhotoOfForPass",
-            delPhoto: "removeCoachPhotoOfForPass"
-        }
-
-        $(coachForeignPass.uplButton).live("click", function() {
-            showUploadModal(coachForeignPass);
-        });
-
-        $(coachForeignPass.fileUplBut).live("click", function() {
-            uploadPhoto(coachForeignPass);
-        });
-
-        $("#" + coachForeignPass.showPhoto).live("click", function(e) {
-            loadPhoto(e);
-        });
-
-        $("#" + coachForeignPass.delPhoto).live("click", function() {
-            deletePhoto(coachForeignPass);
-        });
-
-        var coachAccreditPhoto = {
-            title: "Завантажити фото для акредитації",
-            fileInput: "#coachPhotoForAccreditation",
-            fileUplBut: "#uploadCoachAccreditationPhotoGo",
-            photoId: "#coachAccreditationPhotoId",
-            uplButton: "#uploadCoachAccreditationPhoto",
-            showPhoto: "showCoachPhotoForAccreditation",
-            delPhoto: "removeCoachPhotoForAccreditation"
-        }
-
-        $(coachAccreditPhoto.uplButton).live("click", function() {
-            showUploadModal(coachAccreditPhoto);
-        });
-
-        $(coachAccreditPhoto.fileUplBut).live("click", function() {
-            uploadPhoto(coachAccreditPhoto);
-        });
-
-        $("#" + coachAccreditPhoto.showPhoto).live("click", function(e) {
-            loadPhoto(e);
-        });
-
-        $("#" + coachAccreditPhoto.delPhoto).live("click", function() {
-            deletePhoto(coachAccreditPhoto);
-        });
-
         var coachNP = {
             title: "Завантажити фото національного паспорта",
             uplButton: ".upl-coach-np",
@@ -914,34 +836,27 @@ var dir = "../wp-content/plugins/requests-manager/api/";
         if (data.phone) $("#coachPhone" + n).val(data.phone);
         if (data.email) $("#coachEmail" + n).val(data.email);
         if (data.photo_national_pass_id > 0) {
-            var classLoad = (n > 0) ? ' load-photo-np' : '';
-            var classDel = (n > 0) ? ' remove-photo-np' : '';
             $("#coachPhotoOfNatPassId" + n).val(data.photo_national_pass_id);
             $("#uploadCoachPhotoOfNatPass" + n).remove();
-            $("#coachPhotoOfNatPassId" + n).after("<button type='button' id='showCoachPhotoOfNatPass" + n + "' class='btn btn-default" + classLoad + "' data-show = '" + data.photo_national_pass_id + "' style='margin-right: 5px' >Показати</button>" +
-                "<button type='button' id='removeCoachPhotoOfNatPass" + n + "' class='btn btn-default" + classDel + "' data-remove = '" + data.photo_national_pass_id + "' data-rel='" + n + "'>Видалити</button>");
+            $("#coachPhotoOfNatPassId" + n).after("<button type='button' id='showCoachPhotoOfNatPass" + n + "' class='btn btn-default load-photo-np' data-show = '" + data.photo_national_pass_id + "' style='margin-right: 5px' >Показати</button>" +
+                "<button type='button' id='removeCoachPhotoOfNatPass" + n + "' class='btn btn-default remove-photo-np' data-remove = '" + data.photo_national_pass_id + "' data-rel='" + n + "'>Видалити</button>");
         }
         if (data.photo_international_pass_id > 0) {
-            var classLoad = (n > 0) ? ' load-photo-fp' : '';
-            var classDel = (n > 0) ? ' remove-photo-fp' : '';
             $("#coachPhotoOfForPassId" + n).val(data.photo_international_pass_id);
             $("#uploadCoachPhotoOfForPass" + n).remove();
-            $("#coachPhotoOfForPassId" + n).after("<button type='button' id='showCoachPhotoOfForPass" + n + "' class='btn btn-default" + classLoad + "' data-show = '" + data.photo_international_pass_id + "' style='margin-right: 5px' >Показати</button>" +
-                "<button type='button' id='removeCoachPhotoOfForPass" + n + "' class='btn btn-default" + classDel + "' data-remove = '" + data.photo_international_pass_id + "' data-rel='" + n + "'>Видалити</button>");
+            $("#coachPhotoOfForPassId" + n).after("<button type='button' id='showCoachPhotoOfForPass" + n + "' class='btn btn-default load-photo-fp' data-show = '" + data.photo_international_pass_id + "' style='margin-right: 5px' >Показати</button>" +
+                "<button type='button' id='removeCoachPhotoOfForPass" + n + "' class='btn btn-default remove-photo-fp' data-remove = '" + data.photo_international_pass_id + "' data-rel='" + n + "'>Видалити</button>");
         }
         if (data.accreditation_photo_id > 0) {
-            var classLoad = (n > 0) ? ' load-photo-ap' : '';
-            var classDel = (n > 0) ? ' remove-photo-ap' : '';
             $("#coachAccreditationPhotoId" + n).val(data.accreditation_photo_id);
             $("#uploadCoachAccreditationPhoto" + n).remove();
-            $("#coachAccreditationPhotoId" + n).after("<button type='button' id='showCoachPhotoForAccreditation" + n + "' class='btn btn-default" + classLoad + "' data-show = '" + data.accreditation_photo_id + "' style='margin-right: 5px' >Показати</button>" +
-                "<button type='button' id='removeCoachPhotoForAccreditation" + n + "' class='btn btn-default" + classDel + "' data-remove = '" + data.accreditation_photo_id + "' data-rel='" + n + "'>Видалити</button>");
+            $("#coachAccreditationPhotoId" + n).after("<button type='button' id='showCoachPhotoForAccreditation" + n + "' class='btn btn-default load-photo-ap' data-show = '" + data.accreditation_photo_id + "' style='margin-right: 5px' >Показати</button>" +
+                "<button type='button' id='removeCoachPhotoForAccreditation" + n + "' class='btn btn-default remove-photo-ap' data-remove = '" + data.accreditation_photo_id + "' data-rel='" + n + "'>Видалити</button>");
         }
 
     }
 
     function setDefaultButtons(numberOfCoaches) {
-        if (numberOfCoaches <= 1) return;
         var natPassParent = $("#coachPhotoOfNatPassId" + numberOfCoaches)[0].parentElement;
         $(natPassParent).html('');
         $(natPassParent).append('<p><label for="coachPhotoOfNatPass' + numberOfCoaches + '">Фото першої сторінки національного паспорту</label></p><button type="button" class="btn btn-default upl-coach-np" id="uploadCoachPhotoOfNatPass' + numberOfCoaches + '" data-rel="' + numberOfCoaches + '">Завантажити</button><input type="hidden" name="coachPhotoOfNatPassId' + numberOfCoaches + '" id="coachPhotoOfNatPassId' + numberOfCoaches + '" maxlength="10" />');
