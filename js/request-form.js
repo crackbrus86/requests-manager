@@ -138,10 +138,13 @@ var dir = "../wp-content/plugins/requests-manager/api/";
         });
 
         $("input[name='dopingControl']").on("change", function() {
+            $("#dopingControlDate").val('');
             $("#wrapDopingControlDate").toggle();
         });
 
         $("input[name='activeVisa']").on("change", function() {
+            $("#typeOfVisa option:first").attr('selected', 'selected');
+            $("#termOfVisa").val('');
             $("#visaFeatures").toggle();
         });
 
@@ -666,7 +669,7 @@ var dir = "../wp-content/plugins/requests-manager/api/";
             accreditationPhotoId: $("#accreditationPhotoId").val().trim()
         }
         request.user.id = ($("#isKnownAs").val() != "") ? $("#isKnownAs").val() : null;
-        request.createDate = new Date();
+        request.createDate = getToday();
         request.ageCategory = $("#ageCategory").val().trim();
         request.weightCategory = $("#weightCategory").val().trim();
         request.currentCompetition = $("#currentCompetition").val().trim();
@@ -866,5 +869,13 @@ var dir = "../wp-content/plugins/requests-manager/api/";
         var accrParent = $("#coachAccreditationPhotoId" + numberOfCoaches)[0].parentElement;
         $(accrParent).html('');
         $(accrParent).append('<p><label for="coachAccreditationPhoto">Фото для акредитації</label></p><button type="button" class="btn btn-default upl-coach-ap" id="uploadCoachAccreditationPhoto' + numberOfCoaches + '" data-rel="' + numberOfCoaches + '">Завантажити</button><input type="hidden" name="coachAccreditationPhotoId' + numberOfCoaches + '" id="coachAccreditationPhotoId' + numberOfCoaches + '" maxlength="10" />');
+    }
+
+    function getToday() {
+        var today = new Date();
+        var y = today.getFullYear();
+        var m = (today.getMonth() > 8) ? (today.getMonth() + 1) : '0' + (today.getMonth() + 1);
+        var d = today.getDate();
+        return y + '.' + m + '.' + d;
     }
 })(jQuery)

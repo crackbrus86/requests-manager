@@ -3,7 +3,7 @@ include_once("../wpdb-connect.php");
 include_once("RequestModel.php");
 $tb_name = $wpdb->get_blog_prefix()."rm_users";
 if($_POST['spam'] === ''){
-    $request = new Request();
+    $request = new RequestBody();
     $user = $_POST['user'];
     prepareItem($user);
     if($user['id']){
@@ -67,8 +67,7 @@ if($_POST['spam'] === ''){
 
         }
     }
-    $dataObject = DateTime::createFromFormat('D M d Y H:i:s T +', stripcslashes(trim($_POST['createDate'])));
-    $request->createDate = date_format($dataObject,"Y-m-d");
+    $request->createDate = $_POST['createDate'];
     $request->ageCategory = stripslashes(trim($_POST['ageCategory']));
     $request->weightCategory = stripcslashes(trim($_POST['weightCategory']));
     $request->currentCompetition = stripslashes(trim($_POST['currentCompetition']));
@@ -79,9 +78,19 @@ if($_POST['spam'] === ''){
     }else{
         $request->coaches = 'individual';
     }
+    $request->doping = serialize($_POST['doping']);
+    $request->visa = serialize($_POST['visa']);
     echo "<pre>";
     print_r($request);
     echo "</pre>";
+    $tb_requests = $wpdb->get_blog_prefix()."rm_requests";
+    if($wpdb->query("INSERT INTO $tb_requests (user_id, create_date, age_category, weight_category, current_competition, disciplines, pre_competition, coaches, doping, visa) 
+    VALUES ('$request->userId', '$request->createDate', '$request->ageCategory', '$request->weightCategory', '$request->currentCompetition', '$request->disciplines', 
+    '$request->preCompetition', '$request->coaches', '$request->doping', '$request->visa')")){
+        echo "Request has been sent successfully!";
+    }else{
+        echo "Error: Some trouble with request saving";
+    }
 }else{
     echo "Refused";
 }

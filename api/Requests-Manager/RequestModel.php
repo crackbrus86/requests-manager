@@ -1,6 +1,6 @@
 <?php
 
-class Request
+class RequestBody
 {
     public $userId;
     public $createDate;
