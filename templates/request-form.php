@@ -41,6 +41,12 @@
         <div class="anotherData" style="display: none">
             <input type="hidden" id="isKnownAs" />
             <div class="form-group">
+                <div><label for="region">Область</label></div>
+                <div><select class="form-control" id="region">
+                    <option></option>
+                    </select></div>
+            </div>
+            <div class="form-group">
                 <label for="lastNameLikeInPass">Прізвище як у закордонному паспорті</label>
                 <input type="text" class="form-control required" id="lastNameLikeInPass" placeholder="Last Name" maxlength="50" />
             </div>
@@ -192,6 +198,10 @@
                         <div class="form-group">
                             <label for="coachTermOfPass">Термін дії закордонного паспорту тренера</label>
                             <input type="text" class="form-control" id="coachTermOfPass" maxlength="10" placeholder="дд.мм.рррр" />
+                        </div>
+                        <div class="form-group">
+                            <label for="coachIndNumber">Ідентифікаційний номер</label>
+                            <input type="text" class="form-control required" id="coachIndNumber" maxlength="10" />
                         </div>
                         <div class="form-group">
                             <label for="coachPhone">Номер телефону тренера</label>

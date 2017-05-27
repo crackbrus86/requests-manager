@@ -4,9 +4,19 @@ var dir = "../wp-content/plugins/requests-manager/api/";
         var ageCategories = [],
             weightCategories = [],
             currentCompetition = [],
+            regions = [],
             preCompetition = [];
         var typeOfCompetition;
         var numberOfCoaches = 1;
+
+        $.ajax({
+            type: "POST",
+            url: dir + "Regions-Manager/GetAllRegions.php",
+            success: function(data) {
+                regions = JSON.parse(data);
+                appendOptions("#region", regions);
+            }
+        });
 
         $.ajax({
             type: "POST",
@@ -359,7 +369,7 @@ var dir = "../wp-content/plugins/requests-manager/api/";
         var list = '';
         data.forEach(function(item) {
             var id = item.id;
-            var title = item.title || item.title_w || item.name;
+            var title = item.title || item.title_w || item.name || item.region;
             list += '<option value="' + id + '">' + title + '</option>';
         });
         $(select).html(list);
@@ -403,6 +413,7 @@ var dir = "../wp-content/plugins/requests-manager/api/";
                 .append('<div class="form-group"><label for="coachFirstNameLikeInPass' + numberOfCoaches + '">Ім\'я тренера як у закордонному паспорті</label><input type="text" class="form-control" name="coachFirstNameLikeInPass' + numberOfCoaches + '" id="coachFirstNameLikeInPass' + numberOfCoaches + '" placeholder="Name" maxlength="30" /></div>')
                 .append('<div class="form-group"><label>Серія та номер закордонного паспорту тренера</label><div class="row"><div class="col-sm-4"><input type="text" class="form-control" id="coachSeriaOfpass' + numberOfCoaches + '" placeholder="НН" maxlength="4" /></div><div class="col-sm-8"><input type="text" class="form-control" id="coachNumberOfPass' + numberOfCoaches + '" placeholder="ХХХХХХ" maxlength="8" /></div></div></div>')
                 .append('<div class="form-group"><label for="coachTermOfPass' + numberOfCoaches + '">Термін дії закордонного паспорту тренера</label><input type="text" class="form-control" id="coachTermOfPass' + numberOfCoaches + '" maxlength="10" placeholder="дд.мм.рррр" /></div>')
+                .append('<div class="form-group"><label for="coachndNumber' + numberOfCoaches + '">Ідентифікаційний номер</label><input type="text" class="form-control required" id="coachIndNumber' + numberOfCoaches + '" maxlength="10" /></div>')
                 .append('<div class="form-group"><label for="coachPhone' + numberOfCoaches + '">Номер телефону тренера</label><input type="tel" class="form-control" id="coachPhone' + numberOfCoaches + '" placeholder="+38 (999) 999-99-99" maxlength="20" /></div>')
                 .append('<div class="form-group"><label for="coachEmail' + numberOfCoaches + '">Електронна адреса тренера</label><input type="email" class="form-control" id="coachEmail' + numberOfCoaches + '" placeholder="email.adress@gmail.com" maxlength="50" /></div>')
                 .append('<div class="form-group"><p><label for="coachPhotoOfNatPass' + numberOfCoaches + '">Фото першої сторінки національного паспорту</label></p><button type="button" class="btn btn-default upl-coach-np" id="uploadCoachPhotoOfNatPass' + numberOfCoaches + '" data-rel="' + numberOfCoaches + '">Завантажити</button><input type="hidden" name="coachPhotoOfNatPassId' + numberOfCoaches + '" id="coachPhotoOfNatPassId' + numberOfCoaches + '" maxlength="10" /></div>')
@@ -656,6 +667,7 @@ var dir = "../wp-content/plugins/requests-manager/api/";
             firstName: $("#firstName").val().trim(),
             middleName: $("#middleName").val().trim(),
             birthDate: convertDate($("#birthDate").val().trim()),
+            region: $("#region").val(),
             lastNameLikeInPass: $("#lastNameLikeInPass").val().trim(),
             firstNameLikeInPass: $("#firstNameLikeInPass").val().trim(),
             seriaOfpass: $("#seriaOfpass").val().trim(),
@@ -702,6 +714,7 @@ var dir = "../wp-content/plugins/requests-manager/api/";
                     coach.coachSeriaOfpass = $("#coachSeriaOfpass" + n).val().trim();
                     coach.coachNumberOfPass = $("#coachNumberOfPass" + n).val().trim();
                     coach.coachTermOfPass = convertDate($("#coachTermOfPass" + n).val().trim());
+                    coach.coachIndNumber = $("#coachIndNumber" + n).val().trim();
                     coach.coachPhone = $("#coachPhone" + n).val().trim();
                     coach.coachEmail = $("#coachEmail" + n).val().trim();
                     coach.coachPhotoOfNatPassId = $("#coachPhotoOfNatPassId" + n).val().trim();
@@ -713,6 +726,7 @@ var dir = "../wp-content/plugins/requests-manager/api/";
                     coach.coachSeriaOfpass = "";
                     coach.coachNumberOfPass = "";
                     coach.coachTermOfPass = null;
+                    coach.coachIndNumber = "";
                     coach.coachPhone = "";
                     coach.coachEmail = "";
                     coach.coachPhotoOfNatPassId = "";
@@ -781,6 +795,7 @@ var dir = "../wp-content/plugins/requests-manager/api/";
     }
 
     function setUserValues(data) {
+        $("#region").val(data.region).change();
         $("#lastNameLikeInPass").val(data.last_name_pass);
         $("#firstNameLikeInPass").val(data.first_name_pass);
         $("#seriaOfpass").val(data.serial_number_pass);
@@ -835,6 +850,7 @@ var dir = "../wp-content/plugins/requests-manager/api/";
         if (data.serial_number_pass) $("#coachSeriaOfpass" + n).val(data.serial_number_pass);
         if (data.number_pass > 0) $("#coachNumberOfPass" + n).val(data.number_pass);
         if (data.expiration_date_pass !== "0000-00-00") $("#coachTermOfPass" + n).val(convertDateOposite(data.expiration_date_pass));
+        if (data.individual_number) $("#coachIndNumber" + n).val(data.individual_number);
         if (data.id) $("#coachIsKnownAs" + n).val(data.id);
         if (data.phone) $("#coachPhone" + n).val(data.phone);
         if (data.email) $("#coachEmail" + n).val(data.email);
