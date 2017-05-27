@@ -14,7 +14,7 @@ if($_POST['spam'] === ''){
         number_pass = '$user[numberOfPass]', expiration_date_pass = '$user[termOfPass]', individual_number = '$user[indNumber]', phone = '$user[phone]', 
         email = '$user[email]', photo_national_pass_id = '$user[photoOfNatPassId]', photo_international_pass_id = '$user[photoOfForPassId]', 
         accreditation_photo_id = '$user[accreditationPhotoId]' WHERE id = '$user[id]'")){
-            echo "User was successfully updated!";
+            
         }
     }else{
         if($wpdb->query("INSERT INTO $tb_name (region, last_name, first_name, middle_name, birth_date, last_name_pass, first_name_pass, 
@@ -26,6 +26,7 @@ if($_POST['spam'] === ''){
             $request->userId = $wpdb->insert_id;
         }else{
             echo "Error";
+            exit;
         } 
     } 
     $request->coaches = array();
@@ -37,12 +38,13 @@ if($_POST['spam'] === ''){
             prepareItem($coach);
             if($coach["id"] && $coach["isFollowing"] === "true"){
                 array_push($request->coaches, array($coach['id'], $coach['isFollowing']));
-                if($wpdb->query("UPDATE $tb_coaches
+                if(!$wpdb->query("UPDATE $tb_coaches
                 SET last_name_pass = '$coach[coachLastNameLikeInPass]', first_name_pass = '$coach[coachFirstNameLikeInPass]', 
                     serial_number_pass = '$coach[coachSeriaOfpass]', number_pass = '$coach[coachNumberOfPass]', expiration_date_pass = '$coach[coachTermOfPass]', 
                     individual_number = '$coach[coachIndNumber]', phone = '$coach[coachPhone]', email = '$coach[coachEmail]', photo_national_pass_id = '$coach[coachPhotoOfNatPassId]', 
                     photo_international_pass_id = '$coach[coachPhotoOfForPassId]', accreditation_photo_id = '$coach[coachAccreditationPhotoId]' WHERE id = '$coach[id]'")){
-                        echo "Coach was successfully updated!";
+                        echo "Error";
+                        exit;
                     }
             }elseif(!$coach["id"] || ($coach['id'] && $coach['isFollowing'] === "false")){
                 $clone = $wpdb->get_row("SELECT id FROM $tb_coaches WHERE  last_name = '$coach[lastName]' AND first_name = '$coach[firstName]'
@@ -54,11 +56,11 @@ if($_POST['spam'] === ''){
                         VALUES ('$coach[isFollowing]', '$coach[lastName]', '$coach[firstName]', '$coach[middleName]', '$coach[coachBirthDate]', '$coach[coachLastNameLikeInPass]', '$coach[coachFirstNameLikeInPass]', 
                         '$coach[coachSeriaOfpass]', '$coach[coachNumberOfPass]', '$coach[coachTermOfPass]', '$coach[coachIndNumber]', '$coach[coachPhone]', '$coach[coachEmail]', '$coach[coachPhotoOfNatPassId]', 
                         '$coach[coachPhotoOfForPassId]', '$coach[coachAccreditationPhotoId]')")){
-                            $new_id = $wpdb->insert_id;
-                            
+                            $new_id = $wpdb->insert_id;                            
                             array_push($request->coaches, array($new_id, $coach['isFollowing']));
                         }else{
                             echo "Error";
+                            exit;
                         }
                 }else{
                     array_push($request->coaches, array($clone->id, $coach['isFollowing']));
@@ -80,16 +82,14 @@ if($_POST['spam'] === ''){
     }
     $request->doping = serialize($_POST['doping']);
     $request->visa = serialize($_POST['visa']);
-    echo "<pre>";
-    print_r($request);
-    echo "</pre>";
     $tb_requests = $wpdb->get_blog_prefix()."rm_requests";
     if($wpdb->query("INSERT INTO $tb_requests (user_id, create_date, age_category, weight_category, current_competition, disciplines, pre_competition, coaches, doping, visa) 
     VALUES ('$request->userId', '$request->createDate', '$request->ageCategory', '$request->weightCategory', '$request->currentCompetition', '$request->disciplines', 
     '$request->preCompetition', '$request->coaches', '$request->doping', '$request->visa')")){
         echo "Request has been sent successfully!";
     }else{
-        echo "Error: Some trouble with request saving";
+        echo "Error";
+        exit;
     }
 }else{
     echo "Refused";

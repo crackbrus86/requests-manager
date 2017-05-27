@@ -201,7 +201,7 @@
                         </div>
                         <div class="form-group">
                             <label for="coachIndNumber">Ідентифікаційний номер</label>
-                            <input type="text" class="form-control required" id="coachIndNumber" maxlength="10" />
+                            <input type="text" class="form-control" id="coachIndNumber" maxlength="10" />
                         </div>
                         <div class="form-group">
                             <label for="coachPhone">Номер телефону тренера</label>
