@@ -177,6 +177,12 @@
                     </div>
                     <div id="coachAdvancedData" style="display: none">
                         <div class="form-group">
+                            <div><label for="coachRegion">Область</label></div>
+                            <div><select class="form-control" id="coachRegion">
+                                <option></option>
+                                </select></div>
+                        </div>
+                        <div class="form-group">
                             <label for="coachLastNameLikeInPass">Прізвище тренера як у закордонному паспорті</label>
                             <input type="text" class="form-control" name="coachLastNameLikeInPass" id="coachLastNameLikeInPass" placeholder="Surname" maxlength="50" />
                         </div>

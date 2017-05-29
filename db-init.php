@@ -64,6 +64,7 @@
             `first_name` VARCHAR(30) NOT NULL,
             `middle_name` VARCHAR(30) NOT NULL,
             `birth_date` DATE NOT NULL,
+            `region` INT NOT NULL,
             `last_name_pass` VARCHAR(50),
             `first_name_pass` VARCHAR(30),
             `serial_number_pass` VARCHAR(4),

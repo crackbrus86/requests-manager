@@ -15,6 +15,7 @@ var dir = "../wp-content/plugins/requests-manager/api/";
             success: function(data) {
                 regions = JSON.parse(data);
                 appendOptions("#region", regions);
+                appendOptions("#coachRegion", regions);
             }
         });
 
@@ -144,7 +145,7 @@ var dir = "../wp-content/plugins/requests-manager/api/";
             $(".coachForms").last().after($("<div class='row coachForms' style='margin-top: 10px;'></div>")
                 .append("<p class='text-right'><span class='text-danger remove-coach' style='cursor: pointer'>Видалити</span></p>")
             );
-            renderCouchForm($(".coachForms").last(), ++numberOfCoaches);
+            renderCouchForm($(".coachForms").last(), ++numberOfCoaches, regions);
         });
 
         $("input[name='dopingControl']").on("change", function() {
@@ -400,7 +401,7 @@ var dir = "../wp-content/plugins/requests-manager/api/";
         $("#total").val(total);
     }
 
-    function renderCouchForm(selector, numberOfCoaches) {
+    function renderCouchForm(selector, numberOfCoaches, regions) {
         selector.append($('<div class="col-sm-12 bg-info" id="coachForm' + numberOfCoaches + '" />')
             .append('<div class="form-group"><label>Тренер #' + numberOfCoaches + '</label><input type="hidden" id="coachIsKnownAs' + numberOfCoaches + '" /></div>')
             .append('<div class="form-group"><label for="coachLastName' + numberOfCoaches + '">Прізвище тренера</label><input type="text" class="form-control" name="coachLastName' + numberOfCoaches + '" id="coachLastName' + numberOfCoaches + '" placeholder="Прізвище" maxlength="50" /></div>')
@@ -409,6 +410,7 @@ var dir = "../wp-content/plugins/requests-manager/api/";
             .append('<div class="form-group"><label for="coachBirthDate' + numberOfCoaches + '">Дата народження</label><input type="text" class="form-control" id="coachBirthDate' + numberOfCoaches + '" maxlength="10" placeholder="дд.мм.рррр" /></div>')
             .append('<div class="form-group coachNo' + numberOfCoaches + '"><div><label>Чи супроводжує Вас на змагання?</label></div><label class="radio-inline"><input type="radio" name="following' + numberOfCoaches + '" value="false" checked /> Ні</label><label class="radio-inline"><input type="radio" name="following' + numberOfCoaches + '" value="true" /> Так</label></div>')
             .append($('<div id="coachAdvancedData' + numberOfCoaches + '" style="display: none" />')
+                .append('<div class="form-group"><div><label for="coachRegion' + numberOfCoaches + '">Область</label></div><div><select class="form-control" id="coachRegion' + numberOfCoaches + '"><option></option></select></div></div>')
                 .append('<div class="form-group"><label for="coachLastNameLikeInPass' + numberOfCoaches + '">Прізвище тренера як у закордонному паспорті</label><input type="text" class="form-control" name="coachLastNameLikeInPass' + numberOfCoaches + '" id="coachLastNameLikeInPass' + numberOfCoaches + '" placeholder="Surname" maxlength="50" /></div>')
                 .append('<div class="form-group"><label for="coachFirstNameLikeInPass' + numberOfCoaches + '">Ім\'я тренера як у закордонному паспорті</label><input type="text" class="form-control" name="coachFirstNameLikeInPass' + numberOfCoaches + '" id="coachFirstNameLikeInPass' + numberOfCoaches + '" placeholder="Name" maxlength="30" /></div>')
                 .append('<div class="form-group"><label>Серія та номер закордонного паспорту тренера</label><div class="row"><div class="col-sm-4"><input type="text" class="form-control" id="coachSeriaOfpass' + numberOfCoaches + '" placeholder="НН" maxlength="4" /></div><div class="col-sm-8"><input type="text" class="form-control" id="coachNumberOfPass' + numberOfCoaches + '" placeholder="ХХХХХХ" maxlength="8" /></div></div></div>')
@@ -438,6 +440,8 @@ var dir = "../wp-content/plugins/requests-manager/api/";
                 $("#coachAdvancedData" + numberOfCoaches).fadeOut("800");
             }
         });
+
+        appendOptions("#coachRegion" + numberOfCoaches, regions);
 
         $("#coachPhone" + numberOfCoaches).mask("+38 (999) 999-99-99");
 
@@ -709,6 +713,7 @@ var dir = "../wp-content/plugins/requests-manager/api/";
                     id: ($("#coachIsKnownAs" + n).val()) ? $("#coachIsKnownAs" + n).val() : null
                 }
                 if (JSON.parse(coach.isFollowing)) {
+                    coach.region = $("#coachRegion" + n).val();
                     coach.coachLastNameLikeInPass = $("#coachLastNameLikeInPass" + n).val().trim();
                     coach.coachFirstNameLikeInPass = $("#coachFirstNameLikeInPass" + n).val().trim();
                     coach.coachSeriaOfpass = $("#coachSeriaOfpass" + n).val().trim();
@@ -721,6 +726,7 @@ var dir = "../wp-content/plugins/requests-manager/api/";
                     coach.coachPhotoOfForPassId = $("#coachPhotoOfForPassId" + n).val().trim();
                     coach.coachAccreditationPhotoId = $("#coachAccreditationPhotoId" + n).val().trim();
                 } else {
+                    coach.region = 0;
                     coach.coachLastNameLikeInPass = "";
                     coach.coachFirstNameLikeInPass = "";
                     coach.coachSeriaOfpass = "";
@@ -749,6 +755,7 @@ var dir = "../wp-content/plugins/requests-manager/api/";
     }
 
     function sendRequest(request, e) {
+        var valid = false;
         $(e.target.parentElement).append('<span class="fa fa-spinner fa-spin fa-2x fa-fw" style="color: slategrey;"></span>');
         $.ajax({
             url: dir + "/Requests-Manager/SaveRequest.php",
@@ -761,12 +768,13 @@ var dir = "../wp-content/plugins/requests-manager/api/";
                     showAlert("#RequestForm", "Під час відправки заявки сталася помилка! Перевірте дані та спробуйте ще раз.");
                 } else {
                     showAlertSuccess("#RequestForm", "Заявку прийнято!");
+                    valid = true;
                 }
             }
         }).then(function() {
             $(".fa-spinner").remove();
         }).then(function() {
-            // window.location.reload();
+            if (valid) window.location.reload();
         });
     }
 
@@ -845,6 +853,7 @@ var dir = "../wp-content/plugins/requests-manager/api/";
     }
 
     function setCoachValues(data, n) {
+        if (data.region) $("#coachRegion" + n).val(data.region).change();
         if (data.last_name_pass) $("#coachLastNameLikeInPass" + n).val(data.last_name_pass);
         if (data.first_name_pass) $("#coachFirstNameLikeInPass" + n).val(data.first_name_pass);
         if (data.serial_number_pass) $("#coachSeriaOfpass" + n).val(data.serial_number_pass);

@@ -39,7 +39,7 @@ if($_POST['spam'] === ''){
             if($coach["id"] && $coach["isFollowing"] === "true"){
                 array_push($request->coaches, array($coach['id'], $coach['isFollowing']));
                 if(!$wpdb->query("UPDATE $tb_coaches
-                SET last_name_pass = '$coach[coachLastNameLikeInPass]', first_name_pass = '$coach[coachFirstNameLikeInPass]', 
+                SET region = '$coach[region]', last_name_pass = '$coach[coachLastNameLikeInPass]', first_name_pass = '$coach[coachFirstNameLikeInPass]', 
                     serial_number_pass = '$coach[coachSeriaOfpass]', number_pass = '$coach[coachNumberOfPass]', expiration_date_pass = '$coach[coachTermOfPass]', 
                     individual_number = '$coach[coachIndNumber]', phone = '$coach[coachPhone]', email = '$coach[coachEmail]', photo_national_pass_id = '$coach[coachPhotoOfNatPassId]', 
                     photo_international_pass_id = '$coach[coachPhotoOfForPassId]', accreditation_photo_id = '$coach[coachAccreditationPhotoId]' WHERE id = '$coach[id]'")){
@@ -50,10 +50,10 @@ if($_POST['spam'] === ''){
                 $clone = $wpdb->get_row("SELECT id FROM $tb_coaches WHERE  last_name = '$coach[lastName]' AND first_name = '$coach[firstName]'
                 AND middle_name = '$coach[middleName]' AND birth_date = '$coach[coachBirthDate]'"); 
                 if(is_null($clone)){
-                    if($wpdb->query("INSERT INTO $tb_coaches (accompanies, last_name, first_name, middle_name, birth_date, last_name_pass, first_name_pass, 
+                    if($wpdb->query("INSERT INTO $tb_coaches (accompanies, region, last_name, first_name, middle_name, birth_date, last_name_pass, first_name_pass, 
                         serial_number_pass, number_pass, expiration_date_pass, individual_number, phone, email, photo_national_pass_id, photo_international_pass_id, 
                         accreditation_photo_id) 
-                        VALUES ('$coach[isFollowing]', '$coach[lastName]', '$coach[firstName]', '$coach[middleName]', '$coach[coachBirthDate]', '$coach[coachLastNameLikeInPass]', '$coach[coachFirstNameLikeInPass]', 
+                        VALUES ('$coach[isFollowing]', region = '$coach[region]', '$coach[lastName]', '$coach[firstName]', '$coach[middleName]', '$coach[coachBirthDate]', '$coach[coachLastNameLikeInPass]', '$coach[coachFirstNameLikeInPass]', 
                         '$coach[coachSeriaOfpass]', '$coach[coachNumberOfPass]', '$coach[coachTermOfPass]', '$coach[coachIndNumber]', '$coach[coachPhone]', '$coach[coachEmail]', '$coach[coachPhotoOfNatPassId]', 
                         '$coach[coachPhotoOfForPassId]', '$coach[coachAccreditationPhotoId]')")){
                             $new_id = $wpdb->insert_id;                            
@@ -87,6 +87,7 @@ if($_POST['spam'] === ''){
     VALUES ('$request->userId', '$request->createDate', '$request->ageCategory', '$request->weightCategory', '$request->currentCompetition', '$request->disciplines', 
     '$request->preCompetition', '$request->coaches', '$request->doping', '$request->visa')")){
         echo "Request has been sent successfully!";
+        sendEmail($user["email"], getFullName($user));
     }else{
         echo "Error";
         exit;
@@ -101,3 +102,15 @@ function prepareItem($item){
     endforeach;
 }
 
+function getFullName($user){
+    return $user['lastName']." ".$user['firstName']." ".$user['middleName'];
+}
+
+function sendEmail($email = "", $fullName = ""){
+    $header = "From: \"Admin\"\n";
+    $header .= "Content-type: text/plain; charset=\"utf-8\"";
+    $for = $email;
+    $subject = "Федерація пауерліфтингу України";
+    $message = "Шановний $fullName, Вашу заявку було прийнято. Найближчим часом з Вами зв'яжеться представник федерації для уточнення даних.";
+    mail($for, $subject, $message, $header);
+}
