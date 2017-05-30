@@ -53,7 +53,7 @@ if($_POST['spam'] === ''){
                     if($wpdb->query("INSERT INTO $tb_coaches (accompanies, region, last_name, first_name, middle_name, birth_date, last_name_pass, first_name_pass, 
                         serial_number_pass, number_pass, expiration_date_pass, individual_number, phone, email, photo_national_pass_id, photo_international_pass_id, 
                         accreditation_photo_id) 
-                        VALUES ('$coach[isFollowing]', region = '$coach[region]', '$coach[lastName]', '$coach[firstName]', '$coach[middleName]', '$coach[coachBirthDate]', '$coach[coachLastNameLikeInPass]', '$coach[coachFirstNameLikeInPass]', 
+                        VALUES ('$coach[isFollowing]', '$coach[region]', '$coach[lastName]', '$coach[firstName]', '$coach[middleName]', '$coach[coachBirthDate]', '$coach[coachLastNameLikeInPass]', '$coach[coachFirstNameLikeInPass]', 
                         '$coach[coachSeriaOfpass]', '$coach[coachNumberOfPass]', '$coach[coachTermOfPass]', '$coach[coachIndNumber]', '$coach[coachPhone]', '$coach[coachEmail]', '$coach[coachPhotoOfNatPassId]', 
                         '$coach[coachPhotoOfForPassId]', '$coach[coachAccreditationPhotoId]')")){
                             $new_id = $wpdb->insert_id;                            

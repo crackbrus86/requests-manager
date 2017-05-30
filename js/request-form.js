@@ -116,7 +116,7 @@ var dir = "../wp-content/plugins/requests-manager/api/";
                     this.value = "";
                 });
                 setDefaultButtons("");
-                getCoachData(e);
+                getCoachData(e, regions);
             } else {
                 $("#coachAdvancedData").fadeOut("800");
             }
@@ -435,7 +435,7 @@ var dir = "../wp-content/plugins/requests-manager/api/";
                     this.value = "";
                 });
                 setDefaultButtons(numberOfCoaches);
-                getCoachData(e);
+                getCoachData(e, regions);
             } else {
                 $("#coachAdvancedData" + numberOfCoaches).fadeOut("800");
             }
@@ -726,7 +726,7 @@ var dir = "../wp-content/plugins/requests-manager/api/";
                     coach.coachPhotoOfForPassId = $("#coachPhotoOfForPassId" + n).val().trim();
                     coach.coachAccreditationPhotoId = $("#coachAccreditationPhotoId" + n).val().trim();
                 } else {
-                    coach.region = 0;
+                    coach.region = null;
                     coach.coachLastNameLikeInPass = "";
                     coach.coachFirstNameLikeInPass = "";
                     coach.coachSeriaOfpass = "";
@@ -827,7 +827,7 @@ var dir = "../wp-content/plugins/requests-manager/api/";
             "<button type='button' id='removePhotoForAccreditation' class='btn btn-default' data-remove = '" + data.accreditation_photo_id + "'>Видалити</button>");
     }
 
-    function getCoachData(e) {
+    function getCoachData(e, regions) {
         var coachNm = e.target.name.slice(9);
         var coach = {
             firstName: $("#coachFirstName" + coachNm).val(),
@@ -843,7 +843,7 @@ var dir = "../wp-content/plugins/requests-manager/api/";
             success: function(result) {
                 result = JSON.parse(result);
                 if (result) {
-                    setCoachValues(result, coachNm);
+                    setCoachValues(result, coachNm, regions);
                 }
             }
         }).then(function() {
@@ -852,7 +852,8 @@ var dir = "../wp-content/plugins/requests-manager/api/";
         });
     }
 
-    function setCoachValues(data, n) {
+    function setCoachValues(data, n, regions) {
+        if (data.region == 0) data.region = getFirstItem(regions).id;
         if (data.region) $("#coachRegion" + n).val(data.region).change();
         if (data.last_name_pass) $("#coachLastNameLikeInPass" + n).val(data.last_name_pass);
         if (data.first_name_pass) $("#coachFirstNameLikeInPass" + n).val(data.first_name_pass);
@@ -902,5 +903,9 @@ var dir = "../wp-content/plugins/requests-manager/api/";
         var m = (today.getMonth() > 8) ? (today.getMonth() + 1) : '0' + (today.getMonth() + 1);
         var d = today.getDate();
         return y + '.' + m + '.' + d;
+    }
+
+    function getFirstItem(collection) {
+        return collection[0];
     }
 })(jQuery)
