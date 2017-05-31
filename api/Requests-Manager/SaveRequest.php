@@ -38,14 +38,11 @@ if($_POST['spam'] === ''){
             prepareItem($coach);
             if($coach["id"] && $coach["isFollowing"] === "true"){
                 array_push($request->coaches, array($coach['id'], $coach['isFollowing']));
-                if(!$wpdb->query("UPDATE $tb_coaches
+                $wpdb->query("UPDATE $tb_coaches
                 SET region = '$coach[region]', last_name_pass = '$coach[coachLastNameLikeInPass]', first_name_pass = '$coach[coachFirstNameLikeInPass]', 
                     serial_number_pass = '$coach[coachSeriaOfpass]', number_pass = '$coach[coachNumberOfPass]', expiration_date_pass = '$coach[coachTermOfPass]', 
                     individual_number = '$coach[coachIndNumber]', phone = '$coach[coachPhone]', email = '$coach[coachEmail]', photo_national_pass_id = '$coach[coachPhotoOfNatPassId]', 
-                    photo_international_pass_id = '$coach[coachPhotoOfForPassId]', accreditation_photo_id = '$coach[coachAccreditationPhotoId]' WHERE id = '$coach[id]'")){
-                        echo "Error";
-                        exit;
-                    }
+                    photo_international_pass_id = '$coach[coachPhotoOfForPassId]', accreditation_photo_id = '$coach[coachAccreditationPhotoId]' WHERE id = '$coach[id]'");
             }elseif(!$coach["id"] || ($coach['id'] && $coach['isFollowing'] === "false")){
                 $clone = $wpdb->get_row("SELECT id FROM $tb_coaches WHERE  last_name = '$coach[lastName]' AND first_name = '$coach[firstName]'
                 AND middle_name = '$coach[middleName]' AND birth_date = '$coach[coachBirthDate]'"); 
