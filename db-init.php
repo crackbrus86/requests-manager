@@ -22,13 +22,13 @@
             `title` VARCHAR(200) NOT NULL
         ) {$charset_collate}";
         dbDelta($createCategoryAgeTab);
-        $tb_category_age = $wpdb->get_blog_prefix() . 'rm_category_weight';
-        $createCategoryAgeTab = "CREATE TABLE IF NOT EXISTS {$tb_category_age} (
+        $tb_category_weight = $wpdb->get_blog_prefix() . 'rm_category_weight';
+        $createCategoryWeightTab = "CREATE TABLE IF NOT EXISTS {$tb_category_weight} (
             `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
             `title_w` VARCHAR(200) NOT NULL,
             `parent` INT
         ) {$charset_collate}";
-        dbDelta($createCategoryAgeTab);
+        dbDelta($createCategoryWeightTab);
         $tb_regions = $wpdb->get_blog_prefix() . 'rm_regions';
         $createRegionsTab = "CREATE TABLE IF NOT EXISTS {$tb_regions} (
             `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,

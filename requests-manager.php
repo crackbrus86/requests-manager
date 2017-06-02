@@ -44,6 +44,40 @@ class RequestManager{
         ?>   
         <div class="container-fluid">
             <h2>Менеджер заявок</h2>
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"><a href="#requests" aria-controls="requests" role="tab" data-toggle="tab">Заявки</a></li>
+                <li role="presentation"><a href="#athletes" aria-controls="athletes" role="tab" data-toggle="tab">Спортсмени</a></li>
+                <li role="presentation"><a href="#coaches" aria-controls="coaches" role="tab" data-toggle="tab">Тренери</a></li>
+                <li role="presentation"><a href="#nominations" aria-controls="nominations" role="tab" data-toggle="tab">Номінації</a></li>
+                <li role="presentation"><a href="#delegation" aria-controls="delegation" role="tab" data-toggle="tab">Делегація</a></li>
+                <li role="presentation"><a href="#visaSupport" aria-controls="visaSupport" role="tab" data-toggle="tab">Візова підтримка</a></li>
+            </ul>
+            <!-- Tab panes --> 
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="requests">
+                <?php   
+                    if(file_exists(RM__PLUGIN_DIR."/templates/requests.php")){
+                        require_once(RM__PLUGIN_DIR."/templates/requests.php");
+                    }
+                ?>
+                </div>
+                <div role="tabpanel" class="tab-pane" id="athletes">
+                    Спортсмени
+                </div>
+                <div role="tabpanel" class="tab-pane" id="coaches">
+                    Тренери
+                </div>
+                <div role="tabpanel" class="tab-pane" id="nominations">
+                    Номінації
+                </div>
+                <div role="tabpanel" class="tab-pane" id="delegation">
+                    Делегації
+                </div>
+                <div role="tabpanel" class="tab-pane" id="visaSupport">
+                    Візова підтримка
+                </div>                                                
+            </div>           
         </div>
         <?php
     }
