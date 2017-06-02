@@ -6,11 +6,11 @@
         if ($("#requests").hasClass("active")) {
             service.GetAllRequests().then(function(data) {
                 var dt = JSON.parse(data);
-                dt.forEach(function(item) {
-                    requestMgr.appendRequest(item);
-                });
+                for (var i = 0; i < dt.length; i++) {
+                    requestMgr.appendRequest(dt[i]);
+                }
             });
-            console.log(requestMgr.requests);
+            console.log(requestMgr.getRequestsList());
         }
 
         $('a[href="#requests"]').live('click', function() {
@@ -18,25 +18,23 @@
         });
     });
 
-    class RequestMgr {
-        constructor() {
-            this.requests = [];
+    function RequestMgr() {
+        var requests = [];
+
+        this.appendRequest = function(request) {
+            requests.push(request);
         }
-        appendRequest(request) {
-            this.requests.push(request);
-        }
-        getRequestsList() {
-            return this.requests;
+        this.getRequestsList = function() {
+            return requests;
         }
     }
 
-    class RequestsService {
-        constructor() {
-            this.dir = "../wp-content/plugins/requests-manager/api/Requests/";
-        }
-        GetAllRequests() {
+    function RequestsService() {
+        var dir = "../wp-content/plugins/requests-manager/api/Requests/";
+
+        this.GetAllRequests = function() {
             return $.ajax({
-                url: this.dir + "GetAllRequests.php",
+                url: dir + "GetAllRequests.php",
                 type: "POST",
                 success: function(data) {
                     return data;
