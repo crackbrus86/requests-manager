@@ -2,15 +2,17 @@
     $(document).ready(function() {
         var service = new RequestsService();
         var requestMgr = new RequestMgr();
+        var spinner = new Spinner();
 
         if ($("#requests").hasClass("active")) {
+            spinner.show();
             service.GetAllRequests().then(function(data) {
-                var dt = JSON.parse(data);
-                for (var i = 0; i < dt.length; i++) {
-                    requestMgr.appendRequest(dt[i]);
-                }
+                requestMgr.fetchRequests(data);
+                var requestsGrid = new Grid(requestMgr.fields, requestMgr.getRequestsList());
+                $("#requestsGrid").append(requestsGrid.renderGrid());
+                spinner.hide();
             });
-            console.log(requestMgr.getRequestsList());
+
         }
 
         $('a[href="#requests"]').live('click', function() {
@@ -20,10 +22,53 @@
 
     function RequestMgr() {
         var requests = [];
+        this.fields = [{
+                title: "",
+                field: "id",
+                button: "edit"
+            },
+            {
+                title: "",
+                field: "id",
+                button: "delete"
+            },
+            {
+                title: "Прізвище",
+                field: "last_name"
+            },
+            {
+                title: "Ім'я",
+                field: "first_name"
+            },
+            {
+                title: "Вікова категорія",
+                field: "title"
+            },
+            {
+                title: "Вагова категорія",
+                field: "title_w"
+            },
+            {
+                title: "Змагання",
+                field: "name"
+            },
+            {
+                title: "Дата подачі",
+                field: "create_date"
+            }
+        ];
 
-        this.appendRequest = function(request) {
+        function appendRequest(request) {
             requests.push(request);
         }
+
+        this.fetchRequests = function(data) {
+            var dt = JSON.parse(data);
+            for (var i = 0; i < dt.length; i++) {
+                requests.push(dt[i]);
+            }
+        }
+
         this.getRequestsList = function() {
             return requests;
         }

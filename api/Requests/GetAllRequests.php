@@ -15,6 +15,6 @@ FROM $tb_request
     JOIN $tb_category_weight
         ON $tb_request.weight_category = $tb_category_weight.id
     JOIN $tb_games
-        ON $tb_request.current_competition = $tb_games.id");
+        ON $tb_request.current_competition = $tb_games.id ORDER BY $tb_request.create_date DESC");
 $return = json_encode($requests);
 print_r($return);
