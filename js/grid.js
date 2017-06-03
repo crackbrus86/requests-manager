@@ -14,9 +14,9 @@ function Grid(fields, datasource) {
     function createButton(type, rel) {
         switch (type) {
             case 'edit':
-                return "<td><button type='button' class='btn btn-success' data-rel='" + rel + "'>Edit</button></td>";
+                return "<td><button type='button' class='btn btn-success btn-edit' data-rel='" + rel + "'>Edit</button></td>";
             case 'delete':
-                return "<td><button type='button' class='btn btn-danger' data-rel='" + rel + "'>Del</button></td>"
+                return "<td><button type='button' class='btn btn-danger btn-delete' data-rel='" + rel + "'>Delete</button></td>"
         }
     }
 

@@ -16,3 +16,23 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="requestModal" tabindex="-1" role="dialog" aria-labelledby="requestModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="requestModalLabel">Редагувати заявку</h4>
+            </div>
+            <div class="modal-body">
+                <form id="editRequest">
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Скасувати</button>
+                <button type="button" class="btn btn-primary" id="saveRequest">Зберегти</button>
+            </div>
+        </div>
+    </div>
+</div>

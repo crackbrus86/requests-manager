@@ -18,6 +18,11 @@
         $('a[href="#requests"]').live('click', function() {
             alert('123');
         });
+
+        $(".btn-edit").live('click', function(e) {
+            service.GetRequest(e.target.dataset["rel"]);
+            $("#requestModal").modal('show');
+        });
     });
 
     function RequestMgr() {
@@ -85,6 +90,17 @@
                     return data;
                 }
             });
+        }
+
+        this.GetRequest = function(id) {
+            return $.ajax({
+                url: dir + "GetRequest.php",
+                type: "POST",
+                data: "id=" + id,
+                success: function(data) {
+                    return data;
+                }
+            })
         }
     }
 })(jQuery)
