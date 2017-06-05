@@ -3,6 +3,19 @@
         var service = new RequestsService();
         var requestMgr = new RequestMgr();
         var spinner = new Spinner();
+        var form = new Form();
+
+        service.GetAgeCategories().then(function(data) {
+            requestMgr.ageCategories = JSON.parse(data);
+            form.appendOptions("#requestModal #ageCategory", requestMgr.ageCategories);
+        }).then(function() {
+            service.GetWeightCategories().then(function(data) {
+                requestMgr.weightCategories = JSON.parse(data);
+                form.appendOptions("#requestModal #weightCategory", requestMgr.weightCategories.filter(function(item) {
+                    return item.parent == requestMgr.ageCategories[0].id;
+                }));
+            })
+        });
 
         if ($("#requests").hasClass("active")) {
             spinner.show();
@@ -20,13 +33,24 @@
         });
 
         $(".btn-edit").live('click', function(e) {
-            service.GetRequest(e.target.dataset["rel"]);
-            $("#requestModal").modal('show');
+            service.GetRequest(e.target.dataset["rel"]).then(function(data) {
+                $("#requestModal").modal('show');
+            });
+        });
+
+        $("#requestModal #ageCategory").on("change", function(e) {
+            form.appendOptions("#requestModal #weightCategory", requestMgr.weightCategories.filter(function(item) {
+                return item.parent == e.target.value;
+            }));
         });
     });
 
     function RequestMgr() {
         var requests = [];
+        this.ageCategories = [];
+        this.weightCategories = [];
+        this.currentCompetition = [];
+        this.preCompetition = [];
         this.fields = [{
                 title: "",
                 field: "id",
@@ -81,6 +105,7 @@
 
     function RequestsService() {
         var dir = "../wp-content/plugins/requests-manager/api/Requests/";
+        var rootDir = "../wp-content/plugins/requests-manager/api/";
 
         this.GetAllRequests = function() {
             return $.ajax({
@@ -97,6 +122,26 @@
                 url: dir + "GetRequest.php",
                 type: "POST",
                 data: "id=" + id,
+                success: function(data) {
+                    return data;
+                }
+            })
+        }
+
+        this.GetAgeCategories = function() {
+            return $.ajax({
+                url: rootDir + "Categories-Manager/GetAgeCategories.php",
+                type: "POST",
+                success: function(data) {
+                    return data;
+                }
+            })
+        }
+
+        this.GetWeightCategories = function() {
+            return $.ajax({
+                url: rootDir + "Categories-Manager/GetWeightCategoriesStrict.php",
+                type: "POST",
                 success: function(data) {
                     return data;
                 }
