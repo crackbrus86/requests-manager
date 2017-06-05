@@ -5,6 +5,13 @@
         var spinner = new Spinner();
         var form = new Form();
 
+        $("#dopingControlDate").datepicker({
+            altFormat: "dd-mm-yy",
+            changeYear: true,
+            yearRange: "1900:2200",
+            regional: ["uk"]
+        });
+
         service.GetAgeCategories().then(function(data) {
             requestMgr.ageCategories = JSON.parse(data);
             form.appendOptions("#requestModal #ageCategory", requestMgr.ageCategories);
@@ -15,6 +22,16 @@
                     return item.parent == requestMgr.ageCategories[0].id;
                 }));
             })
+        });
+
+        service.GetActualGames().then(function(data) {
+            requestMgr.currentCompetition = JSON.parse(data);
+            form.appendOptions("#requestModal #currentCompetition", requestMgr.currentCompetition);
+        }).then(function() {
+            service.GetBeforeGames().then(function(data) {
+                requestMgr.preCompetition = JSON.parse(data);
+                form.appendOptions("#requestModal #preCompetition", requestMgr.preCompetition);
+            });
         });
 
         if ($("#requests").hasClass("active")) {
@@ -33,15 +50,34 @@
         });
 
         $(".btn-edit").live('click', function(e) {
+            spinner.show();
             service.GetRequest(e.target.dataset["rel"]).then(function(data) {
+                spinner.hide();
+                requestMgr.populateModal(JSON.parse(data)[0]);
                 $("#requestModal").modal('show');
+
             });
         });
 
-        $("#requestModal #ageCategory").on("change", function(e) {
+        $("#requestModal #ageCategory").live("change", function(e) {
             form.appendOptions("#requestModal #weightCategory", requestMgr.weightCategories.filter(function(item) {
                 return item.parent == e.target.value;
             }));
+        });
+
+        $("input[name='dopingControl']").live("change", function() {
+            $("#dopingControlDate").val('');
+            $("#wrapDopingControlDate").toggle();
+        });
+
+        $("input[name='activeVisa']").live("change", function() {
+            $("#typeOfVisa option:first").attr('selected', 'selected');
+            $("#termOfVisa").val('');
+            $("#visaFeatures").toggle();
+        });
+
+        $(".discipline").live("change", function() {
+            requestMgr.calculateTotal();
         });
     });
 
@@ -98,6 +134,35 @@
             }
         }
 
+        this.calculateTotal = function() {
+            var disciplines = ["squat", "benchPress", "deadLift"];
+            var total = 0;
+            for (var i = 0; i < disciplines.length; i++) {
+                total += parseFloat($("#" + disciplines[i]).val());
+            }
+            $("#total").val(total);
+        }
+
+        this.populateModal = function(data) {
+            var fullName = data.last_name + " " + data.first_name + " " + data.middle_name;
+            $("#fullname").val(fullName);
+            var bd = data.birth_date.split('-');
+            $("#birthDate").val(bd[2] + "." + bd[1] + "." + bd[0]);
+            $("#region").val(data.region);
+            $("#ageCategory").val(data.age_category_id).change();
+            $("#weightCategory").val(data.weight_category_id).change();
+            $("#currentCompetition").val(data.current_competition_id).change();
+            $("#squat").val(data.results.squat);
+            $("#benchPress").val(data.results.benchPress);
+            $("#deadLift").val(data.results.deadLift);
+            this.calculateTotal();
+            $("#preCompetition").val(data.pre_competition_id);
+            if (data.doping.dopingControl == "true") {
+                $("input[name='dopingControl'][value='true']").attr("checked", "checked");
+                $("#wrapDopingControlDate").toggle();
+            }
+        }
+
         this.getRequestsList = function() {
             return requests;
         }
@@ -141,6 +206,26 @@
         this.GetWeightCategories = function() {
             return $.ajax({
                 url: rootDir + "Categories-Manager/GetWeightCategoriesStrict.php",
+                type: "POST",
+                success: function(data) {
+                    return data;
+                }
+            })
+        }
+
+        this.GetActualGames = function() {
+            return $.ajax({
+                url: rootDir + "Games-Manager/GetActualGames.php",
+                type: "POST",
+                success: function(data) {
+                    return data;
+                }
+            })
+        }
+
+        this.GetBeforeGames = function() {
+            return $.ajax({
+                url: rootDir + "Games-Manager/GetBeforeGames.php",
                 type: "POST",
                 success: function(data) {
                     return data;
