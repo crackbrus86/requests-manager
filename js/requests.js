@@ -184,6 +184,18 @@
                 $("input[name='activeVisa'][value='false']").attr("checked", "checked");
                 $("#visaFeatures").css("display", "none");
             }
+            if (data.coach_details) {
+                $("#coachesList").remove();
+                $("#editRequest").append("<div id='coachesList'><h3>Тренери</h3><ul></ul></div>");
+                for (var i = 0; i < data.coach_details.length; i++) {
+                    var coach = data.coaches.filter(function(item) {
+                        return item[0] == data.coach_details[i].id
+                    });
+                    var escorts = (coach[0][1] == "true") ? " - <strong>cупроводжує</strong>" : "";
+                    $("#coachesList ul").append("<li class='bg-primary'>" + data.coach_details[i].last_name + " " + data.coach_details[i].first_name +
+                        " " + data.coach_details[i].middle_name + escorts + "</li>");
+                }
+            }
         }
 
         this.getRequestsList = function() {

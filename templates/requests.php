@@ -27,8 +27,8 @@
     </div>
 </div>
 
-<div class="modal fade" id="requestModal" tabindex="-1" role="dialog" aria-labelledby="requestModalLabel">
-    <div class="modal-dialog" role="document">
+<div class="modal fade" id="requestModal" tabindex="-1" role="dialog" aria-labelledby="requestModalLabel" style="z-index: 10000">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -36,105 +36,111 @@
             </div>
             <div class="modal-body">
                 <form id="editRequest">
-                    <div class="form-group">
-                        <label for="fullname">П.І.Б</label>
-                        <input type="text" class="form-control" id="fullname" maxlength="50" readonly />
-                    </div>
-                    <div class="form-group">
-                        <label for="birthDate">Дата народження</label>
-                        <input type="text" class="form-control" id="birthDate" maxlength="10" readonly />
-                    </div>
-                    <div class="form-group">
-                        <label for="region">Область</label>
-                        <input type="text" class="form-control" id="region" maxlength="50" readonly />
-                    </div>
-                    <div class="form-group">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div><label for="ageCategory">Вікова категорія</label></div>
-                                <div><select class="form-control" id="ageCategory">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="fullname">П.І.Б</label>
+                                <input type="text" class="form-control" id="fullname" maxlength="50" readonly />
+                            </div>
+                            <div class="form-group">
+                                <label for="birthDate">Дата народження</label>
+                                <input type="text" class="form-control" id="birthDate" maxlength="10" readonly />
+                            </div>
+                            <div class="form-group">
+                                <label for="region">Область</label>
+                                <input type="text" class="form-control" id="region" maxlength="50" readonly />
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div><label for="ageCategory">Вікова категорія</label></div>
+                                        <div><select class="form-control" id="ageCategory">
                             <option></option>
                         </select></div>
-                            </div>
-                            <div class="col-md-6">
-                                <div><label for="weightCategory">Вагова категорія</label></div>
-                                <div><select class="form-control" id="weightCategory">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div><label for="weightCategory">Вагова категорія</label></div>
+                                        <div><select class="form-control" id="weightCategory">
                             <option></option>
                         </select></div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div><label for="currentCompetition">Змагання, на які подається заявка</label></div>
-                        <div><select class="form-control" id="currentCompetition">
+                            <div class="form-group">
+                                <div><label for="currentCompetition">Змагання, на які подається заявка</label></div>
+                                <div><select class="form-control" id="currentCompetition">
                     <option></option>
                     </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <p class="bg-success"><strong>Результат</strong></p>
-                        <div class="row">
-                            <div class="col-md-3">
-                                <label for="squat">Присідання</label>
-                                <input type="text" class="form-control discipline" name="squat" id="squat" maxlength="6" value="00.00" />
-                            </div>
-                            <div class="col-md-3">
-                                <label for="benchPress">Жим лежачи</label>
-                                <input type="text" class="form-control discipline" name="benchPress" id="benchPress" maxlength="6" value="00.00" />
-                            </div>
-                            <div class="col-md-3">
-                                <label for="deadLift">Станова тяга</label>
-                                <input type="text" class="form-control discipline" name="deadLift" id="deadLift" maxlength="6" value="00.00" />
-                            </div>
-                            <div class="col-md-3">
-                                <label for="total">Сума</label>
-                                <input type="text" class="form-control" name="total" id="total" maxlength="6" value="00.00" readonly />
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <div>
-                            <label for="preCompetition">Відбіркові змагання</label>
-                        </div>
-                        <div>
-                            <select class="form-control" id="preCompetition">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <p class="bg-success"><strong>Результат</strong></p>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <label for="squat" style="font-size: 0.9em">Присідання</label>
+                                        <input type="text" class="form-control discipline" name="squat" id="squat" maxlength="6" value="00.00" />
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="benchPress" style="font-size: 0.9em">Жим лежачи</label>
+                                        <input type="text" class="form-control discipline" name="benchPress" id="benchPress" maxlength="6" value="00.00" />
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="deadLift" style="font-size: 0.9em">Станова тяга</label>
+                                        <input type="text" class="form-control discipline" name="deadLift" id="deadLift" maxlength="6" value="00.00" />
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="total" style="font-size: 0.9em">Сума</label>
+                                        <input type="text" class="form-control" name="total" id="total" maxlength="6" value="00.00" readonly />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div>
+                                    <label for="preCompetition">Відбіркові змагання</label>
+                                </div>
+                                <div>
+                                    <select class="form-control" id="preCompetition">
                     <option></option>
                     </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div><label>Чи здавав допінг-контроль?</label></div>
-                        <label class="radio-inline">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div><label>Чи здавав допінг-контроль?</label></div>
+                                <label class="radio-inline">
                     <input type="radio" name="dopingControl" value="false" checked /> Ні
                 </label>
-                        <label class="radio-inline">
+                                <label class="radio-inline">
                     <input type="radio" name="dopingControl" value="true" /> Так
                 </label>
-                    </div>
-                    <div class="form-group" id="wrapDopingControlDate" style="display: none">
-                        <label for="dopingControlDate">Дата проходження допінг-контролю</label>
-                        <input type="text" class="form-control" id="dopingControlDate" maxlength="10" placeholder="дд.мм.рррр" />
-                    </div>
-                    <div class="form-group">
-                        <div><label>Чи має діючу візу?</label></div>
-                        <label class="radio-inline">
+                            </div>
+                            <div class="form-group" id="wrapDopingControlDate" style="display: none">
+                                <label for="dopingControlDate">Дата проходження допінг-контролю</label>
+                                <input type="text" class="form-control" id="dopingControlDate" maxlength="10" placeholder="дд.мм.рррр" />
+                            </div>
+                            <div class="form-group">
+                                <div><label>Чи має діючу візу?</label></div>
+                                <label class="radio-inline">
                     <input type="radio" name="activeVisa" value="false" checked /> Ні
                 </label>
-                        <label class="radio-inline">
+                                <label class="radio-inline">
                     <input type="radio" name="activeVisa" value="true" /> Так
                 </label>
-                    </div>
-                    <div id="visaFeatures" style="display: none">
-                        <div class="form-group">
-                            <label for="typeOfVisa">Тип діючої візи</label>
-                            <select id="typeOfVisa" class="form-control">
+                            </div>
+                            <div id="visaFeatures" style="display: none">
+                                <div class="form-group">
+                                    <label for="typeOfVisa">Тип діючої візи</label>
+                                    <select id="typeOfVisa" class="form-control">
                     <option value="0">Шенгенська віза</option>
                     <option value="1">Віза США</option>
                 </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="termOfVisa">Термін дії візи</label>
-                            <input type="text" class="form-control" id="termOfVisa" maxlength="10" placeholder="дд.мм.рррр" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="termOfVisa">Термін дії візи</label>
+                                    <input type="text" class="form-control" id="termOfVisa" maxlength="10" placeholder="дд.мм.рррр" />
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </form>
