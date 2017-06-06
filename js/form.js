@@ -8,4 +8,9 @@ function Form() {
         });
         jQuery(select).html(list);
     }
+
+    this.formatForDatepicker = function(date, separator) {
+        var dateArray = date.split(separator);
+        return dateArray[2] + "." + dateArray[1] + "." + dateArray[0];
+    }
 }

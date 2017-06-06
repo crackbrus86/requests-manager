@@ -5,13 +5,6 @@
         var spinner = new Spinner();
         var form = new Form();
 
-        $("#dopingControlDate").datepicker({
-            altFormat: "dd-mm-yy",
-            changeYear: true,
-            yearRange: "1900:2200",
-            regional: ["uk"]
-        });
-
         service.GetAgeCategories().then(function(data) {
             requestMgr.ageCategories = JSON.parse(data);
             form.appendOptions("#requestModal #ageCategory", requestMgr.ageCategories);
@@ -66,7 +59,6 @@
         });
 
         $("input[name='dopingControl']").live("change", function() {
-            $("#dopingControlDate").val('');
             $("#wrapDopingControlDate").toggle();
         });
 
@@ -78,6 +70,24 @@
 
         $(".discipline").live("change", function() {
             requestMgr.calculateTotal();
+        });
+
+        $("#dopingControlDate").live("click", function() {
+            $(this).datepicker({
+                altFormat: "dd-mm-yy",
+                changeYear: true,
+                yearRange: "1900:2200",
+                regional: ["uk"]
+            }).datepicker("show");
+        });
+
+        $("#termOfVisa").live("click", function() {
+            $(this).datepicker({
+                altFormat: "dd-mm-yy",
+                changeYear: true,
+                yearRange: "1900:2200",
+                regional: ["uk"]
+            }).datepicker("show");
         });
     });
 
@@ -144,10 +154,10 @@
         }
 
         this.populateModal = function(data) {
+            var globalForm = new Form();
             var fullName = data.last_name + " " + data.first_name + " " + data.middle_name;
             $("#fullname").val(fullName);
-            var bd = data.birth_date.split('-');
-            $("#birthDate").val(bd[2] + "." + bd[1] + "." + bd[0]);
+            $("#birthDate").val(globalForm.formatForDatepicker(data.birth_date, '-'));
             $("#region").val(data.region);
             $("#ageCategory").val(data.age_category_id).change();
             $("#weightCategory").val(data.weight_category_id).change();
@@ -159,7 +169,20 @@
             $("#preCompetition").val(data.pre_competition_id);
             if (data.doping.dopingControl == "true") {
                 $("input[name='dopingControl'][value='true']").attr("checked", "checked");
-                $("#wrapDopingControlDate").toggle();
+                $("#dopingControlDate").val(globalForm.formatForDatepicker(data.doping.dopingControlDate, "."));
+                $("#wrapDopingControlDate").css("display", "block");
+            } else {
+                $("input[name='dopingControl'][value='false']").attr("checked", "checked");
+                $("#wrapDopingControlDate").css("display", "none");
+            }
+            if (data.visa.hasActiveVisa == "true") {
+                $("input[name='activeVisa'][value='true']").attr("checked", "checked");
+                $("#typeOfVisa").val(data.visa.typeOfVisa).change();
+                $("#termOfVisa").val(globalForm.formatForDatepicker(data.visa.termOfVisa, "."));
+                $("#visaFeatures").css("display", "block");
+            } else {
+                $("input[name='activeVisa'][value='false']").attr("checked", "checked");
+                $("#visaFeatures").css("display", "none");
             }
         }
 
