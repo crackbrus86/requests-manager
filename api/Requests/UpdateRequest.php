@@ -1,6 +1,7 @@
 <?php
 include_once("../wpdb-connect.php");
 if(current_user_can('edit_others_pages')):
+    $tb_requests = $wpdb->get_blog_prefix()."rm_requests";
     include_once("../Requests-Manager/RequestModel.php");
     $request = new RequestBody();
     $requestId = strip_tags(stripcslashes(trim($_POST["id"])));
@@ -11,7 +12,9 @@ if(current_user_can('edit_others_pages')):
     $request->preCompetition = strip_tags(stripcslashes(trim($_POST["preCompetition"])));
     $request->doping = serialize($_POST["doping"]);
     $request->visa = serialize($_POST["visa"]);
-    echo "<pre>";
-    print_r($request);
-    echo "</pre>";
+    
+    $query = $wpdb->query("UPDATE $tb_requests SET age_category = '$request->ageCategory', weight_category = '$request->weightCategory',
+    current_competition = '$request->currentCompetition', disciplines = '$request->disciplines', pre_competition = '$request->preCompetition',
+    doping = '$request->doping', visa = '$request->visa' WHERE id = '$requestId'");
+    print_r($query);
 endif;

@@ -34,6 +34,10 @@ function Grid(fields, datasource) {
         return body;
     }
 
+    this.getDataSource = function(datasource) {
+        data = datasource;
+    }
+
     this.renderGrid = function() {
         return "<table class='table table-striped table-hover table-condensed'>" + createHeader() + createTbody() + "</table>";
     }

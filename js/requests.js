@@ -4,6 +4,7 @@
         var requestMgr = new RequestMgr();
         var spinner = new Spinner();
         var form = new Form();
+        var requestsGrid = {};
 
         service.GetAgeCategories().then(function(data) {
             requestMgr.ageCategories = JSON.parse(data);
@@ -19,6 +20,7 @@
 
         service.GetActualGames().then(function(data) {
             requestMgr.currentCompetition = JSON.parse(data);
+            form.appendOptions("#filter #competitionFilter", requestMgr.currentCompetition);
             form.appendOptions("#requestModal #currentCompetition", requestMgr.currentCompetition);
         }).then(function() {
             service.GetBeforeGames().then(function(data) {
@@ -31,7 +33,7 @@
             spinner.show();
             service.GetAllRequests().then(function(data) {
                 requestMgr.fetchRequests(data);
-                var requestsGrid = new Grid(requestMgr.fields, requestMgr.getRequestsList());
+                requestsGrid = new Grid(requestMgr.fields, requestMgr.getRequestsList());
                 $("#requestsGrid").append(requestsGrid.renderGrid());
                 spinner.hide();
             });
@@ -72,7 +74,7 @@
             requestMgr.calculateTotal();
         });
 
-        $("#dopingControlDate").live("click", function() {
+        $("#dopingControlDate, #startDate, #endDate").live("click", function() {
             $(this).datepicker({
                 altFormat: "dd-mm-yy",
                 changeYear: true,
@@ -91,9 +93,21 @@
         });
 
         $("#requestModal #saveRequest").live("click", function() {
-            console.log(requestMgr.setRequestData());
-            service.UpdateRequest(requestMgr.setRequestData());
+            $("#requestModal").modal("hide");
+            service.UpdateRequest(requestMgr.setRequestData()).then(function() {
+                spinner.show();
+                service.GetAllRequests().then(function(data) {
+                    requestMgr.fetchRequests(data);
+                    requestsGrid.getDataSource(requestMgr.getRequestsList());
+                    $("#requestsGrid").html('');
+                    $("#requestsGrid").append(requestsGrid.renderGrid());
+                    spinner.hide();
+                });
+            });
         });
+
+        $("#startDate").val(form.getToday());
+        $("#endDate").val(form.getToday());
     });
 
     function RequestMgr() {
@@ -143,6 +157,7 @@
         }
 
         this.fetchRequests = function(data) {
+            requests = [];
             var dt = JSON.parse(data);
             for (var i = 0; i < dt.length; i++) {
                 requests.push(dt[i]);
