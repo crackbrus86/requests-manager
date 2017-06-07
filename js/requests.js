@@ -89,6 +89,11 @@
                 regional: ["uk"]
             }).datepicker("show");
         });
+
+        $("#requestModal #saveRequest").live("click", function() {
+            console.log(requestMgr.setRequestData());
+            service.UpdateRequest(requestMgr.setRequestData());
+        });
     });
 
     function RequestMgr() {
@@ -156,6 +161,7 @@
         this.populateModal = function(data) {
             var globalForm = new Form();
             var fullName = data.last_name + " " + data.first_name + " " + data.middle_name;
+            $("#requestId").val(data.id);
             $("#fullname").val(fullName);
             $("#birthDate").val(globalForm.formatForDatepicker(data.birth_date, '-'));
             $("#region").val(data.region);
@@ -200,6 +206,48 @@
 
         this.getRequestsList = function() {
             return requests;
+        }
+
+        this.requestDataForUpdate = {
+            id: "",
+            ageCat: "",
+            weigthCat: "",
+            competiton: "",
+            results: {
+                squat: "0.00",
+                benchPress: "0.00",
+                deadLift: "0.00",
+                total: "0.00"
+            },
+            preCompetition: "",
+            doping: {
+                isChecked: "",
+                checkDate: ""
+            },
+            visa: {
+                hasVisa: "",
+                typeOfVisa: "",
+                termOfVisa: ""
+            }
+        };
+
+        this.setRequestData = function() {
+            var form = new Form();
+            this.requestDataForUpdate.id = $("#requestId").val().trim();
+            this.requestDataForUpdate.ageCat = $("#ageCategory").val();
+            this.requestDataForUpdate.weigthCat = $("#weightCategory").val()
+            this.requestDataForUpdate.competiton = $("#currentCompetition").val();
+            this.requestDataForUpdate.results.squat = $("#squat").val().trim();
+            this.requestDataForUpdate.results.benchPress = $("#benchPress").val().trim();
+            this.requestDataForUpdate.results.deadLift = $("#deadLift").val().trim();
+            this.requestDataForUpdate.results.total = $("#total").val().trim();
+            this.requestDataForUpdate.preCompetition = $("#preCompetition").val();
+            this.requestDataForUpdate.doping.isChecked = $("input[name=dopingControl]:checked").val();
+            this.requestDataForUpdate.doping.checkDate = form.formatForDatepicker($("#dopingControlDate").val().trim(), ".");
+            this.requestDataForUpdate.visa.hasVisa = $("input[name=activeVisa]:checked").val();
+            this.requestDataForUpdate.visa.type = $("#typeOfVisa").val();
+            this.requestDataForUpdate.visa.termOfVisa = form.formatForDatepicker($("#termOfVisa").val(), ".");
+            return this.requestDataForUpdate;
         }
     }
 
@@ -262,6 +310,17 @@
             return $.ajax({
                 url: rootDir + "Games-Manager/GetBeforeGames.php",
                 type: "POST",
+                success: function(data) {
+                    return data;
+                }
+            })
+        }
+
+        this.UpdateRequest = function(request) {
+            return $.ajax({
+                url: dir + "UpdateRequest.php",
+                type: "POST",
+                data: request,
                 success: function(data) {
                     return data;
                 }

@@ -10,6 +10,7 @@ function Form() {
     }
 
     this.formatForDatepicker = function(date, separator) {
+        if (!date) return null;
         var dateArray = date.split(separator);
         return dateArray[2] + "." + dateArray[1] + "." + dateArray[0];
     }
