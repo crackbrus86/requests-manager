@@ -14,7 +14,9 @@
     wp_register_script( 'grid_script', plugins_url( '../js/grid.js', __FILE__ ) );
     wp_enqueue_script(  'grid_script');
     wp_register_script( 'form_script', plugins_url( '../js/form.js', __FILE__ ) );
-    wp_enqueue_script(  'form_script');     
+    wp_enqueue_script(  'form_script');  
+    wp_register_script( 'alert_script', plugins_url( '../js/alert.js', __FILE__ ) );
+    wp_enqueue_script(  'alert_script');         
     wp_register_script( 'requests_script', plugins_url( '../js/requests.js', __FILE__ ) );
     wp_enqueue_script(  'requests_script');
 ?>

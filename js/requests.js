@@ -5,6 +5,7 @@
         var spinner = new Spinner();
         var form = new Form();
         var requestsGrid = {};
+        var alert = new Alert();
 
         service.GetAgeCategories().then(function(data) {
             requestMgr.ageCategories = JSON.parse(data);
@@ -78,8 +79,15 @@
         $(".discipline").live("change", function() {
             requestMgr.calculateTotal();
         });
+        (function() {
+            $("#startDate, #endDate").datepicker({
+                changeYear: true,
+                yearRange: "1900:2200",
+                regional: ["uk"]
+            });
+        })();
 
-        $("#dopingControlDate, #startDate, #endDate").live("click", function() {
+        $("#dopingControlDate").live("click", function() {
             $(this).datepicker({
                 altFormat: "dd-mm-yy",
                 changeYear: true,
@@ -127,16 +135,55 @@
         });
 
         $("#runFilter").live("click", function() {
-            var filter = {
+            requestMgr.filter = {
                 competition: $("#competitionFilter").val(),
                 startDate: form.formatUniversal($("#startDate").val(), ".", "-"),
                 endDate: form.formatUniversal($("#endDate").val(), ".", "-")
             }
-            service.getFilteredRequests(filter).then(function(data) {
-                console.log(data);
-            })
+            switch (requestMgr.validateFilter()) {
+                case 1:
+                    alert.alertDanger("Не вибране змагання");
+                    $("#competitionFilter").parent().addClass("has-error");
+                    break;
+                case 2:
+                    alert.alertDanger("Не вибрано дату Від");
+                    $("#startDate").parent().addClass("has-error");
+                    break;
+                case 3:
+                    alert.alertDanger("Не вибрано дату До");
+                    $("#endDate").parent().addClass("has-error");
+                    break;
+                case 4:
+                    alert.alertDanger("Дата Від пізніше за дату До");
+                    $("#startDate").parent().addClass("has-error");
+                    $("#endDate").parent().addClass("has-error");
+                    break;
+                default:
+                    spinner.show();
+                    service.getFilteredRequests(requestMgr.filter).then(function(data) {
+                        if (!data.length) {
+                            spinner.hide();
+                        } else {
+                            requestMgr.fetchRequests(data);
+                            requestsGrid.getDataSource(requestMgr.getRequestsList());
+                            $("#requestsGrid").html('');
+                            $("#requestsGrid").append(requestsGrid.renderGrid());
+                            spinner.hide();
+                        }
+                    });
+                    break;
+            }
+            $("#competitionFilter").val(requestMgr.filter.competition);
+            $("#startDate").val(form.formatForDatepicker(requestMgr.filter.startDate, "-"));
+            $("#endDate").val(form.formatForDatepicker(requestMgr.filter.endDate, "-"));
         });
 
+
+        $("#startDate, #endDate").live("click", function(e) {
+            if ($(e.target).parent().hasClass("has-error")) {
+                $(e.target).parent().removeClass("has-error");
+            }
+        });
         $("#startDate").val(form.getToday());
         $("#endDate").val(form.getToday());
     });
@@ -147,6 +194,7 @@
         this.weightCategories = [];
         this.currentCompetition = [];
         this.preCompetition = [];
+        this.filter = null;
         this.fields = [{
                 title: "",
                 field: "id",
@@ -294,6 +342,14 @@
             this.requestDataForUpdate.visa.type = $("#typeOfVisa").val();
             this.requestDataForUpdate.visa.termOfVisa = form.formatForDatepicker($("#termOfVisa").val(), ".");
             return this.requestDataForUpdate;
+        }
+
+        this.validateFilter = function() {
+            if (!this.filter.competition) return 1;
+            if (!this.filter.startDate || this.filter.startDate == "") return 2;
+            if (!this.filter.endDate || this.filter.endDate == "") return 3;
+            if (new Date(this.filter.startDate) > new Date(this.filter.endDate)) return 4;
+            return 0;
         }
     }
 
