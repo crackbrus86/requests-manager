@@ -38,7 +38,7 @@
                     <label for="endDate">До:</label>
                     <input type="text" class="form-control" id="endDate" maxlength="10" placeholder="дд.мм.рррр" />
                 </div>
-                <button type="button" class="btn btn-info" id="runFilter">Зберегти</button>
+                <button type="button" class="btn btn-info" id="runFilter">Фільтрувати</button>
             </form>
         </div>
         <div id="requestsGrid">
@@ -169,6 +169,25 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Скасувати</button>
                 <button type="button" class="btn btn-primary" id="saveRequest">Зберегти</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade bs-example-modal-sm" id="confirmDialog" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Видалити заявку</h4>
+            </div>
+            <div class="modal-body">
+                <p><i class="fa fa-exclamation-triangle" style="color: red" aria-hidden="true"></i> Ви впевнені, що хочете видалити цю заявку?</p>
+                <form id="removeRequest"><input type="hidden" class="form-control" name="id" id="removeRequestId"> </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Скасувати</button>
+                <button type="button" class="btn btn-danger" id="deleteRequest">Видалити</button>
             </div>
         </div>
     </div>

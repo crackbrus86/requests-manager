@@ -15,6 +15,12 @@ function Form() {
         return dateArray[2] + "." + dateArray[1] + "." + dateArray[0];
     }
 
+    this.formatUniversal = function(date, oldSeparator, newSeparator) {
+        if (!date) return null;
+        var dateArray = date.split(oldSeparator);
+        return dateArray[2] + newSeparator + dateArray[1] + newSeparator + dateArray[0];
+    }
+
     this.getToday = function() {
         var day = new Date();
         var dayPrefix = (day.getDate() < 10) ? "0" : "";

@@ -54,6 +54,11 @@
             });
         });
 
+        $(".btn-delete").live("click", function(e) {
+            $("#confirmDialog #removeRequestId").val(e.target.dataset["rel"]);
+            $("#confirmDialog").modal("show");
+        });
+
         $("#requestModal #ageCategory").live("change", function(e) {
             form.appendOptions("#requestModal #weightCategory", requestMgr.weightCategories.filter(function(item) {
                 return item.parent == e.target.value;
@@ -104,6 +109,32 @@
                     spinner.hide();
                 });
             });
+        });
+
+        $("#confirmDialog #deleteRequest").live("click", function() {
+            var id = $("#confirmDialog #removeRequestId").val();
+            $("#confirmDialog").modal("hide");
+            service.DeleteRequest(id).then(function() {
+                spinner.show();
+                service.GetAllRequests().then(function(data) {
+                    requestMgr.fetchRequests(data);
+                    requestsGrid.getDataSource(requestMgr.getRequestsList());
+                    $("#requestsGrid").html('');
+                    $("#requestsGrid").append(requestsGrid.renderGrid());
+                    spinner.hide();
+                });
+            });
+        });
+
+        $("#runFilter").live("click", function() {
+            var filter = {
+                competition: $("#competitionFilter").val(),
+                startDate: form.formatUniversal($("#startDate").val(), ".", "-"),
+                endDate: form.formatUniversal($("#endDate").val(), ".", "-")
+            }
+            service.getFilteredRequests(filter).then(function(data) {
+                console.log(data);
+            })
         });
 
         $("#startDate").val(form.getToday());
@@ -336,6 +367,28 @@
                 url: dir + "UpdateRequest.php",
                 type: "POST",
                 data: request,
+                success: function(data) {
+                    return data;
+                }
+            })
+        }
+
+        this.DeleteRequest = function(id) {
+            return $.ajax({
+                url: dir + "DeleteRequest.php",
+                type: "POST",
+                data: "rqstId=" + id,
+                success: function(data) {
+                    return data;
+                }
+            })
+        }
+
+        this.getFilteredRequests = function(filter) {
+            return $.ajax({
+                url: dir + "GetFilteredRequests.php",
+                type: "POST",
+                data: filter,
                 success: function(data) {
                     return data;
                 }
