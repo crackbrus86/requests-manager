@@ -1,24 +1,21 @@
-<?php
-    wp_register_style('req_rm_jquery_ui_style', plugins_url( '../css/jquery-ui.min.css', __FILE__ ));
-    wp_enqueue_style( 'req_rm_jquery_ui_style');
-    wp_register_style('req_rm_jquery_ui_datepicker_style', plugins_url( '../css/jquery-ui.theme.min.css', __FILE__ ));
-    wp_enqueue_style( 'req_rm_jquery_ui_datepicker_style');    
-    wp_register_script( 'req_rm_jquery_ui', plugins_url( '../js/jquery-ui.min.js', __FILE__ ) );
-    wp_enqueue_script(  'req_rm_jquery_ui');    
-    wp_register_script( 'req_rm_jquery_ui_datepicker_uk', plugins_url( '../js/datepicker-uk.js', __FILE__ ) );
-    wp_enqueue_script(  'req_rm_jquery_ui_datepicker_uk');    
-    wp_register_script( 'polyfills_script', plugins_url( '../js/polyfills.js', __FILE__ ) );
-    wp_enqueue_script(  'polyfills_script');
-    wp_register_script( 'spinner_script', plugins_url( '../js/spinner.js', __FILE__ ) );
-    wp_enqueue_script(  'spinner_script');
-    wp_register_script( 'grid_script', plugins_url( '../js/grid.js', __FILE__ ) );
-    wp_enqueue_script(  'grid_script');
-    wp_register_script( 'form_script', plugins_url( '../js/form.js', __FILE__ ) );
-    wp_enqueue_script(  'form_script');  
-    wp_register_script( 'alert_script', plugins_url( '../js/alert.js', __FILE__ ) );
-    wp_enqueue_script(  'alert_script');         
-    wp_register_script( 'requests_script', plugins_url( '../js/requests.js', __FILE__ ) );
-    wp_enqueue_script(  'requests_script');
+<?php  
+
+
+    function requests_datepicker(){      
+        wp_register_script( 'polyfills_script', plugins_url( '../js/polyfills.js', __FILE__ ) );
+        wp_enqueue_script(  'polyfills_script');
+        wp_register_script( 'spinner_script', plugins_url( '../js/spinner.js', __FILE__ ) );
+        wp_enqueue_script(  'spinner_script');
+        wp_register_script( 'grid_script', plugins_url( '../js/grid.js', __FILE__ ) );
+        wp_enqueue_script(  'grid_script');
+        wp_register_script( 'form_script', plugins_url( '../js/form.js', __FILE__ ) );
+        wp_enqueue_script(  'form_script');  
+        wp_register_script( 'alert_script', plugins_url( '../js/alert.js', __FILE__ ) );
+        wp_enqueue_script(  'alert_script');         
+        wp_register_script( 'requests_script', plugins_url( '../js/requests.js', __FILE__ ) );
+        wp_enqueue_script(  'requests_script');           
+    }
+    add_action('admin_footer', 'requests_datepicker');
 ?>
 <div class="row requests-wrapper">
     <div class="col-md-12 requests-content-section">
@@ -140,7 +137,7 @@
                             </div>
                             <div class="form-group" id="wrapDopingControlDate" style="display: none">
                                 <label for="dopingControlDate">Дата проходження допінг-контролю</label>
-                                <input type="text" class="form-control" id="dopingControlDate" maxlength="10" placeholder="дд.мм.рррр" />
+                                <input type="date" class="form-control" id="dopingControlDate" maxlength="10" placeholder="дд.мм.рррр" />
                             </div>
                             <div class="form-group">
                                 <div><label>Чи має діючу візу?</label></div>
@@ -161,7 +158,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="termOfVisa">Термін дії візи</label>
-                                    <input type="text" class="form-control" id="termOfVisa" maxlength="10" placeholder="дд.мм.рррр" />
+                                    <input type="date" class="form-control" id="termOfVisa" maxlength="10" placeholder="дд.мм.рррр" />
                                 </div>
                             </div>
                         </div>

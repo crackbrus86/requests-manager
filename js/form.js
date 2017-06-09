@@ -25,7 +25,6 @@ function Form() {
         var day = new Date();
         var dayPrefix = (day.getDate() < 10) ? "0" : "";
         var monthPrefix = (day.getMonth() < 9) ? "0" : '';
-        // return dayPrefix + day.getDate() + "." + monthPrefix + (day.getMonth() + 1) + "." + day.getFullYear();
         return day.getFullYear() + "-" + monthPrefix + (day.getMonth() + 1) + "-" + dayPrefix + day.getDate();
     }
 }

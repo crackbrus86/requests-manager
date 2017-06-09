@@ -53,7 +53,7 @@
                 $("#requestModal").modal('show');
                 if (requestMgr.filter) {
                     $("#startDate").val(requestMgr.filter.startDate);
-                    $("#endDate").val(requestMgr.filter.startDate);
+                    $("#endDate").val(requestMgr.filter.endDate);
                     $("#competitionFilter").val(requestMgr.filter.competition);
                 } else {
                     $("#startDate").val(form.getToday());
@@ -87,35 +87,32 @@
             requestMgr.calculateTotal();
         });
 
-        $("#dopingControlDate").live("click", function() {
-            $(this).datepicker({
-                altFormat: "dd-mm-yy",
-                changeYear: true,
-                yearRange: "1900:2200",
-                regional: ["uk"]
-            }).datepicker("show");
-        });
-
-        $("#termOfVisa").live("click", function() {
-            $(this).datepicker({
-                altFormat: "dd-mm-yy",
-                changeYear: true,
-                yearRange: "1900:2200",
-                regional: ["uk"]
-            }).datepicker("show");
-        });
-
         $("#requestModal #saveRequest").live("click", function() {
             $("#requestModal").modal("hide");
             service.UpdateRequest(requestMgr.setRequestData()).then(function() {
                 spinner.show();
-                service.GetAllRequests().then(function(data) {
-                    requestMgr.fetchRequests(data);
-                    requestsGrid.getDataSource(requestMgr.getRequestsList());
-                    $("#requestsGrid").html('');
-                    $("#requestsGrid").append(requestsGrid.renderGrid());
-                    spinner.hide();
-                });
+                if (requestMgr.filter) {
+                    service.GetFilteredRequests(requestMgr.filter).then(function(data) {
+                        requestMgr.fetchRequests(data);
+                        requestsGrid.getDataSource(requestMgr.getRequestsList());
+                        $("#requestsGrid").html('');
+                        $("#requestsGrid").append(requestsGrid.renderGrid());
+                        spinner.hide();
+                    });
+                    $("#startDate").val(requestMgr.filter.startDate);
+                    $("#endDate").val(requestMgr.filter.endDate);
+                    $("#competitionFilter").val(requestMgr.filter.competition);
+                } else {
+                    service.GetAllRequests().then(function(data) {
+                        requestMgr.fetchRequests(data);
+                        requestsGrid.getDataSource(requestMgr.getRequestsList());
+                        $("#requestsGrid").html('');
+                        $("#requestsGrid").append(requestsGrid.renderGrid());
+                        spinner.hide();
+                    });
+                    $("#startDate").val(form.getToday());
+                    $("#endDate").val(form.getToday());
+                }
             });
         });
 
@@ -160,7 +157,7 @@
                     break;
                 default:
                     spinner.show();
-                    service.getFilteredRequests(requestMgr.filter).then(function(data) {
+                    service.GetFilteredRequests(requestMgr.filter).then(function(data) {
                         if (!data.length) {
                             spinner.hide();
                         } else {
@@ -268,18 +265,18 @@
             $("#deadLift").val(data.results.deadLift);
             this.calculateTotal();
             $("#preCompetition").val(data.pre_competition_id);
-            if (data.doping.dopingControl == "true") {
+            if (data.doping.isChecked == "true") {
                 $("input[name='dopingControl'][value='true']").attr("checked", "checked");
-                $("#dopingControlDate").val(globalForm.formatForDatepicker(data.doping.dopingControlDate, "."));
+                $("#dopingControlDate").val(data.doping.checkDate);
                 $("#wrapDopingControlDate").css("display", "block");
             } else {
                 $("input[name='dopingControl'][value='false']").attr("checked", "checked");
                 $("#wrapDopingControlDate").css("display", "none");
             }
-            if (data.visa.hasActiveVisa == "true") {
+            if (data.visa.hasVisa == "true") {
                 $("input[name='activeVisa'][value='true']").attr("checked", "checked");
-                $("#typeOfVisa").val(data.visa.typeOfVisa).change();
-                $("#termOfVisa").val(globalForm.formatForDatepicker(data.visa.termOfVisa, "."));
+                $("#typeOfVisa").val(data.visa.type).change();
+                $("#termOfVisa").val(data.visa.termOfVisa);
                 $("#visaFeatures").css("display", "block");
             } else {
                 $("input[name='activeVisa'][value='false']").attr("checked", "checked");
@@ -338,10 +335,10 @@
             this.requestDataForUpdate.results.total = $("#total").val().trim();
             this.requestDataForUpdate.preCompetition = $("#preCompetition").val();
             this.requestDataForUpdate.doping.isChecked = $("input[name=dopingControl]:checked").val();
-            this.requestDataForUpdate.doping.checkDate = form.formatForDatepicker($("#dopingControlDate").val().trim(), ".");
+            this.requestDataForUpdate.doping.checkDate = $("#dopingControlDate").val().trim();
             this.requestDataForUpdate.visa.hasVisa = $("input[name=activeVisa]:checked").val();
             this.requestDataForUpdate.visa.type = $("#typeOfVisa").val();
-            this.requestDataForUpdate.visa.termOfVisa = form.formatForDatepicker($("#termOfVisa").val(), ".");
+            this.requestDataForUpdate.visa.termOfVisa = $("#termOfVisa").val();
             return this.requestDataForUpdate;
         }
 
@@ -441,7 +438,7 @@
             })
         }
 
-        this.getFilteredRequests = function(filter) {
+        this.GetFilteredRequests = function(filter) {
             return $.ajax({
                 url: dir + "GetFilteredRequests.php",
                 type: "POST",
