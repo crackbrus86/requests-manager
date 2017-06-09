@@ -51,7 +51,14 @@
                 spinner.hide();
                 requestMgr.populateModal(JSON.parse(data)[0]);
                 $("#requestModal").modal('show');
-
+                if (requestMgr.filter) {
+                    $("#startDate").val(requestMgr.filter.startDate);
+                    $("#endDate").val(requestMgr.filter.startDate);
+                    $("#competitionFilter").val(requestMgr.filter.competition);
+                } else {
+                    $("#startDate").val(form.getToday());
+                    $("#endDate").val(form.getToday());
+                }
             });
         });
 
@@ -79,13 +86,6 @@
         $(".discipline").live("change", function() {
             requestMgr.calculateTotal();
         });
-        (function() {
-            $("#startDate, #endDate").datepicker({
-                changeYear: true,
-                yearRange: "1900:2200",
-                regional: ["uk"]
-            });
-        })();
 
         $("#dopingControlDate").live("click", function() {
             $(this).datepicker({
@@ -137,8 +137,8 @@
         $("#runFilter").live("click", function() {
             requestMgr.filter = {
                 competition: $("#competitionFilter").val(),
-                startDate: form.formatUniversal($("#startDate").val(), ".", "-"),
-                endDate: form.formatUniversal($("#endDate").val(), ".", "-")
+                startDate: $("#startDate").val(),
+                endDate: $("#endDate").val()
             }
             switch (requestMgr.validateFilter()) {
                 case 1:
@@ -174,8 +174,8 @@
                     break;
             }
             $("#competitionFilter").val(requestMgr.filter.competition);
-            $("#startDate").val(form.formatForDatepicker(requestMgr.filter.startDate, "-"));
-            $("#endDate").val(form.formatForDatepicker(requestMgr.filter.endDate, "-"));
+            $("#startDate").val(requestMgr.filter.startDate);
+            $("#endDate").val(requestMgr.filter.endDate);
         });
 
 
@@ -184,6 +184,7 @@
                 $(e.target).parent().removeClass("has-error");
             }
         });
+
         $("#startDate").val(form.getToday());
         $("#endDate").val(form.getToday());
     });
