@@ -1,7 +1,5 @@
 <?php  
-
-
-    function requests_datepicker(){      
+    function requests_modules(){      
         wp_register_script( 'polyfills_script', plugins_url( '../js/polyfills.js', __FILE__ ) );
         wp_enqueue_script(  'polyfills_script');
         wp_register_script( 'spinner_script', plugins_url( '../js/spinner.js', __FILE__ ) );
@@ -11,11 +9,15 @@
         wp_register_script( 'form_script', plugins_url( '../js/form.js', __FILE__ ) );
         wp_enqueue_script(  'form_script');  
         wp_register_script( 'alert_script', plugins_url( '../js/alert.js', __FILE__ ) );
-        wp_enqueue_script(  'alert_script');         
-        wp_register_script( 'requests_script', plugins_url( '../js/requests.js', __FILE__ ) );
+        wp_enqueue_script(  'alert_script'); 
+        wp_register_script( 'requestsServices_script', plugins_url( '../js/requests/service.js', __FILE__ ) );
+        wp_enqueue_script(  'requestsServices_script');         
+        wp_register_script( 'requestsClass_script', plugins_url( '../js/requests/requestsClass.js', __FILE__ ) );
+        wp_enqueue_script(  'requestsClass_script');                
+        wp_register_script( 'requests_script', plugins_url( '../js/requests/requests.js', __FILE__ ) );
         wp_enqueue_script(  'requests_script');           
     }
-    add_action('admin_footer', 'requests_datepicker');
+    add_action('admin_footer', 'requests_modules');
 ?>
 <div class="row requests-wrapper">
     <div class="col-md-12 requests-content-section">
