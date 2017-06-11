@@ -5,7 +5,13 @@
             this.currentCompetition = [];
             this.preCompetition = [];
             this.filter = null;
-            var recordsPerPage = 3;
+            this.recordsPerPage = 3;
+            this.currentPage = 1;
+            this.offset = this.recordsPerPage * this.currentPage - this.recordsPerPage;
+            this.pageParams = {
+                limit: this.recordsPerPage,
+                offset: this.offset
+            }
             this.fields = [{
                     title: "",
                     field: "id",
@@ -52,6 +58,11 @@
                 for (var i = 0; i < dt.length; i++) {
                     requests.push(dt[i]);
                 }
+            }
+
+            this.offsetRecalc = function() {
+                this.offset = this.recordsPerPage * this.currentPage - this.recordsPerPage;
+                this.pageParams.offset = this.offset;
             }
 
             this.calculateTotal = function() {

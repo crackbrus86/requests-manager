@@ -9,7 +9,9 @@
         wp_register_script( 'form_script', plugins_url( '../js/form.js', __FILE__ ) );
         wp_enqueue_script(  'form_script');  
         wp_register_script( 'alert_script', plugins_url( '../js/alert.js', __FILE__ ) );
-        wp_enqueue_script(  'alert_script'); 
+        wp_enqueue_script(  'alert_script');
+        wp_register_script( 'paging_script', plugins_url( '../js/paging.js', __FILE__ ) );
+        wp_enqueue_script(  'paging_script');  
         wp_register_script( 'requestsServices_script', plugins_url( '../js/requests/service.js', __FILE__ ) );
         wp_enqueue_script(  'requestsServices_script');         
         wp_register_script( 'requestsClass_script', plugins_url( '../js/requests/requestsClass.js', __FILE__ ) );
@@ -43,6 +45,9 @@
             </form>
         </div>
         <div id="requestsGrid">
+
+        </div>
+        <div id="requestsPaging">
 
         </div>
     </div>

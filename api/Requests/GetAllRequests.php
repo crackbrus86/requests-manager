@@ -5,6 +5,8 @@ $tb_user = $wpdb->get_blog_prefix() . "rm_users";
 $tb_category_age = $wpdb->get_blog_prefix() . 'rm_category_age';
 $tb_category_weight = $wpdb->get_blog_prefix() . 'rm_category_weight';
 $tb_games = $wpdb->get_blog_prefix() . 'rm_actual_games';
+$limit = strip_tags(stripcslashes(trim($_POST['limit'])));
+$offset = strip_tags(stripcslashes(trim($_POST['offset'])));
 $requests = $wpdb->get_results( "SELECT $tb_request.id, $tb_user.first_name, $tb_user.last_name, $tb_category_age.title, 
 $tb_category_weight.title_w, $tb_games.name, $tb_request.create_date 
 FROM $tb_request 
@@ -15,6 +17,7 @@ FROM $tb_request
     JOIN $tb_category_weight
         ON $tb_request.weight_category = $tb_category_weight.id
     JOIN $tb_games
-        ON $tb_request.current_competition = $tb_games.id ORDER BY $tb_request.create_date DESC");
+        ON $tb_request.current_competition = $tb_games.id ORDER BY $tb_request.create_date DESC
+LIMIT $limit OFFSET $offset");
 $return = json_encode($requests);
 print_r($return);

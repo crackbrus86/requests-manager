@@ -6,6 +6,7 @@
         var form = new Form();
         var requestsGrid = {};
         var alert = new Alert();
+        var requestsPaging = null;
 
         service.GetAgeCategories().then(function(data) {
             requestMgr.ageCategories = JSON.parse(data);
@@ -30,9 +31,14 @@
             });
         });
 
+        service.GetCountOfAllRequests().then(function(count) {
+            requestsPaging = new Paging(requestMgr.recordsPerPage, count, requestMgr.currentPage);
+            $("#requestsPaging").html(requestsPaging.renderPaging());
+        });
+
         if ($("#requests").hasClass("active")) {
             spinner.show();
-            service.GetAllRequests().then(function(data) {
+            service.GetAllRequests(requestMgr.pageParams).then(function(data) {
                 requestMgr.fetchRequests(data);
                 requestsGrid = new Grid(requestMgr.fields, requestMgr.getRequestsList());
                 $("#requestsGrid").append(requestsGrid.renderGrid());
@@ -126,7 +132,7 @@
                     break;
                 default:
                     spinner.show();
-                    service.GetFilteredRequests(requestMgr.filter).then(function(data) {
+                    service.GetFilteredRequests(requestMgr.filter, requestMgr.pageParams).then(function(data) {
                         if (!data.length) {
                             spinner.hide();
                         } else {
@@ -145,6 +151,31 @@
             }
         });
 
+        $(".pagination li a").live("click", function(e) {
+            requestMgr.currentPage = e.target.dataset["rel"];
+            requestMgr.offsetRecalc();
+            spinner.show();
+            if (requestMgr.filter) {
+                refreshFilteredGrid(requestMgr.pageParams);
+                service.GetCountOfFilteredRequests(requestMgr.filter).then(function(count) {
+                    requestsPaging.update(requestMgr.recordsPerPage, count, requestMgr.currentPage);
+                    $("#requestsPaging").html();
+                    $("#requestsPaging").html(requestsPaging.renderPaging());
+                });
+            } else {
+                refreshDefaultGrid(requestMgr.pageParams);
+                service.GetCountOfAllRequests().then(function(count) {
+                    requestsPaging.update(requestMgr.recordsPerPage, count, requestMgr.currentPage);
+                    $("#requestsPaging").html();
+                    $("#requestsPaging").html(requestsPaging.renderPaging());
+                });
+            }
+        });
+
+        function refreshPagingForAll() {
+
+        }
+
         function refreshGrid(data) {
             requestMgr.fetchRequests(data);
             requestsGrid.getDataSource(requestMgr.getRequestsList());
@@ -153,13 +184,13 @@
             spinner.hide();
         }
 
-        function refreshDefaultGrid() {
-            service.GetAllRequests().then(function(data) { refreshGrid(data) });
+        function refreshDefaultGrid(params) {
+            service.GetAllRequests(params).then(function(data) { refreshGrid(data) });
             setupDefaultFilter();
         }
 
-        function refreshFilteredGrid() {
-            service.GetFilteredRequests(requestMgr.filter).then(function(data) { refreshGrid(data) });
+        function refreshFilteredGrid(params) {
+            service.GetFilteredRequests(requestMgr.filter, params).then(function(data) { refreshGrid(data) });
             setupCurrentFilter();
         }
 

@@ -2,10 +2,11 @@
         var dir = "../wp-content/plugins/requests-manager/api/Requests/";
         var rootDir = "../wp-content/plugins/requests-manager/api/";
 
-        this.GetAllRequests = function() {
+        this.GetAllRequests = function(data = null) {
             return jQuery.ajax({
                 url: dir + "GetAllRequests.php",
                 type: "POST",
+                data: data,
                 success: function(data) {
                     return data;
                 }
@@ -85,11 +86,11 @@
             })
         }
 
-        this.GetFilteredRequests = function(filter) {
+        this.GetFilteredRequests = function(filter, params = null) {
             return jQuery.ajax({
                 url: dir + "GetFilteredRequests.php",
                 type: "POST",
-                data: filter,
+                data: { filter, params },
                 success: function(data) {
                     return data;
                 }
@@ -98,8 +99,19 @@
 
         this.GetCountOfAllRequests = function() {
             return jQuery.ajax({
-                url: dir + "GetCountOfAllRequests",
+                url: dir + "GetCountOfAllRequests.php",
                 type: "POST",
+                success: function(data) {
+                    return data;
+                }
+            })
+        }
+
+        this.GetCountOfFilteredRequests = function(filter) {
+            return jQuery.ajax({
+                url: dir + "GetCountOfFilteredRequests.php",
+                type: "POST",
+                data: filter,
                 success: function(data) {
                     return data;
                 }
