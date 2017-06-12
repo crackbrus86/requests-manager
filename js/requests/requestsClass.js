@@ -5,7 +5,7 @@
             this.currentCompetition = [];
             this.preCompetition = [];
             this.filter = null;
-            this.recordsPerPage = 3;
+            this.recordsPerPage = 10;
             this.currentPage = 1;
             this.offset = this.recordsPerPage * this.currentPage - this.recordsPerPage;
             this.pageParams = {

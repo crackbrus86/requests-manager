@@ -91,8 +91,8 @@
             $("#requestModal").modal("hide");
             service.UpdateRequest(requestMgr.setRequestData()).then(function() {
                 spinner.show();
-                if (requestMgr.filter) refreshFilteredGrid();
-                else refreshDefaultGrid();
+                if (requestMgr.filter) refreshPagingForFilter();
+                else refreshPagingForAll();
             });
         });
 
@@ -101,8 +101,11 @@
             $("#confirmDialog").modal("hide");
             service.DeleteRequest(id).then(function() {
                 spinner.show();
-                if (requestMgr.filter) refreshFilteredGrid();
-                else refreshDefaultGrid();
+                if (requestMgr.filter) {
+                    refreshPagingForFilter();
+                } else {
+                    refreshPagingForAll();
+                }
             });
         });
 
@@ -133,11 +136,11 @@
                 default:
                     spinner.show();
                     service.GetFilteredRequests(requestMgr.filter, requestMgr.pageParams).then(function(data) {
-                        if (!data.length) {
-                            spinner.hide();
-                        } else {
-                            refreshGrid(data);
-                        }
+                        service.GetCountOfFilteredRequests(requestMgr.filter).then(function(count) {
+                            refreshPaging(count);
+                            if (!data.length) spinner.hide();
+                            else refreshGrid(data);
+                        });
                     });
                     break;
             }
@@ -155,25 +158,32 @@
             requestMgr.currentPage = e.target.dataset["rel"];
             requestMgr.offsetRecalc();
             spinner.show();
-            if (requestMgr.filter) {
-                refreshFilteredGrid(requestMgr.pageParams);
-                service.GetCountOfFilteredRequests(requestMgr.filter).then(function(count) {
-                    requestsPaging.update(requestMgr.recordsPerPage, count, requestMgr.currentPage);
-                    $("#requestsPaging").html();
-                    $("#requestsPaging").html(requestsPaging.renderPaging());
-                });
-            } else {
-                refreshDefaultGrid(requestMgr.pageParams);
-                service.GetCountOfAllRequests().then(function(count) {
-                    requestsPaging.update(requestMgr.recordsPerPage, count, requestMgr.currentPage);
-                    $("#requestsPaging").html();
-                    $("#requestsPaging").html(requestsPaging.renderPaging());
-                });
-            }
+            if (requestMgr.filter) refreshPagingForFilter();
+            else refreshPagingForAll();
         });
 
-        function refreshPagingForAll() {
+        $("a.word-export").live("click", function() {
+            $("#requestsGrid").wordExport();
+        });
 
+        $(".print").live("click", function() {
+            $.print("#requestsGrid");
+        })
+
+        function refreshPagingForAll() {
+            refreshDefaultGrid(requestMgr.pageParams);
+            service.GetCountOfAllRequests().then(function(count) { refreshPaging(count); });
+        }
+
+        function refreshPagingForFilter() {
+            refreshFilteredGrid(requestMgr.pageParams);
+            service.GetCountOfFilteredRequests(requestMgr.filter).then(function(count) { refreshPaging(count); });
+        }
+
+        function refreshPaging(count) {
+            requestsPaging.update(requestMgr.recordsPerPage, count, requestMgr.currentPage);
+            $("#requestsPaging").html();
+            $("#requestsPaging").html(requestsPaging.renderPaging());
         }
 
         function refreshGrid(data) {

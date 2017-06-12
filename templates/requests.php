@@ -12,6 +12,12 @@
         wp_enqueue_script(  'alert_script');
         wp_register_script( 'paging_script', plugins_url( '../js/paging.js', __FILE__ ) );
         wp_enqueue_script(  'paging_script');  
+        wp_register_script( 'file_saver_script', plugins_url( '../js/FileSaver.min.js', __FILE__ ) );
+        wp_enqueue_script(  'file_saver_script');    
+        wp_register_script( 'wordexport_script', plugins_url( '../js/jquery.wordexport.js', __FILE__ ) );
+        wp_enqueue_script(  'wordexport_script');  
+        wp_register_script( 'print_script', plugins_url( '../js/jQuery.print.js', __FILE__ ) );
+        wp_enqueue_script(  'print_script');                        
         wp_register_script( 'requestsServices_script', plugins_url( '../js/requests/service.js', __FILE__ ) );
         wp_enqueue_script(  'requestsServices_script');         
         wp_register_script( 'requestsClass_script', plugins_url( '../js/requests/requestsClass.js', __FILE__ ) );
@@ -43,6 +49,8 @@
                 </div>
                 <button type="button" class="btn btn-info" id="runFilter">Фільтрувати</button>
             </form>
+            <a class="word-export" href="javascript:void(0)"> Export as .doc </a>
+            <button class="print"> Print this </button>
         </div>
         <div id="requestsGrid">
 
