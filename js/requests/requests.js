@@ -48,7 +48,8 @@
         }
 
         $('a[href="#requests"]').live('click', function() {
-            alert('123');
+            spinner.show();
+            refreshPagingForAll();
         });
 
         $(".btn-edit").live('click', function(e) {
