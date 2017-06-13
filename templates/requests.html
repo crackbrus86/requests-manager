@@ -3,7 +3,7 @@
         <h4>Заявки</h4>
         <div style="margin: 10px 0 20px; background-color: #f7f7f7; border: 1px solid #ccc; border-radius: 4px; padding: 5px 5px;">
             <h4>Фільтрувати заявки</h4>
-            <form class="form-inline" id="filter">
+            <form class="form-inline" id="filter" style="float: left;">
                 <div class="form-group">
                     <label for="competitionFilter">Змагання</label>
                     <select class="form-control" id="competitionFilter">
@@ -20,8 +20,11 @@
                 </div>
                 <button type="button" class="btn btn-info" id="runFilter">Фільтрувати</button>
             </form>
-            <a class="word-export" href="javascript:void(0)"> Export as .doc </a>
-            <button class="print"> Print this </button>
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-1"><button class="word-export btn btn-default"> Експорт в Word </button></div>
+                <div class="col-md-1"><button class="print btn btn-default"> Друкувати </button></div>
+            </div>
         </div>
         <div id="requestsGrid">
 

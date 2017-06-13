@@ -163,13 +163,28 @@
             else refreshPagingForAll();
         });
 
-        $("a.word-export").live("click", function() {
-            $("#requestsGrid").wordExport();
+        $("button.word-export").live("click", function() {
+            openPreview();
+            $(".preview").wordExport();
+            removePreview();
         });
 
         $(".print").live("click", function() {
-            $.print("#requestsGrid");
-        })
+            openPreview();
+            $.print(".preview");
+            removePreview();
+        });
+
+        function openPreview() {
+            $("body").append("<div class='preview' style='position: absolute; top: 0%; left: 0%; right: 0%; bottom: 0%; z-index: 100000; background-color: #fff;'></div>");
+            $(".preview").html($("#requestsGrid").html());
+            $('.preview .btn-edit, .preview .btn-delete').remove();
+        }
+
+        function removePreview() {
+            $(".preview").html();
+            $(".preview").remove();
+        }
 
         function refreshPagingForAll() {
             refreshDefaultGrid(requestMgr.pageParams);
