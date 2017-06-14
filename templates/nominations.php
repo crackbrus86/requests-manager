@@ -5,25 +5,25 @@
             <h4>Фільтрувати номінації</h4>
             <form class="form-inline" id="filterNom" style="float: left;">
                 <div class="form-group">
-                    <label for="competitionFilter">Змагання</label>
+                    <label for="competitionFilterNom">Змагання</label>
                     <select class="form-control" id="competitionFilterNom">
                     <option></option>
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="startDate">Від:</label>
+                    <label for="startDateNom">Від:</label>
                     <input type="date" class="form-control" id="startDateNom" maxlength="10" placeholder="дд.мм.рррр" />
                 </div>
                 <div class="form-group">
-                    <label for="endDate">До:</label>
+                    <label for="endDateNom">До:</label>
                     <input type="date" class="form-control" id="endDateNom" maxlength="10" placeholder="дд.мм.рррр" />
                 </div>
                 <button type="button" class="btn btn-info" id="runFilterNom">Фільтрувати</button>
             </form>
             <div class="row">
                 <div class="col-md-2"></div>
-                <div class="col-md-1"><button class="word-export btn btn-default"> Експорт в Word </button></div>
-                <div class="col-md-1"><button class="print btn btn-default"> Друкувати </button></div>
+                <div class="col-md-1"><button class="word-export-nom btn btn-default"> Експорт в Word </button></div>
+                <div class="col-md-1"><button class="print-nom btn btn-default"> Друкувати </button></div>
             </div>
         </div>
         <div id="nominationsGrids">

@@ -5,7 +5,8 @@ function Grid(fields, datasource) {
     function createHeader() {
         var header = "<thead><tr>";
         for (var i = 0; i < columns.length; i++) {
-            header += "<th>" + columns[i].title + "</th>";
+            var thWidth = (columns[i].width) ? "width=" + columns[i].width : "";
+            header += "<th " + thWidth + ">" + columns[i].title + "</th>";
         }
         header += "</tr></thead>";
         return header;

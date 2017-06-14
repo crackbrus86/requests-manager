@@ -12,12 +12,19 @@
             type: "POST"
         }).then(function(data) {
             formN.appendOptions("#competitionFilterNom", JSON.parse(data));
-            $("#startDateNom").val(formN.getToday());
-            $("#endDateNom").val(formN.getToday());
+            setupDefaultDate()
         });
 
         nominationsMgr.getAgeCategories().then(function(categories) {
             nominationsMgr.setAgeCategories(JSON.parse(categories));
+        });
+
+        if ($("#nominations").hasClass("active")) {
+            setupDefaultDate()
+        }
+
+        $("a[href=#nominations]").live("click", function() {
+            setupDefaultDate();
         });
 
         $("#runFilterNom").live("click", function() {
@@ -56,6 +63,19 @@
             nominationsMgr.setupCurrentFilter();
         });
 
+        $(".word-export-nom").live("click", function() {
+            $("#nominationsGrids").wordExport();
+        });
+
+        $(".print-nom").live("click", function() {
+            $.print("#nominationsGrids");
+        });
+
+        function setupDefaultDate() {
+            $("#startDateNom").val(formN.getToday());
+            $("#endDateNom").val(formN.getToday());
+        }
+
     });
 
     function NominationsMng() {
@@ -64,35 +84,43 @@
         this.tables = [];
         this.gridFields = [{
                 title: "Вагова кат.",
-                field: "weight"
+                field: "weight",
+                width: "120px"
             },
             {
                 title: "Прізвище",
-                field: "lastName"
+                field: "lastName",
+                width: "300px"
             },
             {
                 title: "Ім'я",
-                field: "firstName"
+                field: "firstName",
+                width: "200px"
             },
             {
                 title: "Дата народження",
-                field: "birthDate"
+                field: "birthDate",
+                width: "120px"
             },
             {
                 title: "Присідання",
-                field: "squat"
+                field: "squat",
+                width: "80px"
             },
             {
                 title: "Жим",
-                field: "benchPress"
+                field: "benchPress",
+                width: "80px"
             },
             {
                 title: "Тяга",
-                field: "deadLift"
+                field: "deadLift",
+                width: "80px"
             },
             {
                 title: "Сума",
-                field: "total"
+                field: "total",
+                width: "80px"
             }
         ]
 

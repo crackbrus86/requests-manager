@@ -25,7 +25,9 @@
         wp_register_script( 'requests_script', plugins_url( '../js/requests/requests.js', __FILE__ ) );
         wp_enqueue_script(  'requests_script');   
         wp_register_script( 'nominations_script', plugins_url( '../js/nominations/nominations.js', __FILE__ ) );
-        wp_enqueue_script(  'nominations_script');                 
+        wp_enqueue_script(  'nominations_script');     
+        wp_register_script( 'visa_script', plugins_url( '../js/visa/visa.js', __FILE__ ) );
+        wp_enqueue_script(  'visa_script');                     
     }
     add_action('admin_footer', 'templates_modules');
 ?>
