@@ -18,7 +18,7 @@ foreach($query as $item){
         array_push($list, $user);
     }
 }
-$result = json_encode($query);
-// $list = json_encode($list);
-print_r($result);
-// print_r($list);
+// $result = json_encode($query);
+$list = json_encode($list);
+// print_r($result);
+print_r($list);

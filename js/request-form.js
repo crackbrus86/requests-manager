@@ -743,13 +743,13 @@ var dir = "../wp-content/plugins/requests-manager/api/";
             }
         }
         request.doping = {
-            dopingControl: $("input[name=dopingControl]:checked").val(),
-            dopingControlDate: convertDate($("#dopingControlDate").val().trim())
+            isChecked: $("input[name=dopingControl]:checked").val(),
+            checkDate: convertDateDashed($("#dopingControlDate").val().trim())
         }
         request.visa = {
             hasVisa: $("input[name=activeVisa]:checked").val(),
-            typeOfVisa: $("#typeOfVisa").val(),
-            termOfVisa: convertDate($("#termOfVisa").val().trim())
+            type: $("#typeOfVisa").val(),
+            termOfVisa: convertDateDashed($("#termOfVisa").val().trim())
         }
         return request;
     }

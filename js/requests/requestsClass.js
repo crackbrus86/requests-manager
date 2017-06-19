@@ -141,7 +141,7 @@
                 },
                 visa: {
                     hasVisa: "",
-                    typeOfVisa: "",
+                    type: "",
                     termOfVisa: ""
                 }
             };
