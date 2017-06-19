@@ -747,7 +747,7 @@ var dir = "../wp-content/plugins/requests-manager/api/";
             dopingControlDate: convertDate($("#dopingControlDate").val().trim())
         }
         request.visa = {
-            hasActiveVisa: $("input[name=activeVisa]:checked").val(),
+            hasVisa: $("input[name=activeVisa]:checked").val(),
             typeOfVisa: $("#typeOfVisa").val(),
             termOfVisa: convertDate($("#termOfVisa").val().trim())
         }
