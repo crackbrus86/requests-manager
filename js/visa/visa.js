@@ -42,19 +42,12 @@
                 default:
                     spinnerV.show();
                     visaSupport.getVisaSupportList().then(function(data) {
-                        console.log(data);
+                        visaSupport.buildGrid(data);
                         spinnerV.hide();
                     });
-                    // spinnerN.show();
-                    // nominationsMgr.getNomination().then(function(data) {
-                    //     nominationsMgr.fetchCategories(JSON.parse(data));
-                    //     nominationsMgr.displayNominations();
-                    //     spinnerN.hide();
-                    // });
                     break;
             }
             visaSupport.setupCurrentFilter();
-            // nominationsMgr.setupCurrentFilter();
         });
 
         $("#startDateVisa, #endDateVisa").live("click", function(e) {
@@ -70,7 +63,54 @@
     });
 
     function VisaSupport() {
-        var filter = null;
+        this.filter = null;
+        this.dataForGrid = [];
+        this.gridFields = [{
+                title: "Прізвище, Ім'я",
+                field: "fullName",
+                width: "220px"
+            },
+            {
+                title: "Дата народження",
+                field: "birthDay",
+                width: "120px"
+            },
+            {
+                title: "Номер паспорта",
+                field: "passNumber",
+                width: "120px"
+            },
+            {
+                title: "Термін дії паспорта",
+                field: "passExpiration",
+                width: "120px"
+            }
+        ]
+
+        this.buildGrid = function(data) {
+            $("#visaGrids").html('');
+            this.dataForGrid = [];
+            var grid = new Grid(this.gridFields, this.prepareData(JSON.parse(data)));
+            $("#visaGrids").append(grid.renderGrid());
+        }
+
+        this.prepareData = function(data) {
+            var result = data.sort(compareLastName);
+            var tempObj = {};
+            for (var i = 0; i < result.length; i++) {
+                tempObj.fullName = result[i].last_name + " " + result[i].first_name;
+                tempObj.birthDay = result[i].birth_date;
+                tempObj.passNumber = result[i].serial_number_pass + result[i].number_pass;
+                tempObj.passExpiration = result[i].expiration_date_pass
+                this.dataForGrid.push({
+                    fullName: tempObj.fullName,
+                    birthDay: tempObj.birthDay,
+                    passNumber: tempObj.passNumber,
+                    passExpiration: tempObj.passExpiration
+                });
+            }
+            return this.dataForGrid;
+        }
 
         this.validateFilter = function() {
             if (!this.filter.competition) return 1;
@@ -92,6 +132,12 @@
             $("#startDateVisa").val(this.filter.startDate);
             $("#endDateVisa").val(this.filter.endDate);
             $("#competitionFilterVisa").val(this.filter.competition);
+        }
+
+        function compareLastName(a, b) {
+            var textA = a.last_name.toUpperCase();
+            var textB = b.last_name.toUpperCase();
+            return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
         }
     }
 })(jQuery)
