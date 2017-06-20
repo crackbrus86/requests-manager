@@ -7,6 +7,15 @@
         var alertV = new Alert();
         var visaSupport = new VisaSupport();
 
+        if ($("#visaSupport").hasClass("active")) {
+            setupDefaultDate();
+        }
+
+        $("a[href=#visaSupport]").live("click", function() {
+            if (visaSupport.filter) visaSupport.setupCurrentFilter();
+            else setupDefaultDate();
+        });
+
         $.ajax({
             url: rootDir + "Games-Manager/GetActualGames.php",
             type: "POST"
@@ -54,6 +63,14 @@
             if ($(e.target).parent().hasClass("has-error")) {
                 $(e.target).parent().removeClass("has-error");
             }
+        });
+
+        $(".word-export-visa").live("click", function() {
+            $("#visaGrids").wordExport();
+        });
+
+        $(".print-visa").live("click", function() {
+            $.print("#visaGrids");
         });
 
         function setupDefaultDate() {

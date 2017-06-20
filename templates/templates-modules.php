@@ -28,6 +28,8 @@
         wp_enqueue_script(  'nominations_script');     
         wp_register_script( 'visa_script', plugins_url( '../js/visa/visa.js', __FILE__ ) );
         wp_enqueue_script(  'visa_script');                     
+        wp_register_script( 'delegation_script', plugins_url( '../js/delegation/delegation.js', __FILE__ ) );
+        wp_enqueue_script(  'delegation_script');          
     }
     add_action('admin_footer', 'templates_modules');
 ?>

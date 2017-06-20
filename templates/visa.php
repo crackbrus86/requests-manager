@@ -26,8 +26,12 @@
                 <div class="col-md-1"><button class="print-visa btn btn-default"> Друкувати </button></div>
             </div>
         </div>
-        <div id="visaGrids">
+        <div class="row">
+            <div class="col-md-6">
+                <div id="visaGrids">
 
+                </div>
+            </div>
         </div>
     </div>
 </div>

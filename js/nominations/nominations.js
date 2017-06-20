@@ -20,11 +20,12 @@
         });
 
         if ($("#nominations").hasClass("active")) {
-            setupDefaultDate()
+            setupDefaultDate();
         }
 
         $("a[href=#nominations]").live("click", function() {
-            setupDefaultDate();
+            if (nominationsMgr.filter) nominationsMgr.setupCurrentFilter();
+            else setupDefaultDate();
         });
 
         $("#runFilterNom").live("click", function() {

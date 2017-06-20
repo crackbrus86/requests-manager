@@ -79,7 +79,11 @@ class RequestManager{
                 ?>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="delegation">
-                    Делегації
+                <?php   
+                    if(file_exists(RM__PLUGIN_DIR."/templates/delegation.php")){
+                        require_once(RM__PLUGIN_DIR."/templates/delegation.php");
+                    }
+                ?>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="visaSupport">
                 <?php   
