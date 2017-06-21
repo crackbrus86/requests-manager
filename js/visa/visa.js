@@ -154,7 +154,7 @@
         function compareLastName(a, b) {
             var textA = a.last_name.toUpperCase();
             var textB = b.last_name.toUpperCase();
-            return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+            return textA.localeCompare(textB);
         }
     }
 })(jQuery)
