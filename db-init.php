@@ -93,3 +93,10 @@
             `visa` VARCHAR(250) NOT NULL
         ) {$charset_collate}";
         dbDelta($createRequestsTab);
+        $tb_others = $wpdb->get_blog_prefix()."rm_others";
+        $createOthersTab = "CREATE TABLE IF NOT EXISTS {$tb_others} (
+            `id` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+            `president_name` VARCHAR(250),
+            `president_region` INT
+        ) {$charset_collate}";
+        dbDelta($createOthersTab);

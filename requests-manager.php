@@ -108,6 +108,7 @@ class RequestManager{
                 <li role="presentation" class="active"><a href="#games" aria-controls="games" role="tab" data-toggle="tab">Змагання</a></li>
                 <li role="presentation"><a href="#categories" aria-controls="categories" role="tab" data-toggle="tab">Категорії</a></li>
                 <li role="presentation"><a href="#regions" aria-controls="regions" role="tab" data-toggle="tab">Області</a></li>
+                <li role="presentation"><a href="#others" aria-controls="others" role="tab" data-toggle="tab">Інші</a></li>
             </ul>
 
             <!-- Tab panes -->
@@ -130,6 +131,13 @@ class RequestManager{
                 <?php 
                     if(file_exists(RM__PLUGIN_DIR."/templates/regions-manager.php")){
                         require_once(RM__PLUGIN_DIR."/templates/regions-manager.php");
+                    }
+                ?>
+                </div>
+                <div role="tabpanel" class="tab-pane" id="others">
+                <?php
+                    if(file_exists(RM__PLUGIN_DIR."/templates/others.php")){
+                        require_once(RM__PLUGIN_DIR."/templates/others.php");
                     }
                 ?>
                 </div>
