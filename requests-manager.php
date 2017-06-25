@@ -66,7 +66,11 @@ class RequestManager{
                 ?>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="athletes">
-                    Спортсмени
+                <?php
+                    if(file_exists(RM__PLUGIN_DIR."/templates/users.php")){
+                        require_once(RM__PLUGIN_DIR."/templates/users.php");
+                    }
+                ?>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="coaches">
                     Тренери

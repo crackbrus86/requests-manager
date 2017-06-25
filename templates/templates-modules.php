@@ -29,7 +29,13 @@
         wp_register_script( 'visa_script', plugins_url( '../js/visa/visa.js', __FILE__ ) );
         wp_enqueue_script(  'visa_script');                     
         wp_register_script( 'delegation_script', plugins_url( '../js/delegation/delegation.js', __FILE__ ) );
-        wp_enqueue_script(  'delegation_script');          
+        wp_enqueue_script(  'delegation_script'); 
+        wp_register_script( 'usersServices_script', plugins_url('../js/users/usersServices.js', __FILE__));
+        wp_enqueue_script('usersServices_script');    
+        wp_register_script( 'usersClass_script', plugins_url('../js/users/usersClass.js', __FILE__));
+        wp_enqueue_script('usersClass_script');             
+        wp_register_script( 'users_script', plugins_url('../js/users/users.js', __FILE__));
+        wp_enqueue_script('users_script');        
     }
     add_action('admin_footer', 'templates_modules');
 ?>

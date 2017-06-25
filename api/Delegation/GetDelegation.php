@@ -4,9 +4,20 @@ global $wpdb;
 $tb_requests = $wpdb->get_blog_prefix()."rm_requests";
 $tb_users = $wpdb->get_blog_prefix()."rm_users";
 $tb_coaches = $wpdb->get_blog_prefix()."rm_coaches";
+$tb_others = $wpdb->get_blog_prefix()."rm_others";
 $competition = strip_tags(stripcslashes(trim($_POST["competition"])));
 $startDate = strip_tags(stripcslashes(trim($_POST["startDate"])));
 $endDate = strip_tags(stripcslashes(trim($_POST["endDate"])));
+$tb_regions = $wpdb->get_blog_prefix()."rm_regions";
+$president = $wpdb->get_results("SELECT $tb_others.president_name AS name, $tb_regions.region AS region 
+    FROM $tb_others
+        JOIN $tb_regions
+        ON $tb_others.president_region = $tb_regions.id");
+$president[0]->type = "president";
+$presidentName = explode(" ", $president[0]->name);
+$president[0]->last_name = $presidentName[0];
+$president[0]->first_name = $presidentName[1];
+$president[0]->middle_name = $presidentName[2];
 $query = $wpdb->get_results("SELECT user_id, coaches, visa FROM $tb_requests 
 WHERE current_competition = $competition AND (create_date BETWEEN '$startDate' AND '$endDate')");
 $list = Array();
@@ -30,6 +41,7 @@ foreach($list as $item){
     if($item[1] == "user") array_push($big_list, get_private_data($item, $tb_users, $wpdb));
     if($item[1] == "coach") array_push($big_list, get_private_data($item, $tb_coaches, $wpdb));
 }
+array_push($big_list, $president[0]);
 $big_list = json_encode($big_list);
 print_r($big_list);
 

@@ -65,6 +65,13 @@
             $("#endDateDelegation").val(formD.getToday());
         }
 
+        $(".word-export-delegation").live("click", function() {
+            $("#delegationGrid").wordExport();
+        });
+
+        $(".print-delegation").live("click", function() {
+            $.print("#delegationGrid");
+        });
     });
 
     function Delegation() {
@@ -105,7 +112,17 @@
             for (var i = 0; i < result.length; i++) {
                 tempObj.fullName = result[i].last_name + " " + result[i].first_name + " " + result[i].middle_name;
                 tempObj.region = result[i].region;
-                tempObj.role = (result[i].type === "user") ? "спортсмен" : "тренер";
+                switch (result[i].type) {
+                    case "user":
+                        tempObj.role = "спортсмен";
+                        break;
+                    case "coach":
+                        tempObj.role = "тренер";
+                        break;
+                    case "president":
+                        tempObj.role = "голова делегації";
+                        break;
+                }
                 this.dataForGrid.push({
                     fullName: tempObj.fullName,
                     region: tempObj.region,
