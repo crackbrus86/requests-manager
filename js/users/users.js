@@ -35,10 +35,25 @@
             servicesU.getAllRegions().then(function(data) {
                 formU.appendOptions("#regionU", JSON.parse(data));
                 servicesU.getUserById(userId).then(function(data) {
+                    usersMgr.setModalData(JSON.parse(data)[0]);
                     $("#userModal").modal("show");
                     spinnerU.hide();
                 });
             });
+        });
+
+        $("#athletes #showPhotoOfNatPassU," +
+            "#athletes #showPhotoOfForPassU," +
+            "#athletes #showPhotoForAccreditationU").live("click", function(e) {
+            spinnerU.show();
+            servicesU.loadPhoto(e.target.dataset.show).then(function(img) {
+                usersMgr.showPhoto(img);
+                spinnerU.hide();
+            });
+        });
+
+        $("#athletes #userModal .close").live("click", function() {
+            $("#userModal, .modal-backdrop").fadeOut();
         });
 
     });

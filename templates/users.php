@@ -57,7 +57,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="termOfPassU">Термін дії паспорту</label>
-                                <input type="text" class="form-control" id="termOfPassU" maxlength="10" placeholder="дд.мм.рррр" />
+                                <input type="date" class="form-control" id="termOfPassU" maxlength="10" placeholder="дд.мм.рррр" />
                             </div>                                                                                                            
                         </div>
                         <div class="col-md-6">
@@ -74,19 +74,19 @@
                                 <input type="email" class="form-control emailU" id="emailU" placeholder="email.adress@gmail.com" maxlength="50" />
                             </div>
                             <div class="form-group">
-                                <p><label>Фото першої сторінки національного паспорту</label></p>
-                                <button type="button" class="btn btn-default" id="uploadCoachPhotoOfNatPassU" data-no="1">Завантажити фото</button>
-                                <input type="hidden" name="coachPhotoOfNatPassIdU" id="coachPhotoOfNatPassIdU" maxlength="10" />
+                                <p><label for="photoOfNatPassIdU">Фото першої сторінки національного паспорту</label></p>
+                                <button type="button" class="btn btn-default" id="uploadPhotoOfNatPassU" data-no="1">Завантажити фото</button>
+                                <input type="hidden" name="photoOfNatPassIdU" id="photoOfNatPassIdU" maxlength="10" />
                             </div>
                             <div class="form-group">
-                                <p><label for="coachPhotoOfForPassU">Фото першої сторінки закордонного паспорту</label></p>
-                                <button type="button" class="btn btn-default" id="uploadCoachPhotoOfForPassU" data-no="1">Завантажити фото</button>
-                                <input type="hidden" name="coachPhotoOfForPassIdU" id="coachPhotoOfForPassIdU" maxlength="10" />
+                                <p><label for="photoOfForPassU">Фото першої сторінки закордонного паспорту</label></p>
+                                <button type="button" class="btn btn-default" id="uploadPhotoOfForPassU" data-no="1">Завантажити фото</button>
+                                <input type="hidden" name="photoOfForPassIdU" id="photoOfForPassIdU" maxlength="10" />
                             </div>
                             <div class="form-group">
-                                <p><label for="coachAccreditationPhotoU">Фото для акредитації</label></p>
-                                <button type="button" class="btn btn-default" id="uploadCoachAccreditationPhotoU">Завантажити фото</button>
-                                <input type="hidden" name="coachAccreditationPhotoIdU" id="coachAccreditationPhotoIdU" maxlength="10" />
+                                <p><label for="accreditationPhotoU">Фото для акредитації</label></p>
+                                <button type="button" class="btn btn-default" id="uploadAccreditationPhotoU">Завантажити фото</button>
+                                <input type="hidden" name="accreditationPhotoIdU" id="accreditationPhotoIdU" maxlength="10" />
                             </div>                                                        
                         </div>
                     </div>
@@ -95,6 +95,18 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Скасувати</button>
                 <button type="button" class="btn btn-primary" id="saveUser">Зберегти</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="showPhotoModalU" id="showPhotoModalU" style="z-index: 15000">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
             </div>
         </div>
     </div>

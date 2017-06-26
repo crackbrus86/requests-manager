@@ -42,4 +42,12 @@ function UsersServices() {
 
         });
     }
+
+    this.loadPhoto = function(id) {
+        return jQuery.ajax({
+            url: rootDir + "GetPhoto.php",
+            type: "POST",
+            data: "photoId=" + id
+        });
+    }
 }
