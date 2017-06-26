@@ -52,7 +52,7 @@
             refreshPagingForAll();
         });
 
-        $(".btn-edit").live('click', function(e) {
+        $("#requests .btn-edit").live('click', function(e) {
             spinner.show();
             service.GetRequest(e.target.dataset["rel"]).then(function(data) {
                 spinner.hide();

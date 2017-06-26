@@ -18,12 +18,14 @@ function Users() {
     this.fields = [{
             title: "",
             field: "id",
-            button: "edit"
+            button: "edit",
+            width: "80px"
         },
         {
             title: "",
             field: "id",
-            button: "delete"
+            button: "delete",
+            width: "80px"
         },
         {
             title: "Прізвище",

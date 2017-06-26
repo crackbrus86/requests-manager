@@ -16,9 +16,18 @@ function UsersServices() {
         })
     }
 
+    this.getAllRegions = function() {
+        return jQuery.ajax({
+            url: rootDir + "Regions-Manager/GetAllRegions.php",
+            type: "POST"
+        })
+    }
+
     this.getUserById = function(id) {
         return jQuery.ajax({
-
+            url: usersDir + "GetUserById.php",
+            type: "POST",
+            data: "userId=" + id
         });
     }
 
