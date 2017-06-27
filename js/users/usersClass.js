@@ -57,6 +57,27 @@ function Users() {
         jQuery("#usersPaging").html(usersPaging.renderPaging());
     }
 
+    var natPass = {
+        photoId: "photoOfNatPassIdU",
+        uplButton: "uploadPhotoOfNatPassU",
+        shwButton: "showPhotoOfNatPassU",
+        delButton: "removePhotoOfNatPassU"
+    }
+
+    var forPass = {
+        photoId: "photoOfForPassIdU",
+        uplButton: "uploadPhotoOfForPassU",
+        shwButton: "showPhotoOfForPassU",
+        delButton: "removePhotoOfForPassU"
+    }
+
+    var accPhoto = {
+        photoId: "accreditationPhotoIdU",
+        uplButton: "uploadAccreditationPhotoU",
+        shwButton: "showPhotoForAccreditationU",
+        delButton: "removePhotoForAccreditationU"
+    }
+
     this.setModalData = function(data) {
         jQuery("#fullnameU").val(data.last_name + " " + data.first_name + " " + data.middle_name);
         jQuery("#birthDateU").val(data.birth_date);
@@ -69,34 +90,43 @@ function Users() {
         jQuery("#indNumberU").val(data.individual_number);
         jQuery("#phoneU").val(data.phone);
         jQuery("#emailU").val(data.email);
-        if (data.photo_national_pass_id) {
-            jQuery("#photoOfNatPassIdU").val(data.photo_national_pass_id);
-            jQuery("#uploadPhotoOfNatPassU").remove();
-            if (jQuery("#showPhotoOfNatPassU").length) jQuery("#showPhotoOfNatPassU").remove();
-            if (jQuery("#removePhotoOfNatPassU").length) jQuery("#removePhotoOfNatPassU").remove();
-            jQuery("#photoOfNatPassIdU").after("<button type='button' id='showPhotoOfNatPassU' class='btn btn-default' data-show = '" + data.photo_national_pass_id + "' style='margin-right: 5px' >Показати</button>" +
-                "<button type='button' id='removePhotoOfNatPassU' class='btn btn-default' data-remove = '" + data.photo_national_pass_id + "'>Видалити</button>");
-        }
-        if (data.photo_international_pass_id) {
-            jQuery("#photoOfForPassIdU").val(data.photo_international_pass_id);
-            jQuery("#uploadPhotoOfForPassU").remove();
-            if (jQuery("#showPhotoOfForPassU").length) jQuery("#showPhotoOfForPassU").remove();
-            if (jQuery("#removePhotoOfForPassU").length) jQuery("#removePhotoOfForPassU").remove();
-            jQuery("#photoOfForPassIdU").after("<button type='button' id='showPhotoOfForPassU' class='btn btn-default' data-show = '" + data.photo_international_pass_id + "' style='margin-right: 5px' >Показати</button>" +
-                "<button type='button' id='removePhotoOfForPassU' class='btn btn-default' data-remove = '" + data.photo_international_pass_id + "'>Видалити</button>");
-        }
-        if (data.accreditation_photo_id) {
-            jQuery("#accreditationPhotoIdU").val(data.accreditation_photo_id);
-            jQuery("#uploadAccreditationPhotoU").remove();
-            if (jQuery("#showPhotoForAccreditationU").length) jQuery("#showPhotoForAccreditationU").remove();
-            if (jQuery("#removePhotoForAccreditationU").length) jQuery("#removePhotoForAccreditationU").remove();
-            jQuery("#accreditationPhotoIdU").after("<button type='button' id='showPhotoForAccreditationU' class='btn btn-default' data-show = '" + data.accreditation_photo_id + "' style='margin-right: 5px' >Показати</button>" +
-                "<button type='button' id='removePhotoForAccreditationU' class='btn btn-default' data-remove = '" + data.accreditation_photo_id + "'>Видалити</button>");
+        if (data.photo_national_pass_id) appendPhotoButtons(data.photo_national_pass_id, natPass);
+        if (data.photo_international_pass_id) appendPhotoButtons(data.photo_international_pass_id, forPass);
+        if (data.accreditation_photo_id) appendPhotoButtons(data.accreditation_photo_id, accPhoto);
+    }
+
+    this.removeModalPhoto = function(e) {
+        switch (e.target.id) {
+            case "removePhotoOfNatPassU":
+                deletePhoto(natPass);
+                break;
+            case "removePhotoOfForPassU":
+                deletePhoto(forPass);
+                break;
+            case "removePhotoForAccreditationU":
+                deletePhoto(accPhoto);
+                break;
         }
     }
 
     this.showPhoto = function(img) {
         jQuery("#showPhotoModalU .modal-body").html(img);
         jQuery("#showPhotoModalU").modal("show");
+    }
+
+    function appendPhotoButtons(id, selector) {
+        jQuery("#" + selector.photoId).val(id);
+        jQuery("#" + selector.uplButton).remove();
+        if (jQuery("#" + selector.shwButton).length) jQuery("#" + selector.shwButton).remove();
+        if (jQuery("#" + selector.delButton).length) jQuery("#" + selector.delButton).remove();
+        jQuery("#" + selector.photoId).after("<button type='button' id='" + selector.shwButton + "' class='btn btn-default' data-show = '" + id + "' style='margin-right: 5px' >Показати</button>" +
+            "<button type='button' id='" + selector.delButton + "' class='btn btn-default' data-remove = '" + id + "'>Видалити</button>");
+    }
+
+    function deletePhoto(selector) {
+        jQuery("#" + selector.photoId).val('');
+        jQuery("#" + selector.shwButton).remove();
+        jQuery("#" + selector.delButton).remove();
+        jQuery("#" + selector.photoId).after("<button type='button' class='btn btn-default' id='" + selector.uplButton + "' >Завантажити фото</button>");
     }
 }

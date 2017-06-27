@@ -51,6 +51,11 @@
                 spinnerU.hide();
             });
         });
+        $("#athletes #removePhotoOfNatPassU," +
+            "#athletes #removePhotoOfForPassU," +
+            "#athletes #removePhotoForAccreditationU").live("click", function(e) {
+            usersMgr.removeModalPhoto(e);
+        });
 
         $("#athletes #userModal .close").live("click", function() {
             $("#userModal, .modal-backdrop").fadeOut();
