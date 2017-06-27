@@ -50,4 +50,14 @@ function UsersServices() {
             data: "photoId=" + id
         });
     }
+
+    this.uploadPhoto = function(fd) {
+        return jQuery.ajax({
+            url: rootDir + "UploadPhoto.php",
+            data: fd,
+            processData: false,
+            contentType: false,
+            type: 'POST'
+        });
+    }
 }

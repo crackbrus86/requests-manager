@@ -45,16 +45,34 @@
         $("#athletes #showPhotoOfNatPassU," +
             "#athletes #showPhotoOfForPassU," +
             "#athletes #showPhotoForAccreditationU").live("click", function(e) {
-            spinnerU.show();
             servicesU.loadPhoto(e.target.dataset.show).then(function(img) {
                 usersMgr.showPhoto(img);
-                spinnerU.hide();
             });
         });
+
+        $("#athletes #uploadNatPassPhotoU," +
+            "#athletes #uploadForPassPhotoU," +
+            "#athletes #uploadAccreditationPhotoGoU").live("click", function(e) {
+            var upload = usersMgr.saveNewPhoto(e);
+            if (!upload.type) {
+                alertU(upload.message);
+            } else {
+                servicesU.uploadPhoto(upload.obj).then(function(data) {
+                    usersMgr.updateButtons(e, data);
+                });
+            }
+        });
+
         $("#athletes #removePhotoOfNatPassU," +
             "#athletes #removePhotoOfForPassU," +
             "#athletes #removePhotoForAccreditationU").live("click", function(e) {
             usersMgr.removeModalPhoto(e);
+        });
+
+        $("#athletes #uploadPhotoOfNatPassU," +
+            "#athletes #uploadPhotoOfForPassU," +
+            "#athletes #uploadAccreditationPhotoU").live("click", function(e) {
+            usersMgr.uploadNewPhoto(e);
         });
 
         $("#athletes #userModal .close").live("click", function() {

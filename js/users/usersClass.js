@@ -58,6 +58,9 @@ function Users() {
     }
 
     var natPass = {
+        title: "Завантажити фото національного паспорта",
+        fileInput: "photoOfNatPassU",
+        fileUplBut: "uploadNatPassPhotoU",
         photoId: "photoOfNatPassIdU",
         uplButton: "uploadPhotoOfNatPassU",
         shwButton: "showPhotoOfNatPassU",
@@ -65,6 +68,9 @@ function Users() {
     }
 
     var forPass = {
+        title: "Завантажити фото закордонного паспорта",
+        fileInput: "photoOfForPassU",
+        fileUplBut: "uploadForPassPhotoU",
         photoId: "photoOfForPassIdU",
         uplButton: "uploadPhotoOfForPassU",
         shwButton: "showPhotoOfForPassU",
@@ -72,6 +78,9 @@ function Users() {
     }
 
     var accPhoto = {
+        title: "Завантажити фото для акредитації",
+        fileInput: "photoForAccreditationU",
+        fileUplBut: "uploadAccreditationPhotoGoU",
         photoId: "accreditationPhotoIdU",
         uplButton: "uploadAccreditationPhotoU",
         shwButton: "showPhotoForAccreditationU",
@@ -109,6 +118,45 @@ function Users() {
         }
     }
 
+    this.uploadNewPhoto = function(e) {
+        switch (e.target.id) {
+            case "uploadPhotoOfNatPassU":
+                showUploadModal(natPass);
+                break;
+            case "uploadPhotoOfForPassU":
+                showUploadModal(forPass);
+                break;
+            case "uploadAccreditationPhotoU":
+                showUploadModal(accPhoto);
+                break;
+        }
+    }
+
+    this.saveNewPhoto = function(e) {
+        switch (e.target.id) {
+            case "uploadNatPassPhotoU":
+                return savePhoto(natPass);
+            case "uploadForPassPhotoU":
+                return savePhoto(forPass);
+            case "uploadAccreditationPhotoGoU":
+                return savePhoto(accPhoto);
+        }
+    }
+
+    this.updateButtons = function(e, data) {
+        switch (e.target.id) {
+            case "uploadNatPassPhotoU":
+                setupButtons(natPass, data);
+                break;
+            case "uploadForPassPhotoU":
+                setupButtons(forPass, data);
+                break;
+            case "uploadAccreditationPhotoGoU":
+                setupButtons(accPhoto, data);
+                break;
+        }
+    }
+
     this.showPhoto = function(img) {
         jQuery("#showPhotoModalU .modal-body").html(img);
         jQuery("#showPhotoModalU").modal("show");
@@ -128,5 +176,44 @@ function Users() {
         jQuery("#" + selector.shwButton).remove();
         jQuery("#" + selector.delButton).remove();
         jQuery("#" + selector.photoId).after("<button type='button' class='btn btn-default' id='" + selector.uplButton + "' >Завантажити фото</button>");
+    }
+
+    function showUploadModal(selector) {
+        jQuery("#uploadPhotoModalU .modal-header h6").html(selector.title);
+        jQuery("#uploadPhotoModalU .modal-body").html("<form><input type='file' class='form-control' id='" + selector.fileInput + "' accept='image/jpeg,image/png' /></form>");
+        jQuery("#uploadPhotoModalU .modal-footer").html("<button type='button' class='btn btn-primary' id='" + selector.fileUplBut + "' >Завантажити</button>");
+        jQuery("#uploadPhotoModalU").modal("show");
+    }
+
+    function savePhoto(selector) {
+        var input = jQuery("#" + selector.fileInput);
+        var fd = new FormData;
+        if (input[0].files.length) {
+            if (input[0].files[0].type == "image/jpeg" || input[0].files[0].type == "image/png") {
+                fd.append('img', input[0].files[0]);
+                return {
+                    type: true,
+                    obj: fd
+                }
+            } else {
+                return {
+                    type: false,
+                    message: "Недопустимий тип файлу!"
+                }
+            }
+        } else {
+            return {
+                type: false,
+                message: "Оберіть файл!"
+            }
+        }
+    }
+
+    function setupButtons(selector, data) {
+        jQuery("#" + selector.photoId).val(data);
+        jQuery("#uploadPhotoModalU").modal("hide");
+        jQuery("#" + selector.uplButton).remove();
+        jQuery("#" + selector.photoId).after("<button type='button' id='" + selector.shwButton + "' class='btn btn-default' data-show = '" + data + "' style='margin-right: 5px' >Показати</button>" +
+            "<button type='button' id='" + selector.delButton + "' class='btn btn-default' data-remove = '" + data + "'>Видалити</button>");
     }
 }
