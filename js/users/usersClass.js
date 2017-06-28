@@ -88,6 +88,7 @@ function Users() {
     }
 
     this.setModalData = function(data) {
+        jQuery("#userId").val(data.id);
         jQuery("#fullnameU").val(data.last_name + " " + data.first_name + " " + data.middle_name);
         jQuery("#birthDateU").val(data.birth_date);
         jQuery("#regionU").val(data.region).change();
@@ -160,6 +161,35 @@ function Users() {
     this.showPhoto = function(img) {
         jQuery("#showPhotoModalU .modal-body").html(img);
         jQuery("#showPhotoModalU").modal("show");
+    }
+
+    this.dataForSaving = function() {
+        return {
+            id: jQuery("#userId").val(),
+            region: jQuery("#regionU").val(),
+            lastNamePass: jQuery("#lastNamePassU").val(),
+            firstNamePass: jQuery("#firstNamePassU").val(),
+            seria: jQuery("#seriaOfpassU").val(),
+            passNumb: jQuery("#numberOfPassU").val(),
+            passExpire: jQuery("#termOfPassU").val(),
+            indNumber: jQuery("#indNumberU").val(),
+            phone: jQuery("#phoneU").val(),
+            email: jQuery("#emailU").val(),
+            natPassId: jQuery("#photoOfNatPassIdU").val(),
+            forPassId: jQuery("#photoOfForPassIdU").val(),
+            accId: jQuery("#accreditationPhotoIdU").val()
+        }
+    }
+
+    this.showDeleteConfirm = function(id) {
+        jQuery("#removeUser #removeUId").val(id);
+        jQuery("#removeUser").modal("show");
+    }
+
+    this.getUserForDelete = function() {
+        return {
+            id: jQuery("#removeUId").val()
+        }
     }
 
     function appendPhotoButtons(id, selector) {

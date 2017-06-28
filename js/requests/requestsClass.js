@@ -105,8 +105,8 @@
                     jQuery("input[name='activeVisa'][value='false']").attr("checked", "checked");
                     jQuery("#visaFeatures").css("display", "none");
                 }
+                jQuery("#coachesList").remove();
                 if (data.coach_details) {
-                    jQuery("#coachesList").remove();
                     jQuery("#editRequest").append("<div id='coachesList'><h3>Тренери</h3><ul></ul></div>");
                     for (var i = 0; i < data.coach_details.length; i++) {
                         var coach = data.coaches.filter(function(item) {

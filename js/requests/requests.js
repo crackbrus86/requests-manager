@@ -63,7 +63,7 @@
             });
         });
 
-        $(".btn-delete").live("click", function(e) {
+        $("#requests .btn-delete").live("click", function(e) {
             $("#confirmDialog #removeRequestId").val(e.target.dataset["rel"]);
             $("#confirmDialog").modal("show");
         });
@@ -155,7 +155,7 @@
             }
         });
 
-        $(".pagination li a").live("click", function(e) {
+        $("#requests .pagination li a").live("click", function(e) {
             requestMgr.currentPage = e.target.dataset["rel"];
             requestMgr.offsetRecalc();
             spinner.show();

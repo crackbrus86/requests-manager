@@ -33,13 +33,17 @@ function UsersServices() {
 
     this.saveUser = function(data) {
         return jQuery.ajax({
-
+            url: usersDir + "SaveUser.php",
+            type: "POST",
+            data: data
         });
     }
 
     this.deleteUser = function(id) {
         return jQuery.ajax({
-
+            url: usersDir + "DeleteUser.php",
+            type: "POST",
+            data: id
         });
     }
 

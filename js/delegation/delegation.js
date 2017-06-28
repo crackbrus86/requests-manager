@@ -11,6 +11,16 @@
             setupDefaultDate();
         }
 
+        $('a[href="#delegation"]').live("click", function() {
+            if (delegation.filter) {
+                $("#competitionFilterDelegation").val(delegation.filter.competition).change();
+                $("#startDateDelegation").val(delegation.filter.startDate);
+                $("#endDateDelegation").val(delegation.filter.endDate);
+            } else {
+                setupDefaultDate();
+            }
+        });
+
         $.ajax({
             url: rootDir + "Games-Manager/GetActualGames.php",
             type: "POST"

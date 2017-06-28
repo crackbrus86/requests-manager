@@ -42,10 +42,34 @@
             });
         });
 
+        $("#athletes .btn-delete").live("click", function(e) {
+            var userId = e.target.dataset["rel"];
+            usersMgr.showDeleteConfirm(userId);
+        });
+
+        $("#removeUser #deleteU").live("click", function() {
+            spinnerU.show();
+            servicesU.deleteUser(usersMgr.getUserForDelete()).then(function() {
+                $("#removeUser").fadeOut();
+                $(".modal-backdrop").fadeOut();
+                servicesU.getCountOfAllUsers().then(function(count) {
+                    usersMgr.count = count;
+                    usersMgr.fetchPaging(count);
+                }).then(function() {
+                    servicesU.getAllUsers(usersMgr.pageParams).then(function(data) {
+                        usersMgr.fetchGrid(data);
+                        spinnerU.hide();
+                    });
+                });
+            });
+        });
+
         $("#athletes #showPhotoOfNatPassU," +
             "#athletes #showPhotoOfForPassU," +
             "#athletes #showPhotoForAccreditationU").live("click", function(e) {
+            spinnerU.showInModal("userModal");
             servicesU.loadPhoto(e.target.dataset.show).then(function(img) {
+                spinnerU.hideInModal();
                 usersMgr.showPhoto(img);
             });
         });
@@ -57,7 +81,9 @@
             if (!upload.type) {
                 alertU(upload.message);
             } else {
+                spinnerU.showInModal("userModal");
                 servicesU.uploadPhoto(upload.obj).then(function(data) {
+                    spinnerU.hideInModal();
                     usersMgr.updateButtons(e, data);
                 });
             }
@@ -75,8 +101,16 @@
             usersMgr.uploadNewPhoto(e);
         });
 
-        $("#athletes #userModal .close").live("click", function() {
+        $("#athletes #userModal .close, #athletes #removeUser .close").live("click", function() {
             $("#userModal, .modal-backdrop").fadeOut();
+        });
+
+        $("#saveUser").live("click", function() {
+            spinnerU.showInModal("userModal");
+            servicesU.saveUser(usersMgr.dataForSaving()).then(function(data) {
+                spinnerU.hideInModal();
+                $("#userModal").modal("hide");
+            });
         });
 
     });
