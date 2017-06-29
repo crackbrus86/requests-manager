@@ -35,7 +35,13 @@
         wp_register_script( 'usersClass_script', plugins_url('../js/users/usersClass.js', __FILE__));
         wp_enqueue_script('usersClass_script');             
         wp_register_script( 'users_script', plugins_url('../js/users/users.js', __FILE__));
-        wp_enqueue_script('users_script');        
+        wp_enqueue_script('users_script');   
+        wp_register_script( 'coachesServices_script', plugins_url('../js/coaches/coachesServices.js', __FILE__));
+        wp_enqueue_script('coachesServices_script');    
+        wp_register_script( 'coachesClass_script', plugins_url('../js/coaches/coachesClass.js', __FILE__));
+        wp_enqueue_script('coachesClass_script');             
+        wp_register_script( 'coaches_script', plugins_url('../js/coaches/coaches.js', __FILE__));
+        wp_enqueue_script('coaches_script');              
     }
     add_action('admin_footer', 'templates_modules');
 ?>

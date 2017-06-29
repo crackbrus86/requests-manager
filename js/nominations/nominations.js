@@ -24,8 +24,16 @@
         }
 
         $("a[href=#nominations]").live("click", function() {
-            if (nominationsMgr.filter) nominationsMgr.setupCurrentFilter();
-            else setupDefaultDate();
+            if (nominationsMgr.filter) {
+                nominationsMgr.setupCurrentFilter();
+                spinnerN.show();
+                nominationsMgr.getNomination().then(function(data) {
+                    nominationsMgr.fetchCategories(JSON.parse(data));
+                    nominationsMgr.displayNominations();
+                    spinnerN.hide();
+                });
+                nominationsMgr.setupCurrentFilter();
+            } else setupDefaultDate();
         });
 
         $("#runFilterNom").live("click", function() {

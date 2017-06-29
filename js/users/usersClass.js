@@ -47,7 +47,7 @@ function Users() {
 
     this.fetchGrid = function(data) {
         jQuery("#usersGrid").html();
-        var grid = new Grid(this.fields, JSON.parse(data));
+        var grid = new Grid(this.fields, JSON.parse(data).sort(compareLastName));
         jQuery("#usersGrid").html(grid.renderGrid());
     }
 
@@ -245,5 +245,11 @@ function Users() {
         jQuery("#" + selector.uplButton).remove();
         jQuery("#" + selector.photoId).after("<button type='button' id='" + selector.shwButton + "' class='btn btn-default' data-show = '" + data + "' style='margin-right: 5px' >Показати</button>" +
             "<button type='button' id='" + selector.delButton + "' class='btn btn-default' data-remove = '" + data + "'>Видалити</button>");
+    }
+
+    function compareLastName(a, b) {
+        var textA = a.last_name.toUpperCase();
+        var textB = b.last_name.toUpperCase();
+        return textA.localeCompare(textB);
     }
 }

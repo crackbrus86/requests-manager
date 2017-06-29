@@ -12,8 +12,15 @@
         }
 
         $("a[href=#visaSupport]").live("click", function() {
-            if (visaSupport.filter) visaSupport.setupCurrentFilter();
-            else setupDefaultDate();
+            if (visaSupport.filter) {
+                visaSupport.setupCurrentFilter();
+                spinnerV.show();
+                visaSupport.getVisaSupportList().then(function(data) {
+                    visaSupport.buildGrid(data);
+                    spinnerV.hide();
+                });
+                visaSupport.setupCurrentFilter();
+            } else setupDefaultDate();
         });
 
         $.ajax({

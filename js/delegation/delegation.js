@@ -16,6 +16,12 @@
                 $("#competitionFilterDelegation").val(delegation.filter.competition).change();
                 $("#startDateDelegation").val(delegation.filter.startDate);
                 $("#endDateDelegation").val(delegation.filter.endDate);
+                spinnerD.show();
+                delegation.getDelegation().then(function(data) {
+                    delegation.buildGrid(data);
+                    spinnerD.hide();
+                });
+                delegation.setupCurrentFilter();
             } else {
                 setupDefaultDate();
             }
