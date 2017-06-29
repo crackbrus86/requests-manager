@@ -73,7 +73,11 @@ class RequestManager{
                 ?>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="coaches">
-                    Тренери
+                    <?php
+                        if(file_exists(RM__PLUGIN_DIR."/templates/coaches.php")){
+                            require_once(RM__PLUGIN_DIR."/templates/coaches.php");
+                        }
+                    ?>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="nominations">
                 <?php   
