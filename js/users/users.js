@@ -79,7 +79,7 @@
             "#athletes #uploadAccreditationPhotoGoU").live("click", function(e) {
             var upload = usersMgr.saveNewPhoto(e);
             if (!upload.type) {
-                alertU(upload.message);
+                alertU.alertDanger(upload.message);
             } else {
                 spinnerU.showInModal("userModal");
                 servicesU.uploadPhoto(upload.obj).then(function(data) {
