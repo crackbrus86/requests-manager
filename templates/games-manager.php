@@ -1,6 +1,8 @@
 <?php
-    wp_register_script( 'games_manager_script', plugins_url( '../js/games-manager.js', __FILE__ ) );
-    wp_enqueue_script(  'games_manager_script');
+    // wp_register_script( 'games_manager_script', plugins_url( '../js/games-manager.js', __FILE__ ) );
+    // wp_enqueue_script(  'games_manager_script');
+    wp_register_script( 'games_manager_entry_script', plugins_url( '../js/games/games-bundle.js', __FILE__ ) );
+    wp_enqueue_script(  'games_manager_entry_script');
 ?>      
 <style>
 tbody{
@@ -114,3 +116,4 @@ table{
                 </div>
             </div>
             </div>
+            <div id="games-app"></div>
