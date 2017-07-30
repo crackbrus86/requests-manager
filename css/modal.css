@@ -1,0 +1,33 @@
+.blackout{
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color:rgba(0,0,0,0.8);
+    z-index: 10000;
+}
+.custom-modal{
+    background-color: #ffffff;
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    min-width: 500px;
+    min-height: 200px;
+    border-radius: 5px;
+    padding: 4px 10px;
+    margin-left: -250px;
+}
+
+.custom-modal-header{
+    text-align: right;
+    padding-right: 5px;
+}
+
+.custom-modal-header .fa-times{
+    color: #9a9aaf;
+    cursor: pointer;
+}
+.custom-modal-header .fa-times:hover{
+    color: #68686f;
+}

@@ -1,0 +1,8 @@
+.spinner-wrap{
+        position: absolute;
+    top: 50%;
+    left: 50%;
+}
+.spinner-wrap .fa-spin{
+    color: #6c6fff;
+}

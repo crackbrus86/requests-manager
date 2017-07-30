@@ -1,0 +1,31 @@
+.dialog{
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    min-width: 400px;
+    background-color: #fff;
+    margin-left: -200px;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+.dialog-body{
+    padding: 10px 0;
+}
+.dialog-header .icons{
+    text-align: right;
+}
+
+.dialog-header .icons .fa-times{
+    color: #9a9aaf;
+    cursor: pointer;
+}
+.dialog-header .icons .fa-times:hover{
+    color: #68686f;
+}
+.dialog-footer{
+    text-align: right;
+    padding-bottom: 5px;
+}
+.dialog-footer button{
+    margin-left: 10px;
+}
