@@ -4,6 +4,7 @@ import * as services from "../services/services";
 import Preloader from "../../components/preloader/preloader";
 import Modal from "../../components/modal/modal";
 import GameForm from "./competition-form";
+import Dialog from "../../components/modal/dialog";
 
 class Competition extends React.Component{
     constructor(props){
@@ -17,6 +18,11 @@ class Competition extends React.Component{
         this.onEdit = this.setTarget.bind(this);
         this.onClose = this.removeTarget.bind(this);
         this.onChange = this.changeTargetField.bind(this);
+        this.onSave = this.saveTarget.bind(this);
+        this.onCreate = this.createTarget.bind(this);
+        this.onDelete = this.setDialog.bind(this);
+        this.onCancel = this.removeDialog.bind(this);
+        this.onConfirm = this.deleteGame.bind(this);
     }
 
     setTarget(id){
@@ -35,6 +41,38 @@ class Competition extends React.Component{
         })
     }
 
+    saveTarget(){
+        var contract = {
+            name: this.state.target.name,
+            type: this.state.target.type,
+            year: this.state.target.year,
+            expire_day: this.state.target.expireDay
+        }
+        if(this.state.target.id){
+            contract.id = this.state.target.id;
+            this.setState({loading: true});
+            services.UpdateCompetition(contract).then(() => {
+                this.setState({target: null});
+                this.fetchGames();
+            })
+        }else{
+            this.setState({loading: true});
+            services.CreateCompetition(contract).then(() => {
+                this.setState({target: null});
+                this.fetchGames();
+            })
+        }
+    }
+
+    createTarget(){
+        this.setState({target: {
+            name: "",
+            type: "0",
+            year: null,
+            expireDay: null
+        }})
+    }
+
     removeTarget(){
         this.setState({target: null});
     }
@@ -43,7 +81,26 @@ class Competition extends React.Component{
         var newTarget = this.state.target;
         newTarget[fieldName] = value;
         this.setState({target: newTarget});
-    }    
+    }   
+    
+    setDialog(id){
+        this.setState({dialog: {
+            text: "Ви впевнені що хочете видалити це змагання?",
+            id: id
+        }})
+    }
+
+    removeDialog(){
+        this.setState({dialog: null});
+    }
+
+    deleteGame(){
+        this.setState({loading: true});
+        services.DeleteCompetition({id: this.state.dialog.id}).then(() => {
+            this.removeDialog();
+            this.fetchGames();
+        })
+    }
 
     fetchGames(){
         services.GetCompetitions().then(data => {
@@ -60,10 +117,14 @@ class Competition extends React.Component{
     render(){
         return <div>
             <h4>Змагання, на які подається заявка</h4>
-            <GameGrid data={this.state.games} onEdit={this.onEdit} onDelete={() => null} />
+            <GameGrid data={this.state.games} onEdit={this.onEdit} onDelete={this.onDelete} />
+            <div className="form-group">
+                <button type="button" className="btn btn-primary" onClick={this.onCreate}><i className="fa fa-plus"></i> Додати змагання</button>
+            </div>                
             <Modal target={this.state.target} onClose={this.onClose}>
-                <GameForm game={this.state.target} onChange={this.onChange} />
+                <GameForm game={this.state.target} onChange={this.onChange} onSave={this.onSave} />
             </Modal>
+            <Dialog dialog={this.state.dialog} onCancel={this.onCancel} onConfirm={this.onConfirm} />
             <Preloader loading={this.state.loading} />
         </div>
     }

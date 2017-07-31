@@ -1,6 +1,8 @@
 <?php
     wp_register_script( 'categories_manager_script', plugins_url( '../js/categories-manager.js', __FILE__ ) );
     wp_enqueue_script(  'categories_manager_script');
+    wp_register_script( 'categories_manager_entry_script', plugins_url( '../js/categories/categories-bundle.js', __FILE__ ) );
+    wp_enqueue_script(  'categories_manager_entry_script');    
 ?> 
  <div class="row categories-wrapper">
                 <div class="col-md-6 weight-categories-section">
@@ -86,4 +88,5 @@
                         </div>                    
                 </div>
             </div>
-            </div>               
+            </div>   
+            <div id="categories-app"></div>            

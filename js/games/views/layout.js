@@ -1,6 +1,7 @@
 import React from "react";
 import PreCompetition from "./pre-competition";
 import Competition from "./competition";
+require("../../../css/games.css");
 
 class Games extends React.Component{
     render(){

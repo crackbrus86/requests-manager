@@ -53,3 +53,27 @@ export const GetCompetition = (id) => {
         data: id
     })
 }
+
+export const UpdateCompetition = (contract) => {
+    return jQuery.ajax({
+        url: dir + "UpdateActualGame.php",
+        type: "POST",
+        data: contract
+    })
+}
+
+export const CreateCompetition = (contract) => {
+    return jQuery.ajax({
+        url: dir + "InsertActualGame.php",
+        type: "POST",
+        data: contract
+    })
+}
+
+export const DeleteCompetition = (id) => {
+    return jQuery.ajax({
+        url: dir + "DeleteActualGame.php",
+        type: "POST",
+        data: id
+    })
+}
