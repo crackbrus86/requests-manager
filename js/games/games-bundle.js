@@ -40274,7 +40274,7 @@ var Competition = function (_React$Component) {
                     { target: this.state.target, onClose: this.onClose },
                     _react2.default.createElement(_competitionForm2.default, { game: this.state.target, onChange: this.onChange, onSave: this.onSave })
                 ),
-                _react2.default.createElement(_dialog2.default, { dialog: this.state.dialog, onCancel: this.onCancel, onConfirm: this.onConfirm }),
+                _react2.default.createElement(_dialog2.default, { dialog: this.state.dialog, onClose: this.onCancel, onConfirm: this.onConfirm }),
                 _react2.default.createElement(_preloader2.default, { loading: this.state.loading })
             );
         }

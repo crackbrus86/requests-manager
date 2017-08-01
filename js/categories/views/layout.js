@@ -6,15 +6,16 @@ import Preloader from "../../components/preloader/preloader";
 class Categories extends React.Component{
 
     componentWillMount(){
-        this.setState({loading: true});
+        this.setState({loading: false});
         this.fetchAgeCategories();
+        this.onUpdateAgeCat = this.fetchAgeCategories.bind(this);
     }
 
     fetchAgeCategories(){
+        this.setState({loading: true});        
         services.GetAllAgeCategories().then((data) => {
             this.setState({ageCategories: JSON.parse(data)});
             this.setState({loading: false});
-            console.log(this.state);
         })
     }
 
@@ -28,7 +29,7 @@ class Categories extends React.Component{
 
             </div>
             <div className="col-md-6">
-                <AgeCategories  categories={this.state.ageCategories} />
+                <AgeCategories  categories={this.state.ageCategories} onUpdate={this.onUpdateAgeCat} />
             </div>
             <Preloader loading={this.state.loading} />
         </div>

@@ -124,7 +124,7 @@ class Competition extends React.Component{
             <Modal target={this.state.target} onClose={this.onClose}>
                 <GameForm game={this.state.target} onChange={this.onChange} onSave={this.onSave} />
             </Modal>
-            <Dialog dialog={this.state.dialog} onCancel={this.onCancel} onConfirm={this.onConfirm} />
+            <Dialog dialog={this.state.dialog} onClose={this.onCancel} onConfirm={this.onConfirm} />
             <Preloader loading={this.state.loading} />
         </div>
     }
