@@ -38,3 +38,42 @@ export const DeleteAgeCaegory = (id) => {
         data: id
     })
 }
+
+export const GetAllWeightCategories = () => {
+    return jQuery.ajax({
+        url: dir + "GetWeightCategories.php",
+        type: "POST"
+    })
+}
+
+export const GetWeightCategoryById = (id) => {
+    return jQuery.ajax({
+        url: dir + "GetWeightCategoryById.php",
+        type: "POST",
+        data: id
+    })
+}
+
+export const UpdateWeightCategory = (contract) => {
+    return jQuery.ajax({
+        url: dir + "UpdateWeightCategory.php",
+        type: "POST",
+        data: id
+    })
+}
+
+export const CreateWeightCategory = (contract) => {
+    return jQuery.ajax({
+        url: dir + "InsertWeightCategory.php",
+        type: "POST",
+        data: contract
+    })
+}
+
+export const DeleteWeightCategory = (id) => {
+    return jQuery.ajax({
+        url: dir + "DeleteWeightCategory.php",
+        type: "POST",
+        data: id
+    })
+}
