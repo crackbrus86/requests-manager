@@ -1,0 +1,10 @@
+#regions-app table{
+    display: block;
+}
+#regions-app tbody{
+    max-height: 512px;
+    overflow: auto;
+    display: block;
+    width: 100%;
+    border-bottom: 1px solid #ccc;
+}

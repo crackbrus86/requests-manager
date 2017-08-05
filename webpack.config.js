@@ -1,7 +1,7 @@
 module.exports = {
-    entry: "./js/categories/index.js",
+    entry: "./js/games/index.js",
     output: {
-        filename: "./js/categories/categories-bundle.js"
+        filename: "./js/games/games-bundle.js"
     },
     module: {
         loaders: [
