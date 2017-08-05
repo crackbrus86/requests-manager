@@ -6,7 +6,7 @@ foreach($_POST as $item => $value):
 endforeach;
 if(current_user_can('edit_others_pages')):
 	$wpdb->insert( $tb_name,
-		array( 'title_w' => $data['title_w'], 'parent' => $data['parent']),
+		array( 'title_w' => $data['title'], 'parent' => $data['parent']),
 		array( '%s', '%d')
 	);
 	echo "true";

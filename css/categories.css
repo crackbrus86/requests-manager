@@ -1,0 +1,10 @@
+#categories-app table{
+    display: block;
+}
+#categories-app tbody{
+    max-height: 262px;
+    overflow: auto;
+    display: block;
+    width: 100%;
+    border-bottom: 1px solid #ccc;
+}

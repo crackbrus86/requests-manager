@@ -58,7 +58,7 @@ export const UpdateWeightCategory = (contract) => {
     return jQuery.ajax({
         url: dir + "UpdateWeightCategory.php",
         type: "POST",
-        data: id
+        data: contract
     })
 }
 

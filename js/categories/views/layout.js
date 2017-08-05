@@ -3,11 +3,11 @@ import * as services from "../services/services";
 import AgeCategories from "./ageCategories";
 import WeightCategories from "./weightCategories";
 import Preloader from "../../components/preloader/preloader";
+require("../../../css/categories.css");
 
 class Categories extends React.Component{
 
     componentWillMount(){
-        // this.setState({loading: false});
         this.fetchAgeCategories();
         this.onUpdateAgeCat = this.fetchAgeCategories.bind(this);
         this.onUpdateWeightCat = this.fetchWeightCategories.bind(this);
@@ -37,7 +37,7 @@ class Categories extends React.Component{
     render(){
         return <div className="row">
             <div className="col-md-6">
-                <WeightCategories categories={this.state.weightCategories} onUpdate={this.onUpdateWeightCat }/>
+                <WeightCategories categories={this.state.weightCategories} ageCategories={this.state.ageCategories} onUpdate={this.onUpdateWeightCat }/>
             </div>
             <div className="col-md-6">
                 <AgeCategories  categories={this.state.ageCategories} onUpdate={this.onUpdateAgeCat} />
