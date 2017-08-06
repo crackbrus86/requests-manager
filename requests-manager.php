@@ -21,6 +21,14 @@ function buildRequestsForm(){
 
 add_shortcode('RequestsForm', 'buildRequestsForm');
 
+function buildRequestsFormReact(){   
+    if(file_exists(RM__PLUGIN_DIR."/templates/request-form-react.php")){
+        require_once(RM__PLUGIN_DIR."/templates/request-form-react.php");
+    }
+}
+
+add_shortcode('RequestsFormReact', 'buildRequestsFormReact');
+
 class RequestManager{
     
     function initSettings(){
