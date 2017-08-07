@@ -28000,7 +28000,7 @@ module.exports = Object.assign || function (target, source) {
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.isFieldValid = exports.isFormValid = undefined;
+exports.isEmailValid = exports.isFieldValid = exports.isFormValid = undefined;
 
 var _react = __webpack_require__(8);
 
@@ -28029,6 +28029,30 @@ var isFieldValid = exports.isFieldValid = function isFieldValid(field) {
             "sub",
             null,
             text
+        )
+    );
+};
+
+var isEmailValid = exports.isEmailValid = function isEmailValid(field) {
+    if (!field) return _react2.default.createElement(
+        "i",
+        { className: "invalid" },
+        "*",
+        _react2.default.createElement(
+            "sub",
+            null,
+            "Це поле є обов'язковим"
+        )
+    );
+    var pattern = new RegExp(/^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i);
+    if (!pattern.test(field)) return _react2.default.createElement(
+        "i",
+        { className: "invalid" },
+        "*",
+        _react2.default.createElement(
+            "sub",
+            null,
+            "Не вірно вказано email"
         )
     );
 };
@@ -39444,7 +39468,7 @@ var RequestForm = function (_React$Component) {
             return _react2.default.createElement(
                 "div",
                 null,
-                _react2.default.createElement(_nameForm2.default, { person: this.state.user, onChange: this.onUserChange, onNext: this.onUserLoad }),
+                _react2.default.createElement(_nameForm2.default, { person: this.state.user, onChange: this.onUserChange, onNext: this.onUserLoad, isReadOnly: this.state.showUserData }),
                 _react2.default.createElement(_personalForm2.default, { isVisible: this.state.showUserData, person: this.state.userData, regions: this.state.regions, onChange: this.onUserDataChange }),
                 _react2.default.createElement(_preloader2.default, { loading: this.state.loading })
             );
@@ -39513,6 +39537,9 @@ var NameForm = function (_React$Component) {
 
             var required = ["firstName", "lastName", "middleName", "birthDate"];
             var birthDate = this.props.person.birthDate ? new Date(this.props.person.birthDate) : null;
+            var datetime = this.props.isReadOnly ? _react2.default.createElement("input", { type: "text", value: this.props.person.birthDate, className: "form-control", readOnly: true }) : _react2.default.createElement(_reactDatetime2.default, { value: birthDate, dateFormat: "DD-MM-YYYY", onChange: function onChange(v) {
+                    return _this2.props.onChange("birthDate", v.format("YYYY-MM-DD"));
+                }, timeFormat: false, closeOnSelect: true, maxLength: "10" });
             return _react2.default.createElement(
                 "div",
                 null,
@@ -39530,7 +39557,7 @@ var NameForm = function (_React$Component) {
                         ),
                         _react2.default.createElement("input", { type: "text", value: this.props.person.lastName, onChange: function onChange(e) {
                                 return _this2.props.onChange("lastName", e.target.value);
-                            }, className: "form-control", placeholder: "\u041F\u0440\u0456\u0437\u0432\u0438\u0449\u0435", maxLength: "50" })
+                            }, className: "form-control", placeholder: "\u041F\u0440\u0456\u0437\u0432\u0438\u0449\u0435", maxLength: "50", readOnly: this.props.isReadOnly })
                     ),
                     _react2.default.createElement(
                         "div",
@@ -39543,7 +39570,7 @@ var NameForm = function (_React$Component) {
                         ),
                         _react2.default.createElement("input", { type: "text", value: this.props.person.firstName, onChange: function onChange(e) {
                                 return _this2.props.onChange("firstName", e.target.value);
-                            }, className: "form-control", placeholder: "\u0406\u043C'\u044F", maxLength: "30" })
+                            }, className: "form-control", placeholder: "\u0406\u043C'\u044F", maxLength: "30", readOnly: this.props.isReadOnly })
                     ),
                     _react2.default.createElement(
                         "div",
@@ -39556,7 +39583,7 @@ var NameForm = function (_React$Component) {
                         ),
                         _react2.default.createElement("input", { type: "text", value: this.props.person.middleName, onChange: function onChange(e) {
                                 return _this2.props.onChange("middleName", e.target.value);
-                            }, className: "form-control", placeholder: "\u041F\u043E-\u0431\u0430\u0442\u044C\u043A\u043E\u0432\u0456", maxLength: "30" })
+                            }, className: "form-control", placeholder: "\u041F\u043E-\u0431\u0430\u0442\u044C\u043A\u043E\u0432\u0456", maxLength: "30", readOnly: this.props.isReadOnly })
                     ),
                     _react2.default.createElement(
                         "div",
@@ -39567,9 +39594,7 @@ var NameForm = function (_React$Component) {
                             "\u0414\u0430\u0442\u0430 \u043D\u0430\u0440\u043E\u0434\u0436\u0435\u043D\u043D\u044F ",
                             validation.isFieldValid(birthDate, "Це поле є обов'язковим")
                         ),
-                        _react2.default.createElement(_reactDatetime2.default, { value: birthDate, dateFormat: "DD-MM-YYYY", onChange: function onChange(v) {
-                                return _this2.props.onChange("birthDate", v.format("YYYY-MM-DD"));
-                            }, timeFormat: false, closeOnSelect: true, maxLength: "10" })
+                        datetime
                     ),
                     _react2.default.createElement(
                         "div",
@@ -40841,6 +40866,7 @@ var PersonalForm = function (_React$Component) {
                 );
             }) : null;
             var region = this.props.person.region ? this.props.person.region : this.props.regions[0].id;
+            var expiration_pass = this.props.person.expiration_date_pass ? new Date(this.props.person.expiration_date_pass) : null;
             return _react2.default.createElement(
                 "div",
                 null,
@@ -40869,9 +40895,12 @@ var PersonalForm = function (_React$Component) {
                         _react2.default.createElement(
                             "label",
                             null,
-                            "\u041F\u0440\u0456\u0437\u0432\u0438\u0449\u0435 \u044F\u043A \u0443 \u0437\u0430\u043A\u043E\u0440\u0434\u043E\u043D\u043D\u043E\u043C\u0443 \u043F\u0430\u0441\u043F\u043E\u0440\u0442\u0456"
+                            "\u041F\u0440\u0456\u0437\u0432\u0438\u0449\u0435 \u044F\u043A \u0443 \u0437\u0430\u043A\u043E\u0440\u0434\u043E\u043D\u043D\u043E\u043C\u0443 \u043F\u0430\u0441\u043F\u043E\u0440\u0442\u0456 ",
+                            validation.isFieldValid(this.props.person.last_name_pass, "Це поле є обов'язковим")
                         ),
-                        _react2.default.createElement("input", { type: "text", className: "form-control", placeholder: "Last Name", maxLength: "50" })
+                        _react2.default.createElement("input", { value: this.props.person.last_name_pass, onChange: function onChange(e) {
+                                return _this2.props.onChange("last_name_pass", e.target.value);
+                            }, type: "text", className: "form-control", placeholder: "Last Name", maxLength: "50" })
                     ),
                     _react2.default.createElement(
                         "div",
@@ -40879,9 +40908,12 @@ var PersonalForm = function (_React$Component) {
                         _react2.default.createElement(
                             "label",
                             null,
-                            "\u0406\u043C'\u044F \u044F\u043A \u0443 \u0437\u0430\u043A\u043E\u0440\u0434\u043E\u043D\u043D\u043E\u043C\u0443 \u043F\u0430\u0441\u043F\u043E\u0440\u0442\u0456"
+                            "\u0406\u043C'\u044F \u044F\u043A \u0443 \u0437\u0430\u043A\u043E\u0440\u0434\u043E\u043D\u043D\u043E\u043C\u0443 \u043F\u0430\u0441\u043F\u043E\u0440\u0442\u0456 ",
+                            validation.isFieldValid(this.props.person.first_name_pass, "Це поле є обов'язковим")
                         ),
-                        _react2.default.createElement("input", { type: "text", className: "form-control", placeholder: "First Name", maxLength: "30" })
+                        _react2.default.createElement("input", { value: this.props.person.first_name_pass, onChange: function onChange(e) {
+                                return _this2.props.onChange("first_name_pass", e.target.value);
+                            }, type: "text", className: "form-control", placeholder: "First Name", maxLength: "30" })
                     ),
                     _react2.default.createElement(
                         "div",
@@ -40889,7 +40921,11 @@ var PersonalForm = function (_React$Component) {
                         _react2.default.createElement(
                             "label",
                             null,
-                            "\u0421\u0435\u0440\u0456\u044F \u0442\u0430 \u043D\u043E\u043C\u0435\u0440 \u0437\u0430\u043A\u043E\u0440\u0434\u043E\u043D\u043D\u043E\u0433\u043E \u043F\u0430\u0441\u043F\u043E\u0440\u0442\u0443"
+                            "\u0421\u0435\u0440\u0456\u044F ",
+                            validation.isFieldValid(this.props.person.serial_number_pass, "Введіть серію"),
+                            " \u0442\u0430 \u043D\u043E\u043C\u0435\u0440 ",
+                            validation.isFieldValid(this.props.person.number_pass, "Введіть номер"),
+                            " \u0437\u0430\u043A\u043E\u0440\u0434\u043E\u043D\u043D\u043E\u0433\u043E \u043F\u0430\u0441\u043F\u043E\u0440\u0442\u0443"
                         ),
                         _react2.default.createElement(
                             "div",
@@ -40897,12 +40933,16 @@ var PersonalForm = function (_React$Component) {
                             _react2.default.createElement(
                                 "div",
                                 { className: "col-md-4" },
-                                _react2.default.createElement("input", { type: "text", className: "form-control", placeholder: "\u041D\u041D", maxLength: "4" })
+                                _react2.default.createElement("input", { value: this.props.person.serial_number_pass, onChange: function onChange(e) {
+                                        return _this2.props.onChange("serial_number_pass", e.target.value);
+                                    }, type: "text", className: "form-control", placeholder: "\u041D\u041D", maxLength: "4" })
                             ),
                             _react2.default.createElement(
                                 "div",
                                 { className: "col-md-8" },
-                                _react2.default.createElement("input", { type: "text", className: "form-control", placeholder: "\u0425\u0425\u0425\u0425\u0425\u0425", maxLength: "8" })
+                                _react2.default.createElement("input", { value: this.props.person.number_pass, onChange: function onChange(e) {
+                                        return _this2.props.onChange("number_pass", e.target.value);
+                                    }, type: "text", className: "form-control", placeholder: "\u0425\u0425\u0425\u0425\u0425\u0425", maxLength: "8" })
                             )
                         )
                     ),
@@ -40912,9 +40952,12 @@ var PersonalForm = function (_React$Component) {
                         _react2.default.createElement(
                             "label",
                             null,
-                            "\u0422\u0435\u0440\u043C\u0456\u043D \u0434\u0456\u0457 \u043F\u0430\u0441\u043F\u043E\u0440\u0442\u0443"
+                            "\u0422\u0435\u0440\u043C\u0456\u043D \u0434\u0456\u0457 \u043F\u0430\u0441\u043F\u043E\u0440\u0442\u0443 ",
+                            validation.isFieldValid(expiration_pass, "Це поле є обов'язковим")
                         ),
-                        _react2.default.createElement(_reactDatetime2.default, { dateFormat: "DD-MM-YYYY", timeFormat: false, closeOnSelect: true, maxLength: "10" })
+                        _react2.default.createElement(_reactDatetime2.default, { value: expiration_pass, dateFormat: "DD-MM-YYYY", timeFormat: false, closeOnSelect: true, maxLength: "10", onChange: function onChange(v) {
+                                return _this2.props.onChange("expiration_date_pass", v.format("YYYY-MM-DD"));
+                            } })
                     ),
                     _react2.default.createElement(
                         "div",
@@ -40922,9 +40965,12 @@ var PersonalForm = function (_React$Component) {
                         _react2.default.createElement(
                             "label",
                             null,
-                            "\u0406\u0434\u0435\u043D\u0442\u0438\u0444\u0456\u043A\u0430\u0446\u0456\u0439\u043D\u0438\u0439 \u043D\u043E\u043C\u0435\u0440"
+                            "\u0406\u0434\u0435\u043D\u0442\u0438\u0444\u0456\u043A\u0430\u0446\u0456\u0439\u043D\u0438\u0439 \u043D\u043E\u043C\u0435\u0440 ",
+                            validation.isFieldValid(this.props.person.individual_number, "Це поле є обов'язковим")
                         ),
-                        _react2.default.createElement("input", { type: "text", className: "form-control", maxLength: "10" })
+                        _react2.default.createElement("input", { value: this.props.person.individual_number, onChange: function onChange(e) {
+                                return _this2.props.onChange("individual_number", e.target.value);
+                            }, type: "text", className: "form-control", maxLength: "10" })
                     ),
                     _react2.default.createElement(
                         "div",
@@ -40932,9 +40978,12 @@ var PersonalForm = function (_React$Component) {
                         _react2.default.createElement(
                             "label",
                             null,
-                            "\u041D\u043E\u043C\u0435\u0440 \u0442\u0435\u043B\u0435\u0444\u043E\u043D\u0443"
+                            "\u041D\u043E\u043C\u0435\u0440 \u0442\u0435\u043B\u0435\u0444\u043E\u043D\u0443 ",
+                            validation.isFieldValid(this.props.person.phone, "Це поле є обов'язковим")
                         ),
-                        _react2.default.createElement("input", { type: "text", className: "form-control phone", placeholder: "+38 (999) 999-99-99", maxLength: "20" })
+                        _react2.default.createElement("input", { value: this.props.person.phone, onChange: function onChange(e) {
+                                return _this2.props.onChange("phone", e.target.value);
+                            }, type: "text", className: "form-control phone", placeholder: "+38 (999) 999-99-99", maxLength: "20" })
                     ),
                     _react2.default.createElement(
                         "div",
@@ -40942,9 +40991,12 @@ var PersonalForm = function (_React$Component) {
                         _react2.default.createElement(
                             "label",
                             null,
-                            "\u0415\u043B\u0435\u043A\u0442\u0440\u043E\u043D\u043D\u0430 \u0430\u0434\u0440\u0435\u0441\u0430"
+                            "\u0415\u043B\u0435\u043A\u0442\u0440\u043E\u043D\u043D\u0430 \u0430\u0434\u0440\u0435\u0441\u0430 ",
+                            validation.isEmailValid(this.props.person.email)
                         ),
-                        _react2.default.createElement("input", { type: "text", className: "form-control", placeholder: "email.adress@gmail.com", maxLength: "50" })
+                        _react2.default.createElement("input", { value: this.props.person.email, onChange: function onChange(e) {
+                                return _this2.props.onChange("email", e.target.value);
+                            }, type: "text", className: "form-control", placeholder: "email.adress@gmail.com", maxLength: "50" })
                     )
                 )
             );

@@ -82,7 +82,7 @@ class RequestForm extends React.Component{
     }
     render(){
         return <div>
-            <NameForm person={this.state.user} onChange={this.onUserChange} onNext={this.onUserLoad} />
+            <NameForm person={this.state.user} onChange={this.onUserChange} onNext={this.onUserLoad} isReadOnly={this.state.showUserData} />
             <PersonalForm isVisible={this.state.showUserData} person={this.state.userData} regions={this.state.regions} onChange={this.onUserDataChange} />
             <Preloader loading={this.state.loading} />
         </div>
