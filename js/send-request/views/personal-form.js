@@ -3,6 +3,7 @@ import moment from "moment";
 require("../../../css/react-datetime.css");
 import Datetime from "react-datetime";
 import * as validation from "../../components/validation/validation";
+import PhotoLoader from "../../components/photo-loader/photo-loader";
 
 class PersonalForm extends React.Component{
 componentWillMount(){
@@ -54,7 +55,11 @@ componentWillMount(){
                 <div className="form-group">
                     <label>Електронна адреса {validation.isEmailValid(this.props.person.email)}</label> 
                     <input value={this.props.person.email} onChange={e => this.props.onChange("email", e.target.value)} type="text" className="form-control" placeholder="email.adress@gmail.com" maxLength="50" />   
-                </div>                                            
+                </div>
+                <div className="form-group">
+                    <label>Фото першої сторінки національного паспорту</label>
+                    <PhotoLoader value={this.props.person.photo_national_pass_id} desc={"Фото першої сторінки національного паспорту"}  onRemove={() => this.props.onChange("photo_national_pass_id", "")} onUpdate={(id) => this.props.onChange("photo_national_pass_id", id)} /> 
+                </div>                                           
             </form>
         </div>
     }
