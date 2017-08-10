@@ -1,0 +1,9 @@
+.photoPanel button{
+    margin-right: 10px;
+}
+
+.user-photo{
+    display: block;
+    margin: 0 auto;
+    max-width: 500px;
+}

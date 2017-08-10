@@ -9,3 +9,11 @@ export const uploadPhoto = (files) => {
         type: 'POST'     
     })
 }
+
+export const getPhotoSrc = (photoId) => {
+    return jQuery.ajax({
+        url: dir + "GetPhotoSrc.php",
+        type: "POST",
+        data: photoId
+    })
+}

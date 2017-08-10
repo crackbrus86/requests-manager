@@ -10,7 +10,7 @@ class PhotoLoaderForm extends React.Component{
                     <input type="file" className="form-control" onChange={(e) => this.props.onChose(e.target)} />
                 </div>
                 <div className="form-group">
-                    <button type="button" className="btn btn-primary" onClick={() => {this.props.onSave()}}>Завантажити</button>
+                    <button type="button" className="btn btn-primary" onClick={() => {this.props.onSave()}} disabled={this.props.error}>Завантажити</button>
                 </div>
         </div>
     }
