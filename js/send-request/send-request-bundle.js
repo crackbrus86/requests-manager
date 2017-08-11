@@ -39407,7 +39407,7 @@ var _personalForm = __webpack_require__(324);
 
 var _personalForm2 = _interopRequireDefault(_personalForm);
 
-var _services = __webpack_require__(335);
+var _services = __webpack_require__(336);
 
 var services = _interopRequireWildcard(_services);
 
@@ -39449,8 +39449,14 @@ var RequestForm = function (_React$Component) {
     }, {
         key: "changeUserDataField",
         value: function changeUserDataField(fieldName, value) {
+            var fieldParent = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+
             var newUserData = this.state.userData;
-            newUserData[fieldName] = value;
+            if (fieldParent) {
+                newUserData[fieldParent][fieldName] = value;
+            } else {
+                newUserData[fieldName] = value;
+            }
             this.setState({ userData: newUserData });
             console.log(this.state);
         }
@@ -39499,7 +39505,12 @@ var RequestForm = function (_React$Component) {
                     photo_international_pass_id: "",
                     photo_national_pass_id: "",
                     region: "",
-                    serial_number_pass: ""
+                    serial_number_pass: "",
+                    visa: {
+                        hasVisa: "false",
+                        type: 0,
+                        term: null
+                    }
                 } });
         }
     }, {
@@ -40887,6 +40898,10 @@ var _photoLoader = __webpack_require__(325);
 
 var _photoLoader2 = _interopRequireDefault(_photoLoader);
 
+var _visaForm = __webpack_require__(335);
+
+var _visaForm2 = _interopRequireDefault(_visaForm);
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -41072,7 +41087,65 @@ var PersonalForm = function (_React$Component) {
                             }, onUpdate: function onUpdate(id) {
                                 return _this2.props.onChange("photo_national_pass_id", id);
                             } })
-                    )
+                    ),
+                    _react2.default.createElement(
+                        "div",
+                        { className: "form-group" },
+                        _react2.default.createElement(
+                            "label",
+                            null,
+                            "\u0424\u043E\u0442\u043E \u043F\u0435\u0440\u0448\u043E\u0457 \u0441\u0442\u043E\u0440\u0456\u043D\u043A\u0438 \u0437\u0430\u043A\u043E\u0440\u0434\u043E\u043D\u043D\u043E\u0433\u043E \u043F\u0430\u0441\u043F\u043E\u0440\u0442\u0443"
+                        ),
+                        _react2.default.createElement(_photoLoader2.default, { value: this.props.person.photo_international_pass_id, desc: "Фото першої сторінки закордонного паспорту", onRemove: function onRemove() {
+                                return _this2.props.onChange("photo_international_pass_id", "");
+                            }, onUpdate: function onUpdate(id) {
+                                return _this2.props.onChange("photo_international_pass_id", id);
+                            } })
+                    ),
+                    _react2.default.createElement(
+                        "div",
+                        { className: "form-group" },
+                        _react2.default.createElement(
+                            "label",
+                            null,
+                            "\u0424\u043E\u0442\u043E \u0434\u043B\u044F \u0430\u043A\u0440\u0435\u0434\u0438\u0442\u0430\u0446\u0456\u0457"
+                        ),
+                        _react2.default.createElement(_photoLoader2.default, { value: this.props.person.accreditation_photo_id, desc: "Фото для акредитації", onRemove: function onRemove() {
+                                return _this2.props.onChange("accreditation_photo_id", "");
+                            }, onUpdate: function onUpdate(id) {
+                                return _this2.props.onChange("accreditation_photo_id", id);
+                            } })
+                    ),
+                    _react2.default.createElement(
+                        "div",
+                        { className: "form-group" },
+                        _react2.default.createElement(
+                            "div",
+                            null,
+                            _react2.default.createElement(
+                                "label",
+                                null,
+                                "\u0427\u0438 \u043C\u0430\u0454\u0442\u0435 \u0412\u0438 \u0434\u0456\u044E\u0447\u0443 \u0432\u0456\u0437\u0443?"
+                            )
+                        ),
+                        _react2.default.createElement(
+                            "label",
+                            { className: "radio-inline" },
+                            _react2.default.createElement("input", { type: "radio", value: "false", checked: this.props.person.visa.hasVisa === "false", onChange: function onChange(e) {
+                                    return _this2.props.onChange("hasVisa", e.target.value, "visa");
+                                } }),
+                            " \u041D\u0456"
+                        ),
+                        _react2.default.createElement(
+                            "label",
+                            { className: "radio-inline" },
+                            _react2.default.createElement("input", { type: "radio", value: "true", checked: this.props.person.visa.hasVisa === "true", onChange: function onChange(e) {
+                                    return _this2.props.onChange("hasVisa", e.target.value, "visa");
+                                } }),
+                            " \u0422\u0430\u043A"
+                        )
+                    ),
+                    _react2.default.createElement(_visaForm2.default, { visa: this.props.person.visa, onChange: this.props.onChange })
                 )
             );
         }
@@ -41576,6 +41649,48 @@ exports.push([module.i, ".photoPanel button{\r\n    margin-right: 10px;\r\n}\r\n
 
 /***/ }),
 /* 335 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _react = __webpack_require__(7);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var VisaForm = function VisaForm(props) {
+    if (props.visa.hasVisa === "false") return null;
+    var types = [{ id: 0, title: "Шенгенська віза" }, { id: 1, title: "Віза США" }];
+    var typesList = types.map(function (type) {
+        return _react2.default.createElement(
+            "option",
+            { key: type.id, value: type.id },
+            type.title
+        );
+    });
+    return _react2.default.createElement(
+        "div",
+        null,
+        _react2.default.createElement(
+            "select",
+            { value: props.visa.type, className: "form-control", onChange: function onChange(e) {
+                    return props.onChange("type", e.target.value, "visa");
+                } },
+            typesList
+        )
+    );
+};
+
+exports.default = VisaForm;
+
+/***/ }),
+/* 336 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

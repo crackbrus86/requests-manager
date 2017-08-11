@@ -18,9 +18,13 @@ class RequestForm extends React.Component{
         this.setState({user: newUser});
     } 
 
-    changeUserDataField(fieldName, value){
+    changeUserDataField(fieldName, value, fieldParent = null){
         var newUserData = this.state.userData;
-        newUserData[fieldName] = value;
+        if(fieldParent){
+            newUserData[fieldParent][fieldName] = value;
+        }else{
+            newUserData[fieldName] = value;
+        }
         this.setState({userData: newUserData});
         console.log(this.state);        
     }     
@@ -62,7 +66,12 @@ class RequestForm extends React.Component{
             photo_international_pass_id: "",
             photo_national_pass_id: "",
             region: "",
-            serial_number_pass: ""
+            serial_number_pass: "",
+            visa:{
+                hasVisa: "false",
+                type: 0,
+                term: null
+            }
         }})
     }
 

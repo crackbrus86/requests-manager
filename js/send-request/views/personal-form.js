@@ -4,6 +4,7 @@ require("../../../css/react-datetime.css");
 import Datetime from "react-datetime";
 import * as validation from "../../components/validation/validation";
 import PhotoLoader from "../../components/photo-loader/photo-loader";
+import VisaForm from "./visa-form";
 
 class PersonalForm extends React.Component{
 componentWillMount(){
@@ -59,7 +60,25 @@ componentWillMount(){
                 <div className="form-group">
                     <label>Фото першої сторінки національного паспорту</label>
                     <PhotoLoader value={this.props.person.photo_national_pass_id} desc={"Фото першої сторінки національного паспорту"}  onRemove={() => this.props.onChange("photo_national_pass_id", "")} onUpdate={(id) => this.props.onChange("photo_national_pass_id", id)} /> 
-                </div>                                           
+                </div>   
+                <div className="form-group">
+                    <label>Фото першої сторінки закордонного паспорту</label>
+                    <PhotoLoader value={this.props.person.photo_international_pass_id} desc={"Фото першої сторінки закордонного паспорту"}  onRemove={() => this.props.onChange("photo_international_pass_id", "")} onUpdate={(id) => this.props.onChange("photo_international_pass_id", id)} /> 
+                </div> 
+                <div className="form-group">
+                    <label>Фото для акредитації</label>
+                    <PhotoLoader value={this.props.person.accreditation_photo_id} desc={"Фото для акредитації"}  onRemove={() => this.props.onChange("accreditation_photo_id", "")} onUpdate={(id) => this.props.onChange("accreditation_photo_id", id)} /> 
+                </div>
+                <div className="form-group">
+                    <div><label>Чи маєте Ви діючу візу?</label></div>
+                    <label className="radio-inline">
+                        <input type="radio" value="false" checked={this.props.person.visa.hasVisa === "false"} onChange={e => this.props.onChange("hasVisa", e.target.value, "visa")} /> Ні
+                    </label>
+                    <label className="radio-inline">
+                        <input type="radio" value="true" checked={this.props.person.visa.hasVisa === "true"} onChange={e => this.props.onChange("hasVisa", e.target.value, "visa")} /> Так
+                    </label>
+                </div>
+                <VisaForm visa={this.props.person.visa} onChange={this.props.onChange} />
             </form>
         </div>
     }
