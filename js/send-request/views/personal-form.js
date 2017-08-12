@@ -18,6 +18,8 @@ componentWillMount(){
         var expiration_pass = (this.props.person.expiration_date_pass)? new Date(this.props.person.expiration_date_pass) : null;
         return <div>
             <form>
+                <fieldset>
+                    <legend>Особисті дані</legend>
                 <div className="form-group">
                     <label>Область</label>
                     <select value={region} className="form-control" onChange={e => this.props.onChange("region", e.target.value)}>{regionsList}</select>
@@ -79,6 +81,7 @@ componentWillMount(){
                     </label>
                 </div>
                 <VisaForm visa={this.props.person.visa} onChange={this.props.onChange} />
+                </fieldset>
             </form>
         </div>
     }

@@ -1896,7 +1896,7 @@ function loadLocale(name) {
             module && module.exports) {
         try {
             oldLocale = globalLocale._abbr;
-            __webpack_require__(312)("./" + name);
+            __webpack_require__(311)("./" + name);
             // because defineLocale currently also sets the global locale, we
             // want to undo that for lazy loaded locales
             getSetGlobalLocale(oldLocale);
@@ -4531,7 +4531,7 @@ return hooks;
 
 })));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(311)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(310)(module)))
 
 /***/ }),
 /* 1 */
@@ -5017,7 +5017,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 var _prodInvariant = __webpack_require__(4);
 
 var DOMProperty = __webpack_require__(15);
-var ReactDOMComponentFlags = __webpack_require__(65);
+var ReactDOMComponentFlags = __webpack_require__(68);
 
 var invariant = __webpack_require__(2);
 
@@ -5762,9 +5762,9 @@ module.exports = ReactCurrentOwner;
 var _prodInvariant = __webpack_require__(4),
     _assign = __webpack_require__(5);
 
-var CallbackQueue = __webpack_require__(69);
+var CallbackQueue = __webpack_require__(72);
 var PooledClass = __webpack_require__(17);
-var ReactFeatureFlags = __webpack_require__(70);
+var ReactFeatureFlags = __webpack_require__(73);
 var ReactReconciler = __webpack_require__(21);
 var Transaction = __webpack_require__(32);
 
@@ -6511,7 +6511,7 @@ var warning = __webpack_require__(3);
 var canDefineProperty = __webpack_require__(29);
 var hasOwnProperty = Object.prototype.hasOwnProperty;
 
-var REACT_ELEMENT_TYPE = __webpack_require__(58);
+var REACT_ELEMENT_TYPE = __webpack_require__(61);
 
 var RESERVED_PROPS = {
   key: true,
@@ -6969,7 +6969,7 @@ module.exports = PooledClass;
 
 
 var React = __webpack_require__(7);
-var factory = __webpack_require__(63);
+var factory = __webpack_require__(66);
 
 if (typeof React === 'undefined') {
   throw Error(
@@ -7007,7 +7007,7 @@ module.exports = factory(
 
 var _assign = __webpack_require__(5);
 
-var ReactBaseClasses = __webpack_require__(56);
+var ReactBaseClasses = __webpack_require__(59);
 var ReactChildren = __webpack_require__(211);
 var ReactDOMFactories = __webpack_require__(215);
 var ReactElement = __webpack_require__(16);
@@ -7024,7 +7024,7 @@ var cloneElement = ReactElement.cloneElement;
 if (process.env.NODE_ENV !== 'production') {
   var lowPriorityWarning = __webpack_require__(38);
   var canDefineProperty = __webpack_require__(29);
-  var ReactElementValidator = __webpack_require__(60);
+  var ReactElementValidator = __webpack_require__(63);
   var didWarnPropTypesDeprecated = false;
   createElement = ReactElementValidator.createElement;
   createFactory = ReactElementValidator.createFactory;
@@ -7363,7 +7363,7 @@ var DOMNamespaces = __webpack_require__(46);
 var setInnerHTML = __webpack_require__(34);
 
 var createMicrosoftUnsafeLocalFunction = __webpack_require__(47);
-var setTextContent = __webpack_require__(74);
+var setTextContent = __webpack_require__(77);
 
 var ELEMENT_NODE_TYPE = 1;
 var DOCUMENT_FRAGMENT_NODE_TYPE = 11;
@@ -7485,8 +7485,8 @@ module.exports = DOMLazyTree;
 var EventPluginHub = __webpack_require__(24);
 var EventPluginUtils = __webpack_require__(40);
 
-var accumulateInto = __webpack_require__(66);
-var forEachAccumulated = __webpack_require__(67);
+var accumulateInto = __webpack_require__(69);
+var forEachAccumulated = __webpack_require__(70);
 var warning = __webpack_require__(3);
 
 var getListener = EventPluginHub.getListener;
@@ -7628,8 +7628,8 @@ var EventPluginRegistry = __webpack_require__(31);
 var EventPluginUtils = __webpack_require__(40);
 var ReactErrorUtils = __webpack_require__(41);
 
-var accumulateInto = __webpack_require__(66);
-var forEachAccumulated = __webpack_require__(67);
+var accumulateInto = __webpack_require__(69);
+var forEachAccumulated = __webpack_require__(70);
 var invariant = __webpack_require__(2);
 
 /**
@@ -9010,7 +9010,7 @@ module.exports = TransactionImpl;
 
 
 var SyntheticUIEvent = __webpack_require__(25);
-var ViewportMetrics = __webpack_require__(73);
+var ViewportMetrics = __webpack_require__(76);
 
 var getEventModifierState = __webpack_require__(44);
 
@@ -9320,7 +9320,7 @@ var _assign = __webpack_require__(5);
 
 var EventPluginRegistry = __webpack_require__(31);
 var ReactEventEmitterMixin = __webpack_require__(258);
-var ViewportMetrics = __webpack_require__(73);
+var ViewportMetrics = __webpack_require__(76);
 
 var getVendorPrefixedEventName = __webpack_require__(259);
 var isEventSupported = __webpack_require__(43);
@@ -9921,7 +9921,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
   function setupBinding(root, factory) {
     if (true) {
       // AMD. Register as an anonymous module.
-      !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(7),__webpack_require__(64),__webpack_require__(18)], __WEBPACK_AMD_DEFINE_RESULT__ = function(React, ReactDom, createReactClass) {
+      !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(7),__webpack_require__(67),__webpack_require__(18)], __WEBPACK_AMD_DEFINE_RESULT__ = function(React, ReactDom, createReactClass) {
         if (!createReactClass) createReactClass = React.createClass;
         return factory(root, React, ReactDom, createReactClass);
       }.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
@@ -10527,7 +10527,7 @@ var ReactInstrumentation = __webpack_require__(11);
 
 var createMicrosoftUnsafeLocalFunction = __webpack_require__(47);
 var setInnerHTML = __webpack_require__(34);
-var setTextContent = __webpack_require__(74);
+var setTextContent = __webpack_require__(77);
 
 function getNodeAfter(parentNode, node) {
   // Special case for text components, which return [open, close] comments
@@ -10816,8 +10816,8 @@ module.exports = createMicrosoftUnsafeLocalFunction;
 
 var _prodInvariant = __webpack_require__(4);
 
-var ReactPropTypesSecret = __webpack_require__(78);
-var propTypesFactory = __webpack_require__(61);
+var ReactPropTypesSecret = __webpack_require__(81);
+var propTypesFactory = __webpack_require__(64);
 
 var React = __webpack_require__(19);
 var PropTypes = propTypesFactory(React.isValidElement);
@@ -11852,6 +11852,551 @@ module.exports = getEventCharCode;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+
+
+var assign = __webpack_require__(208),
+	PropTypes = __webpack_require__(313),
+    createClass = __webpack_require__(18),
+	moment = __webpack_require__(0),
+	React = __webpack_require__(7),
+	CalendarContainer = __webpack_require__(315)
+;
+
+var TYPES = PropTypes;
+var Datetime = createClass({
+	propTypes: {
+		// value: TYPES.object | TYPES.string,
+		// defaultValue: TYPES.object | TYPES.string,
+		onFocus: TYPES.func,
+		onBlur: TYPES.func,
+		onChange: TYPES.func,
+		onViewModeChange: TYPES.func,
+		locale: TYPES.string,
+		utc: TYPES.bool,
+		input: TYPES.bool,
+		// dateFormat: TYPES.string | TYPES.bool,
+		// timeFormat: TYPES.string | TYPES.bool,
+		inputProps: TYPES.object,
+		timeConstraints: TYPES.object,
+		viewMode: TYPES.oneOf(['years', 'months', 'days', 'time']),
+		isValidDate: TYPES.func,
+		open: TYPES.bool,
+		strictParsing: TYPES.bool,
+		closeOnSelect: TYPES.bool,
+		closeOnTab: TYPES.bool
+	},
+
+	getDefaultProps: function() {
+		var nof = function() {};
+		return {
+			className: '',
+			defaultValue: '',
+			inputProps: {},
+			input: true,
+			onFocus: nof,
+			onBlur: nof,
+			onChange: nof,
+			onViewModeChange: nof,
+			timeFormat: true,
+			timeConstraints: {},
+			dateFormat: true,
+			strictParsing: true,
+			closeOnSelect: false,
+			closeOnTab: true,
+			utc: false
+		};
+	},
+
+	getInitialState: function() {
+		var state = this.getStateFromProps( this.props );
+
+		if ( state.open === undefined )
+			state.open = !this.props.input;
+
+		state.currentView = this.props.dateFormat ? (this.props.viewMode || state.updateOn || 'days') : 'time';
+
+		return state;
+	},
+
+	getStateFromProps: function( props ) {
+		var formats = this.getFormats( props ),
+			date = props.value || props.defaultValue,
+			selectedDate, viewDate, updateOn, inputValue
+		;
+
+		if ( date && typeof date === 'string' )
+			selectedDate = this.localMoment( date, formats.datetime );
+		else if ( date )
+			selectedDate = this.localMoment( date );
+
+		if ( selectedDate && !selectedDate.isValid() )
+			selectedDate = null;
+
+		viewDate = selectedDate ?
+			selectedDate.clone().startOf('month') :
+			this.localMoment().startOf('month')
+		;
+
+		updateOn = this.getUpdateOn(formats);
+
+		if ( selectedDate )
+			inputValue = selectedDate.format(formats.datetime);
+		else if ( date.isValid && !date.isValid() )
+			inputValue = '';
+		else
+			inputValue = date || '';
+
+		return {
+			updateOn: updateOn,
+			inputFormat: formats.datetime,
+			viewDate: viewDate,
+			selectedDate: selectedDate,
+			inputValue: inputValue,
+			open: props.open
+		};
+	},
+
+	getUpdateOn: function( formats ) {
+        if ( formats.date.match(/[lLD]/) ) {
+			return 'days';
+		} else if ( formats.date.indexOf('M') !== -1 ) {
+			return 'months';
+		} else if ( formats.date.indexOf('Y') !== -1 ) {
+			return 'years';
+		}
+
+		return 'days';
+	},
+
+	getFormats: function( props ) {
+		var formats = {
+				date: props.dateFormat || '',
+				time: props.timeFormat || ''
+			},
+			locale = this.localMoment( props.date, null, props ).localeData()
+		;
+
+		if ( formats.date === true ) {
+			formats.date = locale.longDateFormat('L');
+		}
+		else if ( this.getUpdateOn(formats) !== 'days' ) {
+			formats.time = '';
+		}
+
+		if ( formats.time === true ) {
+			formats.time = locale.longDateFormat('LT');
+		}
+
+		formats.datetime = formats.date && formats.time ?
+			formats.date + ' ' + formats.time :
+			formats.date || formats.time
+		;
+
+		return formats;
+	},
+
+	componentWillReceiveProps: function( nextProps ) {
+		var formats = this.getFormats( nextProps ),
+			updatedState = {}
+		;
+
+		if ( nextProps.value !== this.props.value ||
+			formats.datetime !== this.getFormats( this.props ).datetime ) {
+			updatedState = this.getStateFromProps( nextProps );
+		}
+
+		if ( updatedState.open === undefined ) {
+			if ( this.props.closeOnSelect && this.state.currentView !== 'time' ) {
+				updatedState.open = false;
+			} else {
+				updatedState.open = this.state.open;
+			}
+		}
+
+		if ( nextProps.viewMode !== this.props.viewMode ) {
+			updatedState.currentView = nextProps.viewMode;
+		}
+
+		if ( nextProps.locale !== this.props.locale ) {
+			if ( this.state.viewDate ) {
+				var updatedViewDate = this.state.viewDate.clone().locale( nextProps.locale );
+				updatedState.viewDate = updatedViewDate;
+			}
+			if ( this.state.selectedDate ) {
+				var updatedSelectedDate = this.state.selectedDate.clone().locale( nextProps.locale );
+				updatedState.selectedDate = updatedSelectedDate;
+				updatedState.inputValue = updatedSelectedDate.format( formats.datetime );
+			}
+		}
+
+		if ( nextProps.utc !== this.props.utc ) {
+			if ( nextProps.utc ) {
+				if ( this.state.viewDate )
+					updatedState.viewDate = this.state.viewDate.clone().utc();
+				if ( this.state.selectedDate ) {
+					updatedState.selectedDate = this.state.selectedDate.clone().utc();
+					updatedState.inputValue = updatedState.selectedDate.format( formats.datetime );
+				}
+			} else {
+				if ( this.state.viewDate )
+					updatedState.viewDate = this.state.viewDate.clone().local();
+				if ( this.state.selectedDate ) {
+					updatedState.selectedDate = this.state.selectedDate.clone().local();
+					updatedState.inputValue = updatedState.selectedDate.format(formats.datetime);
+				}
+			}
+		}
+
+		this.setState( updatedState );
+	},
+
+	onInputChange: function( e ) {
+		var value = e.target === null ? e : e.target.value,
+			localMoment = this.localMoment( value, this.state.inputFormat ),
+			update = { inputValue: value }
+		;
+
+		if ( localMoment.isValid() && !this.props.value ) {
+			update.selectedDate = localMoment;
+			update.viewDate = localMoment.clone().startOf('month');
+		} else {
+			update.selectedDate = null;
+		}
+
+		return this.setState( update, function() {
+			return this.props.onChange( localMoment.isValid() ? localMoment : this.state.inputValue );
+		});
+	},
+
+	onInputKey: function( e ) {
+		if ( e.which === 9 && this.props.closeOnTab ) {
+			this.closeCalendar();
+		}
+	},
+
+	showView: function( view ) {
+		var me = this;
+		return function() {
+			me.state.currentView !== view && me.props.onViewModeChange( view );
+			me.setState({ currentView: view });
+		};
+	},
+
+	setDate: function( type ) {
+		var me = this,
+			nextViews = {
+				month: 'days',
+				year: 'months'
+			}
+		;
+		return function( e ) {
+			me.setState({
+				viewDate: me.state.viewDate.clone()[ type ]( parseInt(e.target.getAttribute('data-value'), 10) ).startOf( type ),
+				currentView: nextViews[ type ]
+			});
+			me.props.onViewModeChange( nextViews[ type ] );
+		};
+	},
+
+	addTime: function( amount, type, toSelected ) {
+		return this.updateTime( 'add', amount, type, toSelected );
+	},
+
+	subtractTime: function( amount, type, toSelected ) {
+		return this.updateTime( 'subtract', amount, type, toSelected );
+	},
+
+	updateTime: function( op, amount, type, toSelected ) {
+		var me = this;
+
+		return function() {
+			var update = {},
+				date = toSelected ? 'selectedDate' : 'viewDate'
+			;
+
+			update[ date ] = me.state[ date ].clone()[ op ]( amount, type );
+
+			me.setState( update );
+		};
+	},
+
+	allowedSetTime: ['hours', 'minutes', 'seconds', 'milliseconds'],
+	setTime: function( type, value ) {
+		var index = this.allowedSetTime.indexOf( type ) + 1,
+			state = this.state,
+			date = (state.selectedDate || state.viewDate).clone(),
+			nextType
+		;
+
+		// It is needed to set all the time properties
+		// to not to reset the time
+		date[ type ]( value );
+		for (; index < this.allowedSetTime.length; index++) {
+			nextType = this.allowedSetTime[index];
+			date[ nextType ]( date[nextType]() );
+		}
+
+		if ( !this.props.value ) {
+			this.setState({
+				selectedDate: date,
+				inputValue: date.format( state.inputFormat )
+			});
+		}
+		this.props.onChange( date );
+	},
+
+	updateSelectedDate: function( e, close ) {
+		var target = e.target,
+			modifier = 0,
+			viewDate = this.state.viewDate,
+			currentDate = this.state.selectedDate || viewDate,
+			date
+		;
+
+		if (target.className.indexOf('rdtDay') !== -1) {
+			if (target.className.indexOf('rdtNew') !== -1)
+				modifier = 1;
+			else if (target.className.indexOf('rdtOld') !== -1)
+				modifier = -1;
+
+			date = viewDate.clone()
+				.month( viewDate.month() + modifier )
+				.date( parseInt( target.getAttribute('data-value'), 10 ) );
+		} else if (target.className.indexOf('rdtMonth') !== -1) {
+			date = viewDate.clone()
+				.month( parseInt( target.getAttribute('data-value'), 10 ) )
+				.date( currentDate.date() );
+		} else if (target.className.indexOf('rdtYear') !== -1) {
+			date = viewDate.clone()
+				.month( currentDate.month() )
+				.date( currentDate.date() )
+				.year( parseInt( target.getAttribute('data-value'), 10 ) );
+		}
+
+		date.hours( currentDate.hours() )
+			.minutes( currentDate.minutes() )
+			.seconds( currentDate.seconds() )
+			.milliseconds( currentDate.milliseconds() );
+
+		if ( !this.props.value ) {
+			var open = !( this.props.closeOnSelect && close );
+			if ( !open ) {
+				this.props.onBlur( date );
+			}
+
+			this.setState({
+				selectedDate: date,
+				viewDate: date.clone().startOf('month'),
+				inputValue: date.format( this.state.inputFormat ),
+				open: open
+			});
+		} else {
+			if ( this.props.closeOnSelect && close ) {
+				this.closeCalendar();
+			}
+		}
+
+		this.props.onChange( date );
+	},
+
+	openCalendar: function() {
+		if (!this.state.open) {
+			this.setState({ open: true }, function() {
+				this.props.onFocus();
+			});
+		}
+	},
+
+	closeCalendar: function() {
+		this.setState({ open: false }, function () {
+			this.props.onBlur( this.state.selectedDate || this.state.inputValue );
+		});
+	},
+
+	handleClickOutside: function() {
+		if ( this.props.input && this.state.open && !this.props.open ) {
+			this.setState({ open: false }, function() {
+				this.props.onBlur( this.state.selectedDate || this.state.inputValue );
+			});
+		}
+	},
+
+	localMoment: function( date, format, props ) {
+		props = props || this.props;
+		var momentFn = props.utc ? moment.utc : moment;
+		var m = momentFn( date, format, props.strictParsing );
+		if ( props.locale )
+			m.locale( props.locale );
+		return m;
+	},
+
+	componentProps: {
+		fromProps: ['value', 'isValidDate', 'renderDay', 'renderMonth', 'renderYear', 'timeConstraints'],
+		fromState: ['viewDate', 'selectedDate', 'updateOn'],
+		fromThis: ['setDate', 'setTime', 'showView', 'addTime', 'subtractTime', 'updateSelectedDate', 'localMoment', 'handleClickOutside']
+	},
+
+	getComponentProps: function() {
+		var me = this,
+			formats = this.getFormats( this.props ),
+			props = {dateFormat: formats.date, timeFormat: formats.time}
+		;
+
+		this.componentProps.fromProps.forEach( function( name ) {
+			props[ name ] = me.props[ name ];
+		});
+		this.componentProps.fromState.forEach( function( name ) {
+			props[ name ] = me.state[ name ];
+		});
+		this.componentProps.fromThis.forEach( function( name ) {
+			props[ name ] = me[ name ];
+		});
+
+		return props;
+	},
+
+	render: function() {
+		var className = 'rdt' + (this.props.className ?
+                  ( Array.isArray( this.props.className ) ?
+                  ' ' + this.props.className.join( ' ' ) : ' ' + this.props.className) : ''),
+			children = []
+		;
+
+		if ( this.props.input ) {
+			children = [ React.createElement('input', assign({
+				key: 'i',
+				type: 'text',
+				className: 'form-control',
+				onFocus: this.openCalendar,
+				onChange: this.onInputChange,
+				onKeyDown: this.onInputKey,
+				value: this.state.inputValue
+			}, this.props.inputProps ))];
+		} else {
+			className += ' rdtStatic';
+		}
+
+		if ( this.state.open )
+			className += ' rdtOpen';
+
+		return React.createElement('div', {className: className}, children.concat(
+			React.createElement('div',
+				{ key: 'dt', className: 'rdtPicker' },
+				React.createElement( CalendarContainer, {view: this.state.currentView, viewProps: this.getComponentProps(), onClickOutside: this.handleClickOutside })
+			)
+		));
+	}
+});
+
+// Make moment accessible through the Datetime class
+Datetime.moment = moment;
+
+module.exports = Datetime;
+
+
+/***/ }),
+/* 57 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.isEmailValid = exports.isFieldValid = exports.isFormValid = undefined;
+
+var _react = __webpack_require__(7);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+__webpack_require__(320);
+
+var isFormValid = exports.isFormValid = function isFormValid(formObject, required) {
+    for (var i = 0; i < required.length; i++) {
+        if (!formObject[required[i]]) return true;
+    }
+    return false;
+};
+
+var isFieldValid = exports.isFieldValid = function isFieldValid(field) {
+    var text = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "";
+
+    if (!!field) return null;
+    return _react2.default.createElement(
+        "i",
+        { className: "invalid" },
+        "*",
+        _react2.default.createElement(
+            "sub",
+            null,
+            text
+        )
+    );
+};
+
+var isEmailValid = exports.isEmailValid = function isEmailValid(field) {
+    if (!field) return _react2.default.createElement(
+        "i",
+        { className: "invalid" },
+        "*",
+        _react2.default.createElement(
+            "sub",
+            null,
+            "Це поле є обов'язковим"
+        )
+    );
+    var pattern = new RegExp(/^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i);
+    if (!pattern.test(field)) return _react2.default.createElement(
+        "i",
+        { className: "invalid" },
+        "*",
+        _react2.default.createElement(
+            "sub",
+            null,
+            "Не вірно вказано email"
+        )
+    );
+};
+
+/***/ }),
+/* 58 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(323);
+if(typeof content === 'string') content = [[module.i, content, '']];
+// Prepare cssTransformation
+var transform;
+
+var options = {}
+options.transform = transform
+// add the styles to the DOM
+var update = __webpack_require__(28)(content, options);
+if(content.locals) module.exports = content.locals;
+// Hot Module Replacement
+if(false) {
+	// When the styles change, update the <style> tags
+	if(!content.locals) {
+		module.hot.accept("!!../node_modules/css-loader/index.js!./react-datetime.css", function() {
+			var newContent = require("!!../node_modules/css-loader/index.js!./react-datetime.css");
+			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+			update(newContent);
+		});
+	}
+	// When the module is disposed, remove the <style> tags
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 59 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
 /* WEBPACK VAR INJECTION */(function(process) {/**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -11867,7 +12412,7 @@ module.exports = getEventCharCode;
 var _prodInvariant = __webpack_require__(20),
     _assign = __webpack_require__(5);
 
-var ReactNoopUpdateQueue = __webpack_require__(57);
+var ReactNoopUpdateQueue = __webpack_require__(60);
 
 var canDefineProperty = __webpack_require__(29);
 var emptyObject = __webpack_require__(30);
@@ -11997,7 +12542,7 @@ module.exports = {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 57 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12098,7 +12643,7 @@ module.exports = ReactNoopUpdateQueue;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 58 */
+/* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12123,7 +12668,7 @@ var REACT_ELEMENT_TYPE = typeof Symbol === 'function' && Symbol['for'] && Symbol
 module.exports = REACT_ELEMENT_TYPE;
 
 /***/ }),
-/* 59 */
+/* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12169,7 +12714,7 @@ function getIteratorFn(maybeIterable) {
 module.exports = getIteratorFn;
 
 /***/ }),
-/* 60 */
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12199,7 +12744,7 @@ var ReactElement = __webpack_require__(16);
 var checkReactTypeSpec = __webpack_require__(216);
 
 var canDefineProperty = __webpack_require__(29);
-var getIteratorFn = __webpack_require__(59);
+var getIteratorFn = __webpack_require__(62);
 var warning = __webpack_require__(3);
 var lowPriorityWarning = __webpack_require__(38);
 
@@ -12430,7 +12975,7 @@ module.exports = ReactElementValidator;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 61 */
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12449,7 +12994,7 @@ module.exports = ReactElementValidator;
 // Therefore we re-export development-only version with all the PropTypes checks here.
 // However if one is migrating to the `prop-types` npm library, they will go through the
 // `index.js` entry point, and it will branch depending on the environment.
-var factory = __webpack_require__(62);
+var factory = __webpack_require__(65);
 module.exports = function(isValidElement) {
   // It is still allowed in 15.5.
   var throwOnDirectAccess = false;
@@ -12458,7 +13003,7 @@ module.exports = function(isValidElement) {
 
 
 /***/ }),
-/* 62 */
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12978,7 +13523,7 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 63 */
+/* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13858,7 +14403,7 @@ module.exports = factory;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 64 */
+/* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13868,7 +14413,7 @@ module.exports = __webpack_require__(224);
 
 
 /***/ }),
-/* 65 */
+/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13891,7 +14436,7 @@ var ReactDOMComponentFlags = {
 module.exports = ReactDOMComponentFlags;
 
 /***/ }),
-/* 66 */
+/* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13955,7 +14500,7 @@ module.exports = accumulateInto;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 67 */
+/* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13991,7 +14536,7 @@ function forEachAccumulated(arr, cb, scope) {
 module.exports = forEachAccumulated;
 
 /***/ }),
-/* 68 */
+/* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14029,7 +14574,7 @@ function getTextContentAccessor() {
 module.exports = getTextContentAccessor;
 
 /***/ }),
-/* 69 */
+/* 72 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14154,7 +14699,7 @@ module.exports = PooledClass.addPoolingTo(CallbackQueue);
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 70 */
+/* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14181,7 +14726,7 @@ var ReactFeatureFlags = {
 module.exports = ReactFeatureFlags;
 
 /***/ }),
-/* 71 */
+/* 74 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14309,7 +14854,7 @@ var inputValueTracking = {
 module.exports = inputValueTracking;
 
 /***/ }),
-/* 72 */
+/* 75 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14365,7 +14910,7 @@ function isTextInputElement(elem) {
 module.exports = isTextInputElement;
 
 /***/ }),
-/* 73 */
+/* 76 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14395,7 +14940,7 @@ var ViewportMetrics = {
 module.exports = ViewportMetrics;
 
 /***/ }),
-/* 74 */
+/* 77 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14452,7 +14997,7 @@ if (ExecutionEnvironment.canUseDOM) {
 module.exports = setTextContent;
 
 /***/ }),
-/* 75 */
+/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14484,7 +15029,7 @@ function focusNode(node) {
 module.exports = focusNode;
 
 /***/ }),
-/* 76 */
+/* 79 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14643,7 +15188,7 @@ var CSSProperty = {
 module.exports = CSSProperty;
 
 /***/ }),
-/* 77 */
+/* 80 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14884,7 +15429,7 @@ module.exports = DOMPropertyOperations;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 78 */
+/* 81 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14906,7 +15451,7 @@ var ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
 module.exports = ReactPropTypesSecret;
 
 /***/ }),
-/* 79 */
+/* 82 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15112,7 +15657,7 @@ module.exports = ReactDOMSelect;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 80 */
+/* 83 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15132,8 +15677,8 @@ var _prodInvariant = __webpack_require__(4),
     _assign = __webpack_require__(5);
 
 var ReactCompositeComponent = __webpack_require__(265);
-var ReactEmptyComponent = __webpack_require__(82);
-var ReactHostComponent = __webpack_require__(83);
+var ReactEmptyComponent = __webpack_require__(85);
+var ReactHostComponent = __webpack_require__(86);
 
 var getNextDebugID = __webpack_require__(268);
 var invariant = __webpack_require__(2);
@@ -15247,7 +15792,7 @@ module.exports = instantiateReactComponent;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 81 */
+/* 84 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15293,7 +15838,7 @@ module.exports = ReactNodeTypes;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 82 */
+/* 85 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15328,7 +15873,7 @@ ReactEmptyComponent.injection = ReactEmptyComponentInjection;
 module.exports = ReactEmptyComponent;
 
 /***/ }),
-/* 83 */
+/* 86 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15402,7 +15947,7 @@ module.exports = ReactHostComponent;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 84 */
+/* 87 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15584,7 +16129,7 @@ module.exports = traverseAllChildren;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 85 */
+/* 88 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15667,7 +16212,7 @@ module.exports = EventListener;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 86 */
+/* 89 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15686,8 +16231,8 @@ module.exports = EventListener;
 var ReactDOMSelection = __webpack_require__(282);
 
 var containsNode = __webpack_require__(284);
-var focusNode = __webpack_require__(75);
-var getActiveElement = __webpack_require__(87);
+var focusNode = __webpack_require__(78);
+var getActiveElement = __webpack_require__(90);
 
 function isInDocument(node) {
   return containsNode(document.documentElement, node);
@@ -15795,7 +16340,7 @@ var ReactInputSelection = {
 module.exports = ReactInputSelection;
 
 /***/ }),
-/* 87 */
+/* 90 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15839,7 +16384,7 @@ function getActiveElement(doc) /*?DOMElement*/{
 module.exports = getActiveElement;
 
 /***/ }),
-/* 88 */
+/* 91 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15865,7 +16410,7 @@ var ReactCurrentOwner = __webpack_require__(12);
 var ReactDOMComponentTree = __webpack_require__(6);
 var ReactDOMContainerInfo = __webpack_require__(299);
 var ReactDOMFeatureFlags = __webpack_require__(300);
-var ReactFeatureFlags = __webpack_require__(70);
+var ReactFeatureFlags = __webpack_require__(73);
 var ReactInstanceMap = __webpack_require__(26);
 var ReactInstrumentation = __webpack_require__(11);
 var ReactMarkupChecksum = __webpack_require__(301);
@@ -15874,7 +16419,7 @@ var ReactUpdateQueue = __webpack_require__(53);
 var ReactUpdates = __webpack_require__(13);
 
 var emptyObject = __webpack_require__(30);
-var instantiateReactComponent = __webpack_require__(80);
+var instantiateReactComponent = __webpack_require__(83);
 var invariant = __webpack_require__(2);
 var setInnerHTML = __webpack_require__(34);
 var shouldUpdateReactComponent = __webpack_require__(51);
@@ -16383,7 +16928,7 @@ module.exports = ReactMount;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 89 */
+/* 92 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16399,7 +16944,7 @@ module.exports = ReactMount;
 
 
 
-var ReactNodeTypes = __webpack_require__(81);
+var ReactNodeTypes = __webpack_require__(84);
 
 function getHostComponentFromComposite(inst) {
   var type;
@@ -16418,7 +16963,7 @@ function getHostComponentFromComposite(inst) {
 module.exports = getHostComponentFromComposite;
 
 /***/ }),
-/* 90 */
+/* 93 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -16496,7 +17041,7 @@ return af;
 
 
 /***/ }),
-/* 91 */
+/* 94 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -16643,7 +17188,7 @@ return ar;
 
 
 /***/ }),
-/* 92 */
+/* 95 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -16707,7 +17252,7 @@ return arDz;
 
 
 /***/ }),
-/* 93 */
+/* 96 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -16771,7 +17316,7 @@ return arKw;
 
 
 /***/ }),
-/* 94 */
+/* 97 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -16902,7 +17447,7 @@ return arLy;
 
 
 /***/ }),
-/* 95 */
+/* 98 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -16967,7 +17512,7 @@ return arMa;
 
 
 /***/ }),
-/* 96 */
+/* 99 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -17077,7 +17622,7 @@ return arSa;
 
 
 /***/ }),
-/* 97 */
+/* 100 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -17141,7 +17686,7 @@ return arTn;
 
 
 /***/ }),
-/* 98 */
+/* 101 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -17251,7 +17796,7 @@ return az;
 
 
 /***/ }),
-/* 99 */
+/* 102 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -17390,7 +17935,7 @@ return be;
 
 
 /***/ }),
-/* 100 */
+/* 103 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -17485,7 +18030,7 @@ return bg;
 
 
 /***/ }),
-/* 101 */
+/* 104 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -17609,7 +18154,7 @@ return bn;
 
 
 /***/ }),
-/* 102 */
+/* 105 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -17733,7 +18278,7 @@ return bo;
 
 
 /***/ }),
-/* 103 */
+/* 106 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -17846,7 +18391,7 @@ return br;
 
 
 /***/ }),
-/* 104 */
+/* 107 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -17994,7 +18539,7 @@ return bs;
 
 
 /***/ }),
-/* 105 */
+/* 108 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -18087,7 +18632,7 @@ return ca;
 
 
 /***/ }),
-/* 106 */
+/* 109 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -18264,7 +18809,7 @@ return cs;
 
 
 /***/ }),
-/* 107 */
+/* 110 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -18332,7 +18877,7 @@ return cv;
 
 
 /***/ }),
-/* 108 */
+/* 111 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -18418,7 +18963,7 @@ return cy;
 
 
 /***/ }),
-/* 109 */
+/* 112 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -18483,7 +19028,7 @@ return da;
 
 
 /***/ }),
-/* 110 */
+/* 113 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -18566,7 +19111,7 @@ return de;
 
 
 /***/ }),
-/* 111 */
+/* 114 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -18650,7 +19195,7 @@ return deAt;
 
 
 /***/ }),
-/* 112 */
+/* 115 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -18733,7 +19278,7 @@ return deCh;
 
 
 /***/ }),
-/* 113 */
+/* 116 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -18838,7 +19383,7 @@ return dv;
 
 
 /***/ }),
-/* 114 */
+/* 117 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -18943,7 +19488,7 @@ return el;
 
 
 /***/ }),
-/* 115 */
+/* 118 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -19015,7 +19560,7 @@ return enAu;
 
 
 /***/ }),
-/* 116 */
+/* 119 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -19083,7 +19628,7 @@ return enCa;
 
 
 /***/ }),
-/* 117 */
+/* 120 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -19155,7 +19700,7 @@ return enGb;
 
 
 /***/ }),
-/* 118 */
+/* 121 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -19227,7 +19772,7 @@ return enIe;
 
 
 /***/ }),
-/* 119 */
+/* 122 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -19299,7 +19844,7 @@ return enNz;
 
 
 /***/ }),
-/* 120 */
+/* 123 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -19377,7 +19922,7 @@ return eo;
 
 
 /***/ }),
-/* 121 */
+/* 124 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -19465,7 +20010,7 @@ return es;
 
 
 /***/ }),
-/* 122 */
+/* 125 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -19552,7 +20097,7 @@ return esDo;
 
 
 /***/ }),
-/* 123 */
+/* 126 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -19637,7 +20182,7 @@ return et;
 
 
 /***/ }),
-/* 124 */
+/* 127 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -19708,7 +20253,7 @@ return eu;
 
 
 /***/ }),
-/* 125 */
+/* 128 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -19820,7 +20365,7 @@ return fa;
 
 
 /***/ }),
-/* 126 */
+/* 129 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -19932,7 +20477,7 @@ return fi;
 
 
 /***/ }),
-/* 127 */
+/* 130 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -19997,7 +20542,7 @@ return fo;
 
 
 /***/ }),
-/* 128 */
+/* 131 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -20085,7 +20630,7 @@ return fr;
 
 
 /***/ }),
-/* 129 */
+/* 132 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -20164,7 +20709,7 @@ return frCa;
 
 
 /***/ }),
-/* 130 */
+/* 133 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -20247,7 +20792,7 @@ return frCh;
 
 
 /***/ }),
-/* 131 */
+/* 134 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -20327,7 +20872,7 @@ return fy;
 
 
 /***/ }),
-/* 132 */
+/* 135 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -20408,7 +20953,7 @@ return gd;
 
 
 /***/ }),
-/* 133 */
+/* 136 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -20490,7 +21035,7 @@ return gl;
 
 
 /***/ }),
-/* 134 */
+/* 137 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -20617,7 +21162,7 @@ return gomLatn;
 
 
 /***/ }),
-/* 135 */
+/* 138 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -20721,7 +21266,7 @@ return he;
 
 
 /***/ }),
-/* 136 */
+/* 139 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -20850,7 +21395,7 @@ return hi;
 
 
 /***/ }),
-/* 137 */
+/* 140 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -21000,7 +21545,7 @@ return hr;
 
 
 /***/ }),
-/* 138 */
+/* 141 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -21114,7 +21659,7 @@ return hu;
 
 
 /***/ }),
-/* 139 */
+/* 142 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -21214,7 +21759,7 @@ return hyAm;
 
 
 /***/ }),
-/* 140 */
+/* 143 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -21302,7 +21847,7 @@ return id;
 
 
 /***/ }),
-/* 141 */
+/* 144 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -21434,7 +21979,7 @@ return is;
 
 
 /***/ }),
-/* 142 */
+/* 145 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -21509,7 +22054,7 @@ return it;
 
 
 /***/ }),
-/* 143 */
+/* 146 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -21594,7 +22139,7 @@ return ja;
 
 
 /***/ }),
-/* 144 */
+/* 147 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -21682,7 +22227,7 @@ return jv;
 
 
 /***/ }),
-/* 145 */
+/* 148 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -21776,7 +22321,7 @@ return ka;
 
 
 /***/ }),
-/* 146 */
+/* 149 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -21868,7 +22413,7 @@ return kk;
 
 
 /***/ }),
-/* 147 */
+/* 150 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -21931,7 +22476,7 @@ return km;
 
 
 /***/ }),
-/* 148 */
+/* 151 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -22062,7 +22607,7 @@ return kn;
 
 
 /***/ }),
-/* 149 */
+/* 152 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -22136,7 +22681,7 @@ return ko;
 
 
 /***/ }),
-/* 150 */
+/* 153 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -22229,7 +22774,7 @@ return ky;
 
 
 /***/ }),
-/* 151 */
+/* 154 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -22371,7 +22916,7 @@ return lb;
 
 
 /***/ }),
-/* 152 */
+/* 155 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -22446,7 +22991,7 @@ return lo;
 
 
 /***/ }),
-/* 153 */
+/* 156 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -22568,7 +23113,7 @@ return lt;
 
 
 /***/ }),
-/* 154 */
+/* 157 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -22670,7 +23215,7 @@ return lv;
 
 
 /***/ }),
-/* 155 */
+/* 158 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -22786,7 +23331,7 @@ return me;
 
 
 /***/ }),
-/* 156 */
+/* 159 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -22855,7 +23400,7 @@ return mi;
 
 
 /***/ }),
-/* 157 */
+/* 160 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -22950,7 +23495,7 @@ return mk;
 
 
 /***/ }),
-/* 158 */
+/* 161 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -23036,7 +23581,7 @@ return ml;
 
 
 /***/ }),
-/* 159 */
+/* 162 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -23200,7 +23745,7 @@ return mr;
 
 
 /***/ }),
-/* 160 */
+/* 163 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -23287,7 +23832,7 @@ return ms;
 
 
 /***/ }),
-/* 161 */
+/* 164 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -23375,7 +23920,7 @@ return msMy;
 
 
 /***/ }),
-/* 162 */
+/* 165 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -23476,7 +24021,7 @@ return my;
 
 
 /***/ }),
-/* 163 */
+/* 166 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -23544,7 +24089,7 @@ return nb;
 
 
 /***/ }),
-/* 164 */
+/* 167 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -23672,7 +24217,7 @@ return ne;
 
 
 /***/ }),
-/* 165 */
+/* 168 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -23765,7 +24310,7 @@ return nl;
 
 
 /***/ }),
-/* 166 */
+/* 169 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -23858,7 +24403,7 @@ return nlBe;
 
 
 /***/ }),
-/* 167 */
+/* 170 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -23923,7 +24468,7 @@ return nn;
 
 
 /***/ }),
-/* 168 */
+/* 171 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -24052,7 +24597,7 @@ return paIn;
 
 
 /***/ }),
-/* 169 */
+/* 172 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -24164,7 +24709,7 @@ return pl;
 
 
 /***/ }),
-/* 170 */
+/* 173 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -24234,7 +24779,7 @@ return pt;
 
 
 /***/ }),
-/* 171 */
+/* 174 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -24300,7 +24845,7 @@ return ptBr;
 
 
 /***/ }),
-/* 172 */
+/* 175 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -24380,7 +24925,7 @@ return ro;
 
 
 /***/ }),
-/* 173 */
+/* 176 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -24568,7 +25113,7 @@ return ru;
 
 
 /***/ }),
-/* 174 */
+/* 177 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -24671,7 +25216,7 @@ return sd;
 
 
 /***/ }),
-/* 175 */
+/* 178 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -24737,7 +25282,7 @@ return se;
 
 
 /***/ }),
-/* 176 */
+/* 179 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -24813,7 +25358,7 @@ return si;
 
 
 /***/ }),
-/* 177 */
+/* 180 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -24968,7 +25513,7 @@ return sk;
 
 
 /***/ }),
-/* 178 */
+/* 181 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -25135,7 +25680,7 @@ return sl;
 
 
 /***/ }),
-/* 179 */
+/* 182 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -25210,7 +25755,7 @@ return sq;
 
 
 /***/ }),
-/* 180 */
+/* 183 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -25325,7 +25870,7 @@ return sr;
 
 
 /***/ }),
-/* 181 */
+/* 184 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -25440,7 +25985,7 @@ return srCyrl;
 
 
 /***/ }),
-/* 182 */
+/* 185 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -25534,7 +26079,7 @@ return ss;
 
 
 /***/ }),
-/* 183 */
+/* 186 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -25608,7 +26153,7 @@ return sv;
 
 
 /***/ }),
-/* 184 */
+/* 187 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -25672,7 +26217,7 @@ return sw;
 
 
 /***/ }),
-/* 185 */
+/* 188 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -25807,7 +26352,7 @@ return ta;
 
 
 /***/ }),
-/* 186 */
+/* 189 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -25901,7 +26446,7 @@ return te;
 
 
 /***/ }),
-/* 187 */
+/* 190 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -25974,7 +26519,7 @@ return tet;
 
 
 /***/ }),
-/* 188 */
+/* 191 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -26046,7 +26591,7 @@ return th;
 
 
 /***/ }),
-/* 189 */
+/* 192 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -26113,7 +26658,7 @@ return tlPh;
 
 
 /***/ }),
-/* 190 */
+/* 193 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -26238,7 +26783,7 @@ return tlh;
 
 
 /***/ }),
-/* 191 */
+/* 194 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -26333,7 +26878,7 @@ return tr;
 
 
 /***/ }),
-/* 192 */
+/* 195 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -26429,7 +26974,7 @@ return tzl;
 
 
 /***/ }),
-/* 193 */
+/* 196 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -26492,7 +27037,7 @@ return tzm;
 
 
 /***/ }),
-/* 194 */
+/* 197 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -26555,7 +27100,7 @@ return tzmLatn;
 
 
 /***/ }),
-/* 195 */
+/* 198 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -26711,7 +27256,7 @@ return uk;
 
 
 /***/ }),
-/* 196 */
+/* 199 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -26815,7 +27360,7 @@ return ur;
 
 
 /***/ }),
-/* 197 */
+/* 200 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -26878,7 +27423,7 @@ return uz;
 
 
 /***/ }),
-/* 198 */
+/* 201 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -26941,7 +27486,7 @@ return uzLatn;
 
 
 /***/ }),
-/* 199 */
+/* 202 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -27025,7 +27570,7 @@ return vi;
 
 
 /***/ }),
-/* 200 */
+/* 203 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -27098,7 +27643,7 @@ return xPseudo;
 
 
 /***/ }),
-/* 201 */
+/* 204 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -27163,7 +27708,7 @@ return yo;
 
 
 /***/ }),
-/* 202 */
+/* 205 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -27279,7 +27824,7 @@ return zhCn;
 
 
 /***/ }),
-/* 203 */
+/* 206 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -27389,7 +27934,7 @@ return zhHk;
 
 
 /***/ }),
-/* 204 */
+/* 207 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -27498,454 +28043,7 @@ return zhTw;
 
 
 /***/ }),
-/* 205 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var assign = __webpack_require__(206),
-	PropTypes = __webpack_require__(313),
-    createClass = __webpack_require__(18),
-	moment = __webpack_require__(0),
-	React = __webpack_require__(7),
-	CalendarContainer = __webpack_require__(315)
-;
-
-var TYPES = PropTypes;
-var Datetime = createClass({
-	propTypes: {
-		// value: TYPES.object | TYPES.string,
-		// defaultValue: TYPES.object | TYPES.string,
-		onFocus: TYPES.func,
-		onBlur: TYPES.func,
-		onChange: TYPES.func,
-		onViewModeChange: TYPES.func,
-		locale: TYPES.string,
-		utc: TYPES.bool,
-		input: TYPES.bool,
-		// dateFormat: TYPES.string | TYPES.bool,
-		// timeFormat: TYPES.string | TYPES.bool,
-		inputProps: TYPES.object,
-		timeConstraints: TYPES.object,
-		viewMode: TYPES.oneOf(['years', 'months', 'days', 'time']),
-		isValidDate: TYPES.func,
-		open: TYPES.bool,
-		strictParsing: TYPES.bool,
-		closeOnSelect: TYPES.bool,
-		closeOnTab: TYPES.bool
-	},
-
-	getDefaultProps: function() {
-		var nof = function() {};
-		return {
-			className: '',
-			defaultValue: '',
-			inputProps: {},
-			input: true,
-			onFocus: nof,
-			onBlur: nof,
-			onChange: nof,
-			onViewModeChange: nof,
-			timeFormat: true,
-			timeConstraints: {},
-			dateFormat: true,
-			strictParsing: true,
-			closeOnSelect: false,
-			closeOnTab: true,
-			utc: false
-		};
-	},
-
-	getInitialState: function() {
-		var state = this.getStateFromProps( this.props );
-
-		if ( state.open === undefined )
-			state.open = !this.props.input;
-
-		state.currentView = this.props.dateFormat ? (this.props.viewMode || state.updateOn || 'days') : 'time';
-
-		return state;
-	},
-
-	getStateFromProps: function( props ) {
-		var formats = this.getFormats( props ),
-			date = props.value || props.defaultValue,
-			selectedDate, viewDate, updateOn, inputValue
-		;
-
-		if ( date && typeof date === 'string' )
-			selectedDate = this.localMoment( date, formats.datetime );
-		else if ( date )
-			selectedDate = this.localMoment( date );
-
-		if ( selectedDate && !selectedDate.isValid() )
-			selectedDate = null;
-
-		viewDate = selectedDate ?
-			selectedDate.clone().startOf('month') :
-			this.localMoment().startOf('month')
-		;
-
-		updateOn = this.getUpdateOn(formats);
-
-		if ( selectedDate )
-			inputValue = selectedDate.format(formats.datetime);
-		else if ( date.isValid && !date.isValid() )
-			inputValue = '';
-		else
-			inputValue = date || '';
-
-		return {
-			updateOn: updateOn,
-			inputFormat: formats.datetime,
-			viewDate: viewDate,
-			selectedDate: selectedDate,
-			inputValue: inputValue,
-			open: props.open
-		};
-	},
-
-	getUpdateOn: function( formats ) {
-        if ( formats.date.match(/[lLD]/) ) {
-			return 'days';
-		} else if ( formats.date.indexOf('M') !== -1 ) {
-			return 'months';
-		} else if ( formats.date.indexOf('Y') !== -1 ) {
-			return 'years';
-		}
-
-		return 'days';
-	},
-
-	getFormats: function( props ) {
-		var formats = {
-				date: props.dateFormat || '',
-				time: props.timeFormat || ''
-			},
-			locale = this.localMoment( props.date, null, props ).localeData()
-		;
-
-		if ( formats.date === true ) {
-			formats.date = locale.longDateFormat('L');
-		}
-		else if ( this.getUpdateOn(formats) !== 'days' ) {
-			formats.time = '';
-		}
-
-		if ( formats.time === true ) {
-			formats.time = locale.longDateFormat('LT');
-		}
-
-		formats.datetime = formats.date && formats.time ?
-			formats.date + ' ' + formats.time :
-			formats.date || formats.time
-		;
-
-		return formats;
-	},
-
-	componentWillReceiveProps: function( nextProps ) {
-		var formats = this.getFormats( nextProps ),
-			updatedState = {}
-		;
-
-		if ( nextProps.value !== this.props.value ||
-			formats.datetime !== this.getFormats( this.props ).datetime ) {
-			updatedState = this.getStateFromProps( nextProps );
-		}
-
-		if ( updatedState.open === undefined ) {
-			if ( this.props.closeOnSelect && this.state.currentView !== 'time' ) {
-				updatedState.open = false;
-			} else {
-				updatedState.open = this.state.open;
-			}
-		}
-
-		if ( nextProps.viewMode !== this.props.viewMode ) {
-			updatedState.currentView = nextProps.viewMode;
-		}
-
-		if ( nextProps.locale !== this.props.locale ) {
-			if ( this.state.viewDate ) {
-				var updatedViewDate = this.state.viewDate.clone().locale( nextProps.locale );
-				updatedState.viewDate = updatedViewDate;
-			}
-			if ( this.state.selectedDate ) {
-				var updatedSelectedDate = this.state.selectedDate.clone().locale( nextProps.locale );
-				updatedState.selectedDate = updatedSelectedDate;
-				updatedState.inputValue = updatedSelectedDate.format( formats.datetime );
-			}
-		}
-
-		if ( nextProps.utc !== this.props.utc ) {
-			if ( nextProps.utc ) {
-				if ( this.state.viewDate )
-					updatedState.viewDate = this.state.viewDate.clone().utc();
-				if ( this.state.selectedDate ) {
-					updatedState.selectedDate = this.state.selectedDate.clone().utc();
-					updatedState.inputValue = updatedState.selectedDate.format( formats.datetime );
-				}
-			} else {
-				if ( this.state.viewDate )
-					updatedState.viewDate = this.state.viewDate.clone().local();
-				if ( this.state.selectedDate ) {
-					updatedState.selectedDate = this.state.selectedDate.clone().local();
-					updatedState.inputValue = updatedState.selectedDate.format(formats.datetime);
-				}
-			}
-		}
-
-		this.setState( updatedState );
-	},
-
-	onInputChange: function( e ) {
-		var value = e.target === null ? e : e.target.value,
-			localMoment = this.localMoment( value, this.state.inputFormat ),
-			update = { inputValue: value }
-		;
-
-		if ( localMoment.isValid() && !this.props.value ) {
-			update.selectedDate = localMoment;
-			update.viewDate = localMoment.clone().startOf('month');
-		} else {
-			update.selectedDate = null;
-		}
-
-		return this.setState( update, function() {
-			return this.props.onChange( localMoment.isValid() ? localMoment : this.state.inputValue );
-		});
-	},
-
-	onInputKey: function( e ) {
-		if ( e.which === 9 && this.props.closeOnTab ) {
-			this.closeCalendar();
-		}
-	},
-
-	showView: function( view ) {
-		var me = this;
-		return function() {
-			me.state.currentView !== view && me.props.onViewModeChange( view );
-			me.setState({ currentView: view });
-		};
-	},
-
-	setDate: function( type ) {
-		var me = this,
-			nextViews = {
-				month: 'days',
-				year: 'months'
-			}
-		;
-		return function( e ) {
-			me.setState({
-				viewDate: me.state.viewDate.clone()[ type ]( parseInt(e.target.getAttribute('data-value'), 10) ).startOf( type ),
-				currentView: nextViews[ type ]
-			});
-			me.props.onViewModeChange( nextViews[ type ] );
-		};
-	},
-
-	addTime: function( amount, type, toSelected ) {
-		return this.updateTime( 'add', amount, type, toSelected );
-	},
-
-	subtractTime: function( amount, type, toSelected ) {
-		return this.updateTime( 'subtract', amount, type, toSelected );
-	},
-
-	updateTime: function( op, amount, type, toSelected ) {
-		var me = this;
-
-		return function() {
-			var update = {},
-				date = toSelected ? 'selectedDate' : 'viewDate'
-			;
-
-			update[ date ] = me.state[ date ].clone()[ op ]( amount, type );
-
-			me.setState( update );
-		};
-	},
-
-	allowedSetTime: ['hours', 'minutes', 'seconds', 'milliseconds'],
-	setTime: function( type, value ) {
-		var index = this.allowedSetTime.indexOf( type ) + 1,
-			state = this.state,
-			date = (state.selectedDate || state.viewDate).clone(),
-			nextType
-		;
-
-		// It is needed to set all the time properties
-		// to not to reset the time
-		date[ type ]( value );
-		for (; index < this.allowedSetTime.length; index++) {
-			nextType = this.allowedSetTime[index];
-			date[ nextType ]( date[nextType]() );
-		}
-
-		if ( !this.props.value ) {
-			this.setState({
-				selectedDate: date,
-				inputValue: date.format( state.inputFormat )
-			});
-		}
-		this.props.onChange( date );
-	},
-
-	updateSelectedDate: function( e, close ) {
-		var target = e.target,
-			modifier = 0,
-			viewDate = this.state.viewDate,
-			currentDate = this.state.selectedDate || viewDate,
-			date
-		;
-
-		if (target.className.indexOf('rdtDay') !== -1) {
-			if (target.className.indexOf('rdtNew') !== -1)
-				modifier = 1;
-			else if (target.className.indexOf('rdtOld') !== -1)
-				modifier = -1;
-
-			date = viewDate.clone()
-				.month( viewDate.month() + modifier )
-				.date( parseInt( target.getAttribute('data-value'), 10 ) );
-		} else if (target.className.indexOf('rdtMonth') !== -1) {
-			date = viewDate.clone()
-				.month( parseInt( target.getAttribute('data-value'), 10 ) )
-				.date( currentDate.date() );
-		} else if (target.className.indexOf('rdtYear') !== -1) {
-			date = viewDate.clone()
-				.month( currentDate.month() )
-				.date( currentDate.date() )
-				.year( parseInt( target.getAttribute('data-value'), 10 ) );
-		}
-
-		date.hours( currentDate.hours() )
-			.minutes( currentDate.minutes() )
-			.seconds( currentDate.seconds() )
-			.milliseconds( currentDate.milliseconds() );
-
-		if ( !this.props.value ) {
-			var open = !( this.props.closeOnSelect && close );
-			if ( !open ) {
-				this.props.onBlur( date );
-			}
-
-			this.setState({
-				selectedDate: date,
-				viewDate: date.clone().startOf('month'),
-				inputValue: date.format( this.state.inputFormat ),
-				open: open
-			});
-		} else {
-			if ( this.props.closeOnSelect && close ) {
-				this.closeCalendar();
-			}
-		}
-
-		this.props.onChange( date );
-	},
-
-	openCalendar: function() {
-		if (!this.state.open) {
-			this.setState({ open: true }, function() {
-				this.props.onFocus();
-			});
-		}
-	},
-
-	closeCalendar: function() {
-		this.setState({ open: false }, function () {
-			this.props.onBlur( this.state.selectedDate || this.state.inputValue );
-		});
-	},
-
-	handleClickOutside: function() {
-		if ( this.props.input && this.state.open && !this.props.open ) {
-			this.setState({ open: false }, function() {
-				this.props.onBlur( this.state.selectedDate || this.state.inputValue );
-			});
-		}
-	},
-
-	localMoment: function( date, format, props ) {
-		props = props || this.props;
-		var momentFn = props.utc ? moment.utc : moment;
-		var m = momentFn( date, format, props.strictParsing );
-		if ( props.locale )
-			m.locale( props.locale );
-		return m;
-	},
-
-	componentProps: {
-		fromProps: ['value', 'isValidDate', 'renderDay', 'renderMonth', 'renderYear', 'timeConstraints'],
-		fromState: ['viewDate', 'selectedDate', 'updateOn'],
-		fromThis: ['setDate', 'setTime', 'showView', 'addTime', 'subtractTime', 'updateSelectedDate', 'localMoment', 'handleClickOutside']
-	},
-
-	getComponentProps: function() {
-		var me = this,
-			formats = this.getFormats( this.props ),
-			props = {dateFormat: formats.date, timeFormat: formats.time}
-		;
-
-		this.componentProps.fromProps.forEach( function( name ) {
-			props[ name ] = me.props[ name ];
-		});
-		this.componentProps.fromState.forEach( function( name ) {
-			props[ name ] = me.state[ name ];
-		});
-		this.componentProps.fromThis.forEach( function( name ) {
-			props[ name ] = me[ name ];
-		});
-
-		return props;
-	},
-
-	render: function() {
-		var className = 'rdt' + (this.props.className ?
-                  ( Array.isArray( this.props.className ) ?
-                  ' ' + this.props.className.join( ' ' ) : ' ' + this.props.className) : ''),
-			children = []
-		;
-
-		if ( this.props.input ) {
-			children = [ React.createElement('input', assign({
-				key: 'i',
-				type: 'text',
-				className: 'form-control',
-				onFocus: this.openCalendar,
-				onChange: this.onInputChange,
-				onKeyDown: this.onInputKey,
-				value: this.state.inputValue
-			}, this.props.inputProps ))];
-		} else {
-			className += ' rdtStatic';
-		}
-
-		if ( this.state.open )
-			className += ' rdtOpen';
-
-		return React.createElement('div', {className: className}, children.concat(
-			React.createElement('div',
-				{ key: 'dt', className: 'rdtPicker' },
-				React.createElement( CalendarContainer, {view: this.state.currentView, viewProps: this.getComponentProps(), onClickOutside: this.handleClickOutside })
-			)
-		));
-	}
-});
-
-// Make moment accessible through the Datetime class
-Datetime.moment = moment;
-
-module.exports = Datetime;
-
-
-/***/ }),
-/* 206 */
+/* 208 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27989,104 +28087,6 @@ module.exports = Object.assign || function (target, source) {
 	return to;
 };
 
-
-/***/ }),
-/* 207 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.isEmailValid = exports.isFieldValid = exports.isFormValid = undefined;
-
-var _react = __webpack_require__(7);
-
-var _react2 = _interopRequireDefault(_react);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-__webpack_require__(320);
-
-var isFormValid = exports.isFormValid = function isFormValid(formObject, required) {
-    for (var i = 0; i < required.length; i++) {
-        if (!formObject[required[i]]) return true;
-    }
-    return false;
-};
-
-var isFieldValid = exports.isFieldValid = function isFieldValid(field) {
-    var text = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "";
-
-    if (!!field) return null;
-    return _react2.default.createElement(
-        "i",
-        { className: "invalid" },
-        "*",
-        _react2.default.createElement(
-            "sub",
-            null,
-            text
-        )
-    );
-};
-
-var isEmailValid = exports.isEmailValid = function isEmailValid(field) {
-    if (!field) return _react2.default.createElement(
-        "i",
-        { className: "invalid" },
-        "*",
-        _react2.default.createElement(
-            "sub",
-            null,
-            "Це поле є обов'язковим"
-        )
-    );
-    var pattern = new RegExp(/^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i);
-    if (!pattern.test(field)) return _react2.default.createElement(
-        "i",
-        { className: "invalid" },
-        "*",
-        _react2.default.createElement(
-            "sub",
-            null,
-            "Не вірно вказано email"
-        )
-    );
-};
-
-/***/ }),
-/* 208 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(323);
-if(typeof content === 'string') content = [[module.i, content, '']];
-// Prepare cssTransformation
-var transform;
-
-var options = {}
-options.transform = transform
-// add the styles to the DOM
-var update = __webpack_require__(28)(content, options);
-if(content.locals) module.exports = content.locals;
-// Hot Module Replacement
-if(false) {
-	// When the styles change, update the <style> tags
-	if(!content.locals) {
-		module.hot.accept("!!../node_modules/css-loader/index.js!./react-datetime.css", function() {
-			var newContent = require("!!../node_modules/css-loader/index.js!./react-datetime.css");
-			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-			update(newContent);
-		});
-	}
-	// When the module is disposed, remove the <style> tags
-	module.hot.dispose(function() { update(); });
-}
 
 /***/ }),
 /* 209 */
@@ -28156,7 +28156,7 @@ var _react = __webpack_require__(7);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(64);
+var _reactDom = __webpack_require__(67);
 
 var _layout = __webpack_require__(309);
 
@@ -28500,9 +28500,9 @@ module.exports = PooledClass;
 var _prodInvariant = __webpack_require__(20);
 
 var ReactCurrentOwner = __webpack_require__(12);
-var REACT_ELEMENT_TYPE = __webpack_require__(58);
+var REACT_ELEMENT_TYPE = __webpack_require__(61);
 
-var getIteratorFn = __webpack_require__(59);
+var getIteratorFn = __webpack_require__(62);
 var invariant = __webpack_require__(2);
 var KeyEscapeUtils = __webpack_require__(214);
 var warning = __webpack_require__(3);
@@ -28752,7 +28752,7 @@ var ReactElement = __webpack_require__(16);
  */
 var createDOMFactory = ReactElement.createFactory;
 if (process.env.NODE_ENV !== 'production') {
-  var ReactElementValidator = __webpack_require__(60);
+  var ReactElementValidator = __webpack_require__(63);
   createDOMFactory = ReactElementValidator.createFactory;
 }
 
@@ -29067,7 +29067,7 @@ module.exports = ReactPropTypesSecret;
 var _require = __webpack_require__(16),
     isValidElement = _require.isValidElement;
 
-var factory = __webpack_require__(61);
+var factory = __webpack_require__(64);
 
 module.exports = factory(isValidElement);
 
@@ -29176,14 +29176,14 @@ module.exports = '15.6.1';
 
 
 
-var _require = __webpack_require__(56),
+var _require = __webpack_require__(59),
     Component = _require.Component;
 
 var _require2 = __webpack_require__(16),
     isValidElement = _require2.isValidElement;
 
-var ReactNoopUpdateQueue = __webpack_require__(57);
-var factory = __webpack_require__(63);
+var ReactNoopUpdateQueue = __webpack_require__(60);
+var factory = __webpack_require__(66);
 
 module.exports = factory(Component, isValidElement, ReactNoopUpdateQueue);
 
@@ -29252,13 +29252,13 @@ module.exports = onlyChild;
 
 var ReactDOMComponentTree = __webpack_require__(6);
 var ReactDefaultInjection = __webpack_require__(225);
-var ReactMount = __webpack_require__(88);
+var ReactMount = __webpack_require__(91);
 var ReactReconciler = __webpack_require__(21);
 var ReactUpdates = __webpack_require__(13);
 var ReactVersion = __webpack_require__(303);
 
 var findDOMNode = __webpack_require__(304);
-var getHostComponentFromComposite = __webpack_require__(89);
+var getHostComponentFromComposite = __webpack_require__(92);
 var renderSubtreeIntoContainer = __webpack_require__(305);
 var warning = __webpack_require__(3);
 
@@ -29928,7 +29928,7 @@ var _assign = __webpack_require__(5);
 
 var PooledClass = __webpack_require__(17);
 
-var getTextContentAccessor = __webpack_require__(68);
+var getTextContentAccessor = __webpack_require__(71);
 
 /**
  * This helper class stores information about text content of a target node,
@@ -30114,10 +30114,10 @@ var ReactDOMComponentTree = __webpack_require__(6);
 var ReactUpdates = __webpack_require__(13);
 var SyntheticEvent = __webpack_require__(14);
 
-var inputValueTracking = __webpack_require__(71);
+var inputValueTracking = __webpack_require__(74);
 var getEventTarget = __webpack_require__(42);
 var isEventSupported = __webpack_require__(43);
-var isTextInputElement = __webpack_require__(72);
+var isTextInputElement = __webpack_require__(75);
 
 var eventTypes = {
   change: {
@@ -31965,15 +31965,15 @@ var CSSPropertyOperations = __webpack_require__(250);
 var DOMLazyTree = __webpack_require__(22);
 var DOMNamespaces = __webpack_require__(46);
 var DOMProperty = __webpack_require__(15);
-var DOMPropertyOperations = __webpack_require__(77);
+var DOMPropertyOperations = __webpack_require__(80);
 var EventPluginHub = __webpack_require__(24);
 var EventPluginRegistry = __webpack_require__(31);
 var ReactBrowserEventEmitter = __webpack_require__(36);
-var ReactDOMComponentFlags = __webpack_require__(65);
+var ReactDOMComponentFlags = __webpack_require__(68);
 var ReactDOMComponentTree = __webpack_require__(6);
 var ReactDOMInput = __webpack_require__(260);
 var ReactDOMOption = __webpack_require__(261);
-var ReactDOMSelect = __webpack_require__(79);
+var ReactDOMSelect = __webpack_require__(82);
 var ReactDOMTextarea = __webpack_require__(262);
 var ReactInstrumentation = __webpack_require__(11);
 var ReactMultiChild = __webpack_require__(263);
@@ -31984,7 +31984,7 @@ var escapeTextContentForBrowser = __webpack_require__(35);
 var invariant = __webpack_require__(2);
 var isEventSupported = __webpack_require__(43);
 var shallowEqual = __webpack_require__(50);
-var inputValueTracking = __webpack_require__(71);
+var inputValueTracking = __webpack_require__(74);
 var validateDOMNesting = __webpack_require__(54);
 var warning = __webpack_require__(3);
 
@@ -32973,7 +32973,7 @@ module.exports = ReactDOMComponent;
 
 var ReactDOMComponentTree = __webpack_require__(6);
 
-var focusNode = __webpack_require__(75);
+var focusNode = __webpack_require__(78);
 
 var AutoFocusUtils = {
   focusDOMComponent: function () {
@@ -33000,7 +33000,7 @@ module.exports = AutoFocusUtils;
 
 
 
-var CSSProperty = __webpack_require__(76);
+var CSSProperty = __webpack_require__(79);
 var ExecutionEnvironment = __webpack_require__(8);
 var ReactInstrumentation = __webpack_require__(11);
 
@@ -33303,7 +33303,7 @@ module.exports = camelize;
 
 
 
-var CSSProperty = __webpack_require__(76);
+var CSSProperty = __webpack_require__(79);
 var warning = __webpack_require__(3);
 
 var isUnitlessNumber = CSSProperty.isUnitlessNumber;
@@ -33682,7 +33682,7 @@ module.exports = getVendorPrefixedEventName;
 var _prodInvariant = __webpack_require__(4),
     _assign = __webpack_require__(5);
 
-var DOMPropertyOperations = __webpack_require__(77);
+var DOMPropertyOperations = __webpack_require__(80);
 var LinkedValueUtils = __webpack_require__(48);
 var ReactDOMComponentTree = __webpack_require__(6);
 var ReactUpdates = __webpack_require__(13);
@@ -33976,7 +33976,7 @@ var _assign = __webpack_require__(5);
 
 var React = __webpack_require__(19);
 var ReactDOMComponentTree = __webpack_require__(6);
-var ReactDOMSelect = __webpack_require__(79);
+var ReactDOMSelect = __webpack_require__(82);
 
 var warning = __webpack_require__(3);
 var didWarnInvalidOptionChildren = false;
@@ -34720,10 +34720,10 @@ module.exports = ReactMultiChild;
 
 var ReactReconciler = __webpack_require__(21);
 
-var instantiateReactComponent = __webpack_require__(80);
+var instantiateReactComponent = __webpack_require__(83);
 var KeyEscapeUtils = __webpack_require__(52);
 var shouldUpdateReactComponent = __webpack_require__(51);
-var traverseAllChildren = __webpack_require__(84);
+var traverseAllChildren = __webpack_require__(87);
 var warning = __webpack_require__(3);
 
 var ReactComponentTreeHook;
@@ -34886,7 +34886,7 @@ var ReactCurrentOwner = __webpack_require__(12);
 var ReactErrorUtils = __webpack_require__(41);
 var ReactInstanceMap = __webpack_require__(26);
 var ReactInstrumentation = __webpack_require__(11);
-var ReactNodeTypes = __webpack_require__(81);
+var ReactNodeTypes = __webpack_require__(84);
 var ReactReconciler = __webpack_require__(21);
 
 if (process.env.NODE_ENV !== 'production') {
@@ -35786,7 +35786,7 @@ module.exports = ReactCompositeComponent;
 var _prodInvariant = __webpack_require__(4);
 
 var ReactPropTypeLocationNames = __webpack_require__(267);
-var ReactPropTypesSecret = __webpack_require__(78);
+var ReactPropTypesSecret = __webpack_require__(81);
 
 var invariant = __webpack_require__(2);
 var warning = __webpack_require__(3);
@@ -36006,7 +36006,7 @@ module.exports = getIteratorFn;
 
 
 var KeyEscapeUtils = __webpack_require__(52);
-var traverseAllChildren = __webpack_require__(84);
+var traverseAllChildren = __webpack_require__(87);
 var warning = __webpack_require__(3);
 
 var ReactComponentTreeHook;
@@ -36777,7 +36777,7 @@ module.exports = ReactDefaultBatchingStrategy;
 
 var _assign = __webpack_require__(5);
 
-var EventListener = __webpack_require__(85);
+var EventListener = __webpack_require__(88);
 var ExecutionEnvironment = __webpack_require__(8);
 var PooledClass = __webpack_require__(17);
 var ReactDOMComponentTree = __webpack_require__(6);
@@ -36983,9 +36983,9 @@ var DOMProperty = __webpack_require__(15);
 var EventPluginHub = __webpack_require__(24);
 var EventPluginUtils = __webpack_require__(40);
 var ReactComponentEnvironment = __webpack_require__(49);
-var ReactEmptyComponent = __webpack_require__(82);
+var ReactEmptyComponent = __webpack_require__(85);
 var ReactBrowserEventEmitter = __webpack_require__(36);
-var ReactHostComponent = __webpack_require__(83);
+var ReactHostComponent = __webpack_require__(86);
 var ReactUpdates = __webpack_require__(13);
 
 var ReactInjection = {
@@ -37020,10 +37020,10 @@ module.exports = ReactInjection;
 
 var _assign = __webpack_require__(5);
 
-var CallbackQueue = __webpack_require__(69);
+var CallbackQueue = __webpack_require__(72);
 var PooledClass = __webpack_require__(17);
 var ReactBrowserEventEmitter = __webpack_require__(36);
-var ReactInputSelection = __webpack_require__(86);
+var ReactInputSelection = __webpack_require__(89);
 var ReactInstrumentation = __webpack_require__(11);
 var Transaction = __webpack_require__(32);
 var ReactUpdateQueue = __webpack_require__(53);
@@ -37205,7 +37205,7 @@ module.exports = ReactReconcileTransaction;
 var ExecutionEnvironment = __webpack_require__(8);
 
 var getNodeForCharacterOffset = __webpack_require__(283);
-var getTextContentAccessor = __webpack_require__(68);
+var getTextContentAccessor = __webpack_require__(71);
 
 /**
  * While `isCollapsed` is available on the Selection object and `collapsed`
@@ -37913,11 +37913,11 @@ module.exports = SVGDOMPropertyConfig;
 var EventPropagators = __webpack_require__(23);
 var ExecutionEnvironment = __webpack_require__(8);
 var ReactDOMComponentTree = __webpack_require__(6);
-var ReactInputSelection = __webpack_require__(86);
+var ReactInputSelection = __webpack_require__(89);
 var SyntheticEvent = __webpack_require__(14);
 
-var getActiveElement = __webpack_require__(87);
-var isTextInputElement = __webpack_require__(72);
+var getActiveElement = __webpack_require__(90);
+var isTextInputElement = __webpack_require__(75);
 var shallowEqual = __webpack_require__(50);
 
 var skipSelectionChangeEvent = ExecutionEnvironment.canUseDOM && 'documentMode' in document && document.documentMode <= 11;
@@ -38106,7 +38106,7 @@ module.exports = SelectEventPlugin;
 
 var _prodInvariant = __webpack_require__(4);
 
-var EventListener = __webpack_require__(85);
+var EventListener = __webpack_require__(88);
 var EventPropagators = __webpack_require__(23);
 var ReactDOMComponentTree = __webpack_require__(6);
 var SyntheticAnimationEvent = __webpack_require__(290);
@@ -39052,7 +39052,7 @@ var ReactCurrentOwner = __webpack_require__(12);
 var ReactDOMComponentTree = __webpack_require__(6);
 var ReactInstanceMap = __webpack_require__(26);
 
-var getHostComponentFromComposite = __webpack_require__(89);
+var getHostComponentFromComposite = __webpack_require__(92);
 var invariant = __webpack_require__(2);
 var warning = __webpack_require__(3);
 
@@ -39112,7 +39112,7 @@ module.exports = findDOMNode;
 
 
 
-var ReactMount = __webpack_require__(88);
+var ReactMount = __webpack_require__(91);
 
 module.exports = ReactMount.renderSubtreeIntoContainer;
 
@@ -39399,7 +39399,11 @@ var _react = __webpack_require__(7);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _nameForm = __webpack_require__(310);
+var _moment = __webpack_require__(0);
+
+var _moment2 = _interopRequireDefault(_moment);
+
+var _nameForm = __webpack_require__(312);
 
 var _nameForm2 = _interopRequireDefault(_nameForm);
 
@@ -39407,7 +39411,11 @@ var _personalForm = __webpack_require__(324);
 
 var _personalForm2 = _interopRequireDefault(_personalForm);
 
-var _services = __webpack_require__(336);
+var _gameForm = __webpack_require__(336);
+
+var _gameForm2 = _interopRequireDefault(_gameForm);
+
+var _services = __webpack_require__(337);
 
 var services = _interopRequireWildcard(_services);
 
@@ -39436,6 +39444,7 @@ var RequestForm = function (_React$Component) {
         _this.onUserChange = _this.changeUserField.bind(_this);
         _this.onUserDataChange = _this.changeUserDataField.bind(_this);
         _this.onUserLoad = _this.getUserData.bind(_this);
+        _this.onGameChange = _this.changeGameField.bind(_this);
         return _this;
     }
 
@@ -39461,6 +39470,14 @@ var RequestForm = function (_React$Component) {
             console.log(this.state);
         }
     }, {
+        key: "changeGameField",
+        value: function changeGameField(fieldName, value) {
+            var newGame = this.state.gameData;
+            newGame[fieldName] = value;
+            this.setState({ gameData: newGame });
+            console.log(this.state);
+        }
+    }, {
         key: "getRegions",
         value: function getRegions() {
             var _this2 = this;
@@ -39468,13 +39485,50 @@ var RequestForm = function (_React$Component) {
             this.setState({ loading: true });
             services.getAllRegions().then(function (data) {
                 _this2.setState({ regions: JSON.parse(data) });
+                if (_this2.state.regions.length) _this2.changeUserDataField("region", _this2.state.regions[0].id);
                 _this2.setState({ loading: false });
+            });
+        }
+    }, {
+        key: "getAgeCategories",
+        value: function getAgeCategories() {
+            var _this3 = this;
+
+            this.setState({ loading: true });
+            services.getAgeCategories().then(function (data) {
+                _this3.setState({ ageCategories: JSON.parse(data) });
+                if (_this3.state.ageCategories.length) _this3.changeGameField("ageCat", _this3.state.ageCategories[0].id);
+                _this3.setState({ loading: false });
+            });
+        }
+    }, {
+        key: "getWeightCategories",
+        value: function getWeightCategories() {
+            var _this4 = this;
+
+            this.setState({ loading: true });
+            services.getWeightCategories().then(function (data) {
+                _this4.setState({ weightCategories: JSON.parse(data) });
+                if (_this4.state.weightCategories.length) _this4.changeGameField("weightCat", _this4.state.weightCategories[0].id);
+                _this4.setState({ loading: false });
+            });
+        }
+    }, {
+        key: "getActualGames",
+        value: function getActualGames() {
+            var _this5 = this;
+
+            this.setState({ loading: true });
+            services.getOpenedActualGames({ currentDay: (0, _moment2.default)(new Date()).format("YYYY-MM-DD") }).then(function (data) {
+                _this5.setState({ actualGames: JSON.parse(data) });
+                if (_this5.state.actualGames.length) _this5.changeGameField("aGame", _this5.state.actualGames[0].id);
+                _this5.setState({ loading: false });
             });
         }
     }, {
         key: "getUserData",
         value: function getUserData() {
-            var _this3 = this;
+            var _this6 = this;
 
             var conract = {
                 surname: this.state.user.lastName,
@@ -39485,9 +39539,17 @@ var RequestForm = function (_React$Component) {
             this.setState({ loading: true });
             this.setDefaultUserData();
             services.getUserData(conract).then(function (data) {
-                if (data != "null") _this3.setState({ userData: JSON.parse(data) });
-                _this3.showUserData();
-                _this3.setState({ loading: false });
+                if (data != "null") _this6.setState({ userData: JSON.parse(data) });
+                var newUD = _this6.state.userData;
+                newUD.visa = {
+                    hasVisa: "false",
+                    type: 0,
+                    term: null
+                };
+                _this6.setState({ userData: newUD });
+                _this6.showUserData();
+                _this6.showGameData();
+                _this6.setState({ loading: false });
             });
         }
     }, {
@@ -39505,18 +39567,27 @@ var RequestForm = function (_React$Component) {
                     photo_international_pass_id: "",
                     photo_national_pass_id: "",
                     region: "",
-                    serial_number_pass: "",
-                    visa: {
-                        hasVisa: "false",
-                        type: 0,
-                        term: null
-                    }
+                    serial_number_pass: ""
+                } });
+        }
+    }, {
+        key: "setDefaultGameData",
+        value: function setDefaultGameData() {
+            this.setState({ gameData: {
+                    ageCat: "",
+                    weightCat: "",
+                    aGame: ""
                 } });
         }
     }, {
         key: "showUserData",
         value: function showUserData() {
             this.setState({ showUserData: true });
+        }
+    }, {
+        key: "showGameData",
+        value: function showGameData() {
+            this.setState({ showGameData: true });
         }
     }, {
         key: "componentWillMount",
@@ -39526,9 +39597,13 @@ var RequestForm = function (_React$Component) {
                     lastName: "",
                     middleName: "",
                     birthDate: null
-                }, loading: false, showUserData: false });
+                }, loading: false, showUserData: false, showGameData: false });
             this.setDefaultUserData();
+            this.setDefaultGameData();
             this.getRegions();
+            this.getAgeCategories();
+            this.getWeightCategories();
+            this.getActualGames();
         }
     }, {
         key: "render",
@@ -39538,6 +39613,8 @@ var RequestForm = function (_React$Component) {
                 null,
                 _react2.default.createElement(_nameForm2.default, { person: this.state.user, onChange: this.onUserChange, onNext: this.onUserLoad, isReadOnly: this.state.showUserData }),
                 _react2.default.createElement(_personalForm2.default, { isVisible: this.state.showUserData, person: this.state.userData, regions: this.state.regions, onChange: this.onUserDataChange }),
+                _react2.default.createElement(_gameForm2.default, { isVisible: this.state.showGameData, game: this.state.gameData, ageCategories: this.state.ageCategories,
+                    actualGames: this.state.actualGames, weightCategories: this.state.weightCategories, onChange: this.onGameChange }),
                 _react2.default.createElement(_preloader2.default, { loading: this.state.loading })
             );
         }
@@ -39550,6 +39627,286 @@ exports.default = RequestForm;
 
 /***/ }),
 /* 310 */
+/***/ (function(module, exports) {
+
+module.exports = function(module) {
+	if(!module.webpackPolyfill) {
+		module.deprecate = function() {};
+		module.paths = [];
+		// module.parent = undefined by default
+		if(!module.children) module.children = [];
+		Object.defineProperty(module, "loaded", {
+			enumerable: true,
+			get: function() {
+				return module.l;
+			}
+		});
+		Object.defineProperty(module, "id", {
+			enumerable: true,
+			get: function() {
+				return module.i;
+			}
+		});
+		module.webpackPolyfill = 1;
+	}
+	return module;
+};
+
+
+/***/ }),
+/* 311 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var map = {
+	"./af": 93,
+	"./af.js": 93,
+	"./ar": 94,
+	"./ar-dz": 95,
+	"./ar-dz.js": 95,
+	"./ar-kw": 96,
+	"./ar-kw.js": 96,
+	"./ar-ly": 97,
+	"./ar-ly.js": 97,
+	"./ar-ma": 98,
+	"./ar-ma.js": 98,
+	"./ar-sa": 99,
+	"./ar-sa.js": 99,
+	"./ar-tn": 100,
+	"./ar-tn.js": 100,
+	"./ar.js": 94,
+	"./az": 101,
+	"./az.js": 101,
+	"./be": 102,
+	"./be.js": 102,
+	"./bg": 103,
+	"./bg.js": 103,
+	"./bn": 104,
+	"./bn.js": 104,
+	"./bo": 105,
+	"./bo.js": 105,
+	"./br": 106,
+	"./br.js": 106,
+	"./bs": 107,
+	"./bs.js": 107,
+	"./ca": 108,
+	"./ca.js": 108,
+	"./cs": 109,
+	"./cs.js": 109,
+	"./cv": 110,
+	"./cv.js": 110,
+	"./cy": 111,
+	"./cy.js": 111,
+	"./da": 112,
+	"./da.js": 112,
+	"./de": 113,
+	"./de-at": 114,
+	"./de-at.js": 114,
+	"./de-ch": 115,
+	"./de-ch.js": 115,
+	"./de.js": 113,
+	"./dv": 116,
+	"./dv.js": 116,
+	"./el": 117,
+	"./el.js": 117,
+	"./en-au": 118,
+	"./en-au.js": 118,
+	"./en-ca": 119,
+	"./en-ca.js": 119,
+	"./en-gb": 120,
+	"./en-gb.js": 120,
+	"./en-ie": 121,
+	"./en-ie.js": 121,
+	"./en-nz": 122,
+	"./en-nz.js": 122,
+	"./eo": 123,
+	"./eo.js": 123,
+	"./es": 124,
+	"./es-do": 125,
+	"./es-do.js": 125,
+	"./es.js": 124,
+	"./et": 126,
+	"./et.js": 126,
+	"./eu": 127,
+	"./eu.js": 127,
+	"./fa": 128,
+	"./fa.js": 128,
+	"./fi": 129,
+	"./fi.js": 129,
+	"./fo": 130,
+	"./fo.js": 130,
+	"./fr": 131,
+	"./fr-ca": 132,
+	"./fr-ca.js": 132,
+	"./fr-ch": 133,
+	"./fr-ch.js": 133,
+	"./fr.js": 131,
+	"./fy": 134,
+	"./fy.js": 134,
+	"./gd": 135,
+	"./gd.js": 135,
+	"./gl": 136,
+	"./gl.js": 136,
+	"./gom-latn": 137,
+	"./gom-latn.js": 137,
+	"./he": 138,
+	"./he.js": 138,
+	"./hi": 139,
+	"./hi.js": 139,
+	"./hr": 140,
+	"./hr.js": 140,
+	"./hu": 141,
+	"./hu.js": 141,
+	"./hy-am": 142,
+	"./hy-am.js": 142,
+	"./id": 143,
+	"./id.js": 143,
+	"./is": 144,
+	"./is.js": 144,
+	"./it": 145,
+	"./it.js": 145,
+	"./ja": 146,
+	"./ja.js": 146,
+	"./jv": 147,
+	"./jv.js": 147,
+	"./ka": 148,
+	"./ka.js": 148,
+	"./kk": 149,
+	"./kk.js": 149,
+	"./km": 150,
+	"./km.js": 150,
+	"./kn": 151,
+	"./kn.js": 151,
+	"./ko": 152,
+	"./ko.js": 152,
+	"./ky": 153,
+	"./ky.js": 153,
+	"./lb": 154,
+	"./lb.js": 154,
+	"./lo": 155,
+	"./lo.js": 155,
+	"./lt": 156,
+	"./lt.js": 156,
+	"./lv": 157,
+	"./lv.js": 157,
+	"./me": 158,
+	"./me.js": 158,
+	"./mi": 159,
+	"./mi.js": 159,
+	"./mk": 160,
+	"./mk.js": 160,
+	"./ml": 161,
+	"./ml.js": 161,
+	"./mr": 162,
+	"./mr.js": 162,
+	"./ms": 163,
+	"./ms-my": 164,
+	"./ms-my.js": 164,
+	"./ms.js": 163,
+	"./my": 165,
+	"./my.js": 165,
+	"./nb": 166,
+	"./nb.js": 166,
+	"./ne": 167,
+	"./ne.js": 167,
+	"./nl": 168,
+	"./nl-be": 169,
+	"./nl-be.js": 169,
+	"./nl.js": 168,
+	"./nn": 170,
+	"./nn.js": 170,
+	"./pa-in": 171,
+	"./pa-in.js": 171,
+	"./pl": 172,
+	"./pl.js": 172,
+	"./pt": 173,
+	"./pt-br": 174,
+	"./pt-br.js": 174,
+	"./pt.js": 173,
+	"./ro": 175,
+	"./ro.js": 175,
+	"./ru": 176,
+	"./ru.js": 176,
+	"./sd": 177,
+	"./sd.js": 177,
+	"./se": 178,
+	"./se.js": 178,
+	"./si": 179,
+	"./si.js": 179,
+	"./sk": 180,
+	"./sk.js": 180,
+	"./sl": 181,
+	"./sl.js": 181,
+	"./sq": 182,
+	"./sq.js": 182,
+	"./sr": 183,
+	"./sr-cyrl": 184,
+	"./sr-cyrl.js": 184,
+	"./sr.js": 183,
+	"./ss": 185,
+	"./ss.js": 185,
+	"./sv": 186,
+	"./sv.js": 186,
+	"./sw": 187,
+	"./sw.js": 187,
+	"./ta": 188,
+	"./ta.js": 188,
+	"./te": 189,
+	"./te.js": 189,
+	"./tet": 190,
+	"./tet.js": 190,
+	"./th": 191,
+	"./th.js": 191,
+	"./tl-ph": 192,
+	"./tl-ph.js": 192,
+	"./tlh": 193,
+	"./tlh.js": 193,
+	"./tr": 194,
+	"./tr.js": 194,
+	"./tzl": 195,
+	"./tzl.js": 195,
+	"./tzm": 196,
+	"./tzm-latn": 197,
+	"./tzm-latn.js": 197,
+	"./tzm.js": 196,
+	"./uk": 198,
+	"./uk.js": 198,
+	"./ur": 199,
+	"./ur.js": 199,
+	"./uz": 200,
+	"./uz-latn": 201,
+	"./uz-latn.js": 201,
+	"./uz.js": 200,
+	"./vi": 202,
+	"./vi.js": 202,
+	"./x-pseudo": 203,
+	"./x-pseudo.js": 203,
+	"./yo": 204,
+	"./yo.js": 204,
+	"./zh-cn": 205,
+	"./zh-cn.js": 205,
+	"./zh-hk": 206,
+	"./zh-hk.js": 206,
+	"./zh-tw": 207,
+	"./zh-tw.js": 207
+};
+function webpackContext(req) {
+	return __webpack_require__(webpackContextResolve(req));
+};
+function webpackContextResolve(req) {
+	var id = map[req];
+	if(!(id + 1)) // check for number or string
+		throw new Error("Cannot find module '" + req + "'.");
+	return id;
+};
+webpackContext.keys = function webpackContextKeys() {
+	return Object.keys(map);
+};
+webpackContext.resolve = webpackContextResolve;
+module.exports = webpackContext;
+webpackContext.id = 311;
+
+/***/ }),
+/* 312 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -39569,11 +39926,11 @@ var _moment = __webpack_require__(0);
 
 var _moment2 = _interopRequireDefault(_moment);
 
-var _reactDatetime = __webpack_require__(205);
+var _reactDatetime = __webpack_require__(56);
 
 var _reactDatetime2 = _interopRequireDefault(_reactDatetime);
 
-var _validation = __webpack_require__(207);
+var _validation = __webpack_require__(57);
 
 var validation = _interopRequireWildcard(_validation);
 
@@ -39587,7 +39944,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-__webpack_require__(208);
+__webpack_require__(58);
 
 var NameForm = function (_React$Component) {
     _inherits(NameForm, _React$Component);
@@ -39686,286 +40043,6 @@ var NameForm = function (_React$Component) {
 exports.default = NameForm;
 
 /***/ }),
-/* 311 */
-/***/ (function(module, exports) {
-
-module.exports = function(module) {
-	if(!module.webpackPolyfill) {
-		module.deprecate = function() {};
-		module.paths = [];
-		// module.parent = undefined by default
-		if(!module.children) module.children = [];
-		Object.defineProperty(module, "loaded", {
-			enumerable: true,
-			get: function() {
-				return module.l;
-			}
-		});
-		Object.defineProperty(module, "id", {
-			enumerable: true,
-			get: function() {
-				return module.i;
-			}
-		});
-		module.webpackPolyfill = 1;
-	}
-	return module;
-};
-
-
-/***/ }),
-/* 312 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var map = {
-	"./af": 90,
-	"./af.js": 90,
-	"./ar": 91,
-	"./ar-dz": 92,
-	"./ar-dz.js": 92,
-	"./ar-kw": 93,
-	"./ar-kw.js": 93,
-	"./ar-ly": 94,
-	"./ar-ly.js": 94,
-	"./ar-ma": 95,
-	"./ar-ma.js": 95,
-	"./ar-sa": 96,
-	"./ar-sa.js": 96,
-	"./ar-tn": 97,
-	"./ar-tn.js": 97,
-	"./ar.js": 91,
-	"./az": 98,
-	"./az.js": 98,
-	"./be": 99,
-	"./be.js": 99,
-	"./bg": 100,
-	"./bg.js": 100,
-	"./bn": 101,
-	"./bn.js": 101,
-	"./bo": 102,
-	"./bo.js": 102,
-	"./br": 103,
-	"./br.js": 103,
-	"./bs": 104,
-	"./bs.js": 104,
-	"./ca": 105,
-	"./ca.js": 105,
-	"./cs": 106,
-	"./cs.js": 106,
-	"./cv": 107,
-	"./cv.js": 107,
-	"./cy": 108,
-	"./cy.js": 108,
-	"./da": 109,
-	"./da.js": 109,
-	"./de": 110,
-	"./de-at": 111,
-	"./de-at.js": 111,
-	"./de-ch": 112,
-	"./de-ch.js": 112,
-	"./de.js": 110,
-	"./dv": 113,
-	"./dv.js": 113,
-	"./el": 114,
-	"./el.js": 114,
-	"./en-au": 115,
-	"./en-au.js": 115,
-	"./en-ca": 116,
-	"./en-ca.js": 116,
-	"./en-gb": 117,
-	"./en-gb.js": 117,
-	"./en-ie": 118,
-	"./en-ie.js": 118,
-	"./en-nz": 119,
-	"./en-nz.js": 119,
-	"./eo": 120,
-	"./eo.js": 120,
-	"./es": 121,
-	"./es-do": 122,
-	"./es-do.js": 122,
-	"./es.js": 121,
-	"./et": 123,
-	"./et.js": 123,
-	"./eu": 124,
-	"./eu.js": 124,
-	"./fa": 125,
-	"./fa.js": 125,
-	"./fi": 126,
-	"./fi.js": 126,
-	"./fo": 127,
-	"./fo.js": 127,
-	"./fr": 128,
-	"./fr-ca": 129,
-	"./fr-ca.js": 129,
-	"./fr-ch": 130,
-	"./fr-ch.js": 130,
-	"./fr.js": 128,
-	"./fy": 131,
-	"./fy.js": 131,
-	"./gd": 132,
-	"./gd.js": 132,
-	"./gl": 133,
-	"./gl.js": 133,
-	"./gom-latn": 134,
-	"./gom-latn.js": 134,
-	"./he": 135,
-	"./he.js": 135,
-	"./hi": 136,
-	"./hi.js": 136,
-	"./hr": 137,
-	"./hr.js": 137,
-	"./hu": 138,
-	"./hu.js": 138,
-	"./hy-am": 139,
-	"./hy-am.js": 139,
-	"./id": 140,
-	"./id.js": 140,
-	"./is": 141,
-	"./is.js": 141,
-	"./it": 142,
-	"./it.js": 142,
-	"./ja": 143,
-	"./ja.js": 143,
-	"./jv": 144,
-	"./jv.js": 144,
-	"./ka": 145,
-	"./ka.js": 145,
-	"./kk": 146,
-	"./kk.js": 146,
-	"./km": 147,
-	"./km.js": 147,
-	"./kn": 148,
-	"./kn.js": 148,
-	"./ko": 149,
-	"./ko.js": 149,
-	"./ky": 150,
-	"./ky.js": 150,
-	"./lb": 151,
-	"./lb.js": 151,
-	"./lo": 152,
-	"./lo.js": 152,
-	"./lt": 153,
-	"./lt.js": 153,
-	"./lv": 154,
-	"./lv.js": 154,
-	"./me": 155,
-	"./me.js": 155,
-	"./mi": 156,
-	"./mi.js": 156,
-	"./mk": 157,
-	"./mk.js": 157,
-	"./ml": 158,
-	"./ml.js": 158,
-	"./mr": 159,
-	"./mr.js": 159,
-	"./ms": 160,
-	"./ms-my": 161,
-	"./ms-my.js": 161,
-	"./ms.js": 160,
-	"./my": 162,
-	"./my.js": 162,
-	"./nb": 163,
-	"./nb.js": 163,
-	"./ne": 164,
-	"./ne.js": 164,
-	"./nl": 165,
-	"./nl-be": 166,
-	"./nl-be.js": 166,
-	"./nl.js": 165,
-	"./nn": 167,
-	"./nn.js": 167,
-	"./pa-in": 168,
-	"./pa-in.js": 168,
-	"./pl": 169,
-	"./pl.js": 169,
-	"./pt": 170,
-	"./pt-br": 171,
-	"./pt-br.js": 171,
-	"./pt.js": 170,
-	"./ro": 172,
-	"./ro.js": 172,
-	"./ru": 173,
-	"./ru.js": 173,
-	"./sd": 174,
-	"./sd.js": 174,
-	"./se": 175,
-	"./se.js": 175,
-	"./si": 176,
-	"./si.js": 176,
-	"./sk": 177,
-	"./sk.js": 177,
-	"./sl": 178,
-	"./sl.js": 178,
-	"./sq": 179,
-	"./sq.js": 179,
-	"./sr": 180,
-	"./sr-cyrl": 181,
-	"./sr-cyrl.js": 181,
-	"./sr.js": 180,
-	"./ss": 182,
-	"./ss.js": 182,
-	"./sv": 183,
-	"./sv.js": 183,
-	"./sw": 184,
-	"./sw.js": 184,
-	"./ta": 185,
-	"./ta.js": 185,
-	"./te": 186,
-	"./te.js": 186,
-	"./tet": 187,
-	"./tet.js": 187,
-	"./th": 188,
-	"./th.js": 188,
-	"./tl-ph": 189,
-	"./tl-ph.js": 189,
-	"./tlh": 190,
-	"./tlh.js": 190,
-	"./tr": 191,
-	"./tr.js": 191,
-	"./tzl": 192,
-	"./tzl.js": 192,
-	"./tzm": 193,
-	"./tzm-latn": 194,
-	"./tzm-latn.js": 194,
-	"./tzm.js": 193,
-	"./uk": 195,
-	"./uk.js": 195,
-	"./ur": 196,
-	"./ur.js": 196,
-	"./uz": 197,
-	"./uz-latn": 198,
-	"./uz-latn.js": 198,
-	"./uz.js": 197,
-	"./vi": 199,
-	"./vi.js": 199,
-	"./x-pseudo": 200,
-	"./x-pseudo.js": 200,
-	"./yo": 201,
-	"./yo.js": 201,
-	"./zh-cn": 202,
-	"./zh-cn.js": 202,
-	"./zh-hk": 203,
-	"./zh-hk.js": 203,
-	"./zh-tw": 204,
-	"./zh-tw.js": 204
-};
-function webpackContext(req) {
-	return __webpack_require__(webpackContextResolve(req));
-};
-function webpackContextResolve(req) {
-	var id = map[req];
-	if(!(id + 1)) // check for number or string
-		throw new Error("Cannot find module '" + req + "'.");
-	return id;
-};
-webpackContext.keys = function webpackContextKeys() {
-	return Object.keys(map);
-};
-webpackContext.resolve = webpackContextResolve;
-module.exports = webpackContext;
-webpackContext.id = 312;
-
-/***/ }),
 /* 313 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -39993,7 +40070,7 @@ if (process.env.NODE_ENV !== 'production') {
   // By explicitly using `prop-types` you are opting into new development behavior.
   // http://fb.me/prop-types-in-prod
   var throwOnDirectAccess = true;
-  module.exports = __webpack_require__(62)(isValidElement, throwOnDirectAccess);
+  module.exports = __webpack_require__(65)(isValidElement, throwOnDirectAccess);
 } else {
   // By explicitly using `prop-types` you are opting into new production behavior.
   // http://fb.me/prop-types-in-prod
@@ -40485,7 +40562,7 @@ module.exports = DateTimePickerYears;
 
 var React = __webpack_require__(7),
     createClass = __webpack_require__(18),
-	assign = __webpack_require__(206),
+	assign = __webpack_require__(208),
   onClickOutside = __webpack_require__(37)
 ;
 
@@ -40886,11 +40963,11 @@ var _moment = __webpack_require__(0);
 
 var _moment2 = _interopRequireDefault(_moment);
 
-var _reactDatetime = __webpack_require__(205);
+var _reactDatetime = __webpack_require__(56);
 
 var _reactDatetime2 = _interopRequireDefault(_reactDatetime);
 
-var _validation = __webpack_require__(207);
+var _validation = __webpack_require__(57);
 
 var validation = _interopRequireWildcard(_validation);
 
@@ -40912,7 +40989,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-__webpack_require__(208);
+__webpack_require__(58);
 
 var PersonalForm = function (_React$Component) {
     _inherits(PersonalForm, _React$Component);
@@ -40950,202 +41027,211 @@ var PersonalForm = function (_React$Component) {
                     "form",
                     null,
                     _react2.default.createElement(
-                        "div",
-                        { className: "form-group" },
+                        "fieldset",
+                        null,
                         _react2.default.createElement(
-                            "label",
+                            "legend",
                             null,
-                            "\u041E\u0431\u043B\u0430\u0441\u0442\u044C"
-                        ),
-                        _react2.default.createElement(
-                            "select",
-                            { value: region, className: "form-control", onChange: function onChange(e) {
-                                    return _this2.props.onChange("region", e.target.value);
-                                } },
-                            regionsList
-                        )
-                    ),
-                    _react2.default.createElement(
-                        "div",
-                        { className: "form-group" },
-                        _react2.default.createElement(
-                            "label",
-                            null,
-                            "\u041F\u0440\u0456\u0437\u0432\u0438\u0449\u0435 \u044F\u043A \u0443 \u0437\u0430\u043A\u043E\u0440\u0434\u043E\u043D\u043D\u043E\u043C\u0443 \u043F\u0430\u0441\u043F\u043E\u0440\u0442\u0456 ",
-                            validation.isFieldValid(this.props.person.last_name_pass, "Це поле є обов'язковим")
-                        ),
-                        _react2.default.createElement("input", { value: this.props.person.last_name_pass, onChange: function onChange(e) {
-                                return _this2.props.onChange("last_name_pass", e.target.value);
-                            }, type: "text", className: "form-control", placeholder: "Last Name", maxLength: "50" })
-                    ),
-                    _react2.default.createElement(
-                        "div",
-                        { className: "form-group" },
-                        _react2.default.createElement(
-                            "label",
-                            null,
-                            "\u0406\u043C'\u044F \u044F\u043A \u0443 \u0437\u0430\u043A\u043E\u0440\u0434\u043E\u043D\u043D\u043E\u043C\u0443 \u043F\u0430\u0441\u043F\u043E\u0440\u0442\u0456 ",
-                            validation.isFieldValid(this.props.person.first_name_pass, "Це поле є обов'язковим")
-                        ),
-                        _react2.default.createElement("input", { value: this.props.person.first_name_pass, onChange: function onChange(e) {
-                                return _this2.props.onChange("first_name_pass", e.target.value);
-                            }, type: "text", className: "form-control", placeholder: "First Name", maxLength: "30" })
-                    ),
-                    _react2.default.createElement(
-                        "div",
-                        { className: "form-group" },
-                        _react2.default.createElement(
-                            "label",
-                            null,
-                            "\u0421\u0435\u0440\u0456\u044F ",
-                            validation.isFieldValid(this.props.person.serial_number_pass, "Введіть серію"),
-                            " \u0442\u0430 \u043D\u043E\u043C\u0435\u0440 ",
-                            validation.isFieldValid(this.props.person.number_pass, "Введіть номер"),
-                            " \u0437\u0430\u043A\u043E\u0440\u0434\u043E\u043D\u043D\u043E\u0433\u043E \u043F\u0430\u0441\u043F\u043E\u0440\u0442\u0443"
+                            "\u041E\u0441\u043E\u0431\u0438\u0441\u0442\u0456 \u0434\u0430\u043D\u0456"
                         ),
                         _react2.default.createElement(
                             "div",
-                            { className: "row" },
-                            _react2.default.createElement(
-                                "div",
-                                { className: "col-md-4" },
-                                _react2.default.createElement("input", { value: this.props.person.serial_number_pass, onChange: function onChange(e) {
-                                        return _this2.props.onChange("serial_number_pass", e.target.value);
-                                    }, type: "text", className: "form-control", placeholder: "\u041D\u041D", maxLength: "4" })
-                            ),
-                            _react2.default.createElement(
-                                "div",
-                                { className: "col-md-8" },
-                                _react2.default.createElement("input", { value: this.props.person.number_pass, onChange: function onChange(e) {
-                                        return _this2.props.onChange("number_pass", e.target.value);
-                                    }, type: "text", className: "form-control", placeholder: "\u0425\u0425\u0425\u0425\u0425\u0425", maxLength: "8" })
-                            )
-                        )
-                    ),
-                    _react2.default.createElement(
-                        "div",
-                        { className: "form-group" },
-                        _react2.default.createElement(
-                            "label",
-                            null,
-                            "\u0422\u0435\u0440\u043C\u0456\u043D \u0434\u0456\u0457 \u043F\u0430\u0441\u043F\u043E\u0440\u0442\u0443 ",
-                            validation.isFieldValid(expiration_pass, "Це поле є обов'язковим")
-                        ),
-                        _react2.default.createElement(_reactDatetime2.default, { value: expiration_pass, dateFormat: "DD-MM-YYYY", timeFormat: false, closeOnSelect: true, maxLength: "10", onChange: function onChange(v) {
-                                return _this2.props.onChange("expiration_date_pass", v.format("YYYY-MM-DD"));
-                            } })
-                    ),
-                    _react2.default.createElement(
-                        "div",
-                        { className: "form-group" },
-                        _react2.default.createElement(
-                            "label",
-                            null,
-                            "\u0406\u0434\u0435\u043D\u0442\u0438\u0444\u0456\u043A\u0430\u0446\u0456\u0439\u043D\u0438\u0439 \u043D\u043E\u043C\u0435\u0440 ",
-                            validation.isFieldValid(this.props.person.individual_number, "Це поле є обов'язковим")
-                        ),
-                        _react2.default.createElement("input", { value: this.props.person.individual_number, onChange: function onChange(e) {
-                                return _this2.props.onChange("individual_number", e.target.value);
-                            }, type: "text", className: "form-control", maxLength: "10" })
-                    ),
-                    _react2.default.createElement(
-                        "div",
-                        { className: "form-group" },
-                        _react2.default.createElement(
-                            "label",
-                            null,
-                            "\u041D\u043E\u043C\u0435\u0440 \u0442\u0435\u043B\u0435\u0444\u043E\u043D\u0443 ",
-                            validation.isFieldValid(this.props.person.phone, "Це поле є обов'язковим")
-                        ),
-                        _react2.default.createElement("input", { value: this.props.person.phone, onChange: function onChange(e) {
-                                return _this2.props.onChange("phone", e.target.value);
-                            }, type: "text", className: "form-control phone", placeholder: "+38 (999) 999-99-99", maxLength: "20" })
-                    ),
-                    _react2.default.createElement(
-                        "div",
-                        { className: "form-group" },
-                        _react2.default.createElement(
-                            "label",
-                            null,
-                            "\u0415\u043B\u0435\u043A\u0442\u0440\u043E\u043D\u043D\u0430 \u0430\u0434\u0440\u0435\u0441\u0430 ",
-                            validation.isEmailValid(this.props.person.email)
-                        ),
-                        _react2.default.createElement("input", { value: this.props.person.email, onChange: function onChange(e) {
-                                return _this2.props.onChange("email", e.target.value);
-                            }, type: "text", className: "form-control", placeholder: "email.adress@gmail.com", maxLength: "50" })
-                    ),
-                    _react2.default.createElement(
-                        "div",
-                        { className: "form-group" },
-                        _react2.default.createElement(
-                            "label",
-                            null,
-                            "\u0424\u043E\u0442\u043E \u043F\u0435\u0440\u0448\u043E\u0457 \u0441\u0442\u043E\u0440\u0456\u043D\u043A\u0438 \u043D\u0430\u0446\u0456\u043E\u043D\u0430\u043B\u044C\u043D\u043E\u0433\u043E \u043F\u0430\u0441\u043F\u043E\u0440\u0442\u0443"
-                        ),
-                        _react2.default.createElement(_photoLoader2.default, { value: this.props.person.photo_national_pass_id, desc: "Фото першої сторінки національного паспорту", onRemove: function onRemove() {
-                                return _this2.props.onChange("photo_national_pass_id", "");
-                            }, onUpdate: function onUpdate(id) {
-                                return _this2.props.onChange("photo_national_pass_id", id);
-                            } })
-                    ),
-                    _react2.default.createElement(
-                        "div",
-                        { className: "form-group" },
-                        _react2.default.createElement(
-                            "label",
-                            null,
-                            "\u0424\u043E\u0442\u043E \u043F\u0435\u0440\u0448\u043E\u0457 \u0441\u0442\u043E\u0440\u0456\u043D\u043A\u0438 \u0437\u0430\u043A\u043E\u0440\u0434\u043E\u043D\u043D\u043E\u0433\u043E \u043F\u0430\u0441\u043F\u043E\u0440\u0442\u0443"
-                        ),
-                        _react2.default.createElement(_photoLoader2.default, { value: this.props.person.photo_international_pass_id, desc: "Фото першої сторінки закордонного паспорту", onRemove: function onRemove() {
-                                return _this2.props.onChange("photo_international_pass_id", "");
-                            }, onUpdate: function onUpdate(id) {
-                                return _this2.props.onChange("photo_international_pass_id", id);
-                            } })
-                    ),
-                    _react2.default.createElement(
-                        "div",
-                        { className: "form-group" },
-                        _react2.default.createElement(
-                            "label",
-                            null,
-                            "\u0424\u043E\u0442\u043E \u0434\u043B\u044F \u0430\u043A\u0440\u0435\u0434\u0438\u0442\u0430\u0446\u0456\u0457"
-                        ),
-                        _react2.default.createElement(_photoLoader2.default, { value: this.props.person.accreditation_photo_id, desc: "Фото для акредитації", onRemove: function onRemove() {
-                                return _this2.props.onChange("accreditation_photo_id", "");
-                            }, onUpdate: function onUpdate(id) {
-                                return _this2.props.onChange("accreditation_photo_id", id);
-                            } })
-                    ),
-                    _react2.default.createElement(
-                        "div",
-                        { className: "form-group" },
-                        _react2.default.createElement(
-                            "div",
-                            null,
+                            { className: "form-group" },
                             _react2.default.createElement(
                                 "label",
                                 null,
-                                "\u0427\u0438 \u043C\u0430\u0454\u0442\u0435 \u0412\u0438 \u0434\u0456\u044E\u0447\u0443 \u0432\u0456\u0437\u0443?"
+                                "\u041E\u0431\u043B\u0430\u0441\u0442\u044C"
+                            ),
+                            _react2.default.createElement(
+                                "select",
+                                { value: region, className: "form-control", onChange: function onChange(e) {
+                                        return _this2.props.onChange("region", e.target.value);
+                                    } },
+                                regionsList
                             )
                         ),
                         _react2.default.createElement(
-                            "label",
-                            { className: "radio-inline" },
-                            _react2.default.createElement("input", { type: "radio", value: "false", checked: this.props.person.visa.hasVisa === "false", onChange: function onChange(e) {
-                                    return _this2.props.onChange("hasVisa", e.target.value, "visa");
-                                } }),
-                            " \u041D\u0456"
+                            "div",
+                            { className: "form-group" },
+                            _react2.default.createElement(
+                                "label",
+                                null,
+                                "\u041F\u0440\u0456\u0437\u0432\u0438\u0449\u0435 \u044F\u043A \u0443 \u0437\u0430\u043A\u043E\u0440\u0434\u043E\u043D\u043D\u043E\u043C\u0443 \u043F\u0430\u0441\u043F\u043E\u0440\u0442\u0456 ",
+                                validation.isFieldValid(this.props.person.last_name_pass, "Це поле є обов'язковим")
+                            ),
+                            _react2.default.createElement("input", { value: this.props.person.last_name_pass, onChange: function onChange(e) {
+                                    return _this2.props.onChange("last_name_pass", e.target.value);
+                                }, type: "text", className: "form-control", placeholder: "Last Name", maxLength: "50" })
                         ),
                         _react2.default.createElement(
-                            "label",
-                            { className: "radio-inline" },
-                            _react2.default.createElement("input", { type: "radio", value: "true", checked: this.props.person.visa.hasVisa === "true", onChange: function onChange(e) {
-                                    return _this2.props.onChange("hasVisa", e.target.value, "visa");
-                                } }),
-                            " \u0422\u0430\u043A"
-                        )
-                    ),
-                    _react2.default.createElement(_visaForm2.default, { visa: this.props.person.visa, onChange: this.props.onChange })
+                            "div",
+                            { className: "form-group" },
+                            _react2.default.createElement(
+                                "label",
+                                null,
+                                "\u0406\u043C'\u044F \u044F\u043A \u0443 \u0437\u0430\u043A\u043E\u0440\u0434\u043E\u043D\u043D\u043E\u043C\u0443 \u043F\u0430\u0441\u043F\u043E\u0440\u0442\u0456 ",
+                                validation.isFieldValid(this.props.person.first_name_pass, "Це поле є обов'язковим")
+                            ),
+                            _react2.default.createElement("input", { value: this.props.person.first_name_pass, onChange: function onChange(e) {
+                                    return _this2.props.onChange("first_name_pass", e.target.value);
+                                }, type: "text", className: "form-control", placeholder: "First Name", maxLength: "30" })
+                        ),
+                        _react2.default.createElement(
+                            "div",
+                            { className: "form-group" },
+                            _react2.default.createElement(
+                                "label",
+                                null,
+                                "\u0421\u0435\u0440\u0456\u044F ",
+                                validation.isFieldValid(this.props.person.serial_number_pass, "Введіть серію"),
+                                " \u0442\u0430 \u043D\u043E\u043C\u0435\u0440 ",
+                                validation.isFieldValid(this.props.person.number_pass, "Введіть номер"),
+                                " \u0437\u0430\u043A\u043E\u0440\u0434\u043E\u043D\u043D\u043E\u0433\u043E \u043F\u0430\u0441\u043F\u043E\u0440\u0442\u0443"
+                            ),
+                            _react2.default.createElement(
+                                "div",
+                                { className: "row" },
+                                _react2.default.createElement(
+                                    "div",
+                                    { className: "col-md-4" },
+                                    _react2.default.createElement("input", { value: this.props.person.serial_number_pass, onChange: function onChange(e) {
+                                            return _this2.props.onChange("serial_number_pass", e.target.value);
+                                        }, type: "text", className: "form-control", placeholder: "\u041D\u041D", maxLength: "4" })
+                                ),
+                                _react2.default.createElement(
+                                    "div",
+                                    { className: "col-md-8" },
+                                    _react2.default.createElement("input", { value: this.props.person.number_pass, onChange: function onChange(e) {
+                                            return _this2.props.onChange("number_pass", e.target.value);
+                                        }, type: "text", className: "form-control", placeholder: "\u0425\u0425\u0425\u0425\u0425\u0425", maxLength: "8" })
+                                )
+                            )
+                        ),
+                        _react2.default.createElement(
+                            "div",
+                            { className: "form-group" },
+                            _react2.default.createElement(
+                                "label",
+                                null,
+                                "\u0422\u0435\u0440\u043C\u0456\u043D \u0434\u0456\u0457 \u043F\u0430\u0441\u043F\u043E\u0440\u0442\u0443 ",
+                                validation.isFieldValid(expiration_pass, "Це поле є обов'язковим")
+                            ),
+                            _react2.default.createElement(_reactDatetime2.default, { value: expiration_pass, dateFormat: "DD-MM-YYYY", timeFormat: false, closeOnSelect: true, maxLength: "10", onChange: function onChange(v) {
+                                    return _this2.props.onChange("expiration_date_pass", v.format("YYYY-MM-DD"));
+                                } })
+                        ),
+                        _react2.default.createElement(
+                            "div",
+                            { className: "form-group" },
+                            _react2.default.createElement(
+                                "label",
+                                null,
+                                "\u0406\u0434\u0435\u043D\u0442\u0438\u0444\u0456\u043A\u0430\u0446\u0456\u0439\u043D\u0438\u0439 \u043D\u043E\u043C\u0435\u0440 ",
+                                validation.isFieldValid(this.props.person.individual_number, "Це поле є обов'язковим")
+                            ),
+                            _react2.default.createElement("input", { value: this.props.person.individual_number, onChange: function onChange(e) {
+                                    return _this2.props.onChange("individual_number", e.target.value);
+                                }, type: "text", className: "form-control", maxLength: "10" })
+                        ),
+                        _react2.default.createElement(
+                            "div",
+                            { className: "form-group" },
+                            _react2.default.createElement(
+                                "label",
+                                null,
+                                "\u041D\u043E\u043C\u0435\u0440 \u0442\u0435\u043B\u0435\u0444\u043E\u043D\u0443 ",
+                                validation.isFieldValid(this.props.person.phone, "Це поле є обов'язковим")
+                            ),
+                            _react2.default.createElement("input", { value: this.props.person.phone, onChange: function onChange(e) {
+                                    return _this2.props.onChange("phone", e.target.value);
+                                }, type: "text", className: "form-control phone", placeholder: "+38 (999) 999-99-99", maxLength: "20" })
+                        ),
+                        _react2.default.createElement(
+                            "div",
+                            { className: "form-group" },
+                            _react2.default.createElement(
+                                "label",
+                                null,
+                                "\u0415\u043B\u0435\u043A\u0442\u0440\u043E\u043D\u043D\u0430 \u0430\u0434\u0440\u0435\u0441\u0430 ",
+                                validation.isEmailValid(this.props.person.email)
+                            ),
+                            _react2.default.createElement("input", { value: this.props.person.email, onChange: function onChange(e) {
+                                    return _this2.props.onChange("email", e.target.value);
+                                }, type: "text", className: "form-control", placeholder: "email.adress@gmail.com", maxLength: "50" })
+                        ),
+                        _react2.default.createElement(
+                            "div",
+                            { className: "form-group" },
+                            _react2.default.createElement(
+                                "label",
+                                null,
+                                "\u0424\u043E\u0442\u043E \u043F\u0435\u0440\u0448\u043E\u0457 \u0441\u0442\u043E\u0440\u0456\u043D\u043A\u0438 \u043D\u0430\u0446\u0456\u043E\u043D\u0430\u043B\u044C\u043D\u043E\u0433\u043E \u043F\u0430\u0441\u043F\u043E\u0440\u0442\u0443"
+                            ),
+                            _react2.default.createElement(_photoLoader2.default, { value: this.props.person.photo_national_pass_id, desc: "Фото першої сторінки національного паспорту", onRemove: function onRemove() {
+                                    return _this2.props.onChange("photo_national_pass_id", "");
+                                }, onUpdate: function onUpdate(id) {
+                                    return _this2.props.onChange("photo_national_pass_id", id);
+                                } })
+                        ),
+                        _react2.default.createElement(
+                            "div",
+                            { className: "form-group" },
+                            _react2.default.createElement(
+                                "label",
+                                null,
+                                "\u0424\u043E\u0442\u043E \u043F\u0435\u0440\u0448\u043E\u0457 \u0441\u0442\u043E\u0440\u0456\u043D\u043A\u0438 \u0437\u0430\u043A\u043E\u0440\u0434\u043E\u043D\u043D\u043E\u0433\u043E \u043F\u0430\u0441\u043F\u043E\u0440\u0442\u0443"
+                            ),
+                            _react2.default.createElement(_photoLoader2.default, { value: this.props.person.photo_international_pass_id, desc: "Фото першої сторінки закордонного паспорту", onRemove: function onRemove() {
+                                    return _this2.props.onChange("photo_international_pass_id", "");
+                                }, onUpdate: function onUpdate(id) {
+                                    return _this2.props.onChange("photo_international_pass_id", id);
+                                } })
+                        ),
+                        _react2.default.createElement(
+                            "div",
+                            { className: "form-group" },
+                            _react2.default.createElement(
+                                "label",
+                                null,
+                                "\u0424\u043E\u0442\u043E \u0434\u043B\u044F \u0430\u043A\u0440\u0435\u0434\u0438\u0442\u0430\u0446\u0456\u0457"
+                            ),
+                            _react2.default.createElement(_photoLoader2.default, { value: this.props.person.accreditation_photo_id, desc: "Фото для акредитації", onRemove: function onRemove() {
+                                    return _this2.props.onChange("accreditation_photo_id", "");
+                                }, onUpdate: function onUpdate(id) {
+                                    return _this2.props.onChange("accreditation_photo_id", id);
+                                } })
+                        ),
+                        _react2.default.createElement(
+                            "div",
+                            { className: "form-group" },
+                            _react2.default.createElement(
+                                "div",
+                                null,
+                                _react2.default.createElement(
+                                    "label",
+                                    null,
+                                    "\u0427\u0438 \u043C\u0430\u0454\u0442\u0435 \u0412\u0438 \u0434\u0456\u044E\u0447\u0443 \u0432\u0456\u0437\u0443?"
+                                )
+                            ),
+                            _react2.default.createElement(
+                                "label",
+                                { className: "radio-inline" },
+                                _react2.default.createElement("input", { type: "radio", value: "false", checked: this.props.person.visa.hasVisa === "false", onChange: function onChange(e) {
+                                        return _this2.props.onChange("hasVisa", e.target.value, "visa");
+                                    } }),
+                                " \u041D\u0456"
+                            ),
+                            _react2.default.createElement(
+                                "label",
+                                { className: "radio-inline" },
+                                _react2.default.createElement("input", { type: "radio", value: "true", checked: this.props.person.visa.hasVisa === "true", onChange: function onChange(e) {
+                                        return _this2.props.onChange("hasVisa", e.target.value, "visa");
+                                    } }),
+                                " \u0422\u0430\u043A"
+                            )
+                        ),
+                        _react2.default.createElement(_visaForm2.default, { visa: this.props.person.visa, onChange: this.props.onChange })
+                    )
                 )
             );
         }
@@ -41662,7 +41748,20 @@ var _react = __webpack_require__(7);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _reactDatetime = __webpack_require__(56);
+
+var _reactDatetime2 = _interopRequireDefault(_reactDatetime);
+
+var _validation = __webpack_require__(57);
+
+var validation = _interopRequireWildcard(_validation);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+__webpack_require__(58);
+
 
 var VisaForm = function VisaForm(props) {
     if (props.visa.hasVisa === "false") return null;
@@ -41674,15 +41773,38 @@ var VisaForm = function VisaForm(props) {
             type.title
         );
     });
+    var visaExp = props.visa.term ? new Date(props.visa.term) : null;
     return _react2.default.createElement(
         "div",
         null,
         _react2.default.createElement(
-            "select",
-            { value: props.visa.type, className: "form-control", onChange: function onChange(e) {
-                    return props.onChange("type", e.target.value, "visa");
-                } },
-            typesList
+            "div",
+            { className: "form-group" },
+            _react2.default.createElement(
+                "label",
+                null,
+                "\u0422\u0438\u043F \u0434\u0456\u044E\u0447\u043E\u0457 \u0432\u0456\u0437\u0438"
+            ),
+            _react2.default.createElement(
+                "select",
+                { value: props.visa.type, className: "form-control", onChange: function onChange(e) {
+                        return props.onChange("type", e.target.value, "visa");
+                    } },
+                typesList
+            )
+        ),
+        _react2.default.createElement(
+            "div",
+            { className: "form-group" },
+            _react2.default.createElement(
+                "label",
+                null,
+                "\u0422\u0435\u0440\u043C\u0456\u043D \u0434\u0456\u0457 \u0432\u0456\u0437\u0438 ",
+                validation.isFieldValid(visaExp, "Це поле є обов'язковим")
+            ),
+            _react2.default.createElement(_reactDatetime2.default, { value: visaExp, dateFormat: "DD-MM-YYYY", timeFormat: false, closeOnSelect: true, maxLength: "10", onChange: function onChange(v) {
+                    return props.onChange("term", v.format("YYYY-MM-DD"), "visa");
+                } })
         )
     );
 };
@@ -41691,6 +41813,184 @@ exports.default = VisaForm;
 
 /***/ }),
 /* 336 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(7);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var GameForm = function (_React$Component) {
+    _inherits(GameForm, _React$Component);
+
+    function GameForm() {
+        _classCallCheck(this, GameForm);
+
+        return _possibleConstructorReturn(this, (GameForm.__proto__ || Object.getPrototypeOf(GameForm)).apply(this, arguments));
+    }
+
+    _createClass(GameForm, [{
+        key: "render",
+        value: function render() {
+            var _this2 = this;
+
+            if (!this.props.isVisible) return null;
+            var ageCatList = this.props.ageCategories ? this.props.ageCategories.map(function (item) {
+                return _react2.default.createElement(
+                    "option",
+                    { key: item.id, value: item.id },
+                    item.title
+                );
+            }) : null;
+            var weightCats = this.props.weightCategories ? this.props.weightCategories.filter(function (item) {
+                return item.parent == _this2.props.game.ageCat;
+            }) : null;
+            var weightCatList = weightCats.map(function (item) {
+                return _react2.default.createElement(
+                    "option",
+                    { key: item.id, value: item.id },
+                    item.title_w
+                );
+            });
+            var aGamesList = this.props.actualGames ? this.props.actualGames.map(function (item) {
+                return _react2.default.createElement(
+                    "option",
+                    { key: item.id, value: item.id },
+                    item.name
+                );
+            }) : null;
+            var type = this.props.actualGames ? this.props.actualGames.filter(function (item) {
+                return item.id === _this2.props.game.aGame;
+            })[0]["type"] : "0";
+            return _react2.default.createElement(
+                "div",
+                null,
+                _react2.default.createElement(
+                    "form",
+                    null,
+                    _react2.default.createElement(
+                        "fieldset",
+                        null,
+                        _react2.default.createElement(
+                            "legend",
+                            null,
+                            "\u0414\u0430\u043D\u0456 \u043F\u0440\u043E \u0437\u043C\u0430\u0433\u0430\u043D\u043D\u044F"
+                        ),
+                        _react2.default.createElement(
+                            "div",
+                            { className: "form-group" },
+                            _react2.default.createElement(
+                                "div",
+                                { className: "row" },
+                                _react2.default.createElement(
+                                    "div",
+                                    { className: "col-md-6" },
+                                    _react2.default.createElement(
+                                        "label",
+                                        null,
+                                        "\u0412\u0456\u043A\u043E\u0432\u0430 \u043A\u0430\u0442\u0435\u0433\u043E\u0440\u0456\u044F"
+                                    ),
+                                    _react2.default.createElement(
+                                        "select",
+                                        { value: this.props.game.ageCat, className: "form-control", onChange: function onChange(e) {
+                                                return _this2.props.onChange("ageCat", e.target.value);
+                                            } },
+                                        ageCatList
+                                    )
+                                ),
+                                _react2.default.createElement(
+                                    "div",
+                                    { className: "col-md-6" },
+                                    _react2.default.createElement(
+                                        "label",
+                                        null,
+                                        "\u0412\u0430\u0433\u043E\u0432\u0430 \u043A\u0430\u0442\u0435\u0433\u043E\u0440\u0456\u044F"
+                                    ),
+                                    _react2.default.createElement(
+                                        "select",
+                                        { value: this.props.game.weightCat, className: "form-control", onChange: function onChange(e) {
+                                                return _this2.props.onChange("weightCat", e.target.value);
+                                            } },
+                                        weightCatList
+                                    )
+                                )
+                            )
+                        ),
+                        _react2.default.createElement(
+                            "div",
+                            { className: "form-group" },
+                            _react2.default.createElement(
+                                "label",
+                                null,
+                                "\u0417\u043C\u0430\u0433\u0430\u043D\u043D\u044F, \u043D\u0430 \u044F\u043A\u0456 \u043F\u043E\u0434\u0430\u0454\u0442\u0435 \u0437\u0430\u044F\u0432\u043A\u0443"
+                            ),
+                            _react2.default.createElement(
+                                "select",
+                                { value: this.props.game.aGame, className: "form-control", onChange: function onChange(e) {
+                                        return _this2.props.onChange("aGame", e.target.value);
+                                    } },
+                                aGamesList
+                            )
+                        ),
+                        _react2.default.createElement(
+                            "div",
+                            { className: "form-group" },
+                            _react2.default.createElement(
+                                "p",
+                                { className: "bg-success" },
+                                _react2.default.createElement(
+                                    "strong",
+                                    null,
+                                    "\u0417\u0430\u044F\u0432\u043B\u0435\u043D\u0456 \u0440\u0435\u0437\u0443\u043B\u044C\u0442\u0430\u0442\u0438"
+                                )
+                            ),
+                            _react2.default.createElement(
+                                "div",
+                                { className: "row" },
+                                _react2.default.createElement(
+                                    "div",
+                                    { className: "col-md-3" },
+                                    _react2.default.createElement(
+                                        "label",
+                                        null,
+                                        "\u041F\u0440\u0438\u0441\u0456\u0434\u0430\u043D\u043D\u044F"
+                                    ),
+                                    _react2.default.createElement("input", { type: "text", className: "form-control", maxLength: "6", placeholder: "00.00", disabled: type === "1" })
+                                ),
+                                _react2.default.createElement("div", { className: "col-md-3" }),
+                                _react2.default.createElement("div", { className: "col-md-3" }),
+                                _react2.default.createElement("div", { className: "col-md-3" })
+                            )
+                        )
+                    )
+                )
+            );
+        }
+    }]);
+
+    return GameForm;
+}(_react2.default.Component);
+
+exports.default = GameForm;
+
+/***/ }),
+/* 337 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -41716,6 +42016,28 @@ var getUserData = exports.getUserData = function getUserData(contract) {
         url: dir + "GetUser.php",
         type: "POST",
         data: contract
+    });
+};
+
+var getAgeCategories = exports.getAgeCategories = function getAgeCategories() {
+    return jQuery.ajax({
+        url: categoryDir + "GetAgeCategories.php",
+        type: "POST"
+    });
+};
+
+var getWeightCategories = exports.getWeightCategories = function getWeightCategories() {
+    return jQuery.ajax({
+        url: categoryDir + "GetWeightCategoriesStrict.php",
+        type: "POST"
+    });
+};
+
+var getOpenedActualGames = exports.getOpenedActualGames = function getOpenedActualGames(currentDay) {
+    return jQuery.ajax({
+        url: gamesDir + "GetOpenedActualGames.php",
+        type: "POST",
+        data: currentDay
     });
 };
 

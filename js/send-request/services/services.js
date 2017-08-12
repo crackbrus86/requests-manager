@@ -18,3 +18,25 @@ export const getUserData = (contract) => {
     })
 }
 
+export const getAgeCategories = () => {
+    return jQuery.ajax({
+        url: categoryDir + "GetAgeCategories.php",
+        type: "POST"
+    })
+}
+
+export const getWeightCategories = () => {
+    return jQuery.ajax({
+        url: categoryDir + "GetWeightCategoriesStrict.php",
+        type: "POST"
+    })
+}
+
+export const getOpenedActualGames = (currentDay) => {
+    return jQuery.ajax({
+        url: gamesDir + "GetOpenedActualGames.php",
+        type: "POST",
+        data: currentDay
+    })
+}
+
