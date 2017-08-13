@@ -7,6 +7,7 @@ class GameForm extends React.Component{
         var weightCats = (this.props.weightCategories)? this.props.weightCategories.filter( item => item.parent == this.props.game.ageCat) : null;
         var weightCatList = weightCats.map(item => <option key={item.id} value={item.id}>{item.title_w}</option>);
         var aGamesList = (this.props.actualGames)? this.props.actualGames.map(item => <option key={item.id} value={item.id}>{item.name}</option>) : null;
+        var bGamesList = (this.props.beforeGames)? this.props.beforeGames.map(item => <option key={item.id} value={item.id}>{item.name}</option>) : null;
         var type = (this.props.actualGames)? this.props.actualGames.filter(item => item.id === this.props.game.aGame)[0]["type"] : "0";
         return <div>
             <form>
@@ -33,12 +34,25 @@ class GameForm extends React.Component{
                         <div className="row">
                             <div className="col-md-3">
                                 <label>Присідання</label>
-                                <input type="text" className="form-control" maxLength="6"  placeholder="00.00" disabled={type === "1"}/>
+                                <input value={this.props.game.exercises.squat} type="text" className="form-control" maxLength="6"  placeholder="00.00" disabled={type === "1"} onChange={e => this.props.onChange("squat", e.target.value, "exercises")} />
                             </div>
-                            <div className="col-md-3"></div>
-                            <div className="col-md-3"></div>
-                            <div className="col-md-3"></div>
+                            <div className="col-md-3">
+                                <label>Жим лежачи</label>
+                                <input value={this.props.game.exercises.press} type="text" className="form-control" maxLength="6" placeholder="00.00" onChange={e => this.props.onChange("press", e.target.value, "exercises")} />
+                            </div>
+                            <div className="col-md-3">
+                                <label>Станова тяга</label>
+                                <input value={this.props.game.exercises.lift} type="text" className="form-control" maxLength="6" placeholder="00.00" disabled={type === "1"} onChange={e => this.props.onChange("lift", e.target.value, "exercises")} />                                
+                            </div>
+                            <div className="col-md-3">
+                                <label>Сума</label>
+                                <input value={this.props.game.exercises.total} type="text" className="form-control" maxLength="6" placeholder="00.00" readOnly={true} />
+                            </div>
                         </div>
+                    </div>
+                    <div className="form-group">
+                        <label></label>
+                        <select value={this.props.game.bGame} className="form-control" onChange={e => this.props.onChange("bGame", e.target.value)}>{bGamesList}</select>
                     </div>
                 </fieldset>
             </form>

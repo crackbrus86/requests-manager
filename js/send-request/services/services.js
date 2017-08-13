@@ -40,3 +40,18 @@ export const getOpenedActualGames = (currentDay) => {
     })
 }
 
+export const getBeforeGames = () => {
+    return jQuery.ajax({
+        url: gamesDir + "GetBeforeGames.php",
+        type: "POST"
+    })
+}
+
+export const getCoachData = (contract) => {
+    return jQuery.ajax({
+        url: dir + "GetCoach.php",
+        type: "POST",
+        data: contract
+    })
+}
+

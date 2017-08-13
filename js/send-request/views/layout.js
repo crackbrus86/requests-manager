@@ -3,8 +3,10 @@ import moment from "moment";
 import NameForm from "./name-form";
 import PersonalForm from "./personal-form";
 import GameForm from "./game-form";
+import CoachesSection from "./coaches-section";
 import * as services from "../services/services";
 import Preloader from "../../components/preloader/preloader";
+import Modal from "../../components/modal/modal";
 
 class RequestForm extends React.Component{
     constructor(props){
@@ -13,6 +15,21 @@ class RequestForm extends React.Component{
         this.onUserDataChange = this.changeUserDataField.bind(this);
         this.onUserLoad = this.getUserData.bind(this);
         this.onGameChange = this.changeGameField.bind(this);
+        this.onCoachStatusChange = this.changeCoachStatus.bind(this);
+        this.onCloseModal = this.closeCoachModal.bind(this);
+        this.openModal = this.openCoachModal.bind(this);
+        this.onCoachChange = this.changeCoachField.bind(this);
+        this.onCoachLoad = this.getCoachData.bind(this);
+    }
+
+    changeCoachStatus(value){
+        this.setState({hasCoach: value});
+    }
+
+    changeCoachField(fieldName, value){
+        var newModalCoach = this.state.modalCoach;
+        newModalCoach[fieldName] = value;
+        this.setState({modalCoach: newModalCoach});
     }
 
     changeUserField(fieldName, value){
@@ -32,9 +49,17 @@ class RequestForm extends React.Component{
         console.log(this.state);       
     } 
     
-    changeGameField(fieldName, value){
+    changeGameField(fieldName, value, fieldParent = null){
         var newGame = this.state.gameData;
-        newGame[fieldName] = value;
+        if(fieldParent){
+            newGame[fieldParent][fieldName] = value;
+            if(fieldParent === "exercises"){
+                var exercises = this.state.gameData.exercises;
+                newGame["exercises"]["total"] = parseFloat(exercises.squat) + parseFloat(exercises.press) + parseFloat(exercises.lift);
+            } 
+        }else{
+            newGame[fieldName] = value;
+        }
         this.setState({gameData: newGame});
         console.log(this.state);          
     }
@@ -71,6 +96,28 @@ class RequestForm extends React.Component{
         services.getOpenedActualGames({currentDay: moment(new Date()).format("YYYY-MM-DD")}).then(data => {
             this.setState({actualGames: JSON.parse(data)});
             if(this.state.actualGames.length) this.changeGameField("aGame", this.state.actualGames[0].id);
+            this.setState({loading: false});
+        })
+    }
+
+    getBeforeGames(){
+        this.setState({loading: true});
+        services.getBeforeGames().then(data => {
+            this.setState({beforeGames: JSON.parse(data)});
+            if(this.state.beforeGames.length) this.changeGameField("bGame", this.state.beforeGames[0].id);
+            this.setState({loading: false});
+        })
+    }
+
+    getCoachData(){
+        var contract = {
+            lastName: this.state.modalCoach.lastName,
+            firstName: this.state.modalCoach.firstName,
+            middleName: this.state.modalCoach.middleName,
+            birthDate: this.state.modalCoach.birthDate
+        }
+        this.setState({loading: true});
+        services.getCoachData(contract).then(data => {
             this.setState({loading: false});
         })
     }
@@ -120,7 +167,14 @@ class RequestForm extends React.Component{
         this.setState({gameData: {
             ageCat: "",
             weightCat: "",
-            aGame: ""
+            aGame: "",
+            exercises: {
+                squat: 0,
+                press: 0,
+                lift: 0,
+                total: 0
+            },
+            bGame: ""
         }})
     }
 
@@ -132,19 +186,37 @@ class RequestForm extends React.Component{
         this.setState({showGameData: true});
     }
 
+    openCoachModal(){
+        this.setState({modalCoach: {
+            firstName: "",
+            lastName: "",
+            middleName: "",
+            birthDate: null          
+        }})
+    }
+
+    closeCoachModal(){
+        this.setState({modalCoach: null});
+    }
+
     componentWillMount(){
         this.setState({user:{
             firstName: "",
             lastName: "",
             middleName: "",
-            birthDate: null,
-        }, loading: false, showUserData: false, showGameData: false});
+            birthDate: null
+        }, loading: false, 
+        showUserData: false, 
+        showGameData: false, 
+        hasCoach: "false",
+        modalCoach: null});
         this.setDefaultUserData();
         this.setDefaultGameData();
         this.getRegions();
         this.getAgeCategories();
         this.getWeightCategories();  
         this.getActualGames();
+        this.getBeforeGames();
     }
 
     render(){
@@ -152,7 +224,12 @@ class RequestForm extends React.Component{
             <NameForm person={this.state.user} onChange={this.onUserChange} onNext={this.onUserLoad} isReadOnly={this.state.showUserData} />
             <PersonalForm isVisible={this.state.showUserData} person={this.state.userData} regions={this.state.regions} onChange={this.onUserDataChange} />
             <GameForm isVisible={this.state.showGameData} game={this.state.gameData} ageCategories={this.state.ageCategories} 
-            actualGames={this.state.actualGames} weightCategories={this.state.weightCategories} onChange={this.onGameChange} />
+            actualGames={this.state.actualGames} beforeGames={this.state.beforeGames} weightCategories={this.state.weightCategories} onChange={this.onGameChange} />
+            <CoachesSection isVisible={this.state.showGameData} hasCoach={this.state.hasCoach} onChange={this.onCoachStatusChange} openCoachModal={this.openModal} />
+            <Modal target={this.state.modalCoach} onClose={this.onCloseModal}>
+                <h4>Введіть дані тренера</h4>
+                <NameForm person={this.state.modalCoach} onChange={this.onCoachChange} onNext={this.onCoachLoad} />
+            </Modal>
             <Preloader loading={this.state.loading} />
         </div>
     }

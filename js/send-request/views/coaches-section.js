@@ -1,0 +1,25 @@
+import React from "react";
+
+class CoachesSection extends React.Component{
+    render(){
+        if(!this.props.isVisible) return null;
+        var coachesControl = (this.props.hasCoach === "true")? <div className="form-group">
+            <button type="button" className="btn btn-primary" onClick={this.props.openCoachModal}><i className="fa fa-plus"></i> Додати тренера</button>
+        </div> : null;
+        return <div>
+            <fieldset>
+                <legend>Дані тренера</legend>
+                <div className="form-group">
+                    <label className="radio-inline">
+                        <input type="radio" value="false" checked={this.props.hasCoach === "false"} onChange={e => this.props.onChange(e.target.value)} /> Індивідуально
+                    </label>
+                    <label className="radio-inline">
+                        <input type="radio" value="true" checked={this.props.hasCoach === "true"} onChange={e => this.props.onChange(e.target.value)} /> Тренер
+                    </label>                    
+                </div>
+                {coachesControl}
+            </fieldset>
+        </div>
+    }
+}
+export default CoachesSection;
