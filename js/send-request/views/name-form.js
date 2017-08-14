@@ -10,6 +10,19 @@ class NameForm extends React.Component{
         var birthDate = (this.props.person.birthDate)? new Date(this.props.person.birthDate) : null;
         var datetime = (this.props.isReadOnly)? <input type="text" value={this.props.person.birthDate} className="form-control" readOnly={true} /> :
                                                 <Datetime value={birthDate} dateFormat="DD-MM-YYYY" onChange={v => this.props.onChange("birthDate", v.format("YYYY-MM-DD"))} timeFormat={false} closeOnSelect={true} maxLength="10" />;
+        var footer = (this.props.isCoach)? 
+            <div className="form-group">
+                    <div><label>Чи супроводжує Вас на змагання?</label></div>
+                    <label className="radio-inline">
+                        <input type="radio" value="false" checked={this.props.person.isFollowing === "false"} onChange={e => this.props.setFollowing(e.target.value)} disabled={validation.isFormValid(this.props.person, required)} /> Ні
+                    </label>
+                    <label className="radio-inline">
+                        <input type="radio" value="true" checked={this.props.person.isFollowing === "true"} onChange={e => this.props.setFollowing(e.target.value)} disabled={validation.isFormValid(this.props.person, required)} /> Так
+                    </label>            
+            </div> :  <div className="form-group">
+                    <button type="button" className="btn btn-primary" disabled={validation.isFormValid(this.props.person, required)} onClick={() => this.props.onNext()}>Далі</button>
+            </div>;
+
         return <div>
             <form>
                 <div className="form-group">
@@ -28,9 +41,7 @@ class NameForm extends React.Component{
                     <label>Дата народження {validation.isFieldValid(birthDate, "Це поле є обов'язковим")}</label>
                     {datetime}
                 </div>
-                <div className="form-group">
-                    <button type="button" className="btn btn-primary" disabled={validation.isFormValid(this.props.person, required)} onClick={() => this.props.onNext()}>Далі</button>
-                </div>
+                {footer}
             </form>
         </div>
     }

@@ -21,7 +21,7 @@ componentWillMount(){
                 <fieldset>
                     <legend>Особисті дані</legend>
                 <div className="form-group">
-                    <label>Область</label>
+                    <label>Область {validation.isFieldValid(region, "Це поле є обов'язковим")}</label>
                     <select value={region} className="form-control" onChange={e => this.props.onChange("region", e.target.value)}>{regionsList}</select>
                 </div>
                 <div className="form-group">
@@ -60,15 +60,15 @@ componentWillMount(){
                     <input value={this.props.person.email} onChange={e => this.props.onChange("email", e.target.value)} type="text" className="form-control" placeholder="email.adress@gmail.com" maxLength="50" />   
                 </div>
                 <div className="form-group">
-                    <label>Фото першої сторінки національного паспорту</label>
+                    <label>Фото першої сторінки національного паспорту {validation.isFieldValid(this.props.person.photo_national_pass_id, "Це поле є обов'язковим")}</label>
                     <PhotoLoader value={this.props.person.photo_national_pass_id} desc={"Фото першої сторінки національного паспорту"}  onRemove={() => this.props.onChange("photo_national_pass_id", "")} onUpdate={(id) => this.props.onChange("photo_national_pass_id", id)} /> 
                 </div>   
                 <div className="form-group">
-                    <label>Фото першої сторінки закордонного паспорту</label>
+                    <label>Фото першої сторінки закордонного паспорту {validation.isFieldValid(this.props.person.photo_international_pass_id, "Це поле є обов'язковим")}</label>
                     <PhotoLoader value={this.props.person.photo_international_pass_id} desc={"Фото першої сторінки закордонного паспорту"}  onRemove={() => this.props.onChange("photo_international_pass_id", "")} onUpdate={(id) => this.props.onChange("photo_international_pass_id", id)} /> 
                 </div> 
                 <div className="form-group">
-                    <label>Фото для акредитації</label>
+                    <label>Фото для акредитації {validation.isFieldValid(this.props.person.accreditation_photo_id, "Це поле є обов'язковим")}</label>
                     <PhotoLoader value={this.props.person.accreditation_photo_id} desc={"Фото для акредитації"}  onRemove={() => this.props.onChange("accreditation_photo_id", "")} onUpdate={(id) => this.props.onChange("accreditation_photo_id", id)} /> 
                 </div>
                 <div className="form-group">

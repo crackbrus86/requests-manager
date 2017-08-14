@@ -7022,7 +7022,7 @@ var createFactory = ReactElement.createFactory;
 var cloneElement = ReactElement.cloneElement;
 
 if (process.env.NODE_ENV !== 'production') {
-  var lowPriorityWarning = __webpack_require__(38);
+  var lowPriorityWarning = __webpack_require__(39);
   var canDefineProperty = __webpack_require__(29);
   var ReactElementValidator = __webpack_require__(63);
   var didWarnPropTypesDeprecated = false;
@@ -7359,10 +7359,10 @@ module.exports = ReactReconciler;
 
 
 
-var DOMNamespaces = __webpack_require__(46);
+var DOMNamespaces = __webpack_require__(47);
 var setInnerHTML = __webpack_require__(34);
 
-var createMicrosoftUnsafeLocalFunction = __webpack_require__(47);
+var createMicrosoftUnsafeLocalFunction = __webpack_require__(48);
 var setTextContent = __webpack_require__(77);
 
 var ELEMENT_NODE_TYPE = 1;
@@ -7483,7 +7483,7 @@ module.exports = DOMLazyTree;
 
 
 var EventPluginHub = __webpack_require__(24);
-var EventPluginUtils = __webpack_require__(40);
+var EventPluginUtils = __webpack_require__(41);
 
 var accumulateInto = __webpack_require__(69);
 var forEachAccumulated = __webpack_require__(70);
@@ -7625,8 +7625,8 @@ module.exports = EventPropagators;
 var _prodInvariant = __webpack_require__(4);
 
 var EventPluginRegistry = __webpack_require__(31);
-var EventPluginUtils = __webpack_require__(40);
-var ReactErrorUtils = __webpack_require__(41);
+var EventPluginUtils = __webpack_require__(41);
+var ReactErrorUtils = __webpack_require__(42);
 
 var accumulateInto = __webpack_require__(69);
 var forEachAccumulated = __webpack_require__(70);
@@ -7904,7 +7904,7 @@ module.exports = EventPluginHub;
 
 var SyntheticEvent = __webpack_require__(14);
 
-var getEventTarget = __webpack_require__(42);
+var getEventTarget = __webpack_require__(43);
 
 /**
  * @interface UIEvent
@@ -9012,7 +9012,7 @@ module.exports = TransactionImpl;
 var SyntheticUIEvent = __webpack_require__(25);
 var ViewportMetrics = __webpack_require__(76);
 
-var getEventModifierState = __webpack_require__(44);
+var getEventModifierState = __webpack_require__(45);
 
 /**
  * @interface MouseEvent
@@ -9087,12 +9087,12 @@ module.exports = SyntheticMouseEvent;
 
 
 var ExecutionEnvironment = __webpack_require__(8);
-var DOMNamespaces = __webpack_require__(46);
+var DOMNamespaces = __webpack_require__(47);
 
 var WHITESPACE_TEST = /^[ \r\n\t\f]/;
 var NONVISIBLE_TEST = /<(!--|link|noscript|meta|script|style)[ \r\n\t\f\/>]/;
 
-var createMicrosoftUnsafeLocalFunction = __webpack_require__(47);
+var createMicrosoftUnsafeLocalFunction = __webpack_require__(48);
 
 // SVG temp container for IE lacking innerHTML
 var reusableSVGContainer;
@@ -9323,7 +9323,7 @@ var ReactEventEmitterMixin = __webpack_require__(259);
 var ViewportMetrics = __webpack_require__(76);
 
 var getVendorPrefixedEventName = __webpack_require__(260);
-var isEventSupported = __webpack_require__(43);
+var isEventSupported = __webpack_require__(44);
 
 /**
  * Summary of `ReactBrowserEventEmitter` event handling:
@@ -9949,6 +9949,73 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.isEmailValid = exports.isFieldValid = exports.isFormValid = undefined;
+
+var _react = __webpack_require__(7);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+__webpack_require__(321);
+
+var isFormValid = exports.isFormValid = function isFormValid(formObject, required) {
+    for (var i = 0; i < required.length; i++) {
+        if (!formObject[required[i]]) return true;
+    }
+    return false;
+};
+
+var isFieldValid = exports.isFieldValid = function isFieldValid(field) {
+    var text = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "";
+
+    if (!!field) return null;
+    return _react2.default.createElement(
+        "i",
+        { className: "invalid" },
+        "*",
+        _react2.default.createElement(
+            "sub",
+            null,
+            text
+        )
+    );
+};
+
+var isEmailValid = exports.isEmailValid = function isEmailValid(field) {
+    if (!field) return _react2.default.createElement(
+        "i",
+        { className: "invalid" },
+        "*",
+        _react2.default.createElement(
+            "sub",
+            null,
+            "Це поле є обов'язковим"
+        )
+    );
+    var pattern = new RegExp(/^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i);
+    if (!pattern.test(field)) return _react2.default.createElement(
+        "i",
+        { className: "invalid" },
+        "*",
+        _react2.default.createElement(
+            "sub",
+            null,
+            "Не вірно вказано email"
+        )
+    );
+};
+
+/***/ }),
+/* 39 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
 /* WEBPACK VAR INJECTION */(function(process) {/**
  * Copyright 2014-2015, Facebook, Inc.
  * All rights reserved.
@@ -10016,7 +10083,7 @@ module.exports = lowPriorityWarning;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 39 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10037,7 +10104,7 @@ module.exports = ReactPropTypesSecret;
 
 
 /***/ }),
-/* 40 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10055,7 +10122,7 @@ module.exports = ReactPropTypesSecret;
 
 var _prodInvariant = __webpack_require__(4);
 
-var ReactErrorUtils = __webpack_require__(41);
+var ReactErrorUtils = __webpack_require__(42);
 
 var invariant = __webpack_require__(2);
 var warning = __webpack_require__(3);
@@ -10269,7 +10336,7 @@ module.exports = EventPluginUtils;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 41 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10351,7 +10418,7 @@ module.exports = ReactErrorUtils;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 42 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10391,7 +10458,7 @@ function getEventTarget(nativeEvent) {
 module.exports = getEventTarget;
 
 /***/ }),
-/* 43 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10456,7 +10523,7 @@ function isEventSupported(eventNameSuffix, capture) {
 module.exports = isEventSupported;
 
 /***/ }),
-/* 44 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10504,7 +10571,7 @@ function getEventModifierState(nativeEvent) {
 module.exports = getEventModifierState;
 
 /***/ }),
-/* 45 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10525,7 +10592,7 @@ var Danger = __webpack_require__(244);
 var ReactDOMComponentTree = __webpack_require__(6);
 var ReactInstrumentation = __webpack_require__(11);
 
-var createMicrosoftUnsafeLocalFunction = __webpack_require__(47);
+var createMicrosoftUnsafeLocalFunction = __webpack_require__(48);
 var setInnerHTML = __webpack_require__(34);
 var setTextContent = __webpack_require__(77);
 
@@ -10736,7 +10803,7 @@ module.exports = DOMChildrenOperations;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 46 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10761,7 +10828,7 @@ var DOMNamespaces = {
 module.exports = DOMNamespaces;
 
 /***/ }),
-/* 47 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10798,7 +10865,7 @@ var createMicrosoftUnsafeLocalFunction = function (func) {
 module.exports = createMicrosoftUnsafeLocalFunction;
 
 /***/ }),
-/* 48 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10942,7 +11009,7 @@ module.exports = LinkedValueUtils;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 49 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10992,7 +11059,7 @@ module.exports = ReactComponentEnvironment;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 50 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11065,7 +11132,7 @@ function shallowEqual(objA, objB) {
 module.exports = shallowEqual;
 
 /***/ }),
-/* 51 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11112,7 +11179,7 @@ function shouldUpdateReactComponent(prevElement, nextElement) {
 module.exports = shouldUpdateReactComponent;
 
 /***/ }),
-/* 52 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11176,7 +11243,7 @@ var KeyEscapeUtils = {
 module.exports = KeyEscapeUtils;
 
 /***/ }),
-/* 53 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11416,7 +11483,7 @@ module.exports = ReactUpdateQueue;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 54 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11793,7 +11860,7 @@ module.exports = validateDOMNesting;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 55 */
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11848,7 +11915,7 @@ function getEventCharCode(nativeEvent) {
 module.exports = getEventCharCode;
 
 /***/ }),
-/* 56 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12295,73 +12362,6 @@ module.exports = Datetime;
 
 
 /***/ }),
-/* 57 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.isEmailValid = exports.isFieldValid = exports.isFormValid = undefined;
-
-var _react = __webpack_require__(7);
-
-var _react2 = _interopRequireDefault(_react);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-__webpack_require__(321);
-
-var isFormValid = exports.isFormValid = function isFormValid(formObject, required) {
-    for (var i = 0; i < required.length; i++) {
-        if (!formObject[required[i]]) return true;
-    }
-    return false;
-};
-
-var isFieldValid = exports.isFieldValid = function isFieldValid(field) {
-    var text = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "";
-
-    if (!!field) return null;
-    return _react2.default.createElement(
-        "i",
-        { className: "invalid" },
-        "*",
-        _react2.default.createElement(
-            "sub",
-            null,
-            text
-        )
-    );
-};
-
-var isEmailValid = exports.isEmailValid = function isEmailValid(field) {
-    if (!field) return _react2.default.createElement(
-        "i",
-        { className: "invalid" },
-        "*",
-        _react2.default.createElement(
-            "sub",
-            null,
-            "Це поле є обов'язковим"
-        )
-    );
-    var pattern = new RegExp(/^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i);
-    if (!pattern.test(field)) return _react2.default.createElement(
-        "i",
-        { className: "invalid" },
-        "*",
-        _react2.default.createElement(
-            "sub",
-            null,
-            "Не вірно вказано email"
-        )
-    );
-};
-
-/***/ }),
 /* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -12417,7 +12417,7 @@ var ReactNoopUpdateQueue = __webpack_require__(60);
 var canDefineProperty = __webpack_require__(29);
 var emptyObject = __webpack_require__(30);
 var invariant = __webpack_require__(2);
-var lowPriorityWarning = __webpack_require__(38);
+var lowPriorityWarning = __webpack_require__(39);
 
 /**
  * Base class helpers for the updating state of a component.
@@ -12746,7 +12746,7 @@ var checkReactTypeSpec = __webpack_require__(217);
 var canDefineProperty = __webpack_require__(29);
 var getIteratorFn = __webpack_require__(62);
 var warning = __webpack_require__(3);
-var lowPriorityWarning = __webpack_require__(38);
+var lowPriorityWarning = __webpack_require__(39);
 
 function getDeclarationErrorAddendum() {
   if (ReactCurrentOwner.current) {
@@ -13022,7 +13022,7 @@ var emptyFunction = __webpack_require__(10);
 var invariant = __webpack_require__(2);
 var warning = __webpack_require__(3);
 
-var ReactPropTypesSecret = __webpack_require__(39);
+var ReactPropTypesSecret = __webpack_require__(40);
 var checkPropTypes = __webpack_require__(221);
 
 module.exports = function(isValidElement, throwOnDirectAccess) {
@@ -15469,7 +15469,7 @@ module.exports = ReactPropTypesSecret;
 
 var _assign = __webpack_require__(5);
 
-var LinkedValueUtils = __webpack_require__(48);
+var LinkedValueUtils = __webpack_require__(49);
 var ReactDOMComponentTree = __webpack_require__(6);
 var ReactUpdates = __webpack_require__(13);
 
@@ -15970,7 +15970,7 @@ var REACT_ELEMENT_TYPE = __webpack_require__(270);
 
 var getIteratorFn = __webpack_require__(271);
 var invariant = __webpack_require__(2);
-var KeyEscapeUtils = __webpack_require__(52);
+var KeyEscapeUtils = __webpack_require__(53);
 var warning = __webpack_require__(3);
 
 var SEPARATOR = '.';
@@ -16415,14 +16415,14 @@ var ReactInstanceMap = __webpack_require__(26);
 var ReactInstrumentation = __webpack_require__(11);
 var ReactMarkupChecksum = __webpack_require__(302);
 var ReactReconciler = __webpack_require__(21);
-var ReactUpdateQueue = __webpack_require__(53);
+var ReactUpdateQueue = __webpack_require__(54);
 var ReactUpdates = __webpack_require__(13);
 
 var emptyObject = __webpack_require__(30);
 var instantiateReactComponent = __webpack_require__(83);
 var invariant = __webpack_require__(2);
 var setInnerHTML = __webpack_require__(34);
-var shouldUpdateReactComponent = __webpack_require__(51);
+var shouldUpdateReactComponent = __webpack_require__(52);
 var warning = __webpack_require__(3);
 
 var ATTR_NAME = DOMProperty.ID_ATTRIBUTE_NAME;
@@ -29160,7 +29160,7 @@ module.exports = factory(isValidElement);
 if (process.env.NODE_ENV !== 'production') {
   var invariant = __webpack_require__(2);
   var warning = __webpack_require__(3);
-  var ReactPropTypesSecret = __webpack_require__(39);
+  var ReactPropTypesSecret = __webpack_require__(40);
   var loggedTypeFailures = {};
 }
 
@@ -30185,8 +30185,8 @@ var ReactUpdates = __webpack_require__(13);
 var SyntheticEvent = __webpack_require__(14);
 
 var inputValueTracking = __webpack_require__(74);
-var getEventTarget = __webpack_require__(42);
-var isEventSupported = __webpack_require__(43);
+var getEventTarget = __webpack_require__(43);
+var isEventSupported = __webpack_require__(44);
 var isTextInputElement = __webpack_require__(75);
 
 var eventTypes = {
@@ -31578,7 +31578,7 @@ module.exports = HTMLDOMPropertyConfig;
 
 
 
-var DOMChildrenOperations = __webpack_require__(45);
+var DOMChildrenOperations = __webpack_require__(46);
 var ReactDOMIDOperations = __webpack_require__(248);
 
 /**
@@ -31987,7 +31987,7 @@ module.exports = getMarkupWrap;
 
 
 
-var DOMChildrenOperations = __webpack_require__(45);
+var DOMChildrenOperations = __webpack_require__(46);
 var ReactDOMComponentTree = __webpack_require__(6);
 
 /**
@@ -32033,7 +32033,7 @@ var _prodInvariant = __webpack_require__(4),
 var AutoFocusUtils = __webpack_require__(250);
 var CSSPropertyOperations = __webpack_require__(251);
 var DOMLazyTree = __webpack_require__(22);
-var DOMNamespaces = __webpack_require__(46);
+var DOMNamespaces = __webpack_require__(47);
 var DOMProperty = __webpack_require__(15);
 var DOMPropertyOperations = __webpack_require__(80);
 var EventPluginHub = __webpack_require__(24);
@@ -32052,10 +32052,10 @@ var ReactServerRenderingTransaction = __webpack_require__(273);
 var emptyFunction = __webpack_require__(10);
 var escapeTextContentForBrowser = __webpack_require__(35);
 var invariant = __webpack_require__(2);
-var isEventSupported = __webpack_require__(43);
-var shallowEqual = __webpack_require__(50);
+var isEventSupported = __webpack_require__(44);
+var shallowEqual = __webpack_require__(51);
 var inputValueTracking = __webpack_require__(74);
-var validateDOMNesting = __webpack_require__(54);
+var validateDOMNesting = __webpack_require__(55);
 var warning = __webpack_require__(3);
 
 var Flags = ReactDOMComponentFlags;
@@ -33753,7 +33753,7 @@ var _prodInvariant = __webpack_require__(4),
     _assign = __webpack_require__(5);
 
 var DOMPropertyOperations = __webpack_require__(80);
-var LinkedValueUtils = __webpack_require__(48);
+var LinkedValueUtils = __webpack_require__(49);
 var ReactDOMComponentTree = __webpack_require__(6);
 var ReactUpdates = __webpack_require__(13);
 
@@ -34173,7 +34173,7 @@ module.exports = ReactDOMOption;
 var _prodInvariant = __webpack_require__(4),
     _assign = __webpack_require__(5);
 
-var LinkedValueUtils = __webpack_require__(48);
+var LinkedValueUtils = __webpack_require__(49);
 var ReactDOMComponentTree = __webpack_require__(6);
 var ReactUpdates = __webpack_require__(13);
 
@@ -34338,7 +34338,7 @@ module.exports = ReactDOMTextarea;
 
 var _prodInvariant = __webpack_require__(4);
 
-var ReactComponentEnvironment = __webpack_require__(49);
+var ReactComponentEnvironment = __webpack_require__(50);
 var ReactInstanceMap = __webpack_require__(26);
 var ReactInstrumentation = __webpack_require__(11);
 
@@ -34791,8 +34791,8 @@ module.exports = ReactMultiChild;
 var ReactReconciler = __webpack_require__(21);
 
 var instantiateReactComponent = __webpack_require__(83);
-var KeyEscapeUtils = __webpack_require__(52);
-var shouldUpdateReactComponent = __webpack_require__(51);
+var KeyEscapeUtils = __webpack_require__(53);
+var shouldUpdateReactComponent = __webpack_require__(52);
 var traverseAllChildren = __webpack_require__(87);
 var warning = __webpack_require__(3);
 
@@ -34951,9 +34951,9 @@ var _prodInvariant = __webpack_require__(4),
     _assign = __webpack_require__(5);
 
 var React = __webpack_require__(19);
-var ReactComponentEnvironment = __webpack_require__(49);
+var ReactComponentEnvironment = __webpack_require__(50);
 var ReactCurrentOwner = __webpack_require__(12);
-var ReactErrorUtils = __webpack_require__(41);
+var ReactErrorUtils = __webpack_require__(42);
 var ReactInstanceMap = __webpack_require__(26);
 var ReactInstrumentation = __webpack_require__(11);
 var ReactNodeTypes = __webpack_require__(84);
@@ -34965,8 +34965,8 @@ if (process.env.NODE_ENV !== 'production') {
 
 var emptyObject = __webpack_require__(30);
 var invariant = __webpack_require__(2);
-var shallowEqual = __webpack_require__(50);
-var shouldUpdateReactComponent = __webpack_require__(51);
+var shallowEqual = __webpack_require__(51);
+var shouldUpdateReactComponent = __webpack_require__(52);
 var warning = __webpack_require__(3);
 
 var CompositeTypes = {
@@ -36075,7 +36075,7 @@ module.exports = getIteratorFn;
 
 
 
-var KeyEscapeUtils = __webpack_require__(52);
+var KeyEscapeUtils = __webpack_require__(53);
 var traverseAllChildren = __webpack_require__(87);
 var warning = __webpack_require__(3);
 
@@ -36255,7 +36255,7 @@ module.exports = ReactServerRenderingTransaction;
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var ReactUpdateQueue = __webpack_require__(53);
+var ReactUpdateQueue = __webpack_require__(54);
 
 var warning = __webpack_require__(3);
 
@@ -36607,13 +36607,13 @@ module.exports = {
 var _prodInvariant = __webpack_require__(4),
     _assign = __webpack_require__(5);
 
-var DOMChildrenOperations = __webpack_require__(45);
+var DOMChildrenOperations = __webpack_require__(46);
 var DOMLazyTree = __webpack_require__(22);
 var ReactDOMComponentTree = __webpack_require__(6);
 
 var escapeTextContentForBrowser = __webpack_require__(35);
 var invariant = __webpack_require__(2);
-var validateDOMNesting = __webpack_require__(54);
+var validateDOMNesting = __webpack_require__(55);
 
 /**
  * Text nodes violate a couple assumptions that React makes about components:
@@ -36853,7 +36853,7 @@ var PooledClass = __webpack_require__(17);
 var ReactDOMComponentTree = __webpack_require__(6);
 var ReactUpdates = __webpack_require__(13);
 
-var getEventTarget = __webpack_require__(42);
+var getEventTarget = __webpack_require__(43);
 var getUnboundedScrollPosition = __webpack_require__(280);
 
 /**
@@ -37051,8 +37051,8 @@ module.exports = getUnboundedScrollPosition;
 
 var DOMProperty = __webpack_require__(15);
 var EventPluginHub = __webpack_require__(24);
-var EventPluginUtils = __webpack_require__(40);
-var ReactComponentEnvironment = __webpack_require__(49);
+var EventPluginUtils = __webpack_require__(41);
+var ReactComponentEnvironment = __webpack_require__(50);
 var ReactEmptyComponent = __webpack_require__(85);
 var ReactBrowserEventEmitter = __webpack_require__(36);
 var ReactHostComponent = __webpack_require__(86);
@@ -37096,7 +37096,7 @@ var ReactBrowserEventEmitter = __webpack_require__(36);
 var ReactInputSelection = __webpack_require__(89);
 var ReactInstrumentation = __webpack_require__(11);
 var Transaction = __webpack_require__(32);
-var ReactUpdateQueue = __webpack_require__(53);
+var ReactUpdateQueue = __webpack_require__(54);
 
 /**
  * Ensures that, when possible, the selection range (currently selected text
@@ -37988,7 +37988,7 @@ var SyntheticEvent = __webpack_require__(14);
 
 var getActiveElement = __webpack_require__(90);
 var isTextInputElement = __webpack_require__(75);
-var shallowEqual = __webpack_require__(50);
+var shallowEqual = __webpack_require__(51);
 
 var skipSelectionChangeEvent = ExecutionEnvironment.canUseDOM && 'documentMode' in document && document.documentMode <= 11;
 
@@ -38192,7 +38192,7 @@ var SyntheticUIEvent = __webpack_require__(25);
 var SyntheticWheelEvent = __webpack_require__(299);
 
 var emptyFunction = __webpack_require__(10);
-var getEventCharCode = __webpack_require__(55);
+var getEventCharCode = __webpack_require__(56);
 var invariant = __webpack_require__(2);
 
 /**
@@ -38535,9 +38535,9 @@ module.exports = SyntheticFocusEvent;
 
 var SyntheticUIEvent = __webpack_require__(25);
 
-var getEventCharCode = __webpack_require__(55);
+var getEventCharCode = __webpack_require__(56);
 var getEventKey = __webpack_require__(295);
-var getEventModifierState = __webpack_require__(44);
+var getEventModifierState = __webpack_require__(45);
 
 /**
  * @interface KeyboardEvent
@@ -38622,7 +38622,7 @@ module.exports = SyntheticKeyboardEvent;
 
 
 
-var getEventCharCode = __webpack_require__(55);
+var getEventCharCode = __webpack_require__(56);
 
 /**
  * Normalization of deprecated HTML5 `key` values
@@ -38782,7 +38782,7 @@ module.exports = SyntheticDragEvent;
 
 var SyntheticUIEvent = __webpack_require__(25);
 
-var getEventModifierState = __webpack_require__(44);
+var getEventModifierState = __webpack_require__(45);
 
 /**
  * @interface TouchEvent
@@ -38930,7 +38930,7 @@ module.exports = SyntheticWheelEvent;
 
 
 
-var validateDOMNesting = __webpack_require__(54);
+var validateDOMNesting = __webpack_require__(55);
 
 var DOC_NODE_TYPE = 9;
 
@@ -39489,6 +39489,10 @@ var _coachesSection = __webpack_require__(337);
 
 var _coachesSection2 = _interopRequireDefault(_coachesSection);
 
+var _validation = __webpack_require__(38);
+
+var validation = _interopRequireWildcard(_validation);
+
 var _services = __webpack_require__(338);
 
 var services = _interopRequireWildcard(_services);
@@ -39528,6 +39532,9 @@ var RequestForm = function (_React$Component) {
         _this.openModal = _this.openCoachModal.bind(_this);
         _this.onCoachChange = _this.changeCoachField.bind(_this);
         _this.onCoachLoad = _this.getCoachData.bind(_this);
+        _this.onSetCoachFollowing = _this.changeCoachIsFollowing.bind(_this);
+        _this.onCoachDataChange = _this.changeCoachDataField.bind(_this);
+        _this.onCoachSet = _this.appendCoach.bind(_this);
         return _this;
     }
 
@@ -39544,11 +39551,38 @@ var RequestForm = function (_React$Component) {
             this.setState({ modalCoach: newModalCoach });
         }
     }, {
+        key: "changeCoachIsFollowing",
+        value: function changeCoachIsFollowing(value) {
+            var mCoach = this.state.modalCoach;
+            mCoach.isFollowing = value;
+            this.setState({ modalCoach: mCoach });
+            if (value === "false") {
+                this.setState({ showCoachData: false });
+                this.setDefaultCoachData();
+            } else {
+                this.getCoachData();
+            }
+        }
+    }, {
         key: "changeUserField",
         value: function changeUserField(fieldName, value) {
             var newUser = this.state.user;
             newUser[fieldName] = value;
             this.setState({ user: newUser });
+        }
+    }, {
+        key: "changeCoachDataField",
+        value: function changeCoachDataField(fieldName, value) {
+            var fieldParent = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+
+            var newCoachData = this.state.coachData;
+            if (fieldParent) {
+                newCoachData[fieldParent][fieldName] = value;
+            } else {
+                newCoachData[fieldName] = value;
+            }
+            this.setState({ coachData: newCoachData });
+            console.log(this.state);
         }
     }, {
         key: "changeUserDataField",
@@ -39580,6 +39614,35 @@ var RequestForm = function (_React$Component) {
                 newGame[fieldName] = value;
             }
             this.setState({ gameData: newGame });
+            console.log(this.state);
+        }
+    }, {
+        key: "appendCoach",
+        value: function appendCoach() {
+            var coach = {
+                firstName: this.state.modalCoach.firstName,
+                lastName: this.state.modalCoach.lastName,
+                middleName: this.state.modalCoach.middleName,
+                birthDate: this.state.modalCoach.middleName,
+                isFollowing: this.state.modalCoach.isFollowing,
+                id: this.state.coachData.id,
+                accreditationPhotoId: this.state.coachData.accreditation_photo_id,
+                email: this.state.coachData.email,
+                expirationDatePass: this.state.coachData.expiration_date_pass,
+                firstNamePass: this.state.coachData.first_name_pass,
+                individualNumber: this.state.coachData.individual_number,
+                lastNamePass: this.state.coachData.last_name_pass,
+                numberPass: this.state.coachData.number_pass,
+                phone: this.state.coachData.phone,
+                photoInternationalPassId: this.state.coachData.photo_international_pass_id,
+                photoNationalPassId: this.state.coachData.photo_national_pass_id,
+                region: this.state.coachData.region,
+                serialNumberPass: this.state.coachData.serial_number_pass
+            };
+            var coaches = this.state.coaches;
+            coaches.push(coach);
+            this.setState({ coaches: coaches });
+            this.closeCoachModal();
             console.log(this.state);
         }
     }, {
@@ -39654,7 +39717,17 @@ var RequestForm = function (_React$Component) {
                 birthDate: this.state.modalCoach.birthDate
             };
             this.setState({ loading: true });
+            this.setDefaultCoachData(this.state.regions[0].id);
             services.getCoachData(contract).then(function (data) {
+                if (data != "null") _this7.setState({ coachData: JSON.parse(data) });
+                var newCD = _this7.state.coachData;
+                newCD.visa = {
+                    hasVisa: "false",
+                    type: 0,
+                    term: null
+                };
+                _this7.setState({ coachData: newCD });
+                _this7.setState({ showCoachData: true });
                 _this7.setState({ loading: false });
             });
         }
@@ -39670,7 +39743,7 @@ var RequestForm = function (_React$Component) {
                 birthDate: this.state.user.birthDate
             };
             this.setState({ loading: true });
-            this.setDefaultUserData();
+            this.setDefaultUserData(this.state.regions[0].id);
             services.getUserData(conract).then(function (data) {
                 if (data != "null") _this8.setState({ userData: JSON.parse(data) });
                 var newUD = _this8.state.userData;
@@ -39688,10 +39761,13 @@ var RequestForm = function (_React$Component) {
     }, {
         key: "setDefaultUserData",
         value: function setDefaultUserData() {
+            var regionId = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "";
+
             this.setState({ userData: {
                     accreditation_photo_id: "",
                     email: "",
                     expiration_date_pass: null,
+                    id: null,
                     first_name_pass: "",
                     individual_number: "",
                     last_name_pass: "",
@@ -39699,7 +39775,28 @@ var RequestForm = function (_React$Component) {
                     phone: "",
                     photo_international_pass_id: "",
                     photo_national_pass_id: "",
-                    region: "",
+                    region: regionId,
+                    serial_number_pass: ""
+                } });
+        }
+    }, {
+        key: "setDefaultCoachData",
+        value: function setDefaultCoachData() {
+            var regionId = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "";
+
+            this.setState({ coachData: {
+                    accreditation_photo_id: "",
+                    email: "",
+                    expiration_date_pass: null,
+                    id: null,
+                    first_name_pass: "",
+                    individual_number: "",
+                    last_name_pass: "",
+                    number_pass: "",
+                    phone: "",
+                    photo_international_pass_id: "",
+                    photo_national_pass_id: "",
+                    region: regionId,
                     serial_number_pass: ""
                 } });
         }
@@ -39736,13 +39833,15 @@ var RequestForm = function (_React$Component) {
                     firstName: "",
                     lastName: "",
                     middleName: "",
-                    birthDate: null
+                    birthDate: null,
+                    isFollowing: "false"
                 } });
         }
     }, {
         key: "closeCoachModal",
         value: function closeCoachModal() {
-            this.setState({ modalCoach: null });
+            this.setState({ modalCoach: null, showCoachData: false });
+            this.setDefaultCoachData();
         }
     }, {
         key: "componentWillMount",
@@ -39756,9 +39855,12 @@ var RequestForm = function (_React$Component) {
                 showUserData: false,
                 showGameData: false,
                 hasCoach: "false",
-                modalCoach: null });
+                modalCoach: null,
+                showCoachData: false,
+                coaches: [] });
             this.setDefaultUserData();
             this.setDefaultGameData();
+            this.setDefaultCoachData();
             this.getRegions();
             this.getAgeCategories();
             this.getWeightCategories();
@@ -39768,6 +39870,7 @@ var RequestForm = function (_React$Component) {
     }, {
         key: "render",
         value: function render() {
+            var required = ["accreditation_photo_id", "email", "expiration_date_pass", "first_name_pass", "individual_number", "last_name_pass", "number_pass", "phone", "photo_international_pass_id", "photo_national_pass_id", "region", "serial_number_pass"];
             return _react2.default.createElement(
                 "div",
                 null,
@@ -39784,7 +39887,22 @@ var RequestForm = function (_React$Component) {
                         null,
                         "\u0412\u0432\u0435\u0434\u0456\u0442\u044C \u0434\u0430\u043D\u0456 \u0442\u0440\u0435\u043D\u0435\u0440\u0430"
                     ),
-                    _react2.default.createElement(_nameForm2.default, { person: this.state.modalCoach, onChange: this.onCoachChange, onNext: this.onCoachLoad })
+                    _react2.default.createElement(
+                        "div",
+                        { style: { height: "400px", overflowY: "scroll", overflowX: "hidden", paddingRight: "10px" } },
+                        _react2.default.createElement(_nameForm2.default, { isCoach: true, person: this.state.modalCoach, onChange: this.onCoachChange, onNext: this.onCoachLoad,
+                            setFollowing: this.onSetCoachFollowing, isReadOnly: this.state.showCoachData }),
+                        _react2.default.createElement(_personalForm2.default, { isVisible: this.state.showCoachData, person: this.state.coachData, regions: this.state.regions, onChange: this.onCoachDataChange })
+                    ),
+                    _react2.default.createElement(
+                        "div",
+                        { className: "form-group" },
+                        _react2.default.createElement(
+                            "button",
+                            { type: "button", className: "btn btn-primary", disabled: validation.isFormValid(this.state.coachData, required) && this.state.showCoachData, onClick: this.onCoachSet },
+                            "\u0414\u043E\u0434\u0430\u0442\u0438"
+                        )
+                    )
                 ),
                 _react2.default.createElement(_preloader2.default, { loading: this.state.loading })
             );
@@ -40097,11 +40215,11 @@ var _moment = __webpack_require__(0);
 
 var _moment2 = _interopRequireDefault(_moment);
 
-var _reactDatetime = __webpack_require__(56);
+var _reactDatetime = __webpack_require__(57);
 
 var _reactDatetime2 = _interopRequireDefault(_reactDatetime);
 
-var _validation = __webpack_require__(57);
+var _validation = __webpack_require__(38);
 
 var validation = _interopRequireWildcard(_validation);
 
@@ -40136,6 +40254,46 @@ var NameForm = function (_React$Component) {
             var datetime = this.props.isReadOnly ? _react2.default.createElement("input", { type: "text", value: this.props.person.birthDate, className: "form-control", readOnly: true }) : _react2.default.createElement(_reactDatetime2.default, { value: birthDate, dateFormat: "DD-MM-YYYY", onChange: function onChange(v) {
                     return _this2.props.onChange("birthDate", v.format("YYYY-MM-DD"));
                 }, timeFormat: false, closeOnSelect: true, maxLength: "10" });
+            var footer = this.props.isCoach ? _react2.default.createElement(
+                "div",
+                { className: "form-group" },
+                _react2.default.createElement(
+                    "div",
+                    null,
+                    _react2.default.createElement(
+                        "label",
+                        null,
+                        "\u0427\u0438 \u0441\u0443\u043F\u0440\u043E\u0432\u043E\u0434\u0436\u0443\u0454 \u0412\u0430\u0441 \u043D\u0430 \u0437\u043C\u0430\u0433\u0430\u043D\u043D\u044F?"
+                    )
+                ),
+                _react2.default.createElement(
+                    "label",
+                    { className: "radio-inline" },
+                    _react2.default.createElement("input", { type: "radio", value: "false", checked: this.props.person.isFollowing === "false", onChange: function onChange(e) {
+                            return _this2.props.setFollowing(e.target.value);
+                        }, disabled: validation.isFormValid(this.props.person, required) }),
+                    " \u041D\u0456"
+                ),
+                _react2.default.createElement(
+                    "label",
+                    { className: "radio-inline" },
+                    _react2.default.createElement("input", { type: "radio", value: "true", checked: this.props.person.isFollowing === "true", onChange: function onChange(e) {
+                            return _this2.props.setFollowing(e.target.value);
+                        }, disabled: validation.isFormValid(this.props.person, required) }),
+                    " \u0422\u0430\u043A"
+                )
+            ) : _react2.default.createElement(
+                "div",
+                { className: "form-group" },
+                _react2.default.createElement(
+                    "button",
+                    { type: "button", className: "btn btn-primary", disabled: validation.isFormValid(this.props.person, required), onClick: function onClick() {
+                            return _this2.props.onNext();
+                        } },
+                    "\u0414\u0430\u043B\u0456"
+                )
+            );
+
             return _react2.default.createElement(
                 "div",
                 null,
@@ -40192,17 +40350,7 @@ var NameForm = function (_React$Component) {
                         ),
                         datetime
                     ),
-                    _react2.default.createElement(
-                        "div",
-                        { className: "form-group" },
-                        _react2.default.createElement(
-                            "button",
-                            { type: "button", className: "btn btn-primary", disabled: validation.isFormValid(this.props.person, required), onClick: function onClick() {
-                                    return _this2.props.onNext();
-                                } },
-                            "\u0414\u0430\u043B\u0456"
-                        )
-                    )
+                    footer
                 )
             );
         }
@@ -40268,7 +40416,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 var emptyFunction = __webpack_require__(10);
 var invariant = __webpack_require__(2);
-var ReactPropTypesSecret = __webpack_require__(39);
+var ReactPropTypesSecret = __webpack_require__(40);
 
 module.exports = function() {
   function shim(props, propName, componentName, location, propFullName, secret) {
@@ -41134,11 +41282,11 @@ var _moment = __webpack_require__(0);
 
 var _moment2 = _interopRequireDefault(_moment);
 
-var _reactDatetime = __webpack_require__(56);
+var _reactDatetime = __webpack_require__(57);
 
 var _reactDatetime2 = _interopRequireDefault(_reactDatetime);
 
-var _validation = __webpack_require__(57);
+var _validation = __webpack_require__(38);
 
 var validation = _interopRequireWildcard(_validation);
 
@@ -41211,7 +41359,8 @@ var PersonalForm = function (_React$Component) {
                             _react2.default.createElement(
                                 "label",
                                 null,
-                                "\u041E\u0431\u043B\u0430\u0441\u0442\u044C"
+                                "\u041E\u0431\u043B\u0430\u0441\u0442\u044C ",
+                                validation.isFieldValid(region, "Це поле є обов'язковим")
                             ),
                             _react2.default.createElement(
                                 "select",
@@ -41336,7 +41485,8 @@ var PersonalForm = function (_React$Component) {
                             _react2.default.createElement(
                                 "label",
                                 null,
-                                "\u0424\u043E\u0442\u043E \u043F\u0435\u0440\u0448\u043E\u0457 \u0441\u0442\u043E\u0440\u0456\u043D\u043A\u0438 \u043D\u0430\u0446\u0456\u043E\u043D\u0430\u043B\u044C\u043D\u043E\u0433\u043E \u043F\u0430\u0441\u043F\u043E\u0440\u0442\u0443"
+                                "\u0424\u043E\u0442\u043E \u043F\u0435\u0440\u0448\u043E\u0457 \u0441\u0442\u043E\u0440\u0456\u043D\u043A\u0438 \u043D\u0430\u0446\u0456\u043E\u043D\u0430\u043B\u044C\u043D\u043E\u0433\u043E \u043F\u0430\u0441\u043F\u043E\u0440\u0442\u0443 ",
+                                validation.isFieldValid(this.props.person.photo_national_pass_id, "Це поле є обов'язковим")
                             ),
                             _react2.default.createElement(_photoLoader2.default, { value: this.props.person.photo_national_pass_id, desc: "Фото першої сторінки національного паспорту", onRemove: function onRemove() {
                                     return _this2.props.onChange("photo_national_pass_id", "");
@@ -41350,7 +41500,8 @@ var PersonalForm = function (_React$Component) {
                             _react2.default.createElement(
                                 "label",
                                 null,
-                                "\u0424\u043E\u0442\u043E \u043F\u0435\u0440\u0448\u043E\u0457 \u0441\u0442\u043E\u0440\u0456\u043D\u043A\u0438 \u0437\u0430\u043A\u043E\u0440\u0434\u043E\u043D\u043D\u043E\u0433\u043E \u043F\u0430\u0441\u043F\u043E\u0440\u0442\u0443"
+                                "\u0424\u043E\u0442\u043E \u043F\u0435\u0440\u0448\u043E\u0457 \u0441\u0442\u043E\u0440\u0456\u043D\u043A\u0438 \u0437\u0430\u043A\u043E\u0440\u0434\u043E\u043D\u043D\u043E\u0433\u043E \u043F\u0430\u0441\u043F\u043E\u0440\u0442\u0443 ",
+                                validation.isFieldValid(this.props.person.photo_international_pass_id, "Це поле є обов'язковим")
                             ),
                             _react2.default.createElement(_photoLoader2.default, { value: this.props.person.photo_international_pass_id, desc: "Фото першої сторінки закордонного паспорту", onRemove: function onRemove() {
                                     return _this2.props.onChange("photo_international_pass_id", "");
@@ -41364,7 +41515,8 @@ var PersonalForm = function (_React$Component) {
                             _react2.default.createElement(
                                 "label",
                                 null,
-                                "\u0424\u043E\u0442\u043E \u0434\u043B\u044F \u0430\u043A\u0440\u0435\u0434\u0438\u0442\u0430\u0446\u0456\u0457"
+                                "\u0424\u043E\u0442\u043E \u0434\u043B\u044F \u0430\u043A\u0440\u0435\u0434\u0438\u0442\u0430\u0446\u0456\u0457 ",
+                                validation.isFieldValid(this.props.person.accreditation_photo_id, "Це поле є обов'язковим")
                             ),
                             _react2.default.createElement(_photoLoader2.default, { value: this.props.person.accreditation_photo_id, desc: "Фото для акредитації", onRemove: function onRemove() {
                                     return _this2.props.onChange("accreditation_photo_id", "");
@@ -41849,11 +42001,11 @@ var _react = __webpack_require__(7);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDatetime = __webpack_require__(56);
+var _reactDatetime = __webpack_require__(57);
 
 var _reactDatetime2 = _interopRequireDefault(_reactDatetime);
 
-var _validation = __webpack_require__(57);
+var _validation = __webpack_require__(38);
 
 var validation = _interopRequireWildcard(_validation);
 
