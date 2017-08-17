@@ -39535,6 +39535,8 @@ var RequestForm = function (_React$Component) {
         _this.onSetCoachFollowing = _this.changeCoachIsFollowing.bind(_this);
         _this.onCoachDataChange = _this.changeCoachDataField.bind(_this);
         _this.onCoachSet = _this.appendCoach.bind(_this);
+        _this.onCoachEdit = _this.editCoach.bind(_this);
+        _this.onCoachRemove = _this.removeCoach.bind(_this);
         return _this;
     }
 
@@ -39637,13 +39639,29 @@ var RequestForm = function (_React$Component) {
                 photoInternationalPassId: this.state.coachData.photo_international_pass_id,
                 photoNationalPassId: this.state.coachData.photo_national_pass_id,
                 region: this.state.coachData.region,
-                serialNumberPass: this.state.coachData.serial_number_pass
+                serialNumberPass: this.state.coachData.serial_number_pass,
+                visa: {
+                    hasVisa: this.state.coachData.visa.hasVisa,
+                    term: this.state.coachData.visa.term,
+                    type: this.state.coachData.visa.type
+                }
             };
             var coaches = this.state.coaches;
-            coaches.push(coach);
+            if (this.state.coachData.update) {
+                coaches[this.state.coachData.update.index] = coach;
+            } else {
+                coaches.push(coach);
+            }
             this.setState({ coaches: coaches });
             this.closeCoachModal();
             console.log(this.state);
+        }
+    }, {
+        key: "removeCoach",
+        value: function removeCoach(index) {
+            var coaches = this.state.coaches;
+            coaches.splice(index, 1);
+            this.setState({ coaches: coaches });
         }
     }, {
         key: "getRegions",
@@ -39827,6 +39845,41 @@ var RequestForm = function (_React$Component) {
             this.setState({ showGameData: true });
         }
     }, {
+        key: "editCoach",
+        value: function editCoach(event, key) {
+            var coach = this.state.coaches[key];
+            this.setState({ modalCoach: {
+                    firstName: coach.firstName,
+                    lastName: coach.lastName,
+                    middleName: coach.middleName,
+                    birthDate: coach.birthDate,
+                    isFollowing: coach.isFollowing
+                }, coachData: {
+                    id: coach.id,
+                    accreditation_photo_id: coach.accreditationPhotoId,
+                    email: coach.email,
+                    expiration_date_pass: coach.expirationDatePass,
+                    first_name_pass: coach.firstNamePass,
+                    individual_number: coach.individualNumber,
+                    last_name_pass: coach.lastNamePass,
+                    number_pass: coach.numberPass,
+                    phone: coach.phone,
+                    photo_international_pass_id: coach.photoInternationalPassId,
+                    photo_national_pass_id: coach.photoNationalPassId,
+                    region: coach.region,
+                    serial_number_pass: coach.serialNumberPass,
+                    visa: {
+                        hasVisa: coach.visa.hasVisa,
+                        term: coach.visa.term,
+                        type: coach.visa.type
+                    },
+                    update: {
+                        index: key
+                    }
+                }, showCoachData: true });
+            event.preventDefault();
+        }
+    }, {
         key: "openCoachModal",
         value: function openCoachModal() {
             this.setState({ modalCoach: {
@@ -39870,6 +39923,7 @@ var RequestForm = function (_React$Component) {
     }, {
         key: "render",
         value: function render() {
+            var requiredGeneral = ["firstName", "lastName", "middleName", "birthDate"];
             var required = ["accreditation_photo_id", "email", "expiration_date_pass", "first_name_pass", "individual_number", "last_name_pass", "number_pass", "phone", "photo_international_pass_id", "photo_national_pass_id", "region", "serial_number_pass"];
             return _react2.default.createElement(
                 "div",
@@ -39878,7 +39932,7 @@ var RequestForm = function (_React$Component) {
                 _react2.default.createElement(_personalForm2.default, { isVisible: this.state.showUserData, person: this.state.userData, regions: this.state.regions, onChange: this.onUserDataChange }),
                 _react2.default.createElement(_gameForm2.default, { isVisible: this.state.showGameData, game: this.state.gameData, ageCategories: this.state.ageCategories,
                     actualGames: this.state.actualGames, beforeGames: this.state.beforeGames, weightCategories: this.state.weightCategories, onChange: this.onGameChange }),
-                _react2.default.createElement(_coachesSection2.default, { isVisible: this.state.showGameData, hasCoach: this.state.hasCoach, onChange: this.onCoachStatusChange, openCoachModal: this.openModal }),
+                _react2.default.createElement(_coachesSection2.default, { isVisible: this.state.showGameData, coaches: this.state.coaches, hasCoach: this.state.hasCoach, onChange: this.onCoachStatusChange, openCoachModal: this.openModal, editCoach: this.onCoachEdit, removeCoach: this.onCoachRemove }),
                 _react2.default.createElement(
                     _modal2.default,
                     { target: this.state.modalCoach, onClose: this.onCloseModal },
@@ -39899,8 +39953,8 @@ var RequestForm = function (_React$Component) {
                         { className: "form-group" },
                         _react2.default.createElement(
                             "button",
-                            { type: "button", className: "btn btn-primary", disabled: validation.isFormValid(this.state.coachData, required) && this.state.showCoachData, onClick: this.onCoachSet },
-                            "\u0414\u043E\u0434\u0430\u0442\u0438"
+                            { type: "button", className: "btn btn-primary", disabled: this.state.modalCoach && (validation.isFormValid(this.state.modalCoach, requiredGeneral) && !this.state.showCoachData || validation.isFormValid(this.state.coachData, required) && !!this.state.showCoachData) ? true : false, onClick: this.onCoachSet },
+                            this.state.coachData.update ? "Зберегти" : "Додати"
                         )
                     )
                 ),
@@ -42344,6 +42398,24 @@ var CoachesSection = function (_React$Component) {
                     " \u0414\u043E\u0434\u0430\u0442\u0438 \u0442\u0440\u0435\u043D\u0435\u0440\u0430"
                 )
             ) : null;
+            var coachList = this.props.coaches.map(function (item, index) {
+                return _react2.default.createElement(
+                    "li",
+                    { key: index },
+                    _react2.default.createElement(
+                        "a",
+                        { href: "#", onClick: function onClick(e) {
+                                return _this2.props.editCoach(e, index);
+                            } },
+                        item.firstName,
+                        " ",
+                        item.lastName
+                    ),
+                    _react2.default.createElement("i", { className: "fa fa-lg fa-times", onClick: function onClick() {
+                            return _this2.props.removeCoach(index);
+                        } })
+                );
+            });
             return _react2.default.createElement(
                 "div",
                 null,
@@ -42374,6 +42446,11 @@ var CoachesSection = function (_React$Component) {
                                 } }),
                             " \u0422\u0440\u0435\u043D\u0435\u0440"
                         )
+                    ),
+                    _react2.default.createElement(
+                        "ul",
+                        null,
+                        coachList
                     ),
                     coachesControl
                 )

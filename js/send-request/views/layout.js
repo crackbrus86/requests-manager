@@ -24,6 +24,8 @@ class RequestForm extends React.Component{
         this.onSetCoachFollowing = this.changeCoachIsFollowing.bind(this);
         this.onCoachDataChange = this.changeCoachDataField.bind(this);
         this.onCoachSet = this.appendCoach.bind(this);
+        this.onCoachEdit = this.editCoach.bind(this);
+        this.onCoachRemove = this.removeCoach.bind(this);
     }
 
     changeCoachStatus(value){
@@ -110,13 +112,28 @@ class RequestForm extends React.Component{
             photoInternationalPassId: this.state.coachData.photo_international_pass_id,
             photoNationalPassId: this.state.coachData.photo_national_pass_id,
             region: this.state.coachData.region,
-            serialNumberPass: this.state.coachData.serial_number_pass      
+            serialNumberPass: this.state.coachData.serial_number_pass,
+            visa: {
+                hasVisa: this.state.coachData.visa.hasVisa,
+                term: this.state.coachData.visa.term,
+                type: this.state.coachData.visa.type
+            }     
         }
         var coaches = this.state.coaches;
-        coaches.push(coach);
+        if(this.state.coachData.update){
+            coaches[this.state.coachData.update.index] = coach;
+        }else{
+            coaches.push(coach);
+        }
         this.setState({coaches: coaches});
         this.closeCoachModal();
         console.log(this.state);
+    }
+
+    removeCoach(index){
+        var coaches = this.state.coaches;
+        coaches.splice(index,1);
+        this.setState({coaches: coaches});
     }
 
     getRegions(){
@@ -270,6 +287,40 @@ class RequestForm extends React.Component{
         this.setState({showGameData: true});
     }
 
+    editCoach(event, key){
+        var coach = this.state.coaches[key];
+        this.setState({modalCoach:{
+            firstName: coach.firstName,
+            lastName: coach.lastName,
+            middleName: coach.middleName,
+            birthDate: coach.birthDate,
+            isFollowing: coach.isFollowing   
+        }, coachData:{
+            id: coach.id,
+            accreditation_photo_id: coach.accreditationPhotoId,
+            email: coach.email,
+            expiration_date_pass: coach.expirationDatePass,
+            first_name_pass: coach.firstNamePass,
+            individual_number: coach.individualNumber,
+            last_name_pass: coach.lastNamePass,
+            number_pass: coach.numberPass,
+            phone: coach.phone,
+            photo_international_pass_id: coach.photoInternationalPassId,
+            photo_national_pass_id: coach.photoNationalPassId,
+            region: coach.region,
+            serial_number_pass: coach.serialNumberPass,
+            visa: {
+                hasVisa: coach.visa.hasVisa,
+                term: coach.visa.term,
+                type: coach.visa.type
+            },
+            update: {
+                index: key
+            }                 
+        }, showCoachData: true});
+        event.preventDefault();
+    }
+
     openCoachModal(){
         this.setState({modalCoach: {
             firstName: "",
@@ -309,14 +360,15 @@ class RequestForm extends React.Component{
     }
 
     render(){
+        var requiredGeneral = ["firstName", "lastName", "middleName", "birthDate"];
         var required = ["accreditation_photo_id", "email", "expiration_date_pass", "first_name_pass", "individual_number", "last_name_pass", "number_pass",
-            "phone", "photo_international_pass_id", "photo_national_pass_id", "region", "serial_number_pass"];
+                        "phone", "photo_international_pass_id", "photo_national_pass_id", "region", "serial_number_pass"];        
         return <div>
             <NameForm person={this.state.user} onChange={this.onUserChange} onNext={this.onUserLoad} isReadOnly={this.state.showUserData} />
             <PersonalForm isVisible={this.state.showUserData} person={this.state.userData} regions={this.state.regions} onChange={this.onUserDataChange} />
             <GameForm isVisible={this.state.showGameData} game={this.state.gameData} ageCategories={this.state.ageCategories} 
             actualGames={this.state.actualGames} beforeGames={this.state.beforeGames} weightCategories={this.state.weightCategories} onChange={this.onGameChange} />
-            <CoachesSection isVisible={this.state.showGameData} hasCoach={this.state.hasCoach} onChange={this.onCoachStatusChange} openCoachModal={this.openModal} />
+            <CoachesSection isVisible={this.state.showGameData} coaches={this.state.coaches} hasCoach={this.state.hasCoach} onChange={this.onCoachStatusChange} openCoachModal={this.openModal} editCoach={this.onCoachEdit} removeCoach={this.onCoachRemove} />
             <Modal target={this.state.modalCoach} onClose={this.onCloseModal}>
                 <h4>Введіть дані тренера</h4>
                 <div style={{height: "400px", overflowY: "scroll", overflowX: "hidden", paddingRight: "10px"}}>
@@ -325,7 +377,8 @@ class RequestForm extends React.Component{
                     <PersonalForm isVisible={this.state.showCoachData} person={this.state.coachData} regions={this.state.regions} onChange={this.onCoachDataChange} />
                 </div>
                 <div className="form-group">
-                    <button type="button" className="btn btn-primary" disabled={validation.isFormValid(this.state.coachData, required) && this.state.showCoachData} onClick={this.onCoachSet}>Додати</button>
+                    <button type="button" className="btn btn-primary" disabled={this.state.modalCoach && ((validation.isFormValid(this.state.modalCoach, requiredGeneral) && !this.state.showCoachData) || 
+                    (validation.isFormValid(this.state.coachData, required) && !!this.state.showCoachData)) ? true : false } onClick={this.onCoachSet}>{(this.state.coachData.update)? "Зберегти" : "Додати"}</button>
                 </div>                
             </Modal>
             <Preloader loading={this.state.loading} />
