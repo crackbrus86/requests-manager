@@ -1,0 +1,36 @@
+.coaches-section li{
+    display: block;
+    list-style-type: none;
+    background-color: #51a7ff;
+    padding: 5px;
+    border-radius: 4px;
+    margin-top: 10px;
+}
+
+.coaches-section li:hover{
+    background-color: #218fff;
+}
+
+.coaches-section li a{
+    color: #fff;
+    border-bottom: 1px solid #fff;
+    font-size: 1.3em;
+}
+
+.coaches-section li a:hover{
+    border-bottom: none;
+    text-decoration: none;
+}
+
+.coaches-section li .fa-times{
+    display: block;
+    float: right;
+    margin: 5px 2px;
+    color: #cfd4ec;
+    text-shadow: 0 0 1px #000;
+    cursor: pointer;    
+}
+
+.coaches-section li .fa-times:hover{
+    color: #fff;
+}

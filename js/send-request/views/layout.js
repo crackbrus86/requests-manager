@@ -44,7 +44,11 @@ class RequestForm extends React.Component{
         this.setState({modalCoach: mCoach});
         if(value === "false"){
             this.setState({showCoachData: false});
+            var update = (this.state.coachData.update)? this.state.coachData.update : null;
             this.setDefaultCoachData();
+            var newCD = this.state.coachData;
+            if(update) newCD.update = update;
+            this.setState({coachData: newCD});
         }else{
             this.getCoachData();
         }
@@ -98,7 +102,7 @@ class RequestForm extends React.Component{
             firstName: this.state.modalCoach.firstName,
             lastName: this.state.modalCoach.lastName,
             middleName: this.state.modalCoach.middleName,
-            birthDate: this.state.modalCoach.middleName,
+            birthDate: this.state.modalCoach.birthDate,
             isFollowing: this.state.modalCoach.isFollowing,
             id: this.state.coachData.id,
             accreditationPhotoId: this.state.coachData.accreditation_photo_id,
@@ -112,12 +116,12 @@ class RequestForm extends React.Component{
             photoInternationalPassId: this.state.coachData.photo_international_pass_id,
             photoNationalPassId: this.state.coachData.photo_national_pass_id,
             region: this.state.coachData.region,
-            serialNumberPass: this.state.coachData.serial_number_pass,
-            visa: {
-                hasVisa: this.state.coachData.visa.hasVisa,
-                term: this.state.coachData.visa.term,
-                type: this.state.coachData.visa.type
-            }     
+            serialNumberPass: this.state.coachData.serial_number_pass  
+        }
+        if(this.state.coachData.visa) coach.visa = {
+            hasVisa: this.state.coachData.visa.hasVisa,
+            term: this.state.coachData.visa.term,
+            type: this.state.coachData.visa.type            
         }
         var coaches = this.state.coaches;
         if(this.state.coachData.update){
@@ -188,6 +192,7 @@ class RequestForm extends React.Component{
             middleName: this.state.modalCoach.middleName,
             birthDate: this.state.modalCoach.birthDate
         }
+        var update = (this.state.coachData.update)? this.state.coachData.update : null;
         this.setState({loading: true});
         this.setDefaultCoachData(this.state.regions[0].id);
         services.getCoachData(contract).then(data => {
@@ -198,6 +203,7 @@ class RequestForm extends React.Component{
                 type: 0,
                 term: null
             }
+            if(update) newCD.update = update;
             this.setState({coachData: newCD})            
             this.setState({showCoachData: true});
             this.setState({loading: false});
@@ -289,13 +295,7 @@ class RequestForm extends React.Component{
 
     editCoach(event, key){
         var coach = this.state.coaches[key];
-        this.setState({modalCoach:{
-            firstName: coach.firstName,
-            lastName: coach.lastName,
-            middleName: coach.middleName,
-            birthDate: coach.birthDate,
-            isFollowing: coach.isFollowing   
-        }, coachData:{
+        var coachData = {
             id: coach.id,
             accreditation_photo_id: coach.accreditationPhotoId,
             email: coach.email,
@@ -309,15 +309,23 @@ class RequestForm extends React.Component{
             photo_national_pass_id: coach.photoNationalPassId,
             region: coach.region,
             serial_number_pass: coach.serialNumberPass,
-            visa: {
-                hasVisa: coach.visa.hasVisa,
-                term: coach.visa.term,
-                type: coach.visa.type
-            },
             update: {
                 index: key
             }                 
-        }, showCoachData: true});
+        }
+        if(coach.visa) coachData.visa = {
+            hasVisa: coach.visa.hasVisa,
+            term: coach.visa.term,
+            type: coach.visa.type
+        }
+        var showCoachData = (coach.isFollowing === "true")? true : false;
+        this.setState({modalCoach:{
+            firstName: coach.firstName,
+            lastName: coach.lastName,
+            middleName: coach.middleName,
+            birthDate: coach.birthDate,
+            isFollowing: coach.isFollowing   
+        }, coachData: coachData, showCoachData: showCoachData});
         event.preventDefault();
     }
 

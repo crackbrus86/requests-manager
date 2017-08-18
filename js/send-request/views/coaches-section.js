@@ -1,4 +1,5 @@
 import React from "react";
+require("../../../css/coaches-section.css");
 
 class CoachesSection extends React.Component{
     render(){
@@ -18,7 +19,7 @@ class CoachesSection extends React.Component{
                         <input type="radio" value="true" checked={this.props.hasCoach === "true"} onChange={e => this.props.onChange(e.target.value)} /> Тренер
                     </label>                    
                 </div>
-                <ul>
+                <ul className="coaches-section">
                     {coachList}
                 </ul>
                 {coachesControl}
