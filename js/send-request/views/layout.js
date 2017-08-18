@@ -8,6 +8,7 @@ import * as validation from "../../components/validation/validation";
 import * as services from "../services/services";
 import Preloader from "../../components/preloader/preloader";
 import Modal from "../../components/modal/modal";
+require("../../../css/coach-modal.css");
 
 class RequestForm extends React.Component{
     constructor(props){
@@ -379,7 +380,7 @@ class RequestForm extends React.Component{
             <CoachesSection isVisible={this.state.showGameData} coaches={this.state.coaches} hasCoach={this.state.hasCoach} onChange={this.onCoachStatusChange} openCoachModal={this.openModal} editCoach={this.onCoachEdit} removeCoach={this.onCoachRemove} />
             <Modal target={this.state.modalCoach} onClose={this.onCloseModal}>
                 <h4>Введіть дані тренера</h4>
-                <div style={{height: "400px", overflowY: "scroll", overflowX: "hidden", paddingRight: "10px"}}>
+                <div className="coach-wrap">
                     <NameForm isCoach={true} person={this.state.modalCoach} onChange={this.onCoachChange} onNext={this.onCoachLoad} 
                         setFollowing={this.onSetCoachFollowing} isReadOnly={this.state.showCoachData} />
                     <PersonalForm isVisible={this.state.showCoachData} person={this.state.coachData} regions={this.state.regions} onChange={this.onCoachDataChange} />

@@ -31,3 +31,8 @@
 .custom-modal-header .fa-times:hover{
     color: #68686f;
 }
+
+.custom-modal h6,
+.custom-modal h4{
+    margin: 5px 0 10px 0px;
+}
