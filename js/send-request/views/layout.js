@@ -10,6 +10,7 @@ import Preloader from "../../components/preloader/preloader";
 import Modal from "../../components/modal/modal";
 require("../../../css/coach-modal.css");
 import DopingControlForm from "./doping-control-form";
+import SendButton from "./send-button";
 
 class RequestForm extends React.Component{
     constructor(props){
@@ -392,6 +393,7 @@ class RequestForm extends React.Component{
             actualGames={this.state.actualGames} beforeGames={this.state.beforeGames} weightCategories={this.state.weightCategories} onChange={this.onGameChange} />
             <CoachesSection isVisible={this.state.showGameData} coaches={this.state.coaches} hasCoach={this.state.hasCoach} onChange={this.onCoachStatusChange} openCoachModal={this.openModal} editCoach={this.onCoachEdit} removeCoach={this.onCoachRemove} />
             <DopingControlForm isVisible={this.state.showUserData} data={this.state.dopingControl} onChange={this.onDopControlChange} />
+            <SendButton isVisible={this.state.showUserData} userData={this.state.userData} />
             <Modal target={this.state.modalCoach} onClose={this.onCloseModal}>
                 <h4>Введіть дані тренера</h4>
                 <div className="coach-wrap">
