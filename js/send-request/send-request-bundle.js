@@ -39548,6 +39548,7 @@ var RequestForm = function (_React$Component) {
         _this.onCoachEdit = _this.editCoach.bind(_this);
         _this.onCoachRemove = _this.removeCoach.bind(_this);
         _this.onDopControlChange = _this.changeDopingControl.bind(_this);
+        _this.onSend = _this.sendRequest.bind(_this);
         return _this;
     }
 
@@ -39860,6 +39861,51 @@ var RequestForm = function (_React$Component) {
                 } });
         }
     }, {
+        key: "sendRequest",
+        value: function sendRequest() {
+            var contract = {
+                user: {
+                    firstName: this.state.user.firstName,
+                    lastName: this.state.user.lastName,
+                    middleName: this.state.user.middleName,
+                    birthDate: this.state.user.birthDate,
+                    accreditation_photo_id: this.state.userData.accreditation_photo_id,
+                    email: this.state.userData.email,
+                    expiration_date_pass: this.state.userData.expiration_date_pass,
+                    id: this.state.userData.id,
+                    first_name_pass: this.state.userData.first_name_pass,
+                    individual_number: this.state.userData.individual_number,
+                    last_name_pass: this.state.userData.last_name_pass,
+                    number_pass: this.state.userData.number_pass,
+                    phone: this.state.userData.phone,
+                    photo_international_pass_id: this.state.userData.photo_international_pass_id,
+                    photo_national_pass_id: this.state.userData.photo_national_pass_id,
+                    region: this.state.userData.region,
+                    serial_number_pass: this.state.userData.serial_number_pass,
+                    visa: this.state.userData.visa
+                },
+                coaches: this.state.coaches,
+                request: {
+                    ageCat: this.state.gameData.ageCat,
+                    weightCat: this.state.gameData.weightCat,
+                    aGame: this.state.gameData.aGame,
+                    exercises: {
+                        squat: this.state.gameData.exercises.squat,
+                        press: this.state.gameData.exercises.press,
+                        lift: this.state.gameData.exercises.lift,
+                        total: this.state.gameData.exercises.total
+                    },
+                    bGame: this.state.gameData.bGame,
+                    createDate: (0, _moment2.default)(new Date()).format("YYYY-MM-DD")
+                },
+                dopingControl: {
+                    isPassed: this.state.dopingControl.isPassed,
+                    date: this.state.dopingControl.date
+                }
+            };
+            console.log(contract);
+        }
+    }, {
         key: "showUserData",
         value: function showUserData() {
             this.setState({ showUserData: true });
@@ -39965,7 +40011,7 @@ var RequestForm = function (_React$Component) {
                     actualGames: this.state.actualGames, beforeGames: this.state.beforeGames, weightCategories: this.state.weightCategories, onChange: this.onGameChange }),
                 _react2.default.createElement(_coachesSection2.default, { isVisible: this.state.showGameData, coaches: this.state.coaches, hasCoach: this.state.hasCoach, onChange: this.onCoachStatusChange, openCoachModal: this.openModal, editCoach: this.onCoachEdit, removeCoach: this.onCoachRemove }),
                 _react2.default.createElement(_dopingControlForm2.default, { isVisible: this.state.showUserData, data: this.state.dopingControl, onChange: this.onDopControlChange }),
-                _react2.default.createElement(_sendButton2.default, { isVisible: this.state.showUserData, userData: this.state.userData }),
+                _react2.default.createElement(_sendButton2.default, { isVisible: this.state.showUserData, userData: this.state.userData, visa: this.state.userData.visa, doping: this.state.dopingControl, onSend: this.onSend }),
                 _react2.default.createElement(
                     _modal2.default,
                     { target: this.state.modalCoach, onClose: this.onCloseModal },
@@ -42732,13 +42778,17 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var SendButton = function SendButton(props) {
     if (!props.isVisible) return null;
+    var isVisaValid = props.visa.hasVisa === "true" ? validation.isFormValid(props.visa, ["term"]) : false;
+    var isDopingControlValid = props.doping.isPassed === "true" ? validation.isFormValid(props.doping, ["date"]) : false;
     var requiredUserData = ["first_name_pass", "last_name_pass", "serial_number_pass", "number_pass", "expiration_date_pass", "individual_number", "phone", "email", "photo_national_pass_id", "photo_international_pass_id", "accreditation_photo_id"];
     return _react2.default.createElement(
         "div",
         { className: "form-group" },
         _react2.default.createElement(
             "button",
-            { type: "button", className: "btn btn-success", disabled: validation.isFormValid(props.userData, requiredUserData) },
+            { type: "button", className: "btn btn-success", disabled: validation.isFormValid(props.userData, requiredUserData) || isVisaValid || isDopingControlValid, onClick: function onClick() {
+                    return props.onSend();
+                } },
             "\u041F\u043E\u0434\u0430\u0442\u0438 \u0437\u0430\u044F\u0432\u043A\u0443"
         )
     );

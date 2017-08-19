@@ -30,6 +30,7 @@ class RequestForm extends React.Component{
         this.onCoachEdit = this.editCoach.bind(this);
         this.onCoachRemove = this.removeCoach.bind(this);
         this.onDopControlChange = this.changeDopingControl.bind(this);
+        this.onSend = this.sendRequest.bind(this);
     }
 
     changeCoachStatus(value){
@@ -295,6 +296,50 @@ class RequestForm extends React.Component{
             bGame: ""
         }})
     }
+    
+    sendRequest(){
+        var contract = {
+            user: {
+                firstName: this.state.user.firstName,
+                lastName: this.state.user.lastName,
+                middleName: this.state.user.middleName,
+                birthDate: this.state.user.birthDate,
+                accreditation_photo_id: this.state.userData.accreditation_photo_id,
+                email: this.state.userData.email,
+                expiration_date_pass: this.state.userData.expiration_date_pass,
+                id: this.state.userData.id,
+                first_name_pass: this.state.userData.first_name_pass,
+                individual_number: this.state.userData.individual_number,
+                last_name_pass: this.state.userData.last_name_pass,
+                number_pass: this.state.userData.number_pass,
+                phone: this.state.userData.phone,
+                photo_international_pass_id: this.state.userData.photo_international_pass_id,
+                photo_national_pass_id: this.state.userData.photo_national_pass_id,
+                region: this.state.userData.region,
+                serial_number_pass: this.state.userData.serial_number_pass,
+                visa: this.state.userData.visa              
+            },
+            coaches: this.state.coaches,
+            request: {
+                ageCat: this.state.gameData.ageCat,
+                weightCat: this.state.gameData.weightCat,
+                aGame: this.state.gameData.aGame,
+                exercises: {
+                    squat: this.state.gameData.exercises.squat,
+                    press: this.state.gameData.exercises.press,
+                    lift: this.state.gameData.exercises.lift,
+                    total: this.state.gameData.exercises.total
+                },
+                bGame: this.state.gameData.bGame,
+                createDate: moment(new Date()).format("YYYY-MM-DD"),
+            },
+            dopingControl: {
+                isPassed: this.state.dopingControl.isPassed,
+                date: this.state.dopingControl.date
+            }
+        }
+        console.log(contract);
+    }
 
     showUserData(){
         this.setState({showUserData: true});
@@ -393,7 +438,7 @@ class RequestForm extends React.Component{
             actualGames={this.state.actualGames} beforeGames={this.state.beforeGames} weightCategories={this.state.weightCategories} onChange={this.onGameChange} />
             <CoachesSection isVisible={this.state.showGameData} coaches={this.state.coaches} hasCoach={this.state.hasCoach} onChange={this.onCoachStatusChange} openCoachModal={this.openModal} editCoach={this.onCoachEdit} removeCoach={this.onCoachRemove} />
             <DopingControlForm isVisible={this.state.showUserData} data={this.state.dopingControl} onChange={this.onDopControlChange} />
-            <SendButton isVisible={this.state.showUserData} userData={this.state.userData} />
+            <SendButton isVisible={this.state.showUserData} userData={this.state.userData} visa={this.state.userData.visa} doping={this.state.dopingControl} onSend={this.onSend} />
             <Modal target={this.state.modalCoach} onClose={this.onCloseModal}>
                 <h4>Введіть дані тренера</h4>
                 <div className="coach-wrap">
