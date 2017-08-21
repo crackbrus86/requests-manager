@@ -55,3 +55,11 @@ export const getCoachData = (contract) => {
     })
 }
 
+export const saveRequestData = (contract) => {
+    return jQuery.ajax({
+        url: dir + "SaveRequestData.php",
+        type: "POST",
+        data: contract
+    })
+}
+

@@ -102,3 +102,12 @@
             `president_region` INT
         ) {$charset_collate}";
         dbDelta($createOthersTab);
+        $tb_visa = $wpdb->get_blog_prefix()."rm_visa";
+        $createVisaTab = "CREATE TABLE IF NOT EXISTS {$tb_visa} (
+            `id` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+            `owner_type` VARCHAR(10) NOT NULL,
+            `owner_id` BIGINT NOT NULL,
+            `type` VARCHAR(2) NOT NULL,
+            `term` DATE NOT NULL
+        ) {$charset_collate}";
+        dbDelta($createVisaTab);

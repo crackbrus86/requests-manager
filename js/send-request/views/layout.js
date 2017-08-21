@@ -338,7 +338,9 @@ class RequestForm extends React.Component{
                 date: this.state.dopingControl.date
             }
         }
-        console.log(contract);
+        services.saveRequestData(contract).then(data => {
+            console.log(contract);
+        })
     }
 
     showUserData(){

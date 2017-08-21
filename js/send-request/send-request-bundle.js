@@ -39903,7 +39903,9 @@ var RequestForm = function (_React$Component) {
                     date: this.state.dopingControl.date
                 }
             };
-            console.log(contract);
+            services.saveRequestData(contract).then(function (data) {
+                console.log(contract);
+            });
         }
     }, {
         key: "showUserData",
@@ -42651,6 +42653,14 @@ var getBeforeGames = exports.getBeforeGames = function getBeforeGames() {
 var getCoachData = exports.getCoachData = function getCoachData(contract) {
     return jQuery.ajax({
         url: dir + "GetCoach.php",
+        type: "POST",
+        data: contract
+    });
+};
+
+var saveRequestData = exports.saveRequestData = function saveRequestData(contract) {
+    return jQuery.ajax({
+        url: dir + "SaveRequestData.php",
         type: "POST",
         data: contract
     });
