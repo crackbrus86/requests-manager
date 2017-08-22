@@ -298,6 +298,7 @@ class RequestForm extends React.Component{
     }
     
     sendRequest(){
+        var actualGame = this.state.actualGames.filter(item => item.id === this.state.gameData.aGame);
         var contract = {
             user: {
                 firstName: this.state.user.firstName,
@@ -332,13 +333,17 @@ class RequestForm extends React.Component{
                 },
                 bGame: this.state.gameData.bGame,
                 createDate: moment(new Date()).format("YYYY-MM-DD"),
+                event: this.state.gameData.aGame,
+                eventYear: actualGame[0].year
             },
             dopingControl: {
                 isPassed: this.state.dopingControl.isPassed,
                 date: this.state.dopingControl.date
             }
         }
+        this.setState({loading: true});
         services.saveRequestData(contract).then(data => {
+            this.setState({loading: false});
             console.log(contract);
         })
     }

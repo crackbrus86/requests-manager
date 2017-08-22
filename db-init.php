@@ -108,6 +108,8 @@
             `owner_type` VARCHAR(10) NOT NULL,
             `owner_id` BIGINT NOT NULL,
             `type` VARCHAR(2) NOT NULL,
-            `term` DATE NOT NULL
+            `term` DATE NOT NULL,
+            `event` INT,
+            `year` VARCHAR(5)
         ) {$charset_collate}";
         dbDelta($createVisaTab);

@@ -39863,6 +39863,11 @@ var RequestForm = function (_React$Component) {
     }, {
         key: "sendRequest",
         value: function sendRequest() {
+            var _this9 = this;
+
+            var actualGame = this.state.actualGames.filter(function (item) {
+                return item.id === _this9.state.gameData.aGame;
+            });
             var contract = {
                 user: {
                     firstName: this.state.user.firstName,
@@ -39896,14 +39901,18 @@ var RequestForm = function (_React$Component) {
                         total: this.state.gameData.exercises.total
                     },
                     bGame: this.state.gameData.bGame,
-                    createDate: (0, _moment2.default)(new Date()).format("YYYY-MM-DD")
+                    createDate: (0, _moment2.default)(new Date()).format("YYYY-MM-DD"),
+                    event: this.state.gameData.aGame,
+                    eventYear: actualGame[0].year
                 },
                 dopingControl: {
                     isPassed: this.state.dopingControl.isPassed,
                     date: this.state.dopingControl.date
                 }
             };
+            this.setState({ loading: true });
             services.saveRequestData(contract).then(function (data) {
+                _this9.setState({ loading: false });
                 console.log(contract);
             });
         }
