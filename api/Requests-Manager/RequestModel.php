@@ -11,5 +11,5 @@ class RequestBody
     public $preCompetition;
     public $coaches;
     public $doping;
-    public $visa;
+    public $year;
 }

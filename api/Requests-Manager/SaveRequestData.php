@@ -4,6 +4,7 @@ include_once("RequestModel.php");
 
 $user = esc_sql($_POST["user"]);
 $request = esc_sql($_POST["request"]);
+$dopingControl = esc_sql($_POST["dopingControl"]);
 $requestContent = new RequestBody();
 
 $tb_users = $wpdb->get_blog_prefix()."rm_users";
@@ -80,9 +81,28 @@ if(count($coaches)){
         }
     }
 }
+$requestContent->ageCategory = esc_sql($request["ageCat"]);
+$requestContent->weightCategory = esc_sql($request["weightCat"]);
+$requestContent->createDate = esc_sql($request["createDate"]);
+$requestContent->currentCompetition = esc_sql($request["aGame"]);
+$requestContent->disciplines = serialize(esc_sql($request["exercises"]));
+$requestContent->coaches = serialize($requestContent->coaches);
+$requestContent->doping = serialize($dopingControl);
+$requestContent->preCompetition = esc_sql($request["bGame"]);
+$requestContent->year = esc_sql($request["eventYear"]);
+
     echo "<pre>";
-    print_r($requestContent->coaches);
-    echo "</pre>";  
+    print_r($requestContent);
+    echo "</pre>"; 
+
+$tb_requests = $wpdb->get_blog_prefix()."rm_requests";
+$sql = $wpdb->prepare("INSERT INTO $tb_requests (user_id, create_date, age_category, weight_category, current_competition, disciplines, pre_competition, coaches, doping, year) 
+VALUES (%d, %s, %d, %d, %d, %s, %d, %s, %s, %s)", $requestContent->userId, $requestContent->createDate, $requestContent->ageCategory, $requestContent->weightCategory, 
+$requestContent->currentCompetition, $requestContent->disciplines, $requestContent->preCompetition, $requestContent->coaches, $requestContent->doping, $requestContent->year);
+if($wpdb->query($sql)){
+    echo "Request has been sent successfully!";
+    sendEmail($user["email"], getFullName($user));
+}
 
 function saveVisa($table, $visa, $ownerType, $ownerId, $event, $year){
     global $wpdb;      
@@ -101,4 +121,17 @@ function saveVisa($table, $visa, $ownerType, $ownerId, $event, $year){
     if($wpdb->query($sqlVisa)){
         echo "Visa is saved\n";
     }
+}
+
+function getFullName($user){
+    return $user['lastName']." ".$user['firstName']." ".$user['middleName'];
+}
+
+function sendEmail($email = "", $fullName = ""){
+    $header = "From: \"Admin\"\n";
+    $header .= "Content-type: text/plain; charset=\"utf-8\"";
+    $for = $email;
+    $subject = "Федерація пауерліфтингу України";
+    $message = "Шановний $fullName, Вашу заявку було прийнято. Найближчим часом з Вами зв'яжеться представник федерації для уточнення даних.";
+    mail($for, $subject, $message, $header);
 }
