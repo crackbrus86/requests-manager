@@ -40,8 +40,13 @@ if($user["id"]){
 $requestContent->userId = $user["id"];
 $requestContent->coaches = array();
 
-$coaches = esc_sql($_POST["coaches"]);
-if(count($coaches)){
+$coaches = ($_POST["coaches"]) ? esc_sql($_POST["coaches"]) : null;
+
+echo "<pre>";
+print_r($coaches);
+echo "</pre>"; 
+
+if($coaches){
     $tb_coaches = $wpdb->get_blog_prefix()."rm_coaches";
     for($i = 0; $i < count($coaches); $i++){
         $coach = $coaches[$i];
@@ -81,6 +86,7 @@ if(count($coaches)){
         }
     }
 }
+
 $requestContent->ageCategory = esc_sql($request["ageCat"]);
 $requestContent->weightCategory = esc_sql($request["weightCat"]);
 $requestContent->createDate = esc_sql($request["createDate"]);
@@ -90,10 +96,6 @@ $requestContent->coaches = serialize($requestContent->coaches);
 $requestContent->doping = serialize($dopingControl);
 $requestContent->preCompetition = esc_sql($request["bGame"]);
 $requestContent->year = esc_sql($request["eventYear"]);
-
-    echo "<pre>";
-    print_r($requestContent);
-    echo "</pre>"; 
 
 $tb_requests = $wpdb->get_blog_prefix()."rm_requests";
 $sql = $wpdb->prepare("INSERT INTO $tb_requests (user_id, create_date, age_category, weight_category, current_competition, disciplines, pre_competition, coaches, doping, year) 

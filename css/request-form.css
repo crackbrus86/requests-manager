@@ -1,0 +1,14 @@
+.request-success{
+    padding: 40px 10px;
+    height: 100px;
+    margin: 15px 0;
+    border-radius: 5px;
+    color: #3c7145;
+    font-size: 1.3em;
+    text-align: center;
+}
+button.reload-btn{
+    display: block;
+    margin: 0 auto;
+    padding: 5px 25px;
+}

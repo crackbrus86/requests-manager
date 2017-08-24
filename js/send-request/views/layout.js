@@ -9,6 +9,7 @@ import * as services from "../services/services";
 import Preloader from "../../components/preloader/preloader";
 import Modal from "../../components/modal/modal";
 require("../../../css/coach-modal.css");
+require("../../../css/request-form.css");
 import DopingControlForm from "./doping-control-form";
 import SendButton from "./send-button";
 
@@ -31,6 +32,7 @@ class RequestForm extends React.Component{
         this.onCoachRemove = this.removeCoach.bind(this);
         this.onDopControlChange = this.changeDopingControl.bind(this);
         this.onSend = this.sendRequest.bind(this);
+        this.onReload = this.reloadPage.bind(this);
     }
 
     changeCoachStatus(value){
@@ -344,8 +346,12 @@ class RequestForm extends React.Component{
         this.setState({loading: true});
         services.saveRequestData(contract).then(data => {
             this.setState({loading: false});
-            console.log(contract);
+            this.setState({sent: true});
         })
+    }
+
+    reloadPage(){
+        window.location.reload();
     }
 
     showUserData(){
@@ -413,7 +419,8 @@ class RequestForm extends React.Component{
             lastName: "",
             middleName: "",
             birthDate: null
-        }, loading: false, 
+        }, loading: false,
+        sent: false, 
         showUserData: false, 
         showGameData: false, 
         hasCoach: "false",
@@ -446,17 +453,23 @@ class RequestForm extends React.Component{
             <CoachesSection isVisible={this.state.showGameData} coaches={this.state.coaches} hasCoach={this.state.hasCoach} onChange={this.onCoachStatusChange} openCoachModal={this.openModal} editCoach={this.onCoachEdit} removeCoach={this.onCoachRemove} />
             <DopingControlForm isVisible={this.state.showUserData} data={this.state.dopingControl} onChange={this.onDopControlChange} />
             <SendButton isVisible={this.state.showUserData} userData={this.state.userData} visa={this.state.userData.visa} doping={this.state.dopingControl} onSend={this.onSend} />
-            <Modal target={this.state.modalCoach} onClose={this.onCloseModal}>
+            <Modal target={this.state.modalCoach} onClose={this.onCloseModal} className="coachModal">
                 <h4>Введіть дані тренера</h4>
                 <div className="coach-wrap">
                     <NameForm isCoach={true} person={this.state.modalCoach} onChange={this.onCoachChange} onNext={this.onCoachLoad} 
                         setFollowing={this.onSetCoachFollowing} isReadOnly={this.state.showCoachData} />
                     <PersonalForm isVisible={this.state.showCoachData} person={this.state.coachData} regions={this.state.regions} onChange={this.onCoachDataChange} />
                 </div>
-                <div className="form-group">
+                <div className="form-group coach-modal-footer">
                     <button type="button" className="btn btn-primary" disabled={this.state.modalCoach && ((validation.isFormValid(this.state.modalCoach, requiredGeneral) && !this.state.showCoachData) || 
                     (validation.isFormValid(this.state.coachData, required) && !!this.state.showCoachData)) ? true : false } onClick={this.onCoachSet}>{(this.state.coachData.update)? "Зберегти" : "Додати"}</button>
                 </div>                
+            </Modal>
+            <Modal target={this.state.sent} onClose={this.onReload}>
+                <div className="request-success">Заявку було успішно надіслано!</div>
+                <div className="form-group">
+                    <button type="button" className="btn btn-default reload-btn" onClick={this.onReload}>Ok</button>
+                </div>
             </Modal>
             <Preloader loading={this.state.loading} />
         </div>

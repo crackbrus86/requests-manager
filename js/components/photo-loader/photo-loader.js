@@ -72,7 +72,7 @@ class PhotoLoader extends React.Component{
         var modalChild = (this.state.img)? <img src={this.state.img} className="user-photo" alt="" /> : <PhotoLoaderForm photoDesc={this.props.desc} onChose={this.onChose}  onSave={this.onSave} error={this.state.error} />;
 
         return <div>
-            {(this.props.value)? photoControl : addPhoto}
+            {(this.props.value && this.props.value !== "0")? photoControl : addPhoto}
             <Modal target={this.state.load || this.state.img} onClose={this.closeLoadForm}>
                 {modalChild}
             </Modal>
