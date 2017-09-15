@@ -1,25 +1,9 @@
 .coachModal{
     top: 10%;
-    bottom: 10%;
 }
 
-.coachModal .coach-wrap{
-    position: absolute;
-    left: 10px;
-    right: 10px;
-    bottom: 50px;
-    top: 65px;
-    overflow-y: scroll;
-    overflow-x: hidden;
-    padding-right: 10px;  
-    border-top: 1px solid #ccc;
-    border-bottom: 1px solid #ccc;
-    margin: 5px 0 20px;
-}
-
-.coachModal .coach-modal-footer{
-    position: absolute;
-    bottom: 10px;
+.blackout{
+    overflow: auto;
 }
 
 .coachModal .rdtPicker{

@@ -68,8 +68,8 @@ class RequestManager{
             <div class="tab-content">
                 <div role="tabpanel" class="tab-pane active" id="requests">
                 <?php   
-                    if(file_exists(RM__PLUGIN_DIR."/templates/requests.php")){
-                        require_once(RM__PLUGIN_DIR."/templates/requests.php");
+                    if(file_exists(RM__PLUGIN_DIR."/templates/new-requests.php")){
+                        require_once(RM__PLUGIN_DIR."/templates/new-requests.php");
                     }
                 ?>
                 </div>
