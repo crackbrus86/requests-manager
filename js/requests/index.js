@@ -1,4 +1,5 @@
 import React from "react";
 import {render} from "react-dom";
+import RequestsApp from "./views/layout";
 
-render(<h1>Заявки</h1>, document.getElementById("requests-app"));
+render(<RequestsApp />, document.getElementById("requests-app"));

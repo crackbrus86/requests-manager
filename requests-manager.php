@@ -49,9 +49,9 @@ class RequestManager{
 
     function requestEditor(){
         RequestManager::includeBootstrap();
-        if(file_exists(RM__PLUGIN_DIR."/templates/templates-modules.php")){
-           require_once(RM__PLUGIN_DIR."/templates/templates-modules.php");
-        }
+        // if(file_exists(RM__PLUGIN_DIR."/templates/templates-modules.php")){
+        //    require_once(RM__PLUGIN_DIR."/templates/templates-modules.php");
+        // }
         ?>   
         <div class="container-fluid">
             <h2>Менеджер заявок</h2>
