@@ -5,3 +5,17 @@
     border-radius: 4px; 
     padding: 5px 5px;
 }
+
+.filter-box form .form-group{
+    margin-right: 10px;
+}
+
+.filter-box form .rdt input{
+    padding: 2px 4px;
+    height: 28px;
+}
+
+.filter-box form .btn-info{
+    padding: 2px 10px;
+    margin-top: 25px;
+}
