@@ -7,6 +7,10 @@ $request = esc_sql($_POST["request"]);
 $dopingControl = esc_sql($_POST["dopingControl"]);
 $requestContent = new RequestBody();
 
+$user["lastName"] = clearSlashes($user["lastName"]);
+$user["firstName"] = clearSlashes($user["firstName"]);
+$user["middleName"] = clearSlashes($user["middleName"]);
+
 $tb_users = $wpdb->get_blog_prefix()."rm_users";
 $tb_visa = $wpdb->get_blog_prefix()."rm_visa";
 if($user["id"]){
@@ -62,6 +66,10 @@ if($coaches){
             array_push($requestContent->coaches, array($coach["id"], $coach["isFollowing"]));
             saveVisa($tb_visa, $coach["visa"], "coach", $coach["id"], $request["event"], $request["eventYear"]);            
         }elseif($coach["id"] === "" || ($coach["id"] && $coach["isFollowing"] === "false")){
+
+            $coach["lastName"] = clearSlashes($coach["lastName"]);
+            $coach["firstName"] = clearSlashes($coach["firstName"]);
+            $coach["middleName"] = clearSlashes($coach["middleName"]);            
 
             $sql = $wpdb->prepare("SELECT id FROM $tb_coaches WHERE first_name = %s AND last_name = %s AND middle_name = %s AND birth_date = %s", 
             $coach["firstName"], $coach["lastName"], $coach["middleName"], $coach["birthDate"]);
@@ -127,6 +135,10 @@ function saveVisa($table, $visa, $ownerType, $ownerId, $event, $year){
 
 function getFullName($user){
     return $user['lastName']." ".$user['firstName']." ".$user['middleName'];
+}
+
+function clearSlashes($value){
+    return stripslashes(stripslashes($value));
 }
 
 function sendEmail($email = "", $fullName = ""){
