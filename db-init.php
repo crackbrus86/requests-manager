@@ -92,7 +92,6 @@
             `pre_competition` INT NOT NULL,
             `coaches` VARCHAR(500) NOT NULL,
             `doping` VARCHAR(250) NOT NULL,
-            `visa` VARCHAR(250),
             'year' VARCHAR(4)
         ) {$charset_collate}";
         dbDelta($createRequestsTab);

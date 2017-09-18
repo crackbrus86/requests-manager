@@ -27,7 +27,7 @@ export const getAllRequests = (contract) => {
 
 export const getRequest = (contract) => {
     return jQuery.ajax({
-        url: reqDir + "GetRequest.php",
+        url: reqDir + "GetRequestById.php",
         type: "POST",
         data: contract
     })

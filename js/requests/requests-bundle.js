@@ -40837,7 +40837,7 @@ var getAllRequests = exports.getAllRequests = function getAllRequests(contract) 
 
 var getRequest = exports.getRequest = function getRequest(contract) {
     return jQuery.ajax({
-        url: reqDir + "GetRequest.php",
+        url: reqDir + "GetRequestById.php",
         type: "POST",
         data: contract
     });
