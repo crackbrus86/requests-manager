@@ -5766,7 +5766,7 @@ var CallbackQueue = __webpack_require__(69);
 var PooledClass = __webpack_require__(17);
 var ReactFeatureFlags = __webpack_require__(70);
 var ReactReconciler = __webpack_require__(21);
-var Transaction = __webpack_require__(30);
+var Transaction = __webpack_require__(32);
 
 var invariant = __webpack_require__(2);
 
@@ -6508,7 +6508,7 @@ var _assign = __webpack_require__(5);
 var ReactCurrentOwner = __webpack_require__(12);
 
 var warning = __webpack_require__(3);
-var canDefineProperty = __webpack_require__(27);
+var canDefineProperty = __webpack_require__(29);
 var hasOwnProperty = Object.prototype.hasOwnProperty;
 
 var REACT_ELEMENT_TYPE = __webpack_require__(58);
@@ -7023,7 +7023,7 @@ var cloneElement = ReactElement.cloneElement;
 
 if (process.env.NODE_ENV !== 'production') {
   var lowPriorityWarning = __webpack_require__(38);
-  var canDefineProperty = __webpack_require__(27);
+  var canDefineProperty = __webpack_require__(29);
   var ReactElementValidator = __webpack_require__(60);
   var didWarnPropTypesDeprecated = false;
   createElement = ReactElementValidator.createElement;
@@ -7360,7 +7360,7 @@ module.exports = ReactReconciler;
 
 
 var DOMNamespaces = __webpack_require__(46);
-var setInnerHTML = __webpack_require__(32);
+var setInnerHTML = __webpack_require__(34);
 
 var createMicrosoftUnsafeLocalFunction = __webpack_require__(47);
 var setTextContent = __webpack_require__(74);
@@ -7624,7 +7624,7 @@ module.exports = EventPropagators;
 
 var _prodInvariant = __webpack_require__(4);
 
-var EventPluginRegistry = __webpack_require__(29);
+var EventPluginRegistry = __webpack_require__(31);
 var EventPluginUtils = __webpack_require__(40);
 var ReactErrorUtils = __webpack_require__(41);
 
@@ -8002,1509 +8002,6 @@ module.exports = ReactInstanceMap;
 
 /***/ }),
 /* 27 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(process) {/**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * 
- */
-
-
-
-var canDefineProperty = false;
-if (process.env.NODE_ENV !== 'production') {
-  try {
-    // $FlowFixMe https://github.com/facebook/flow/issues/285
-    Object.defineProperty({}, 'x', { get: function () {} });
-    canDefineProperty = true;
-  } catch (x) {
-    // IE will fail on defineProperty
-  }
-}
-
-module.exports = canDefineProperty;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
-
-/***/ }),
-/* 28 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(process) {/**
- * Copyright (c) 2013-present, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- */
-
-
-
-var emptyObject = {};
-
-if (process.env.NODE_ENV !== 'production') {
-  Object.freeze(emptyObject);
-}
-
-module.exports = emptyObject;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
-
-/***/ }),
-/* 29 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(process) {/**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * 
- */
-
-
-
-var _prodInvariant = __webpack_require__(4);
-
-var invariant = __webpack_require__(2);
-
-/**
- * Injectable ordering of event plugins.
- */
-var eventPluginOrder = null;
-
-/**
- * Injectable mapping from names to event plugin modules.
- */
-var namesToPlugins = {};
-
-/**
- * Recomputes the plugin list using the injected plugins and plugin ordering.
- *
- * @private
- */
-function recomputePluginOrdering() {
-  if (!eventPluginOrder) {
-    // Wait until an `eventPluginOrder` is injected.
-    return;
-  }
-  for (var pluginName in namesToPlugins) {
-    var pluginModule = namesToPlugins[pluginName];
-    var pluginIndex = eventPluginOrder.indexOf(pluginName);
-    !(pluginIndex > -1) ? process.env.NODE_ENV !== 'production' ? invariant(false, 'EventPluginRegistry: Cannot inject event plugins that do not exist in the plugin ordering, `%s`.', pluginName) : _prodInvariant('96', pluginName) : void 0;
-    if (EventPluginRegistry.plugins[pluginIndex]) {
-      continue;
-    }
-    !pluginModule.extractEvents ? process.env.NODE_ENV !== 'production' ? invariant(false, 'EventPluginRegistry: Event plugins must implement an `extractEvents` method, but `%s` does not.', pluginName) : _prodInvariant('97', pluginName) : void 0;
-    EventPluginRegistry.plugins[pluginIndex] = pluginModule;
-    var publishedEvents = pluginModule.eventTypes;
-    for (var eventName in publishedEvents) {
-      !publishEventForPlugin(publishedEvents[eventName], pluginModule, eventName) ? process.env.NODE_ENV !== 'production' ? invariant(false, 'EventPluginRegistry: Failed to publish event `%s` for plugin `%s`.', eventName, pluginName) : _prodInvariant('98', eventName, pluginName) : void 0;
-    }
-  }
-}
-
-/**
- * Publishes an event so that it can be dispatched by the supplied plugin.
- *
- * @param {object} dispatchConfig Dispatch configuration for the event.
- * @param {object} PluginModule Plugin publishing the event.
- * @return {boolean} True if the event was successfully published.
- * @private
- */
-function publishEventForPlugin(dispatchConfig, pluginModule, eventName) {
-  !!EventPluginRegistry.eventNameDispatchConfigs.hasOwnProperty(eventName) ? process.env.NODE_ENV !== 'production' ? invariant(false, 'EventPluginHub: More than one plugin attempted to publish the same event name, `%s`.', eventName) : _prodInvariant('99', eventName) : void 0;
-  EventPluginRegistry.eventNameDispatchConfigs[eventName] = dispatchConfig;
-
-  var phasedRegistrationNames = dispatchConfig.phasedRegistrationNames;
-  if (phasedRegistrationNames) {
-    for (var phaseName in phasedRegistrationNames) {
-      if (phasedRegistrationNames.hasOwnProperty(phaseName)) {
-        var phasedRegistrationName = phasedRegistrationNames[phaseName];
-        publishRegistrationName(phasedRegistrationName, pluginModule, eventName);
-      }
-    }
-    return true;
-  } else if (dispatchConfig.registrationName) {
-    publishRegistrationName(dispatchConfig.registrationName, pluginModule, eventName);
-    return true;
-  }
-  return false;
-}
-
-/**
- * Publishes a registration name that is used to identify dispatched events and
- * can be used with `EventPluginHub.putListener` to register listeners.
- *
- * @param {string} registrationName Registration name to add.
- * @param {object} PluginModule Plugin publishing the event.
- * @private
- */
-function publishRegistrationName(registrationName, pluginModule, eventName) {
-  !!EventPluginRegistry.registrationNameModules[registrationName] ? process.env.NODE_ENV !== 'production' ? invariant(false, 'EventPluginHub: More than one plugin attempted to publish the same registration name, `%s`.', registrationName) : _prodInvariant('100', registrationName) : void 0;
-  EventPluginRegistry.registrationNameModules[registrationName] = pluginModule;
-  EventPluginRegistry.registrationNameDependencies[registrationName] = pluginModule.eventTypes[eventName].dependencies;
-
-  if (process.env.NODE_ENV !== 'production') {
-    var lowerCasedName = registrationName.toLowerCase();
-    EventPluginRegistry.possibleRegistrationNames[lowerCasedName] = registrationName;
-
-    if (registrationName === 'onDoubleClick') {
-      EventPluginRegistry.possibleRegistrationNames.ondblclick = registrationName;
-    }
-  }
-}
-
-/**
- * Registers plugins so that they can extract and dispatch events.
- *
- * @see {EventPluginHub}
- */
-var EventPluginRegistry = {
-  /**
-   * Ordered list of injected plugins.
-   */
-  plugins: [],
-
-  /**
-   * Mapping from event name to dispatch config
-   */
-  eventNameDispatchConfigs: {},
-
-  /**
-   * Mapping from registration name to plugin module
-   */
-  registrationNameModules: {},
-
-  /**
-   * Mapping from registration name to event name
-   */
-  registrationNameDependencies: {},
-
-  /**
-   * Mapping from lowercase registration names to the properly cased version,
-   * used to warn in the case of missing event handlers. Available
-   * only in __DEV__.
-   * @type {Object}
-   */
-  possibleRegistrationNames: process.env.NODE_ENV !== 'production' ? {} : null,
-  // Trust the developer to only use possibleRegistrationNames in __DEV__
-
-  /**
-   * Injects an ordering of plugins (by plugin name). This allows the ordering
-   * to be decoupled from injection of the actual plugins so that ordering is
-   * always deterministic regardless of packaging, on-the-fly injection, etc.
-   *
-   * @param {array} InjectedEventPluginOrder
-   * @internal
-   * @see {EventPluginHub.injection.injectEventPluginOrder}
-   */
-  injectEventPluginOrder: function (injectedEventPluginOrder) {
-    !!eventPluginOrder ? process.env.NODE_ENV !== 'production' ? invariant(false, 'EventPluginRegistry: Cannot inject event plugin ordering more than once. You are likely trying to load more than one copy of React.') : _prodInvariant('101') : void 0;
-    // Clone the ordering so it cannot be dynamically mutated.
-    eventPluginOrder = Array.prototype.slice.call(injectedEventPluginOrder);
-    recomputePluginOrdering();
-  },
-
-  /**
-   * Injects plugins to be used by `EventPluginHub`. The plugin names must be
-   * in the ordering injected by `injectEventPluginOrder`.
-   *
-   * Plugins can be injected as part of page initialization or on-the-fly.
-   *
-   * @param {object} injectedNamesToPlugins Map from names to plugin modules.
-   * @internal
-   * @see {EventPluginHub.injection.injectEventPluginsByName}
-   */
-  injectEventPluginsByName: function (injectedNamesToPlugins) {
-    var isOrderingDirty = false;
-    for (var pluginName in injectedNamesToPlugins) {
-      if (!injectedNamesToPlugins.hasOwnProperty(pluginName)) {
-        continue;
-      }
-      var pluginModule = injectedNamesToPlugins[pluginName];
-      if (!namesToPlugins.hasOwnProperty(pluginName) || namesToPlugins[pluginName] !== pluginModule) {
-        !!namesToPlugins[pluginName] ? process.env.NODE_ENV !== 'production' ? invariant(false, 'EventPluginRegistry: Cannot inject two different event plugins using the same name, `%s`.', pluginName) : _prodInvariant('102', pluginName) : void 0;
-        namesToPlugins[pluginName] = pluginModule;
-        isOrderingDirty = true;
-      }
-    }
-    if (isOrderingDirty) {
-      recomputePluginOrdering();
-    }
-  },
-
-  /**
-   * Looks up the plugin for the supplied event.
-   *
-   * @param {object} event A synthetic event.
-   * @return {?object} The plugin that created the supplied event.
-   * @internal
-   */
-  getPluginModuleForEvent: function (event) {
-    var dispatchConfig = event.dispatchConfig;
-    if (dispatchConfig.registrationName) {
-      return EventPluginRegistry.registrationNameModules[dispatchConfig.registrationName] || null;
-    }
-    if (dispatchConfig.phasedRegistrationNames !== undefined) {
-      // pulling phasedRegistrationNames out of dispatchConfig helps Flow see
-      // that it is not undefined.
-      var phasedRegistrationNames = dispatchConfig.phasedRegistrationNames;
-
-      for (var phase in phasedRegistrationNames) {
-        if (!phasedRegistrationNames.hasOwnProperty(phase)) {
-          continue;
-        }
-        var pluginModule = EventPluginRegistry.registrationNameModules[phasedRegistrationNames[phase]];
-        if (pluginModule) {
-          return pluginModule;
-        }
-      }
-    }
-    return null;
-  },
-
-  /**
-   * Exposed for unit testing.
-   * @private
-   */
-  _resetEventPlugins: function () {
-    eventPluginOrder = null;
-    for (var pluginName in namesToPlugins) {
-      if (namesToPlugins.hasOwnProperty(pluginName)) {
-        delete namesToPlugins[pluginName];
-      }
-    }
-    EventPluginRegistry.plugins.length = 0;
-
-    var eventNameDispatchConfigs = EventPluginRegistry.eventNameDispatchConfigs;
-    for (var eventName in eventNameDispatchConfigs) {
-      if (eventNameDispatchConfigs.hasOwnProperty(eventName)) {
-        delete eventNameDispatchConfigs[eventName];
-      }
-    }
-
-    var registrationNameModules = EventPluginRegistry.registrationNameModules;
-    for (var registrationName in registrationNameModules) {
-      if (registrationNameModules.hasOwnProperty(registrationName)) {
-        delete registrationNameModules[registrationName];
-      }
-    }
-
-    if (process.env.NODE_ENV !== 'production') {
-      var possibleRegistrationNames = EventPluginRegistry.possibleRegistrationNames;
-      for (var lowerCasedName in possibleRegistrationNames) {
-        if (possibleRegistrationNames.hasOwnProperty(lowerCasedName)) {
-          delete possibleRegistrationNames[lowerCasedName];
-        }
-      }
-    }
-  }
-};
-
-module.exports = EventPluginRegistry;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
-
-/***/ }),
-/* 30 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(process) {/**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * 
- */
-
-
-
-var _prodInvariant = __webpack_require__(4);
-
-var invariant = __webpack_require__(2);
-
-var OBSERVED_ERROR = {};
-
-/**
- * `Transaction` creates a black box that is able to wrap any method such that
- * certain invariants are maintained before and after the method is invoked
- * (Even if an exception is thrown while invoking the wrapped method). Whoever
- * instantiates a transaction can provide enforcers of the invariants at
- * creation time. The `Transaction` class itself will supply one additional
- * automatic invariant for you - the invariant that any transaction instance
- * should not be run while it is already being run. You would typically create a
- * single instance of a `Transaction` for reuse multiple times, that potentially
- * is used to wrap several different methods. Wrappers are extremely simple -
- * they only require implementing two methods.
- *
- * <pre>
- *                       wrappers (injected at creation time)
- *                                      +        +
- *                                      |        |
- *                    +-----------------|--------|--------------+
- *                    |                 v        |              |
- *                    |      +---------------+   |              |
- *                    |   +--|    wrapper1   |---|----+         |
- *                    |   |  +---------------+   v    |         |
- *                    |   |          +-------------+  |         |
- *                    |   |     +----|   wrapper2  |--------+   |
- *                    |   |     |    +-------------+  |     |   |
- *                    |   |     |                     |     |   |
- *                    |   v     v                     v     v   | wrapper
- *                    | +---+ +---+   +---------+   +---+ +---+ | invariants
- * perform(anyMethod) | |   | |   |   |         |   |   | |   | | maintained
- * +----------------->|-|---|-|---|-->|anyMethod|---|---|-|---|-|-------->
- *                    | |   | |   |   |         |   |   | |   | |
- *                    | |   | |   |   |         |   |   | |   | |
- *                    | |   | |   |   |         |   |   | |   | |
- *                    | +---+ +---+   +---------+   +---+ +---+ |
- *                    |  initialize                    close    |
- *                    +-----------------------------------------+
- * </pre>
- *
- * Use cases:
- * - Preserving the input selection ranges before/after reconciliation.
- *   Restoring selection even in the event of an unexpected error.
- * - Deactivating events while rearranging the DOM, preventing blurs/focuses,
- *   while guaranteeing that afterwards, the event system is reactivated.
- * - Flushing a queue of collected DOM mutations to the main UI thread after a
- *   reconciliation takes place in a worker thread.
- * - Invoking any collected `componentDidUpdate` callbacks after rendering new
- *   content.
- * - (Future use case): Wrapping particular flushes of the `ReactWorker` queue
- *   to preserve the `scrollTop` (an automatic scroll aware DOM).
- * - (Future use case): Layout calculations before and after DOM updates.
- *
- * Transactional plugin API:
- * - A module that has an `initialize` method that returns any precomputation.
- * - and a `close` method that accepts the precomputation. `close` is invoked
- *   when the wrapped process is completed, or has failed.
- *
- * @param {Array<TransactionalWrapper>} transactionWrapper Wrapper modules
- * that implement `initialize` and `close`.
- * @return {Transaction} Single transaction for reuse in thread.
- *
- * @class Transaction
- */
-var TransactionImpl = {
-  /**
-   * Sets up this instance so that it is prepared for collecting metrics. Does
-   * so such that this setup method may be used on an instance that is already
-   * initialized, in a way that does not consume additional memory upon reuse.
-   * That can be useful if you decide to make your subclass of this mixin a
-   * "PooledClass".
-   */
-  reinitializeTransaction: function () {
-    this.transactionWrappers = this.getTransactionWrappers();
-    if (this.wrapperInitData) {
-      this.wrapperInitData.length = 0;
-    } else {
-      this.wrapperInitData = [];
-    }
-    this._isInTransaction = false;
-  },
-
-  _isInTransaction: false,
-
-  /**
-   * @abstract
-   * @return {Array<TransactionWrapper>} Array of transaction wrappers.
-   */
-  getTransactionWrappers: null,
-
-  isInTransaction: function () {
-    return !!this._isInTransaction;
-  },
-
-  /* eslint-disable space-before-function-paren */
-
-  /**
-   * Executes the function within a safety window. Use this for the top level
-   * methods that result in large amounts of computation/mutations that would
-   * need to be safety checked. The optional arguments helps prevent the need
-   * to bind in many cases.
-   *
-   * @param {function} method Member of scope to call.
-   * @param {Object} scope Scope to invoke from.
-   * @param {Object?=} a Argument to pass to the method.
-   * @param {Object?=} b Argument to pass to the method.
-   * @param {Object?=} c Argument to pass to the method.
-   * @param {Object?=} d Argument to pass to the method.
-   * @param {Object?=} e Argument to pass to the method.
-   * @param {Object?=} f Argument to pass to the method.
-   *
-   * @return {*} Return value from `method`.
-   */
-  perform: function (method, scope, a, b, c, d, e, f) {
-    /* eslint-enable space-before-function-paren */
-    !!this.isInTransaction() ? process.env.NODE_ENV !== 'production' ? invariant(false, 'Transaction.perform(...): Cannot initialize a transaction when there is already an outstanding transaction.') : _prodInvariant('27') : void 0;
-    var errorThrown;
-    var ret;
-    try {
-      this._isInTransaction = true;
-      // Catching errors makes debugging more difficult, so we start with
-      // errorThrown set to true before setting it to false after calling
-      // close -- if it's still set to true in the finally block, it means
-      // one of these calls threw.
-      errorThrown = true;
-      this.initializeAll(0);
-      ret = method.call(scope, a, b, c, d, e, f);
-      errorThrown = false;
-    } finally {
-      try {
-        if (errorThrown) {
-          // If `method` throws, prefer to show that stack trace over any thrown
-          // by invoking `closeAll`.
-          try {
-            this.closeAll(0);
-          } catch (err) {}
-        } else {
-          // Since `method` didn't throw, we don't want to silence the exception
-          // here.
-          this.closeAll(0);
-        }
-      } finally {
-        this._isInTransaction = false;
-      }
-    }
-    return ret;
-  },
-
-  initializeAll: function (startIndex) {
-    var transactionWrappers = this.transactionWrappers;
-    for (var i = startIndex; i < transactionWrappers.length; i++) {
-      var wrapper = transactionWrappers[i];
-      try {
-        // Catching errors makes debugging more difficult, so we start with the
-        // OBSERVED_ERROR state before overwriting it with the real return value
-        // of initialize -- if it's still set to OBSERVED_ERROR in the finally
-        // block, it means wrapper.initialize threw.
-        this.wrapperInitData[i] = OBSERVED_ERROR;
-        this.wrapperInitData[i] = wrapper.initialize ? wrapper.initialize.call(this) : null;
-      } finally {
-        if (this.wrapperInitData[i] === OBSERVED_ERROR) {
-          // The initializer for wrapper i threw an error; initialize the
-          // remaining wrappers but silence any exceptions from them to ensure
-          // that the first error is the one to bubble up.
-          try {
-            this.initializeAll(i + 1);
-          } catch (err) {}
-        }
-      }
-    }
-  },
-
-  /**
-   * Invokes each of `this.transactionWrappers.close[i]` functions, passing into
-   * them the respective return values of `this.transactionWrappers.init[i]`
-   * (`close`rs that correspond to initializers that failed will not be
-   * invoked).
-   */
-  closeAll: function (startIndex) {
-    !this.isInTransaction() ? process.env.NODE_ENV !== 'production' ? invariant(false, 'Transaction.closeAll(): Cannot close transaction when none are open.') : _prodInvariant('28') : void 0;
-    var transactionWrappers = this.transactionWrappers;
-    for (var i = startIndex; i < transactionWrappers.length; i++) {
-      var wrapper = transactionWrappers[i];
-      var initData = this.wrapperInitData[i];
-      var errorThrown;
-      try {
-        // Catching errors makes debugging more difficult, so we start with
-        // errorThrown set to true before setting it to false after calling
-        // close -- if it's still set to true in the finally block, it means
-        // wrapper.close threw.
-        errorThrown = true;
-        if (initData !== OBSERVED_ERROR && wrapper.close) {
-          wrapper.close.call(this, initData);
-        }
-        errorThrown = false;
-      } finally {
-        if (errorThrown) {
-          // The closer for wrapper i threw an error; close the remaining
-          // wrappers but silence any exceptions from them to ensure that the
-          // first error is the one to bubble up.
-          try {
-            this.closeAll(i + 1);
-          } catch (e) {}
-        }
-      }
-    }
-    this.wrapperInitData.length = 0;
-  }
-};
-
-module.exports = TransactionImpl;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
-
-/***/ }),
-/* 31 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- */
-
-
-
-var SyntheticUIEvent = __webpack_require__(25);
-var ViewportMetrics = __webpack_require__(73);
-
-var getEventModifierState = __webpack_require__(44);
-
-/**
- * @interface MouseEvent
- * @see http://www.w3.org/TR/DOM-Level-3-Events/
- */
-var MouseEventInterface = {
-  screenX: null,
-  screenY: null,
-  clientX: null,
-  clientY: null,
-  ctrlKey: null,
-  shiftKey: null,
-  altKey: null,
-  metaKey: null,
-  getModifierState: getEventModifierState,
-  button: function (event) {
-    // Webkit, Firefox, IE9+
-    // which:  1 2 3
-    // button: 0 1 2 (standard)
-    var button = event.button;
-    if ('which' in event) {
-      return button;
-    }
-    // IE<9
-    // which:  undefined
-    // button: 0 0 0
-    // button: 1 4 2 (onmouseup)
-    return button === 2 ? 2 : button === 4 ? 1 : 0;
-  },
-  buttons: null,
-  relatedTarget: function (event) {
-    return event.relatedTarget || (event.fromElement === event.srcElement ? event.toElement : event.fromElement);
-  },
-  // "Proprietary" Interface.
-  pageX: function (event) {
-    return 'pageX' in event ? event.pageX : event.clientX + ViewportMetrics.currentScrollLeft;
-  },
-  pageY: function (event) {
-    return 'pageY' in event ? event.pageY : event.clientY + ViewportMetrics.currentScrollTop;
-  }
-};
-
-/**
- * @param {object} dispatchConfig Configuration used to dispatch this event.
- * @param {string} dispatchMarker Marker identifying the event target.
- * @param {object} nativeEvent Native browser event.
- * @extends {SyntheticUIEvent}
- */
-function SyntheticMouseEvent(dispatchConfig, dispatchMarker, nativeEvent, nativeEventTarget) {
-  return SyntheticUIEvent.call(this, dispatchConfig, dispatchMarker, nativeEvent, nativeEventTarget);
-}
-
-SyntheticUIEvent.augmentClass(SyntheticMouseEvent, MouseEventInterface);
-
-module.exports = SyntheticMouseEvent;
-
-/***/ }),
-/* 32 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- */
-
-
-
-var ExecutionEnvironment = __webpack_require__(8);
-var DOMNamespaces = __webpack_require__(46);
-
-var WHITESPACE_TEST = /^[ \r\n\t\f]/;
-var NONVISIBLE_TEST = /<(!--|link|noscript|meta|script|style)[ \r\n\t\f\/>]/;
-
-var createMicrosoftUnsafeLocalFunction = __webpack_require__(47);
-
-// SVG temp container for IE lacking innerHTML
-var reusableSVGContainer;
-
-/**
- * Set the innerHTML property of a node, ensuring that whitespace is preserved
- * even in IE8.
- *
- * @param {DOMElement} node
- * @param {string} html
- * @internal
- */
-var setInnerHTML = createMicrosoftUnsafeLocalFunction(function (node, html) {
-  // IE does not have innerHTML for SVG nodes, so instead we inject the
-  // new markup in a temp node and then move the child nodes across into
-  // the target node
-  if (node.namespaceURI === DOMNamespaces.svg && !('innerHTML' in node)) {
-    reusableSVGContainer = reusableSVGContainer || document.createElement('div');
-    reusableSVGContainer.innerHTML = '<svg>' + html + '</svg>';
-    var svgNode = reusableSVGContainer.firstChild;
-    while (svgNode.firstChild) {
-      node.appendChild(svgNode.firstChild);
-    }
-  } else {
-    node.innerHTML = html;
-  }
-});
-
-if (ExecutionEnvironment.canUseDOM) {
-  // IE8: When updating a just created node with innerHTML only leading
-  // whitespace is removed. When updating an existing node with innerHTML
-  // whitespace in root TextNodes is also collapsed.
-  // @see quirksmode.org/bugreports/archives/2004/11/innerhtml_and_t.html
-
-  // Feature detection; only IE8 is known to behave improperly like this.
-  var testElement = document.createElement('div');
-  testElement.innerHTML = ' ';
-  if (testElement.innerHTML === '') {
-    setInnerHTML = function (node, html) {
-      // Magic theory: IE8 supposedly differentiates between added and updated
-      // nodes when processing innerHTML, innerHTML on updated nodes suffers
-      // from worse whitespace behavior. Re-adding a node like this triggers
-      // the initial and more favorable whitespace behavior.
-      // TODO: What to do on a detached node?
-      if (node.parentNode) {
-        node.parentNode.replaceChild(node, node);
-      }
-
-      // We also implement a workaround for non-visible tags disappearing into
-      // thin air on IE8, this only happens if there is no visible text
-      // in-front of the non-visible tags. Piggyback on the whitespace fix
-      // and simply check if any non-visible tags appear in the source.
-      if (WHITESPACE_TEST.test(html) || html[0] === '<' && NONVISIBLE_TEST.test(html)) {
-        // Recover leading whitespace by temporarily prepending any character.
-        // \uFEFF has the potential advantage of being zero-width/invisible.
-        // UglifyJS drops U+FEFF chars when parsing, so use String.fromCharCode
-        // in hopes that this is preserved even if "\uFEFF" is transformed to
-        // the actual Unicode character (by Babel, for example).
-        // https://github.com/mishoo/UglifyJS2/blob/v2.4.20/lib/parse.js#L216
-        node.innerHTML = String.fromCharCode(0xfeff) + html;
-
-        // deleteData leaves an empty `TextNode` which offsets the index of all
-        // children. Definitely want to avoid this.
-        var textNode = node.firstChild;
-        if (textNode.data.length === 1) {
-          node.removeChild(textNode);
-        } else {
-          textNode.deleteData(0, 1);
-        }
-      } else {
-        node.innerHTML = html;
-      }
-    };
-  }
-  testElement = null;
-}
-
-module.exports = setInnerHTML;
-
-/***/ }),
-/* 33 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/**
- * Copyright 2016-present, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * Based on the escape-html library, which is used under the MIT License below:
- *
- * Copyright (c) 2012-2013 TJ Holowaychuk
- * Copyright (c) 2015 Andreas Lubbe
- * Copyright (c) 2015 Tiancheng "Timothy" Gu
- *
- * Permission is hereby granted, free of charge, to any person obtaining
- * a copy of this software and associated documentation files (the
- * 'Software'), to deal in the Software without restriction, including
- * without limitation the rights to use, copy, modify, merge, publish,
- * distribute, sublicense, and/or sell copies of the Software, and to
- * permit persons to whom the Software is furnished to do so, subject to
- * the following conditions:
- *
- * The above copyright notice and this permission notice shall be
- * included in all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND,
- * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
- * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
- * IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
- * CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
- * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
- * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
- *
- */
-
-
-
-// code copied and modified from escape-html
-/**
- * Module variables.
- * @private
- */
-
-var matchHtmlRegExp = /["'&<>]/;
-
-/**
- * Escape special characters in the given string of html.
- *
- * @param  {string} string The string to escape for inserting into HTML
- * @return {string}
- * @public
- */
-
-function escapeHtml(string) {
-  var str = '' + string;
-  var match = matchHtmlRegExp.exec(str);
-
-  if (!match) {
-    return str;
-  }
-
-  var escape;
-  var html = '';
-  var index = 0;
-  var lastIndex = 0;
-
-  for (index = match.index; index < str.length; index++) {
-    switch (str.charCodeAt(index)) {
-      case 34:
-        // "
-        escape = '&quot;';
-        break;
-      case 38:
-        // &
-        escape = '&amp;';
-        break;
-      case 39:
-        // '
-        escape = '&#x27;'; // modified from escape-html; used to be '&#39'
-        break;
-      case 60:
-        // <
-        escape = '&lt;';
-        break;
-      case 62:
-        // >
-        escape = '&gt;';
-        break;
-      default:
-        continue;
-    }
-
-    if (lastIndex !== index) {
-      html += str.substring(lastIndex, index);
-    }
-
-    lastIndex = index + 1;
-    html += escape;
-  }
-
-  return lastIndex !== index ? html + str.substring(lastIndex, index) : html;
-}
-// end code copied and modified from escape-html
-
-/**
- * Escapes text to prevent scripting attacks.
- *
- * @param {*} text Text value to escape.
- * @return {string} An escaped string.
- */
-function escapeTextContentForBrowser(text) {
-  if (typeof text === 'boolean' || typeof text === 'number') {
-    // this shortcircuit helps perf for types that we know will never have
-    // special characters, especially given that this function is used often
-    // for numeric dom ids.
-    return '' + text;
-  }
-  return escapeHtml(text);
-}
-
-module.exports = escapeTextContentForBrowser;
-
-/***/ }),
-/* 34 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- */
-
-
-
-var _assign = __webpack_require__(5);
-
-var EventPluginRegistry = __webpack_require__(29);
-var ReactEventEmitterMixin = __webpack_require__(255);
-var ViewportMetrics = __webpack_require__(73);
-
-var getVendorPrefixedEventName = __webpack_require__(256);
-var isEventSupported = __webpack_require__(43);
-
-/**
- * Summary of `ReactBrowserEventEmitter` event handling:
- *
- *  - Top-level delegation is used to trap most native browser events. This
- *    may only occur in the main thread and is the responsibility of
- *    ReactEventListener, which is injected and can therefore support pluggable
- *    event sources. This is the only work that occurs in the main thread.
- *
- *  - We normalize and de-duplicate events to account for browser quirks. This
- *    may be done in the worker thread.
- *
- *  - Forward these native events (with the associated top-level type used to
- *    trap it) to `EventPluginHub`, which in turn will ask plugins if they want
- *    to extract any synthetic events.
- *
- *  - The `EventPluginHub` will then process each event by annotating them with
- *    "dispatches", a sequence of listeners and IDs that care about that event.
- *
- *  - The `EventPluginHub` then dispatches the events.
- *
- * Overview of React and the event system:
- *
- * +------------+    .
- * |    DOM     |    .
- * +------------+    .
- *       |           .
- *       v           .
- * +------------+    .
- * | ReactEvent |    .
- * |  Listener  |    .
- * +------------+    .                         +-----------+
- *       |           .               +--------+|SimpleEvent|
- *       |           .               |         |Plugin     |
- * +-----|------+    .               v         +-----------+
- * |     |      |    .    +--------------+                    +------------+
- * |     +-----------.--->|EventPluginHub|                    |    Event   |
- * |            |    .    |              |     +-----------+  | Propagators|
- * | ReactEvent |    .    |              |     |TapEvent   |  |------------|
- * |  Emitter   |    .    |              |<---+|Plugin     |  |other plugin|
- * |            |    .    |              |     +-----------+  |  utilities |
- * |     +-----------.--->|              |                    +------------+
- * |     |      |    .    +--------------+
- * +-----|------+    .                ^        +-----------+
- *       |           .                |        |Enter/Leave|
- *       +           .                +-------+|Plugin     |
- * +-------------+   .                         +-----------+
- * | application |   .
- * |-------------|   .
- * |             |   .
- * |             |   .
- * +-------------+   .
- *                   .
- *    React Core     .  General Purpose Event Plugin System
- */
-
-var hasEventPageXY;
-var alreadyListeningTo = {};
-var isMonitoringScrollValue = false;
-var reactTopListenersCounter = 0;
-
-// For events like 'submit' which don't consistently bubble (which we trap at a
-// lower node than `document`), binding at `document` would cause duplicate
-// events so we don't include them here
-var topEventMapping = {
-  topAbort: 'abort',
-  topAnimationEnd: getVendorPrefixedEventName('animationend') || 'animationend',
-  topAnimationIteration: getVendorPrefixedEventName('animationiteration') || 'animationiteration',
-  topAnimationStart: getVendorPrefixedEventName('animationstart') || 'animationstart',
-  topBlur: 'blur',
-  topCanPlay: 'canplay',
-  topCanPlayThrough: 'canplaythrough',
-  topChange: 'change',
-  topClick: 'click',
-  topCompositionEnd: 'compositionend',
-  topCompositionStart: 'compositionstart',
-  topCompositionUpdate: 'compositionupdate',
-  topContextMenu: 'contextmenu',
-  topCopy: 'copy',
-  topCut: 'cut',
-  topDoubleClick: 'dblclick',
-  topDrag: 'drag',
-  topDragEnd: 'dragend',
-  topDragEnter: 'dragenter',
-  topDragExit: 'dragexit',
-  topDragLeave: 'dragleave',
-  topDragOver: 'dragover',
-  topDragStart: 'dragstart',
-  topDrop: 'drop',
-  topDurationChange: 'durationchange',
-  topEmptied: 'emptied',
-  topEncrypted: 'encrypted',
-  topEnded: 'ended',
-  topError: 'error',
-  topFocus: 'focus',
-  topInput: 'input',
-  topKeyDown: 'keydown',
-  topKeyPress: 'keypress',
-  topKeyUp: 'keyup',
-  topLoadedData: 'loadeddata',
-  topLoadedMetadata: 'loadedmetadata',
-  topLoadStart: 'loadstart',
-  topMouseDown: 'mousedown',
-  topMouseMove: 'mousemove',
-  topMouseOut: 'mouseout',
-  topMouseOver: 'mouseover',
-  topMouseUp: 'mouseup',
-  topPaste: 'paste',
-  topPause: 'pause',
-  topPlay: 'play',
-  topPlaying: 'playing',
-  topProgress: 'progress',
-  topRateChange: 'ratechange',
-  topScroll: 'scroll',
-  topSeeked: 'seeked',
-  topSeeking: 'seeking',
-  topSelectionChange: 'selectionchange',
-  topStalled: 'stalled',
-  topSuspend: 'suspend',
-  topTextInput: 'textInput',
-  topTimeUpdate: 'timeupdate',
-  topTouchCancel: 'touchcancel',
-  topTouchEnd: 'touchend',
-  topTouchMove: 'touchmove',
-  topTouchStart: 'touchstart',
-  topTransitionEnd: getVendorPrefixedEventName('transitionend') || 'transitionend',
-  topVolumeChange: 'volumechange',
-  topWaiting: 'waiting',
-  topWheel: 'wheel'
-};
-
-/**
- * To ensure no conflicts with other potential React instances on the page
- */
-var topListenersIDKey = '_reactListenersID' + String(Math.random()).slice(2);
-
-function getListeningForDocument(mountAt) {
-  // In IE8, `mountAt` is a host object and doesn't have `hasOwnProperty`
-  // directly.
-  if (!Object.prototype.hasOwnProperty.call(mountAt, topListenersIDKey)) {
-    mountAt[topListenersIDKey] = reactTopListenersCounter++;
-    alreadyListeningTo[mountAt[topListenersIDKey]] = {};
-  }
-  return alreadyListeningTo[mountAt[topListenersIDKey]];
-}
-
-/**
- * `ReactBrowserEventEmitter` is used to attach top-level event listeners. For
- * example:
- *
- *   EventPluginHub.putListener('myID', 'onClick', myFunction);
- *
- * This would allocate a "registration" of `('onClick', myFunction)` on 'myID'.
- *
- * @internal
- */
-var ReactBrowserEventEmitter = _assign({}, ReactEventEmitterMixin, {
-  /**
-   * Injectable event backend
-   */
-  ReactEventListener: null,
-
-  injection: {
-    /**
-     * @param {object} ReactEventListener
-     */
-    injectReactEventListener: function (ReactEventListener) {
-      ReactEventListener.setHandleTopLevel(ReactBrowserEventEmitter.handleTopLevel);
-      ReactBrowserEventEmitter.ReactEventListener = ReactEventListener;
-    }
-  },
-
-  /**
-   * Sets whether or not any created callbacks should be enabled.
-   *
-   * @param {boolean} enabled True if callbacks should be enabled.
-   */
-  setEnabled: function (enabled) {
-    if (ReactBrowserEventEmitter.ReactEventListener) {
-      ReactBrowserEventEmitter.ReactEventListener.setEnabled(enabled);
-    }
-  },
-
-  /**
-   * @return {boolean} True if callbacks are enabled.
-   */
-  isEnabled: function () {
-    return !!(ReactBrowserEventEmitter.ReactEventListener && ReactBrowserEventEmitter.ReactEventListener.isEnabled());
-  },
-
-  /**
-   * We listen for bubbled touch events on the document object.
-   *
-   * Firefox v8.01 (and possibly others) exhibited strange behavior when
-   * mounting `onmousemove` events at some node that was not the document
-   * element. The symptoms were that if your mouse is not moving over something
-   * contained within that mount point (for example on the background) the
-   * top-level listeners for `onmousemove` won't be called. However, if you
-   * register the `mousemove` on the document object, then it will of course
-   * catch all `mousemove`s. This along with iOS quirks, justifies restricting
-   * top-level listeners to the document object only, at least for these
-   * movement types of events and possibly all events.
-   *
-   * @see http://www.quirksmode.org/blog/archives/2010/09/click_event_del.html
-   *
-   * Also, `keyup`/`keypress`/`keydown` do not bubble to the window on IE, but
-   * they bubble to document.
-   *
-   * @param {string} registrationName Name of listener (e.g. `onClick`).
-   * @param {object} contentDocumentHandle Document which owns the container
-   */
-  listenTo: function (registrationName, contentDocumentHandle) {
-    var mountAt = contentDocumentHandle;
-    var isListening = getListeningForDocument(mountAt);
-    var dependencies = EventPluginRegistry.registrationNameDependencies[registrationName];
-
-    for (var i = 0; i < dependencies.length; i++) {
-      var dependency = dependencies[i];
-      if (!(isListening.hasOwnProperty(dependency) && isListening[dependency])) {
-        if (dependency === 'topWheel') {
-          if (isEventSupported('wheel')) {
-            ReactBrowserEventEmitter.ReactEventListener.trapBubbledEvent('topWheel', 'wheel', mountAt);
-          } else if (isEventSupported('mousewheel')) {
-            ReactBrowserEventEmitter.ReactEventListener.trapBubbledEvent('topWheel', 'mousewheel', mountAt);
-          } else {
-            // Firefox needs to capture a different mouse scroll event.
-            // @see http://www.quirksmode.org/dom/events/tests/scroll.html
-            ReactBrowserEventEmitter.ReactEventListener.trapBubbledEvent('topWheel', 'DOMMouseScroll', mountAt);
-          }
-        } else if (dependency === 'topScroll') {
-          if (isEventSupported('scroll', true)) {
-            ReactBrowserEventEmitter.ReactEventListener.trapCapturedEvent('topScroll', 'scroll', mountAt);
-          } else {
-            ReactBrowserEventEmitter.ReactEventListener.trapBubbledEvent('topScroll', 'scroll', ReactBrowserEventEmitter.ReactEventListener.WINDOW_HANDLE);
-          }
-        } else if (dependency === 'topFocus' || dependency === 'topBlur') {
-          if (isEventSupported('focus', true)) {
-            ReactBrowserEventEmitter.ReactEventListener.trapCapturedEvent('topFocus', 'focus', mountAt);
-            ReactBrowserEventEmitter.ReactEventListener.trapCapturedEvent('topBlur', 'blur', mountAt);
-          } else if (isEventSupported('focusin')) {
-            // IE has `focusin` and `focusout` events which bubble.
-            // @see http://www.quirksmode.org/blog/archives/2008/04/delegating_the.html
-            ReactBrowserEventEmitter.ReactEventListener.trapBubbledEvent('topFocus', 'focusin', mountAt);
-            ReactBrowserEventEmitter.ReactEventListener.trapBubbledEvent('topBlur', 'focusout', mountAt);
-          }
-
-          // to make sure blur and focus event listeners are only attached once
-          isListening.topBlur = true;
-          isListening.topFocus = true;
-        } else if (topEventMapping.hasOwnProperty(dependency)) {
-          ReactBrowserEventEmitter.ReactEventListener.trapBubbledEvent(dependency, topEventMapping[dependency], mountAt);
-        }
-
-        isListening[dependency] = true;
-      }
-    }
-  },
-
-  trapBubbledEvent: function (topLevelType, handlerBaseName, handle) {
-    return ReactBrowserEventEmitter.ReactEventListener.trapBubbledEvent(topLevelType, handlerBaseName, handle);
-  },
-
-  trapCapturedEvent: function (topLevelType, handlerBaseName, handle) {
-    return ReactBrowserEventEmitter.ReactEventListener.trapCapturedEvent(topLevelType, handlerBaseName, handle);
-  },
-
-  /**
-   * Protect against document.createEvent() returning null
-   * Some popup blocker extensions appear to do this:
-   * https://github.com/facebook/react/issues/6887
-   */
-  supportsEventPageXY: function () {
-    if (!document.createEvent) {
-      return false;
-    }
-    var ev = document.createEvent('MouseEvent');
-    return ev != null && 'pageX' in ev;
-  },
-
-  /**
-   * Listens to window scroll and resize events. We cache scroll values so that
-   * application code can access them without triggering reflows.
-   *
-   * ViewportMetrics is only used by SyntheticMouse/TouchEvent and only when
-   * pageX/pageY isn't supported (legacy browsers).
-   *
-   * NOTE: Scroll events do not bubble.
-   *
-   * @see http://www.quirksmode.org/dom/events/scroll.html
-   */
-  ensureScrollValueMonitoring: function () {
-    if (hasEventPageXY === undefined) {
-      hasEventPageXY = ReactBrowserEventEmitter.supportsEventPageXY();
-    }
-    if (!hasEventPageXY && !isMonitoringScrollValue) {
-      var refresh = ViewportMetrics.refreshScrollValues;
-      ReactBrowserEventEmitter.ReactEventListener.monitorScrollValue(refresh);
-      isMonitoringScrollValue = true;
-    }
-  }
-});
-
-module.exports = ReactBrowserEventEmitter;
-
-/***/ }),
-/* 35 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
- * A higher-order-component for handling onClickOutside for React components.
- */
-(function(root) {
-
-  // administrative
-  var registeredComponents = [];
-  var handlers = [];
-  var IGNORE_CLASS = 'ignore-react-onclickoutside';
-  var DEFAULT_EVENTS = ['mousedown', 'touchstart'];
-
-  /**
-   * Check whether some DOM node is our Component's node.
-   */
-  var isNodeFound = function(current, componentNode, ignoreClass) {
-    if (current === componentNode) {
-      return true;
-    }
-    // SVG <use/> elements do not technically reside in the rendered DOM, so
-    // they do not have classList directly, but they offer a link to their
-    // corresponding element, which can have classList. This extra check is for
-    // that case.
-    // See: http://www.w3.org/TR/SVG11/struct.html#InterfaceSVGUseElement
-    // Discussion: https://github.com/Pomax/react-onclickoutside/pull/17
-    if (current.correspondingElement) {
-      return current.correspondingElement.classList.contains(ignoreClass);
-    }
-    return current.classList.contains(ignoreClass);
-  };
-
-  /**
-   * Try to find our node in a hierarchy of nodes, returning the document
-   * node as highest noode if our node is not found in the path up.
-   */
-  var findHighest = function(current, componentNode, ignoreClass) {
-    if (current === componentNode) {
-      return true;
-    }
-
-    // If source=local then this event came from 'somewhere'
-    // inside and should be ignored. We could handle this with
-    // a layered approach, too, but that requires going back to
-    // thinking in terms of Dom node nesting, running counter
-    // to React's 'you shouldn't care about the DOM' philosophy.
-    while(current.parentNode) {
-      if (isNodeFound(current, componentNode, ignoreClass)) {
-        return true;
-      }
-      current = current.parentNode;
-    }
-    return current;
-  };
-
-  /**
-   * Check if the browser scrollbar was clicked
-   */
-  var clickedScrollbar = function(evt) {
-    return document.documentElement.clientWidth <= evt.clientX || document.documentElement.clientHeight <= evt.clientY;
-  };
-
-  /**
-   * Generate the event handler that checks whether a clicked DOM node
-   * is inside of, or lives outside of, our Component's node tree.
-   */
-  var generateOutsideCheck = function(componentNode, componentInstance, eventHandler, ignoreClass, excludeScrollbar, preventDefault, stopPropagation) {
-    return function(evt) {
-      if (preventDefault) {
-        evt.preventDefault();
-      }
-      if (stopPropagation) {
-        evt.stopPropagation();
-      }
-      var current = evt.target;
-      if((excludeScrollbar && clickedScrollbar(evt)) || (findHighest(current, componentNode, ignoreClass) !== document)) {
-        return;
-      }
-      eventHandler(evt);
-    };
-  };
-
-  /**
-   * This function generates the HOC function that you'll use
-   * in order to impart onOutsideClick listening to an
-   * arbitrary component. It gets called at the end of the
-   * bootstrapping code to yield an instance of the
-   * onClickOutsideHOC function defined inside setupHOC().
-   */
-  function setupHOC(root, React, ReactDOM, createReactClass) {
-
-    // The actual Component-wrapping HOC:
-    return function onClickOutsideHOC(Component, config) {
-      var wrapComponentWithOnClickOutsideHandling = createReactClass({
-        statics: {
-          /**
-           * Access the wrapped Component's class.
-           */
-          getClass: function() {
-            if (Component.getClass) {
-              return Component.getClass();
-            }
-            return Component;
-          }
-        },
-
-        /**
-         * Access the wrapped Component's instance.
-         */
-        getInstance: function() {
-          return Component.prototype.isReactComponent ? this.refs.instance : this;
-        },
-
-        // this is given meaning in componentDidMount
-        __outsideClickHandler: function() {},
-
-        getDefaultProps: function() {
-          return {
-            excludeScrollbar: config && config.excludeScrollbar
-          };
-        },
-
-        /**
-         * Add click listeners to the current document,
-         * linked to this component's state.
-         */
-        componentDidMount: function() {
-          // If we are in an environment without a DOM such
-          // as shallow rendering or snapshots then we exit
-          // early to prevent any unhandled errors being thrown.
-          if (typeof document === 'undefined' || !document.createElement){
-            return;
-          }
-
-          var instance = this.getInstance();
-          var clickOutsideHandler;
-
-          if(config && typeof config.handleClickOutside === 'function') {
-            clickOutsideHandler = config.handleClickOutside(instance);
-            if(typeof clickOutsideHandler !== 'function') {
-              throw new Error('Component lacks a function for processing outside click events specified by the handleClickOutside config option.');
-            }
-          } else if(typeof instance.handleClickOutside === 'function') {
-            if (React.Component.prototype.isPrototypeOf(instance)) {
-              clickOutsideHandler = instance.handleClickOutside.bind(instance);
-            } else {
-              clickOutsideHandler = instance.handleClickOutside;
-            }
-          } else if(typeof instance.props.handleClickOutside === 'function') {
-            clickOutsideHandler = instance.props.handleClickOutside;
-          } else {
-            throw new Error('Component lacks a handleClickOutside(event) function for processing outside click events.');
-          }
-
-          var componentNode = ReactDOM.findDOMNode(instance);
-          if (componentNode === null) {
-            console.warn('Antipattern warning: there was no DOM node associated with the component that is being wrapped by outsideClick.');
-            console.warn([
-              'This is typically caused by having a component that starts life with a render function that',
-              'returns `null` (due to a state or props value), so that the component \'exist\' in the React',
-              'chain of components, but not in the DOM.\n\nInstead, you need to refactor your code so that the',
-              'decision of whether or not to show your component is handled by the parent, in their render()',
-              'function.\n\nIn code, rather than:\n\n  A{render(){return check? <.../> : null;}\n  B{render(){<A check=... />}\n\nmake sure that you',
-              'use:\n\n  A{render(){return <.../>}\n  B{render(){return <...>{ check ? <A/> : null }<...>}}\n\nThat is:',
-              'the parent is always responsible for deciding whether or not to render any of its children.',
-              'It is not the child\'s responsibility to decide whether a render instruction from above should',
-              'get ignored or not by returning `null`.\n\nWhen any component gets its render() function called,',
-              'that is the signal that it should be rendering its part of the UI. It may in turn decide not to',
-              'render all of *its* children, but it should never return `null` for itself. It is not responsible',
-              'for that decision.'
-            ].join(' '));
-          }
-
-          var fn = this.__outsideClickHandler = generateOutsideCheck(
-            componentNode,
-            instance,
-            clickOutsideHandler,
-            this.props.outsideClickIgnoreClass || IGNORE_CLASS,
-            this.props.excludeScrollbar, // fallback not needed, prop always exists because of getDefaultProps
-            this.props.preventDefault || false,
-            this.props.stopPropagation || false
-          );
-
-          var pos = registeredComponents.length;
-          registeredComponents.push(this);
-          handlers[pos] = fn;
-
-          // If there is a truthy disableOnClickOutside property for this
-          // component, don't immediately start listening for outside events.
-          if (!this.props.disableOnClickOutside) {
-            this.enableOnClickOutside();
-          }
-        },
-
-        /**
-        * Track for disableOnClickOutside props changes and enable/disable click outside
-        */
-        componentWillReceiveProps: function(nextProps) {
-          if (this.props.disableOnClickOutside && !nextProps.disableOnClickOutside) {
-            this.enableOnClickOutside();
-          } else if (!this.props.disableOnClickOutside && nextProps.disableOnClickOutside) {
-            this.disableOnClickOutside();
-          }
-        },
-
-        /**
-         * Remove the document's event listeners
-         */
-        componentWillUnmount: function() {
-          this.disableOnClickOutside();
-          this.__outsideClickHandler = false;
-          var pos = registeredComponents.indexOf(this);
-          if( pos>-1) {
-            // clean up so we don't leak memory
-            if (handlers[pos]) { handlers.splice(pos, 1); }
-            registeredComponents.splice(pos, 1);
-          }
-        },
-
-        /**
-         * Can be called to explicitly enable event listening
-         * for clicks and touches outside of this element.
-         */
-        enableOnClickOutside: function() {
-          var fn = this.__outsideClickHandler;
-          if (typeof document !== 'undefined') {
-            var events = this.props.eventTypes || DEFAULT_EVENTS;
-            if (!events.forEach) {
-              events = [events];
-            }
-            events.forEach(function (eventName) {
-              document.addEventListener(eventName, fn);
-            });
-          }
-        },
-
-        /**
-         * Can be called to explicitly disable event listening
-         * for clicks and touches outside of this element.
-         */
-        disableOnClickOutside: function() {
-          var fn = this.__outsideClickHandler;
-          if (typeof document !== 'undefined') {
-            var events = this.props.eventTypes || DEFAULT_EVENTS;
-            if (!events.forEach) {
-              events = [events];
-            }
-            events.forEach(function (eventName) {
-              document.removeEventListener(eventName, fn);
-            });
-          }
-        },
-
-        /**
-         * Pass-through render
-         */
-        render: function() {
-          var passedProps = this.props;
-          var props = {};
-          Object.keys(this.props).forEach(function(key) {
-            if (key !== 'excludeScrollbar') {
-              props[key] = passedProps[key];
-            }
-          });
-          if (Component.prototype.isReactComponent) {
-            props.ref = 'instance';
-          }
-          props.disableOnClickOutside = this.disableOnClickOutside;
-          props.enableOnClickOutside = this.enableOnClickOutside;
-          return React.createElement(Component, props);
-        }
-      });
-
-      // Add display name for React devtools
-      (function bindWrappedComponentName(c, wrapper) {
-        var componentName = c.displayName || c.name || 'Component';
-        wrapper.displayName = 'OnClickOutside(' + componentName + ')';
-      }(Component, wrapComponentWithOnClickOutsideHandling));
-
-      return wrapComponentWithOnClickOutsideHandling;
-    };
-  }
-
-  /**
-   * This function sets up the library in ways that
-   * work with the various modulde loading solutions
-   * used in JavaScript land today.
-   */
-  function setupBinding(root, factory) {
-    if (true) {
-      // AMD. Register as an anonymous module.
-      !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(7),__webpack_require__(64),__webpack_require__(18)], __WEBPACK_AMD_DEFINE_RESULT__ = function(React, ReactDom, createReactClass) {
-        if (!createReactClass) createReactClass = React.createClass;
-        return factory(root, React, ReactDom, createReactClass);
-      }.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
-				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-    } else if (typeof exports === 'object') {
-      // Node. Note that this does not work with strict
-      // CommonJS, but only CommonJS-like environments
-      // that support module.exports
-      module.exports = factory(root, require('react'), require('react-dom'), require('create-react-class'));
-    } else {
-      // Browser globals (root is window)
-      var createReactClass = React.createClass ? React.createClass : window.createReactClass;
-      root.onClickOutside = factory(root, React, ReactDOM, createReactClass);
-    }
-  }
-
-  // Make it all happen
-  setupBinding(root, setupHOC);
-
-}(this));
-
-
-/***/ }),
-/* 36 */
 /***/ (function(module, exports) {
 
 /*
@@ -9586,7 +8083,7 @@ function toComment(sourceMap) {
 
 
 /***/ }),
-/* 37 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -9942,6 +8439,1509 @@ function updateLink (link, options, obj) {
 
 	if(oldSrc) URL.revokeObjectURL(oldSrc);
 }
+
+
+/***/ }),
+/* 29 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(process) {/**
+ * Copyright 2013-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * 
+ */
+
+
+
+var canDefineProperty = false;
+if (process.env.NODE_ENV !== 'production') {
+  try {
+    // $FlowFixMe https://github.com/facebook/flow/issues/285
+    Object.defineProperty({}, 'x', { get: function () {} });
+    canDefineProperty = true;
+  } catch (x) {
+    // IE will fail on defineProperty
+  }
+}
+
+module.exports = canDefineProperty;
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
+
+/***/ }),
+/* 30 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(process) {/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ */
+
+
+
+var emptyObject = {};
+
+if (process.env.NODE_ENV !== 'production') {
+  Object.freeze(emptyObject);
+}
+
+module.exports = emptyObject;
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
+
+/***/ }),
+/* 31 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(process) {/**
+ * Copyright 2013-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * 
+ */
+
+
+
+var _prodInvariant = __webpack_require__(4);
+
+var invariant = __webpack_require__(2);
+
+/**
+ * Injectable ordering of event plugins.
+ */
+var eventPluginOrder = null;
+
+/**
+ * Injectable mapping from names to event plugin modules.
+ */
+var namesToPlugins = {};
+
+/**
+ * Recomputes the plugin list using the injected plugins and plugin ordering.
+ *
+ * @private
+ */
+function recomputePluginOrdering() {
+  if (!eventPluginOrder) {
+    // Wait until an `eventPluginOrder` is injected.
+    return;
+  }
+  for (var pluginName in namesToPlugins) {
+    var pluginModule = namesToPlugins[pluginName];
+    var pluginIndex = eventPluginOrder.indexOf(pluginName);
+    !(pluginIndex > -1) ? process.env.NODE_ENV !== 'production' ? invariant(false, 'EventPluginRegistry: Cannot inject event plugins that do not exist in the plugin ordering, `%s`.', pluginName) : _prodInvariant('96', pluginName) : void 0;
+    if (EventPluginRegistry.plugins[pluginIndex]) {
+      continue;
+    }
+    !pluginModule.extractEvents ? process.env.NODE_ENV !== 'production' ? invariant(false, 'EventPluginRegistry: Event plugins must implement an `extractEvents` method, but `%s` does not.', pluginName) : _prodInvariant('97', pluginName) : void 0;
+    EventPluginRegistry.plugins[pluginIndex] = pluginModule;
+    var publishedEvents = pluginModule.eventTypes;
+    for (var eventName in publishedEvents) {
+      !publishEventForPlugin(publishedEvents[eventName], pluginModule, eventName) ? process.env.NODE_ENV !== 'production' ? invariant(false, 'EventPluginRegistry: Failed to publish event `%s` for plugin `%s`.', eventName, pluginName) : _prodInvariant('98', eventName, pluginName) : void 0;
+    }
+  }
+}
+
+/**
+ * Publishes an event so that it can be dispatched by the supplied plugin.
+ *
+ * @param {object} dispatchConfig Dispatch configuration for the event.
+ * @param {object} PluginModule Plugin publishing the event.
+ * @return {boolean} True if the event was successfully published.
+ * @private
+ */
+function publishEventForPlugin(dispatchConfig, pluginModule, eventName) {
+  !!EventPluginRegistry.eventNameDispatchConfigs.hasOwnProperty(eventName) ? process.env.NODE_ENV !== 'production' ? invariant(false, 'EventPluginHub: More than one plugin attempted to publish the same event name, `%s`.', eventName) : _prodInvariant('99', eventName) : void 0;
+  EventPluginRegistry.eventNameDispatchConfigs[eventName] = dispatchConfig;
+
+  var phasedRegistrationNames = dispatchConfig.phasedRegistrationNames;
+  if (phasedRegistrationNames) {
+    for (var phaseName in phasedRegistrationNames) {
+      if (phasedRegistrationNames.hasOwnProperty(phaseName)) {
+        var phasedRegistrationName = phasedRegistrationNames[phaseName];
+        publishRegistrationName(phasedRegistrationName, pluginModule, eventName);
+      }
+    }
+    return true;
+  } else if (dispatchConfig.registrationName) {
+    publishRegistrationName(dispatchConfig.registrationName, pluginModule, eventName);
+    return true;
+  }
+  return false;
+}
+
+/**
+ * Publishes a registration name that is used to identify dispatched events and
+ * can be used with `EventPluginHub.putListener` to register listeners.
+ *
+ * @param {string} registrationName Registration name to add.
+ * @param {object} PluginModule Plugin publishing the event.
+ * @private
+ */
+function publishRegistrationName(registrationName, pluginModule, eventName) {
+  !!EventPluginRegistry.registrationNameModules[registrationName] ? process.env.NODE_ENV !== 'production' ? invariant(false, 'EventPluginHub: More than one plugin attempted to publish the same registration name, `%s`.', registrationName) : _prodInvariant('100', registrationName) : void 0;
+  EventPluginRegistry.registrationNameModules[registrationName] = pluginModule;
+  EventPluginRegistry.registrationNameDependencies[registrationName] = pluginModule.eventTypes[eventName].dependencies;
+
+  if (process.env.NODE_ENV !== 'production') {
+    var lowerCasedName = registrationName.toLowerCase();
+    EventPluginRegistry.possibleRegistrationNames[lowerCasedName] = registrationName;
+
+    if (registrationName === 'onDoubleClick') {
+      EventPluginRegistry.possibleRegistrationNames.ondblclick = registrationName;
+    }
+  }
+}
+
+/**
+ * Registers plugins so that they can extract and dispatch events.
+ *
+ * @see {EventPluginHub}
+ */
+var EventPluginRegistry = {
+  /**
+   * Ordered list of injected plugins.
+   */
+  plugins: [],
+
+  /**
+   * Mapping from event name to dispatch config
+   */
+  eventNameDispatchConfigs: {},
+
+  /**
+   * Mapping from registration name to plugin module
+   */
+  registrationNameModules: {},
+
+  /**
+   * Mapping from registration name to event name
+   */
+  registrationNameDependencies: {},
+
+  /**
+   * Mapping from lowercase registration names to the properly cased version,
+   * used to warn in the case of missing event handlers. Available
+   * only in __DEV__.
+   * @type {Object}
+   */
+  possibleRegistrationNames: process.env.NODE_ENV !== 'production' ? {} : null,
+  // Trust the developer to only use possibleRegistrationNames in __DEV__
+
+  /**
+   * Injects an ordering of plugins (by plugin name). This allows the ordering
+   * to be decoupled from injection of the actual plugins so that ordering is
+   * always deterministic regardless of packaging, on-the-fly injection, etc.
+   *
+   * @param {array} InjectedEventPluginOrder
+   * @internal
+   * @see {EventPluginHub.injection.injectEventPluginOrder}
+   */
+  injectEventPluginOrder: function (injectedEventPluginOrder) {
+    !!eventPluginOrder ? process.env.NODE_ENV !== 'production' ? invariant(false, 'EventPluginRegistry: Cannot inject event plugin ordering more than once. You are likely trying to load more than one copy of React.') : _prodInvariant('101') : void 0;
+    // Clone the ordering so it cannot be dynamically mutated.
+    eventPluginOrder = Array.prototype.slice.call(injectedEventPluginOrder);
+    recomputePluginOrdering();
+  },
+
+  /**
+   * Injects plugins to be used by `EventPluginHub`. The plugin names must be
+   * in the ordering injected by `injectEventPluginOrder`.
+   *
+   * Plugins can be injected as part of page initialization or on-the-fly.
+   *
+   * @param {object} injectedNamesToPlugins Map from names to plugin modules.
+   * @internal
+   * @see {EventPluginHub.injection.injectEventPluginsByName}
+   */
+  injectEventPluginsByName: function (injectedNamesToPlugins) {
+    var isOrderingDirty = false;
+    for (var pluginName in injectedNamesToPlugins) {
+      if (!injectedNamesToPlugins.hasOwnProperty(pluginName)) {
+        continue;
+      }
+      var pluginModule = injectedNamesToPlugins[pluginName];
+      if (!namesToPlugins.hasOwnProperty(pluginName) || namesToPlugins[pluginName] !== pluginModule) {
+        !!namesToPlugins[pluginName] ? process.env.NODE_ENV !== 'production' ? invariant(false, 'EventPluginRegistry: Cannot inject two different event plugins using the same name, `%s`.', pluginName) : _prodInvariant('102', pluginName) : void 0;
+        namesToPlugins[pluginName] = pluginModule;
+        isOrderingDirty = true;
+      }
+    }
+    if (isOrderingDirty) {
+      recomputePluginOrdering();
+    }
+  },
+
+  /**
+   * Looks up the plugin for the supplied event.
+   *
+   * @param {object} event A synthetic event.
+   * @return {?object} The plugin that created the supplied event.
+   * @internal
+   */
+  getPluginModuleForEvent: function (event) {
+    var dispatchConfig = event.dispatchConfig;
+    if (dispatchConfig.registrationName) {
+      return EventPluginRegistry.registrationNameModules[dispatchConfig.registrationName] || null;
+    }
+    if (dispatchConfig.phasedRegistrationNames !== undefined) {
+      // pulling phasedRegistrationNames out of dispatchConfig helps Flow see
+      // that it is not undefined.
+      var phasedRegistrationNames = dispatchConfig.phasedRegistrationNames;
+
+      for (var phase in phasedRegistrationNames) {
+        if (!phasedRegistrationNames.hasOwnProperty(phase)) {
+          continue;
+        }
+        var pluginModule = EventPluginRegistry.registrationNameModules[phasedRegistrationNames[phase]];
+        if (pluginModule) {
+          return pluginModule;
+        }
+      }
+    }
+    return null;
+  },
+
+  /**
+   * Exposed for unit testing.
+   * @private
+   */
+  _resetEventPlugins: function () {
+    eventPluginOrder = null;
+    for (var pluginName in namesToPlugins) {
+      if (namesToPlugins.hasOwnProperty(pluginName)) {
+        delete namesToPlugins[pluginName];
+      }
+    }
+    EventPluginRegistry.plugins.length = 0;
+
+    var eventNameDispatchConfigs = EventPluginRegistry.eventNameDispatchConfigs;
+    for (var eventName in eventNameDispatchConfigs) {
+      if (eventNameDispatchConfigs.hasOwnProperty(eventName)) {
+        delete eventNameDispatchConfigs[eventName];
+      }
+    }
+
+    var registrationNameModules = EventPluginRegistry.registrationNameModules;
+    for (var registrationName in registrationNameModules) {
+      if (registrationNameModules.hasOwnProperty(registrationName)) {
+        delete registrationNameModules[registrationName];
+      }
+    }
+
+    if (process.env.NODE_ENV !== 'production') {
+      var possibleRegistrationNames = EventPluginRegistry.possibleRegistrationNames;
+      for (var lowerCasedName in possibleRegistrationNames) {
+        if (possibleRegistrationNames.hasOwnProperty(lowerCasedName)) {
+          delete possibleRegistrationNames[lowerCasedName];
+        }
+      }
+    }
+  }
+};
+
+module.exports = EventPluginRegistry;
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
+
+/***/ }),
+/* 32 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(process) {/**
+ * Copyright 2013-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * 
+ */
+
+
+
+var _prodInvariant = __webpack_require__(4);
+
+var invariant = __webpack_require__(2);
+
+var OBSERVED_ERROR = {};
+
+/**
+ * `Transaction` creates a black box that is able to wrap any method such that
+ * certain invariants are maintained before and after the method is invoked
+ * (Even if an exception is thrown while invoking the wrapped method). Whoever
+ * instantiates a transaction can provide enforcers of the invariants at
+ * creation time. The `Transaction` class itself will supply one additional
+ * automatic invariant for you - the invariant that any transaction instance
+ * should not be run while it is already being run. You would typically create a
+ * single instance of a `Transaction` for reuse multiple times, that potentially
+ * is used to wrap several different methods. Wrappers are extremely simple -
+ * they only require implementing two methods.
+ *
+ * <pre>
+ *                       wrappers (injected at creation time)
+ *                                      +        +
+ *                                      |        |
+ *                    +-----------------|--------|--------------+
+ *                    |                 v        |              |
+ *                    |      +---------------+   |              |
+ *                    |   +--|    wrapper1   |---|----+         |
+ *                    |   |  +---------------+   v    |         |
+ *                    |   |          +-------------+  |         |
+ *                    |   |     +----|   wrapper2  |--------+   |
+ *                    |   |     |    +-------------+  |     |   |
+ *                    |   |     |                     |     |   |
+ *                    |   v     v                     v     v   | wrapper
+ *                    | +---+ +---+   +---------+   +---+ +---+ | invariants
+ * perform(anyMethod) | |   | |   |   |         |   |   | |   | | maintained
+ * +----------------->|-|---|-|---|-->|anyMethod|---|---|-|---|-|-------->
+ *                    | |   | |   |   |         |   |   | |   | |
+ *                    | |   | |   |   |         |   |   | |   | |
+ *                    | |   | |   |   |         |   |   | |   | |
+ *                    | +---+ +---+   +---------+   +---+ +---+ |
+ *                    |  initialize                    close    |
+ *                    +-----------------------------------------+
+ * </pre>
+ *
+ * Use cases:
+ * - Preserving the input selection ranges before/after reconciliation.
+ *   Restoring selection even in the event of an unexpected error.
+ * - Deactivating events while rearranging the DOM, preventing blurs/focuses,
+ *   while guaranteeing that afterwards, the event system is reactivated.
+ * - Flushing a queue of collected DOM mutations to the main UI thread after a
+ *   reconciliation takes place in a worker thread.
+ * - Invoking any collected `componentDidUpdate` callbacks after rendering new
+ *   content.
+ * - (Future use case): Wrapping particular flushes of the `ReactWorker` queue
+ *   to preserve the `scrollTop` (an automatic scroll aware DOM).
+ * - (Future use case): Layout calculations before and after DOM updates.
+ *
+ * Transactional plugin API:
+ * - A module that has an `initialize` method that returns any precomputation.
+ * - and a `close` method that accepts the precomputation. `close` is invoked
+ *   when the wrapped process is completed, or has failed.
+ *
+ * @param {Array<TransactionalWrapper>} transactionWrapper Wrapper modules
+ * that implement `initialize` and `close`.
+ * @return {Transaction} Single transaction for reuse in thread.
+ *
+ * @class Transaction
+ */
+var TransactionImpl = {
+  /**
+   * Sets up this instance so that it is prepared for collecting metrics. Does
+   * so such that this setup method may be used on an instance that is already
+   * initialized, in a way that does not consume additional memory upon reuse.
+   * That can be useful if you decide to make your subclass of this mixin a
+   * "PooledClass".
+   */
+  reinitializeTransaction: function () {
+    this.transactionWrappers = this.getTransactionWrappers();
+    if (this.wrapperInitData) {
+      this.wrapperInitData.length = 0;
+    } else {
+      this.wrapperInitData = [];
+    }
+    this._isInTransaction = false;
+  },
+
+  _isInTransaction: false,
+
+  /**
+   * @abstract
+   * @return {Array<TransactionWrapper>} Array of transaction wrappers.
+   */
+  getTransactionWrappers: null,
+
+  isInTransaction: function () {
+    return !!this._isInTransaction;
+  },
+
+  /* eslint-disable space-before-function-paren */
+
+  /**
+   * Executes the function within a safety window. Use this for the top level
+   * methods that result in large amounts of computation/mutations that would
+   * need to be safety checked. The optional arguments helps prevent the need
+   * to bind in many cases.
+   *
+   * @param {function} method Member of scope to call.
+   * @param {Object} scope Scope to invoke from.
+   * @param {Object?=} a Argument to pass to the method.
+   * @param {Object?=} b Argument to pass to the method.
+   * @param {Object?=} c Argument to pass to the method.
+   * @param {Object?=} d Argument to pass to the method.
+   * @param {Object?=} e Argument to pass to the method.
+   * @param {Object?=} f Argument to pass to the method.
+   *
+   * @return {*} Return value from `method`.
+   */
+  perform: function (method, scope, a, b, c, d, e, f) {
+    /* eslint-enable space-before-function-paren */
+    !!this.isInTransaction() ? process.env.NODE_ENV !== 'production' ? invariant(false, 'Transaction.perform(...): Cannot initialize a transaction when there is already an outstanding transaction.') : _prodInvariant('27') : void 0;
+    var errorThrown;
+    var ret;
+    try {
+      this._isInTransaction = true;
+      // Catching errors makes debugging more difficult, so we start with
+      // errorThrown set to true before setting it to false after calling
+      // close -- if it's still set to true in the finally block, it means
+      // one of these calls threw.
+      errorThrown = true;
+      this.initializeAll(0);
+      ret = method.call(scope, a, b, c, d, e, f);
+      errorThrown = false;
+    } finally {
+      try {
+        if (errorThrown) {
+          // If `method` throws, prefer to show that stack trace over any thrown
+          // by invoking `closeAll`.
+          try {
+            this.closeAll(0);
+          } catch (err) {}
+        } else {
+          // Since `method` didn't throw, we don't want to silence the exception
+          // here.
+          this.closeAll(0);
+        }
+      } finally {
+        this._isInTransaction = false;
+      }
+    }
+    return ret;
+  },
+
+  initializeAll: function (startIndex) {
+    var transactionWrappers = this.transactionWrappers;
+    for (var i = startIndex; i < transactionWrappers.length; i++) {
+      var wrapper = transactionWrappers[i];
+      try {
+        // Catching errors makes debugging more difficult, so we start with the
+        // OBSERVED_ERROR state before overwriting it with the real return value
+        // of initialize -- if it's still set to OBSERVED_ERROR in the finally
+        // block, it means wrapper.initialize threw.
+        this.wrapperInitData[i] = OBSERVED_ERROR;
+        this.wrapperInitData[i] = wrapper.initialize ? wrapper.initialize.call(this) : null;
+      } finally {
+        if (this.wrapperInitData[i] === OBSERVED_ERROR) {
+          // The initializer for wrapper i threw an error; initialize the
+          // remaining wrappers but silence any exceptions from them to ensure
+          // that the first error is the one to bubble up.
+          try {
+            this.initializeAll(i + 1);
+          } catch (err) {}
+        }
+      }
+    }
+  },
+
+  /**
+   * Invokes each of `this.transactionWrappers.close[i]` functions, passing into
+   * them the respective return values of `this.transactionWrappers.init[i]`
+   * (`close`rs that correspond to initializers that failed will not be
+   * invoked).
+   */
+  closeAll: function (startIndex) {
+    !this.isInTransaction() ? process.env.NODE_ENV !== 'production' ? invariant(false, 'Transaction.closeAll(): Cannot close transaction when none are open.') : _prodInvariant('28') : void 0;
+    var transactionWrappers = this.transactionWrappers;
+    for (var i = startIndex; i < transactionWrappers.length; i++) {
+      var wrapper = transactionWrappers[i];
+      var initData = this.wrapperInitData[i];
+      var errorThrown;
+      try {
+        // Catching errors makes debugging more difficult, so we start with
+        // errorThrown set to true before setting it to false after calling
+        // close -- if it's still set to true in the finally block, it means
+        // wrapper.close threw.
+        errorThrown = true;
+        if (initData !== OBSERVED_ERROR && wrapper.close) {
+          wrapper.close.call(this, initData);
+        }
+        errorThrown = false;
+      } finally {
+        if (errorThrown) {
+          // The closer for wrapper i threw an error; close the remaining
+          // wrappers but silence any exceptions from them to ensure that the
+          // first error is the one to bubble up.
+          try {
+            this.closeAll(i + 1);
+          } catch (e) {}
+        }
+      }
+    }
+    this.wrapperInitData.length = 0;
+  }
+};
+
+module.exports = TransactionImpl;
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
+
+/***/ }),
+/* 33 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/**
+ * Copyright 2013-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ */
+
+
+
+var SyntheticUIEvent = __webpack_require__(25);
+var ViewportMetrics = __webpack_require__(73);
+
+var getEventModifierState = __webpack_require__(44);
+
+/**
+ * @interface MouseEvent
+ * @see http://www.w3.org/TR/DOM-Level-3-Events/
+ */
+var MouseEventInterface = {
+  screenX: null,
+  screenY: null,
+  clientX: null,
+  clientY: null,
+  ctrlKey: null,
+  shiftKey: null,
+  altKey: null,
+  metaKey: null,
+  getModifierState: getEventModifierState,
+  button: function (event) {
+    // Webkit, Firefox, IE9+
+    // which:  1 2 3
+    // button: 0 1 2 (standard)
+    var button = event.button;
+    if ('which' in event) {
+      return button;
+    }
+    // IE<9
+    // which:  undefined
+    // button: 0 0 0
+    // button: 1 4 2 (onmouseup)
+    return button === 2 ? 2 : button === 4 ? 1 : 0;
+  },
+  buttons: null,
+  relatedTarget: function (event) {
+    return event.relatedTarget || (event.fromElement === event.srcElement ? event.toElement : event.fromElement);
+  },
+  // "Proprietary" Interface.
+  pageX: function (event) {
+    return 'pageX' in event ? event.pageX : event.clientX + ViewportMetrics.currentScrollLeft;
+  },
+  pageY: function (event) {
+    return 'pageY' in event ? event.pageY : event.clientY + ViewportMetrics.currentScrollTop;
+  }
+};
+
+/**
+ * @param {object} dispatchConfig Configuration used to dispatch this event.
+ * @param {string} dispatchMarker Marker identifying the event target.
+ * @param {object} nativeEvent Native browser event.
+ * @extends {SyntheticUIEvent}
+ */
+function SyntheticMouseEvent(dispatchConfig, dispatchMarker, nativeEvent, nativeEventTarget) {
+  return SyntheticUIEvent.call(this, dispatchConfig, dispatchMarker, nativeEvent, nativeEventTarget);
+}
+
+SyntheticUIEvent.augmentClass(SyntheticMouseEvent, MouseEventInterface);
+
+module.exports = SyntheticMouseEvent;
+
+/***/ }),
+/* 34 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/**
+ * Copyright 2013-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ */
+
+
+
+var ExecutionEnvironment = __webpack_require__(8);
+var DOMNamespaces = __webpack_require__(46);
+
+var WHITESPACE_TEST = /^[ \r\n\t\f]/;
+var NONVISIBLE_TEST = /<(!--|link|noscript|meta|script|style)[ \r\n\t\f\/>]/;
+
+var createMicrosoftUnsafeLocalFunction = __webpack_require__(47);
+
+// SVG temp container for IE lacking innerHTML
+var reusableSVGContainer;
+
+/**
+ * Set the innerHTML property of a node, ensuring that whitespace is preserved
+ * even in IE8.
+ *
+ * @param {DOMElement} node
+ * @param {string} html
+ * @internal
+ */
+var setInnerHTML = createMicrosoftUnsafeLocalFunction(function (node, html) {
+  // IE does not have innerHTML for SVG nodes, so instead we inject the
+  // new markup in a temp node and then move the child nodes across into
+  // the target node
+  if (node.namespaceURI === DOMNamespaces.svg && !('innerHTML' in node)) {
+    reusableSVGContainer = reusableSVGContainer || document.createElement('div');
+    reusableSVGContainer.innerHTML = '<svg>' + html + '</svg>';
+    var svgNode = reusableSVGContainer.firstChild;
+    while (svgNode.firstChild) {
+      node.appendChild(svgNode.firstChild);
+    }
+  } else {
+    node.innerHTML = html;
+  }
+});
+
+if (ExecutionEnvironment.canUseDOM) {
+  // IE8: When updating a just created node with innerHTML only leading
+  // whitespace is removed. When updating an existing node with innerHTML
+  // whitespace in root TextNodes is also collapsed.
+  // @see quirksmode.org/bugreports/archives/2004/11/innerhtml_and_t.html
+
+  // Feature detection; only IE8 is known to behave improperly like this.
+  var testElement = document.createElement('div');
+  testElement.innerHTML = ' ';
+  if (testElement.innerHTML === '') {
+    setInnerHTML = function (node, html) {
+      // Magic theory: IE8 supposedly differentiates between added and updated
+      // nodes when processing innerHTML, innerHTML on updated nodes suffers
+      // from worse whitespace behavior. Re-adding a node like this triggers
+      // the initial and more favorable whitespace behavior.
+      // TODO: What to do on a detached node?
+      if (node.parentNode) {
+        node.parentNode.replaceChild(node, node);
+      }
+
+      // We also implement a workaround for non-visible tags disappearing into
+      // thin air on IE8, this only happens if there is no visible text
+      // in-front of the non-visible tags. Piggyback on the whitespace fix
+      // and simply check if any non-visible tags appear in the source.
+      if (WHITESPACE_TEST.test(html) || html[0] === '<' && NONVISIBLE_TEST.test(html)) {
+        // Recover leading whitespace by temporarily prepending any character.
+        // \uFEFF has the potential advantage of being zero-width/invisible.
+        // UglifyJS drops U+FEFF chars when parsing, so use String.fromCharCode
+        // in hopes that this is preserved even if "\uFEFF" is transformed to
+        // the actual Unicode character (by Babel, for example).
+        // https://github.com/mishoo/UglifyJS2/blob/v2.4.20/lib/parse.js#L216
+        node.innerHTML = String.fromCharCode(0xfeff) + html;
+
+        // deleteData leaves an empty `TextNode` which offsets the index of all
+        // children. Definitely want to avoid this.
+        var textNode = node.firstChild;
+        if (textNode.data.length === 1) {
+          node.removeChild(textNode);
+        } else {
+          textNode.deleteData(0, 1);
+        }
+      } else {
+        node.innerHTML = html;
+      }
+    };
+  }
+  testElement = null;
+}
+
+module.exports = setInnerHTML;
+
+/***/ }),
+/* 35 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/**
+ * Copyright 2016-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * Based on the escape-html library, which is used under the MIT License below:
+ *
+ * Copyright (c) 2012-2013 TJ Holowaychuk
+ * Copyright (c) 2015 Andreas Lubbe
+ * Copyright (c) 2015 Tiancheng "Timothy" Gu
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining
+ * a copy of this software and associated documentation files (the
+ * 'Software'), to deal in the Software without restriction, including
+ * without limitation the rights to use, copy, modify, merge, publish,
+ * distribute, sublicense, and/or sell copies of the Software, and to
+ * permit persons to whom the Software is furnished to do so, subject to
+ * the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be
+ * included in all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+ * IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+ * CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+ * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+ * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ *
+ */
+
+
+
+// code copied and modified from escape-html
+/**
+ * Module variables.
+ * @private
+ */
+
+var matchHtmlRegExp = /["'&<>]/;
+
+/**
+ * Escape special characters in the given string of html.
+ *
+ * @param  {string} string The string to escape for inserting into HTML
+ * @return {string}
+ * @public
+ */
+
+function escapeHtml(string) {
+  var str = '' + string;
+  var match = matchHtmlRegExp.exec(str);
+
+  if (!match) {
+    return str;
+  }
+
+  var escape;
+  var html = '';
+  var index = 0;
+  var lastIndex = 0;
+
+  for (index = match.index; index < str.length; index++) {
+    switch (str.charCodeAt(index)) {
+      case 34:
+        // "
+        escape = '&quot;';
+        break;
+      case 38:
+        // &
+        escape = '&amp;';
+        break;
+      case 39:
+        // '
+        escape = '&#x27;'; // modified from escape-html; used to be '&#39'
+        break;
+      case 60:
+        // <
+        escape = '&lt;';
+        break;
+      case 62:
+        // >
+        escape = '&gt;';
+        break;
+      default:
+        continue;
+    }
+
+    if (lastIndex !== index) {
+      html += str.substring(lastIndex, index);
+    }
+
+    lastIndex = index + 1;
+    html += escape;
+  }
+
+  return lastIndex !== index ? html + str.substring(lastIndex, index) : html;
+}
+// end code copied and modified from escape-html
+
+/**
+ * Escapes text to prevent scripting attacks.
+ *
+ * @param {*} text Text value to escape.
+ * @return {string} An escaped string.
+ */
+function escapeTextContentForBrowser(text) {
+  if (typeof text === 'boolean' || typeof text === 'number') {
+    // this shortcircuit helps perf for types that we know will never have
+    // special characters, especially given that this function is used often
+    // for numeric dom ids.
+    return '' + text;
+  }
+  return escapeHtml(text);
+}
+
+module.exports = escapeTextContentForBrowser;
+
+/***/ }),
+/* 36 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/**
+ * Copyright 2013-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ */
+
+
+
+var _assign = __webpack_require__(5);
+
+var EventPluginRegistry = __webpack_require__(31);
+var ReactEventEmitterMixin = __webpack_require__(255);
+var ViewportMetrics = __webpack_require__(73);
+
+var getVendorPrefixedEventName = __webpack_require__(256);
+var isEventSupported = __webpack_require__(43);
+
+/**
+ * Summary of `ReactBrowserEventEmitter` event handling:
+ *
+ *  - Top-level delegation is used to trap most native browser events. This
+ *    may only occur in the main thread and is the responsibility of
+ *    ReactEventListener, which is injected and can therefore support pluggable
+ *    event sources. This is the only work that occurs in the main thread.
+ *
+ *  - We normalize and de-duplicate events to account for browser quirks. This
+ *    may be done in the worker thread.
+ *
+ *  - Forward these native events (with the associated top-level type used to
+ *    trap it) to `EventPluginHub`, which in turn will ask plugins if they want
+ *    to extract any synthetic events.
+ *
+ *  - The `EventPluginHub` will then process each event by annotating them with
+ *    "dispatches", a sequence of listeners and IDs that care about that event.
+ *
+ *  - The `EventPluginHub` then dispatches the events.
+ *
+ * Overview of React and the event system:
+ *
+ * +------------+    .
+ * |    DOM     |    .
+ * +------------+    .
+ *       |           .
+ *       v           .
+ * +------------+    .
+ * | ReactEvent |    .
+ * |  Listener  |    .
+ * +------------+    .                         +-----------+
+ *       |           .               +--------+|SimpleEvent|
+ *       |           .               |         |Plugin     |
+ * +-----|------+    .               v         +-----------+
+ * |     |      |    .    +--------------+                    +------------+
+ * |     +-----------.--->|EventPluginHub|                    |    Event   |
+ * |            |    .    |              |     +-----------+  | Propagators|
+ * | ReactEvent |    .    |              |     |TapEvent   |  |------------|
+ * |  Emitter   |    .    |              |<---+|Plugin     |  |other plugin|
+ * |            |    .    |              |     +-----------+  |  utilities |
+ * |     +-----------.--->|              |                    +------------+
+ * |     |      |    .    +--------------+
+ * +-----|------+    .                ^        +-----------+
+ *       |           .                |        |Enter/Leave|
+ *       +           .                +-------+|Plugin     |
+ * +-------------+   .                         +-----------+
+ * | application |   .
+ * |-------------|   .
+ * |             |   .
+ * |             |   .
+ * +-------------+   .
+ *                   .
+ *    React Core     .  General Purpose Event Plugin System
+ */
+
+var hasEventPageXY;
+var alreadyListeningTo = {};
+var isMonitoringScrollValue = false;
+var reactTopListenersCounter = 0;
+
+// For events like 'submit' which don't consistently bubble (which we trap at a
+// lower node than `document`), binding at `document` would cause duplicate
+// events so we don't include them here
+var topEventMapping = {
+  topAbort: 'abort',
+  topAnimationEnd: getVendorPrefixedEventName('animationend') || 'animationend',
+  topAnimationIteration: getVendorPrefixedEventName('animationiteration') || 'animationiteration',
+  topAnimationStart: getVendorPrefixedEventName('animationstart') || 'animationstart',
+  topBlur: 'blur',
+  topCanPlay: 'canplay',
+  topCanPlayThrough: 'canplaythrough',
+  topChange: 'change',
+  topClick: 'click',
+  topCompositionEnd: 'compositionend',
+  topCompositionStart: 'compositionstart',
+  topCompositionUpdate: 'compositionupdate',
+  topContextMenu: 'contextmenu',
+  topCopy: 'copy',
+  topCut: 'cut',
+  topDoubleClick: 'dblclick',
+  topDrag: 'drag',
+  topDragEnd: 'dragend',
+  topDragEnter: 'dragenter',
+  topDragExit: 'dragexit',
+  topDragLeave: 'dragleave',
+  topDragOver: 'dragover',
+  topDragStart: 'dragstart',
+  topDrop: 'drop',
+  topDurationChange: 'durationchange',
+  topEmptied: 'emptied',
+  topEncrypted: 'encrypted',
+  topEnded: 'ended',
+  topError: 'error',
+  topFocus: 'focus',
+  topInput: 'input',
+  topKeyDown: 'keydown',
+  topKeyPress: 'keypress',
+  topKeyUp: 'keyup',
+  topLoadedData: 'loadeddata',
+  topLoadedMetadata: 'loadedmetadata',
+  topLoadStart: 'loadstart',
+  topMouseDown: 'mousedown',
+  topMouseMove: 'mousemove',
+  topMouseOut: 'mouseout',
+  topMouseOver: 'mouseover',
+  topMouseUp: 'mouseup',
+  topPaste: 'paste',
+  topPause: 'pause',
+  topPlay: 'play',
+  topPlaying: 'playing',
+  topProgress: 'progress',
+  topRateChange: 'ratechange',
+  topScroll: 'scroll',
+  topSeeked: 'seeked',
+  topSeeking: 'seeking',
+  topSelectionChange: 'selectionchange',
+  topStalled: 'stalled',
+  topSuspend: 'suspend',
+  topTextInput: 'textInput',
+  topTimeUpdate: 'timeupdate',
+  topTouchCancel: 'touchcancel',
+  topTouchEnd: 'touchend',
+  topTouchMove: 'touchmove',
+  topTouchStart: 'touchstart',
+  topTransitionEnd: getVendorPrefixedEventName('transitionend') || 'transitionend',
+  topVolumeChange: 'volumechange',
+  topWaiting: 'waiting',
+  topWheel: 'wheel'
+};
+
+/**
+ * To ensure no conflicts with other potential React instances on the page
+ */
+var topListenersIDKey = '_reactListenersID' + String(Math.random()).slice(2);
+
+function getListeningForDocument(mountAt) {
+  // In IE8, `mountAt` is a host object and doesn't have `hasOwnProperty`
+  // directly.
+  if (!Object.prototype.hasOwnProperty.call(mountAt, topListenersIDKey)) {
+    mountAt[topListenersIDKey] = reactTopListenersCounter++;
+    alreadyListeningTo[mountAt[topListenersIDKey]] = {};
+  }
+  return alreadyListeningTo[mountAt[topListenersIDKey]];
+}
+
+/**
+ * `ReactBrowserEventEmitter` is used to attach top-level event listeners. For
+ * example:
+ *
+ *   EventPluginHub.putListener('myID', 'onClick', myFunction);
+ *
+ * This would allocate a "registration" of `('onClick', myFunction)` on 'myID'.
+ *
+ * @internal
+ */
+var ReactBrowserEventEmitter = _assign({}, ReactEventEmitterMixin, {
+  /**
+   * Injectable event backend
+   */
+  ReactEventListener: null,
+
+  injection: {
+    /**
+     * @param {object} ReactEventListener
+     */
+    injectReactEventListener: function (ReactEventListener) {
+      ReactEventListener.setHandleTopLevel(ReactBrowserEventEmitter.handleTopLevel);
+      ReactBrowserEventEmitter.ReactEventListener = ReactEventListener;
+    }
+  },
+
+  /**
+   * Sets whether or not any created callbacks should be enabled.
+   *
+   * @param {boolean} enabled True if callbacks should be enabled.
+   */
+  setEnabled: function (enabled) {
+    if (ReactBrowserEventEmitter.ReactEventListener) {
+      ReactBrowserEventEmitter.ReactEventListener.setEnabled(enabled);
+    }
+  },
+
+  /**
+   * @return {boolean} True if callbacks are enabled.
+   */
+  isEnabled: function () {
+    return !!(ReactBrowserEventEmitter.ReactEventListener && ReactBrowserEventEmitter.ReactEventListener.isEnabled());
+  },
+
+  /**
+   * We listen for bubbled touch events on the document object.
+   *
+   * Firefox v8.01 (and possibly others) exhibited strange behavior when
+   * mounting `onmousemove` events at some node that was not the document
+   * element. The symptoms were that if your mouse is not moving over something
+   * contained within that mount point (for example on the background) the
+   * top-level listeners for `onmousemove` won't be called. However, if you
+   * register the `mousemove` on the document object, then it will of course
+   * catch all `mousemove`s. This along with iOS quirks, justifies restricting
+   * top-level listeners to the document object only, at least for these
+   * movement types of events and possibly all events.
+   *
+   * @see http://www.quirksmode.org/blog/archives/2010/09/click_event_del.html
+   *
+   * Also, `keyup`/`keypress`/`keydown` do not bubble to the window on IE, but
+   * they bubble to document.
+   *
+   * @param {string} registrationName Name of listener (e.g. `onClick`).
+   * @param {object} contentDocumentHandle Document which owns the container
+   */
+  listenTo: function (registrationName, contentDocumentHandle) {
+    var mountAt = contentDocumentHandle;
+    var isListening = getListeningForDocument(mountAt);
+    var dependencies = EventPluginRegistry.registrationNameDependencies[registrationName];
+
+    for (var i = 0; i < dependencies.length; i++) {
+      var dependency = dependencies[i];
+      if (!(isListening.hasOwnProperty(dependency) && isListening[dependency])) {
+        if (dependency === 'topWheel') {
+          if (isEventSupported('wheel')) {
+            ReactBrowserEventEmitter.ReactEventListener.trapBubbledEvent('topWheel', 'wheel', mountAt);
+          } else if (isEventSupported('mousewheel')) {
+            ReactBrowserEventEmitter.ReactEventListener.trapBubbledEvent('topWheel', 'mousewheel', mountAt);
+          } else {
+            // Firefox needs to capture a different mouse scroll event.
+            // @see http://www.quirksmode.org/dom/events/tests/scroll.html
+            ReactBrowserEventEmitter.ReactEventListener.trapBubbledEvent('topWheel', 'DOMMouseScroll', mountAt);
+          }
+        } else if (dependency === 'topScroll') {
+          if (isEventSupported('scroll', true)) {
+            ReactBrowserEventEmitter.ReactEventListener.trapCapturedEvent('topScroll', 'scroll', mountAt);
+          } else {
+            ReactBrowserEventEmitter.ReactEventListener.trapBubbledEvent('topScroll', 'scroll', ReactBrowserEventEmitter.ReactEventListener.WINDOW_HANDLE);
+          }
+        } else if (dependency === 'topFocus' || dependency === 'topBlur') {
+          if (isEventSupported('focus', true)) {
+            ReactBrowserEventEmitter.ReactEventListener.trapCapturedEvent('topFocus', 'focus', mountAt);
+            ReactBrowserEventEmitter.ReactEventListener.trapCapturedEvent('topBlur', 'blur', mountAt);
+          } else if (isEventSupported('focusin')) {
+            // IE has `focusin` and `focusout` events which bubble.
+            // @see http://www.quirksmode.org/blog/archives/2008/04/delegating_the.html
+            ReactBrowserEventEmitter.ReactEventListener.trapBubbledEvent('topFocus', 'focusin', mountAt);
+            ReactBrowserEventEmitter.ReactEventListener.trapBubbledEvent('topBlur', 'focusout', mountAt);
+          }
+
+          // to make sure blur and focus event listeners are only attached once
+          isListening.topBlur = true;
+          isListening.topFocus = true;
+        } else if (topEventMapping.hasOwnProperty(dependency)) {
+          ReactBrowserEventEmitter.ReactEventListener.trapBubbledEvent(dependency, topEventMapping[dependency], mountAt);
+        }
+
+        isListening[dependency] = true;
+      }
+    }
+  },
+
+  trapBubbledEvent: function (topLevelType, handlerBaseName, handle) {
+    return ReactBrowserEventEmitter.ReactEventListener.trapBubbledEvent(topLevelType, handlerBaseName, handle);
+  },
+
+  trapCapturedEvent: function (topLevelType, handlerBaseName, handle) {
+    return ReactBrowserEventEmitter.ReactEventListener.trapCapturedEvent(topLevelType, handlerBaseName, handle);
+  },
+
+  /**
+   * Protect against document.createEvent() returning null
+   * Some popup blocker extensions appear to do this:
+   * https://github.com/facebook/react/issues/6887
+   */
+  supportsEventPageXY: function () {
+    if (!document.createEvent) {
+      return false;
+    }
+    var ev = document.createEvent('MouseEvent');
+    return ev != null && 'pageX' in ev;
+  },
+
+  /**
+   * Listens to window scroll and resize events. We cache scroll values so that
+   * application code can access them without triggering reflows.
+   *
+   * ViewportMetrics is only used by SyntheticMouse/TouchEvent and only when
+   * pageX/pageY isn't supported (legacy browsers).
+   *
+   * NOTE: Scroll events do not bubble.
+   *
+   * @see http://www.quirksmode.org/dom/events/scroll.html
+   */
+  ensureScrollValueMonitoring: function () {
+    if (hasEventPageXY === undefined) {
+      hasEventPageXY = ReactBrowserEventEmitter.supportsEventPageXY();
+    }
+    if (!hasEventPageXY && !isMonitoringScrollValue) {
+      var refresh = ViewportMetrics.refreshScrollValues;
+      ReactBrowserEventEmitter.ReactEventListener.monitorScrollValue(refresh);
+      isMonitoringScrollValue = true;
+    }
+  }
+});
+
+module.exports = ReactBrowserEventEmitter;
+
+/***/ }),
+/* 37 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
+ * A higher-order-component for handling onClickOutside for React components.
+ */
+(function(root) {
+
+  // administrative
+  var registeredComponents = [];
+  var handlers = [];
+  var IGNORE_CLASS = 'ignore-react-onclickoutside';
+  var DEFAULT_EVENTS = ['mousedown', 'touchstart'];
+
+  /**
+   * Check whether some DOM node is our Component's node.
+   */
+  var isNodeFound = function(current, componentNode, ignoreClass) {
+    if (current === componentNode) {
+      return true;
+    }
+    // SVG <use/> elements do not technically reside in the rendered DOM, so
+    // they do not have classList directly, but they offer a link to their
+    // corresponding element, which can have classList. This extra check is for
+    // that case.
+    // See: http://www.w3.org/TR/SVG11/struct.html#InterfaceSVGUseElement
+    // Discussion: https://github.com/Pomax/react-onclickoutside/pull/17
+    if (current.correspondingElement) {
+      return current.correspondingElement.classList.contains(ignoreClass);
+    }
+    return current.classList.contains(ignoreClass);
+  };
+
+  /**
+   * Try to find our node in a hierarchy of nodes, returning the document
+   * node as highest noode if our node is not found in the path up.
+   */
+  var findHighest = function(current, componentNode, ignoreClass) {
+    if (current === componentNode) {
+      return true;
+    }
+
+    // If source=local then this event came from 'somewhere'
+    // inside and should be ignored. We could handle this with
+    // a layered approach, too, but that requires going back to
+    // thinking in terms of Dom node nesting, running counter
+    // to React's 'you shouldn't care about the DOM' philosophy.
+    while(current.parentNode) {
+      if (isNodeFound(current, componentNode, ignoreClass)) {
+        return true;
+      }
+      current = current.parentNode;
+    }
+    return current;
+  };
+
+  /**
+   * Check if the browser scrollbar was clicked
+   */
+  var clickedScrollbar = function(evt) {
+    return document.documentElement.clientWidth <= evt.clientX || document.documentElement.clientHeight <= evt.clientY;
+  };
+
+  /**
+   * Generate the event handler that checks whether a clicked DOM node
+   * is inside of, or lives outside of, our Component's node tree.
+   */
+  var generateOutsideCheck = function(componentNode, componentInstance, eventHandler, ignoreClass, excludeScrollbar, preventDefault, stopPropagation) {
+    return function(evt) {
+      if (preventDefault) {
+        evt.preventDefault();
+      }
+      if (stopPropagation) {
+        evt.stopPropagation();
+      }
+      var current = evt.target;
+      if((excludeScrollbar && clickedScrollbar(evt)) || (findHighest(current, componentNode, ignoreClass) !== document)) {
+        return;
+      }
+      eventHandler(evt);
+    };
+  };
+
+  /**
+   * This function generates the HOC function that you'll use
+   * in order to impart onOutsideClick listening to an
+   * arbitrary component. It gets called at the end of the
+   * bootstrapping code to yield an instance of the
+   * onClickOutsideHOC function defined inside setupHOC().
+   */
+  function setupHOC(root, React, ReactDOM, createReactClass) {
+
+    // The actual Component-wrapping HOC:
+    return function onClickOutsideHOC(Component, config) {
+      var wrapComponentWithOnClickOutsideHandling = createReactClass({
+        statics: {
+          /**
+           * Access the wrapped Component's class.
+           */
+          getClass: function() {
+            if (Component.getClass) {
+              return Component.getClass();
+            }
+            return Component;
+          }
+        },
+
+        /**
+         * Access the wrapped Component's instance.
+         */
+        getInstance: function() {
+          return Component.prototype.isReactComponent ? this.refs.instance : this;
+        },
+
+        // this is given meaning in componentDidMount
+        __outsideClickHandler: function() {},
+
+        getDefaultProps: function() {
+          return {
+            excludeScrollbar: config && config.excludeScrollbar
+          };
+        },
+
+        /**
+         * Add click listeners to the current document,
+         * linked to this component's state.
+         */
+        componentDidMount: function() {
+          // If we are in an environment without a DOM such
+          // as shallow rendering or snapshots then we exit
+          // early to prevent any unhandled errors being thrown.
+          if (typeof document === 'undefined' || !document.createElement){
+            return;
+          }
+
+          var instance = this.getInstance();
+          var clickOutsideHandler;
+
+          if(config && typeof config.handleClickOutside === 'function') {
+            clickOutsideHandler = config.handleClickOutside(instance);
+            if(typeof clickOutsideHandler !== 'function') {
+              throw new Error('Component lacks a function for processing outside click events specified by the handleClickOutside config option.');
+            }
+          } else if(typeof instance.handleClickOutside === 'function') {
+            if (React.Component.prototype.isPrototypeOf(instance)) {
+              clickOutsideHandler = instance.handleClickOutside.bind(instance);
+            } else {
+              clickOutsideHandler = instance.handleClickOutside;
+            }
+          } else if(typeof instance.props.handleClickOutside === 'function') {
+            clickOutsideHandler = instance.props.handleClickOutside;
+          } else {
+            throw new Error('Component lacks a handleClickOutside(event) function for processing outside click events.');
+          }
+
+          var componentNode = ReactDOM.findDOMNode(instance);
+          if (componentNode === null) {
+            console.warn('Antipattern warning: there was no DOM node associated with the component that is being wrapped by outsideClick.');
+            console.warn([
+              'This is typically caused by having a component that starts life with a render function that',
+              'returns `null` (due to a state or props value), so that the component \'exist\' in the React',
+              'chain of components, but not in the DOM.\n\nInstead, you need to refactor your code so that the',
+              'decision of whether or not to show your component is handled by the parent, in their render()',
+              'function.\n\nIn code, rather than:\n\n  A{render(){return check? <.../> : null;}\n  B{render(){<A check=... />}\n\nmake sure that you',
+              'use:\n\n  A{render(){return <.../>}\n  B{render(){return <...>{ check ? <A/> : null }<...>}}\n\nThat is:',
+              'the parent is always responsible for deciding whether or not to render any of its children.',
+              'It is not the child\'s responsibility to decide whether a render instruction from above should',
+              'get ignored or not by returning `null`.\n\nWhen any component gets its render() function called,',
+              'that is the signal that it should be rendering its part of the UI. It may in turn decide not to',
+              'render all of *its* children, but it should never return `null` for itself. It is not responsible',
+              'for that decision.'
+            ].join(' '));
+          }
+
+          var fn = this.__outsideClickHandler = generateOutsideCheck(
+            componentNode,
+            instance,
+            clickOutsideHandler,
+            this.props.outsideClickIgnoreClass || IGNORE_CLASS,
+            this.props.excludeScrollbar, // fallback not needed, prop always exists because of getDefaultProps
+            this.props.preventDefault || false,
+            this.props.stopPropagation || false
+          );
+
+          var pos = registeredComponents.length;
+          registeredComponents.push(this);
+          handlers[pos] = fn;
+
+          // If there is a truthy disableOnClickOutside property for this
+          // component, don't immediately start listening for outside events.
+          if (!this.props.disableOnClickOutside) {
+            this.enableOnClickOutside();
+          }
+        },
+
+        /**
+        * Track for disableOnClickOutside props changes and enable/disable click outside
+        */
+        componentWillReceiveProps: function(nextProps) {
+          if (this.props.disableOnClickOutside && !nextProps.disableOnClickOutside) {
+            this.enableOnClickOutside();
+          } else if (!this.props.disableOnClickOutside && nextProps.disableOnClickOutside) {
+            this.disableOnClickOutside();
+          }
+        },
+
+        /**
+         * Remove the document's event listeners
+         */
+        componentWillUnmount: function() {
+          this.disableOnClickOutside();
+          this.__outsideClickHandler = false;
+          var pos = registeredComponents.indexOf(this);
+          if( pos>-1) {
+            // clean up so we don't leak memory
+            if (handlers[pos]) { handlers.splice(pos, 1); }
+            registeredComponents.splice(pos, 1);
+          }
+        },
+
+        /**
+         * Can be called to explicitly enable event listening
+         * for clicks and touches outside of this element.
+         */
+        enableOnClickOutside: function() {
+          var fn = this.__outsideClickHandler;
+          if (typeof document !== 'undefined') {
+            var events = this.props.eventTypes || DEFAULT_EVENTS;
+            if (!events.forEach) {
+              events = [events];
+            }
+            events.forEach(function (eventName) {
+              document.addEventListener(eventName, fn);
+            });
+          }
+        },
+
+        /**
+         * Can be called to explicitly disable event listening
+         * for clicks and touches outside of this element.
+         */
+        disableOnClickOutside: function() {
+          var fn = this.__outsideClickHandler;
+          if (typeof document !== 'undefined') {
+            var events = this.props.eventTypes || DEFAULT_EVENTS;
+            if (!events.forEach) {
+              events = [events];
+            }
+            events.forEach(function (eventName) {
+              document.removeEventListener(eventName, fn);
+            });
+          }
+        },
+
+        /**
+         * Pass-through render
+         */
+        render: function() {
+          var passedProps = this.props;
+          var props = {};
+          Object.keys(this.props).forEach(function(key) {
+            if (key !== 'excludeScrollbar') {
+              props[key] = passedProps[key];
+            }
+          });
+          if (Component.prototype.isReactComponent) {
+            props.ref = 'instance';
+          }
+          props.disableOnClickOutside = this.disableOnClickOutside;
+          props.enableOnClickOutside = this.enableOnClickOutside;
+          return React.createElement(Component, props);
+        }
+      });
+
+      // Add display name for React devtools
+      (function bindWrappedComponentName(c, wrapper) {
+        var componentName = c.displayName || c.name || 'Component';
+        wrapper.displayName = 'OnClickOutside(' + componentName + ')';
+      }(Component, wrapComponentWithOnClickOutsideHandling));
+
+      return wrapComponentWithOnClickOutsideHandling;
+    };
+  }
+
+  /**
+   * This function sets up the library in ways that
+   * work with the various modulde loading solutions
+   * used in JavaScript land today.
+   */
+  function setupBinding(root, factory) {
+    if (true) {
+      // AMD. Register as an anonymous module.
+      !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(7),__webpack_require__(64),__webpack_require__(18)], __WEBPACK_AMD_DEFINE_RESULT__ = function(React, ReactDom, createReactClass) {
+        if (!createReactClass) createReactClass = React.createClass;
+        return factory(root, React, ReactDom, createReactClass);
+      }.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+    } else if (typeof exports === 'object') {
+      // Node. Note that this does not work with strict
+      // CommonJS, but only CommonJS-like environments
+      // that support module.exports
+      module.exports = factory(root, require('react'), require('react-dom'), require('create-react-class'));
+    } else {
+      // Browser globals (root is window)
+      var createReactClass = React.createClass ? React.createClass : window.createReactClass;
+      root.onClickOutside = factory(root, React, ReactDOM, createReactClass);
+    }
+  }
+
+  // Make it all happen
+  setupBinding(root, setupHOC);
+
+}(this));
 
 
 /***/ }),
@@ -10526,7 +10526,7 @@ var ReactDOMComponentTree = __webpack_require__(6);
 var ReactInstrumentation = __webpack_require__(11);
 
 var createMicrosoftUnsafeLocalFunction = __webpack_require__(47);
-var setInnerHTML = __webpack_require__(32);
+var setInnerHTML = __webpack_require__(34);
 var setTextContent = __webpack_require__(74);
 
 function getNodeAfter(parentNode, node) {
@@ -11869,8 +11869,8 @@ var _prodInvariant = __webpack_require__(20),
 
 var ReactNoopUpdateQueue = __webpack_require__(57);
 
-var canDefineProperty = __webpack_require__(27);
-var emptyObject = __webpack_require__(28);
+var canDefineProperty = __webpack_require__(29);
+var emptyObject = __webpack_require__(30);
 var invariant = __webpack_require__(2);
 var lowPriorityWarning = __webpack_require__(38);
 
@@ -12198,7 +12198,7 @@ var ReactElement = __webpack_require__(16);
 
 var checkReactTypeSpec = __webpack_require__(213);
 
-var canDefineProperty = __webpack_require__(27);
+var canDefineProperty = __webpack_require__(29);
 var getIteratorFn = __webpack_require__(59);
 var warning = __webpack_require__(3);
 var lowPriorityWarning = __webpack_require__(38);
@@ -12996,7 +12996,7 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
 
 var _assign = __webpack_require__(5);
 
-var emptyObject = __webpack_require__(28);
+var emptyObject = __webpack_require__(30);
 var _invariant = __webpack_require__(2);
 
 if (process.env.NODE_ENV !== 'production') {
@@ -14412,8 +14412,8 @@ module.exports = ViewportMetrics;
 
 
 var ExecutionEnvironment = __webpack_require__(8);
-var escapeTextContentForBrowser = __webpack_require__(33);
-var setInnerHTML = __webpack_require__(32);
+var escapeTextContentForBrowser = __webpack_require__(35);
+var setInnerHTML = __webpack_require__(34);
 
 /**
  * Set the textContent property of a node, ensuring that whitespace is preserved
@@ -15860,7 +15860,7 @@ var _prodInvariant = __webpack_require__(4);
 var DOMLazyTree = __webpack_require__(22);
 var DOMProperty = __webpack_require__(15);
 var React = __webpack_require__(19);
-var ReactBrowserEventEmitter = __webpack_require__(34);
+var ReactBrowserEventEmitter = __webpack_require__(36);
 var ReactCurrentOwner = __webpack_require__(12);
 var ReactDOMComponentTree = __webpack_require__(6);
 var ReactDOMContainerInfo = __webpack_require__(296);
@@ -15873,10 +15873,10 @@ var ReactReconciler = __webpack_require__(21);
 var ReactUpdateQueue = __webpack_require__(53);
 var ReactUpdates = __webpack_require__(13);
 
-var emptyObject = __webpack_require__(28);
+var emptyObject = __webpack_require__(30);
 var instantiateReactComponent = __webpack_require__(80);
 var invariant = __webpack_require__(2);
-var setInnerHTML = __webpack_require__(32);
+var setInnerHTML = __webpack_require__(34);
 var shouldUpdateReactComponent = __webpack_require__(51);
 var warning = __webpack_require__(3);
 
@@ -30619,7 +30619,7 @@ module.exports = DefaultEventPluginOrder;
 
 var EventPropagators = __webpack_require__(23);
 var ReactDOMComponentTree = __webpack_require__(6);
-var SyntheticMouseEvent = __webpack_require__(31);
+var SyntheticMouseEvent = __webpack_require__(33);
 
 var eventTypes = {
   mouseEnter: {
@@ -31420,8 +31420,8 @@ var DOMNamespaces = __webpack_require__(46);
 var DOMProperty = __webpack_require__(15);
 var DOMPropertyOperations = __webpack_require__(77);
 var EventPluginHub = __webpack_require__(24);
-var EventPluginRegistry = __webpack_require__(29);
-var ReactBrowserEventEmitter = __webpack_require__(34);
+var EventPluginRegistry = __webpack_require__(31);
+var ReactBrowserEventEmitter = __webpack_require__(36);
 var ReactDOMComponentFlags = __webpack_require__(65);
 var ReactDOMComponentTree = __webpack_require__(6);
 var ReactDOMInput = __webpack_require__(257);
@@ -31433,7 +31433,7 @@ var ReactMultiChild = __webpack_require__(260);
 var ReactServerRenderingTransaction = __webpack_require__(269);
 
 var emptyFunction = __webpack_require__(10);
-var escapeTextContentForBrowser = __webpack_require__(33);
+var escapeTextContentForBrowser = __webpack_require__(35);
 var invariant = __webpack_require__(2);
 var isEventSupported = __webpack_require__(43);
 var shallowEqual = __webpack_require__(50);
@@ -32958,7 +32958,7 @@ module.exports = memoizeStringOnly;
 
 
 
-var escapeTextContentForBrowser = __webpack_require__(33);
+var escapeTextContentForBrowser = __webpack_require__(35);
 
 /**
  * Escapes attribute value to prevent scripting attacks.
@@ -34346,7 +34346,7 @@ if (process.env.NODE_ENV !== 'production') {
   var checkReactTypeSpec = __webpack_require__(263);
 }
 
-var emptyObject = __webpack_require__(28);
+var emptyObject = __webpack_require__(30);
 var invariant = __webpack_require__(2);
 var shallowEqual = __webpack_require__(50);
 var shouldUpdateReactComponent = __webpack_require__(51);
@@ -35542,7 +35542,7 @@ module.exports = flattenChildren;
 var _assign = __webpack_require__(5);
 
 var PooledClass = __webpack_require__(17);
-var Transaction = __webpack_require__(30);
+var Transaction = __webpack_require__(32);
 var ReactInstrumentation = __webpack_require__(11);
 var ReactServerUpdateQueue = __webpack_require__(270);
 
@@ -35994,7 +35994,7 @@ var DOMChildrenOperations = __webpack_require__(45);
 var DOMLazyTree = __webpack_require__(22);
 var ReactDOMComponentTree = __webpack_require__(6);
 
-var escapeTextContentForBrowser = __webpack_require__(33);
+var escapeTextContentForBrowser = __webpack_require__(35);
 var invariant = __webpack_require__(2);
 var validateDOMNesting = __webpack_require__(54);
 
@@ -36158,7 +36158,7 @@ module.exports = ReactDOMTextComponent;
 var _assign = __webpack_require__(5);
 
 var ReactUpdates = __webpack_require__(13);
-var Transaction = __webpack_require__(30);
+var Transaction = __webpack_require__(32);
 
 var emptyFunction = __webpack_require__(10);
 
@@ -36437,7 +36437,7 @@ var EventPluginHub = __webpack_require__(24);
 var EventPluginUtils = __webpack_require__(40);
 var ReactComponentEnvironment = __webpack_require__(49);
 var ReactEmptyComponent = __webpack_require__(82);
-var ReactBrowserEventEmitter = __webpack_require__(34);
+var ReactBrowserEventEmitter = __webpack_require__(36);
 var ReactHostComponent = __webpack_require__(83);
 var ReactUpdates = __webpack_require__(13);
 
@@ -36475,10 +36475,10 @@ var _assign = __webpack_require__(5);
 
 var CallbackQueue = __webpack_require__(69);
 var PooledClass = __webpack_require__(17);
-var ReactBrowserEventEmitter = __webpack_require__(34);
+var ReactBrowserEventEmitter = __webpack_require__(36);
 var ReactInputSelection = __webpack_require__(86);
 var ReactInstrumentation = __webpack_require__(11);
-var Transaction = __webpack_require__(30);
+var Transaction = __webpack_require__(32);
 var ReactUpdateQueue = __webpack_require__(53);
 
 /**
@@ -37567,7 +37567,7 @@ var SyntheticClipboardEvent = __webpack_require__(288);
 var SyntheticEvent = __webpack_require__(14);
 var SyntheticFocusEvent = __webpack_require__(289);
 var SyntheticKeyboardEvent = __webpack_require__(290);
-var SyntheticMouseEvent = __webpack_require__(31);
+var SyntheticMouseEvent = __webpack_require__(33);
 var SyntheticDragEvent = __webpack_require__(292);
 var SyntheticTouchEvent = __webpack_require__(293);
 var SyntheticTransitionEvent = __webpack_require__(294);
@@ -38122,7 +38122,7 @@ module.exports = getEventKey;
 
 
 
-var SyntheticMouseEvent = __webpack_require__(31);
+var SyntheticMouseEvent = __webpack_require__(33);
 
 /**
  * @interface DragEvent
@@ -38257,7 +38257,7 @@ module.exports = SyntheticTransitionEvent;
 
 
 
-var SyntheticMouseEvent = __webpack_require__(31);
+var SyntheticMouseEvent = __webpack_require__(33);
 
 /**
  * @interface WheelEvent
@@ -38587,7 +38587,7 @@ module.exports = ReactMount.renderSubtreeIntoContainer;
 
 
 var DOMProperty = __webpack_require__(15);
-var EventPluginRegistry = __webpack_require__(29);
+var EventPluginRegistry = __webpack_require__(31);
 var ReactComponentTreeHook = __webpack_require__(9);
 
 var warning = __webpack_require__(3);
@@ -38890,6 +38890,8 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+__webpack_require__(334);
+
 var RequestsApp = function (_React$Component) {
     _inherits(RequestsApp, _React$Component);
 
@@ -38900,6 +38902,11 @@ var RequestsApp = function (_React$Component) {
 
         _this.state = {
             requests: [],
+            ageCat: [],
+            weightCat: [],
+            regions: [],
+            games: [],
+            editRequest: null,
             filter: {
                 games: [],
                 year: new Date(),
@@ -38917,6 +38924,8 @@ var RequestsApp = function (_React$Component) {
         _this.changePage = _this.changeCurrentPage.bind(_this);
         _this.onFilter = _this.runFilter.bind(_this);
         _this.onEdit = _this.editRequest.bind(_this);
+        _this.onClose = _this.closeRequest.bind(_this);
+        _this.changeRequest = _this.onRequestChange.bind(_this);
         return _this;
     }
 
@@ -38935,6 +38944,20 @@ var RequestsApp = function (_React$Component) {
             var newFilter = this.state.filter;
             newFilter[field] = value;
             this.setState({ filter: newFilter });
+        }
+    }, {
+        key: "onRequestChange",
+        value: function onRequestChange(field, value) {
+            var parent = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+
+            var request = this.state.editRequest;
+            if (parent) {
+                request[parent][field] = value;
+                if (parent === "results") request["results"]["total"] = parseFloat(request["results"]["squat"]) + parseFloat(request["results"]["press"]) + parseFloat(request["results"]["lift"]);
+            } else {
+                request[field] = value;
+            }
+            this.setState({ editRequest: request });
             console.log(this.state);
         }
     }, {
@@ -38944,11 +38967,48 @@ var RequestsApp = function (_React$Component) {
 
             this.setState({ isLoading: true });
             services.getOpenedGames({ currentDay: (0, _moment2.default)(new Date()).format("YYYY-MM-DD") }).then(function (data) {
+                _this2.setState({ games: JSON.parse(data) });
                 _this2.onFielterChange("games", JSON.parse(data));
                 _this2.onFielterChange("currentGame", JSON.parse(data)[0].id);
                 _this2.setState({ isLoading: false });
                 _this2.setDefaultGame();
                 _this2.getCountOfAllRequests();
+                _this2.getAgeCategories();
+                _this2.getWeightCategories();
+                _this2.getRegions();
+            });
+        }
+    }, {
+        key: "getAgeCategories",
+        value: function getAgeCategories() {
+            var _this3 = this;
+
+            this.setState({ isLoading: true });
+            services.getAgeCategories().then(function (data) {
+                _this3.setState({ ageCat: JSON.parse(data) });
+                _this3.setState({ isLoading: false });
+            });
+        }
+    }, {
+        key: "getWeightCategories",
+        value: function getWeightCategories() {
+            var _this4 = this;
+
+            this.setState({ isLoading: true });
+            services.getWeightCategories().then(function (data) {
+                _this4.setState({ weightCat: JSON.parse(data) });
+                _this4.setState({ isLoading: false });
+            });
+        }
+    }, {
+        key: "getRegions",
+        value: function getRegions() {
+            var _this5 = this;
+
+            this.setState({ isLoading: true });
+            services.getAllRegions().then(function (data) {
+                _this5.setState({ regions: JSON.parse(data) });
+                _this5.setState({ isLoading: false });
             });
         }
     }, {
@@ -38963,24 +39023,24 @@ var RequestsApp = function (_React$Component) {
     }, {
         key: "getCountOfAllRequests",
         value: function getCountOfAllRequests() {
-            var _this3 = this;
+            var _this6 = this;
 
             this.setState({ isLoading: true });
             services.getCountOfAllRequests({
                 game: this.state.filter.currentGame,
                 year: (0, _moment2.default)(this.state.filter.year).format("YYYY")
             }).then(function (data) {
-                var paging = _this3.state.paging;
+                var paging = _this6.state.paging;
                 paging.total = parseInt(data);
-                _this3.setState({ paging: paging });
-                _this3.setState({ isLoading: false });
-                _this3.getAllRequests();
+                _this6.setState({ paging: paging });
+                _this6.setState({ isLoading: false });
+                _this6.getAllRequests();
             });
         }
     }, {
         key: "getAllRequests",
         value: function getAllRequests() {
-            var _this4 = this;
+            var _this7 = this;
 
             this.setState({ isLoading: true });
             services.getAllRequests({
@@ -38989,21 +39049,25 @@ var RequestsApp = function (_React$Component) {
                 game: this.state.filter.currentGame,
                 year: (0, _moment2.default)(this.state.filter.year).format("YYYY")
             }).then(function (data) {
-                _this4.setState({ requests: JSON.parse(data) });
-                _this4.setState({ isLoading: false });
-                console.log(_this4.state);
+                _this7.setState({ requests: JSON.parse(data) });
+                _this7.setState({ isLoading: false });
             });
         }
     }, {
         key: "editRequest",
         value: function editRequest(id) {
-            var _this5 = this;
+            var _this8 = this;
 
             this.setState({ isLoading: true });
             services.getRequest({ id: id }).then(function (data) {
-                console.log(JSON.parse(data));
-                _this5.setState({ isLoading: false });
+                _this8.setState({ editRequest: JSON.parse(data)[0] });
+                _this8.setState({ isLoading: false });
             });
+        }
+    }, {
+        key: "closeRequest",
+        value: function closeRequest() {
+            this.setState({ editRequest: null });
         }
     }, {
         key: "runFilter",
@@ -39035,6 +39099,8 @@ var RequestsApp = function (_React$Component) {
                         return null;
                     } }),
                 _react2.default.createElement(_paging2.default, { paging: this.state.paging, changePage: this.changePage }),
+                _react2.default.createElement(_request2.default, { target: this.state.editRequest, regions: this.state.regions, ages: this.state.ageCat, weights: this.state.weightCat,
+                    games: this.state.games, onClose: this.onClose, onChange: this.changeRequest }),
                 _react2.default.createElement(_preloader2.default, { loading: this.state.isLoading })
             );
         }
@@ -40011,7 +40077,7 @@ module.exports = CalendarContainer;
 var React = __webpack_require__(7),
     createClass = __webpack_require__(18),
 	moment = __webpack_require__(0),
-	onClickOutside = __webpack_require__(35)
+	onClickOutside = __webpack_require__(37)
 ;
 
 var DateTimePickerDays = onClickOutside( createClass({
@@ -40161,7 +40227,7 @@ module.exports = DateTimePickerDays;
 
 var React = __webpack_require__(7),
     createClass = __webpack_require__(18),
-	onClickOutside = __webpack_require__(35)
+	onClickOutside = __webpack_require__(37)
 ;
 
 var DateTimePickerMonths = onClickOutside( createClass({
@@ -40275,7 +40341,7 @@ module.exports = DateTimePickerMonths;
 
 var React = __webpack_require__(7),
     createClass = __webpack_require__(18),
-	onClickOutside = __webpack_require__(35)
+	onClickOutside = __webpack_require__(37)
 ;
 
 var DateTimePickerYears = onClickOutside( createClass({
@@ -40388,7 +40454,7 @@ module.exports = DateTimePickerYears;
 var React = __webpack_require__(7),
     createClass = __webpack_require__(18),
 	assign = __webpack_require__(90),
-  onClickOutside = __webpack_require__(35)
+  onClickOutside = __webpack_require__(37)
 ;
 
 var DateTimePickerTime = onClickOutside( createClass({
@@ -40628,7 +40694,7 @@ var transform;
 var options = {}
 options.transform = transform
 // add the styles to the DOM
-var update = __webpack_require__(37)(content, options);
+var update = __webpack_require__(28)(content, options);
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -40648,7 +40714,7 @@ if(false) {
 /* 319 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(36)(undefined);
+exports = module.exports = __webpack_require__(27)(undefined);
 // imports
 
 
@@ -40768,7 +40834,7 @@ var transform;
 var options = {}
 options.transform = transform
 // add the styles to the DOM
-var update = __webpack_require__(37)(content, options);
+var update = __webpack_require__(28)(content, options);
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -40788,7 +40854,7 @@ if(false) {
 /* 322 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(36)(undefined);
+exports = module.exports = __webpack_require__(27)(undefined);
 // imports
 
 
@@ -40810,6 +40876,8 @@ Object.defineProperty(exports, "__esModule", {
 });
 var gamesDir = "../wp-content/plugins/requests-manager/api/Games-Manager/";
 var reqDir = "../wp-content/plugins/requests-manager/api/Requests/";
+var catDir = "../wp-content/plugins/requests-manager/api/Categories-Manager/";
+var regDir = "../wp-content/plugins/requests-manager/api/Regions-Manager/";
 
 var getOpenedGames = exports.getOpenedGames = function getOpenedGames(contract) {
     return jQuery.ajax({
@@ -40840,6 +40908,27 @@ var getRequest = exports.getRequest = function getRequest(contract) {
         url: reqDir + "GetRequestById.php",
         type: "POST",
         data: contract
+    });
+};
+
+var getAgeCategories = exports.getAgeCategories = function getAgeCategories() {
+    return jQuery.ajax({
+        url: catDir + "GetAgeCategories.php",
+        type: "POST"
+    });
+};
+
+var getWeightCategories = exports.getWeightCategories = function getWeightCategories() {
+    return jQuery.ajax({
+        url: catDir + "GetWeightCategoriesStrict.php",
+        type: "POST"
+    });
+};
+
+var getAllRegions = exports.getAllRegions = function getAllRegions() {
+    return jQuery.ajax({
+        url: regDir + "GetAllRegions.php",
+        type: "POST"
     });
 };
 
@@ -41116,7 +41205,7 @@ var transform;
 var options = {}
 options.transform = transform
 // add the styles to the DOM
-var update = __webpack_require__(37)(content, options);
+var update = __webpack_require__(28)(content, options);
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -41136,7 +41225,7 @@ if(false) {
 /* 328 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(36)(undefined);
+exports = module.exports = __webpack_require__(27)(undefined);
 // imports
 
 
@@ -41276,20 +41365,231 @@ var _modal = __webpack_require__(331);
 
 var _modal2 = _interopRequireDefault(_modal);
 
+var _moment = __webpack_require__(0);
+
+var _moment2 = _interopRequireDefault(_moment);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var ReqModal = function ReqModal(props) {
+    if (!props.target) return null;
+    var request = props.target;
+    var fullName = request.surname + " " + request.name + " " + request.mName;
+    var region = props.regions.filter(function (r) {
+        return r.id === request.region;
+    })[0].region;
+    var born = (0, _moment2.default)(new Date(request.born)).format("DD-MM-YYYY");
+    var agesList = props.ages.map(function (a) {
+        return _react2.default.createElement(
+            "option",
+            { key: a.id, value: a.id },
+            a.title
+        );
+    });
+    var weights = props.weights.filter(function (w) {
+        return w.parent == request.age;
+    });
+    var weightsList = weights.map(function (w) {
+        return _react2.default.createElement(
+            "option",
+            { key: w.id, value: w.id },
+            w.title_w
+        );
+    });
+    weightsList.unshift(_react2.default.createElement(
+        "option",
+        { key: 0, value: 0 },
+        ""
+    ));
+    var weight = weights.filter(function (w) {
+        return w.id === request.weight;
+    }).length ? request.weight : 0;
+    var gamesList = props.games.map(function (g) {
+        return _react2.default.createElement(
+            "option",
+            { key: g.id, value: g.id },
+            g.name
+        );
+    });
+    var total = parseFloat(request.results.squat) + parseFloat(request.results.press) + parseFloat(request.results.lift);
+    var type = props.games.filter(function (g) {
+        return g.id === request.game;
+    })[0].type;
     return _react2.default.createElement(
         _modal2.default,
-        { target: props.target, onClose: props.onClose },
+        { target: props.target, onClose: props.onClose, className: "request-edit-modal" },
+        _react2.default.createElement(
+            "h4",
+            null,
+            "Редагувати заявку"
+        ),
         _react2.default.createElement(
             "div",
             { className: "row" },
             _react2.default.createElement(
                 "form",
                 null,
-                _react2.default.createElement("div", { className: "col-md-6" }),
-                _react2.default.createElement("div", { className: "col-md-6" })
+                _react2.default.createElement(
+                    "div",
+                    { className: "col-md-6" },
+                    _react2.default.createElement(
+                        "div",
+                        { className: "form-group" },
+                        _react2.default.createElement(
+                            "label",
+                            null,
+                            "\u041F.\u0406.\u041F."
+                        ),
+                        _react2.default.createElement("input", { type: "text", value: fullName, className: "form-control", readOnly: true })
+                    ),
+                    _react2.default.createElement(
+                        "div",
+                        { className: "form-group" },
+                        _react2.default.createElement(
+                            "label",
+                            null,
+                            "\u0414\u0430\u0442\u0430 \u043D\u0430\u0440\u043E\u0434\u0436\u0435\u043D\u043D\u044F"
+                        ),
+                        _react2.default.createElement("input", { type: "text", value: born, className: "form-control", readOnly: true })
+                    ),
+                    _react2.default.createElement(
+                        "div",
+                        { className: "form-group" },
+                        _react2.default.createElement(
+                            "label",
+                            null,
+                            "\u041E\u0431\u043B\u0430\u0441\u0442\u044C"
+                        ),
+                        _react2.default.createElement("input", { type: "text", value: region, className: "form-control", readOnly: true })
+                    ),
+                    _react2.default.createElement(
+                        "div",
+                        { className: "row" },
+                        _react2.default.createElement(
+                            "div",
+                            { className: "col-md-6" },
+                            _react2.default.createElement(
+                                "div",
+                                { className: "form-group" },
+                                _react2.default.createElement(
+                                    "label",
+                                    null,
+                                    "\u0412\u0456\u043A\u043E\u0432\u0430 \u043A\u0430\u0442\u0435\u0433\u043E\u0440\u0456\u044F"
+                                ),
+                                _react2.default.createElement(
+                                    "select",
+                                    { value: request.age, className: "form-control", onChange: function onChange(e) {
+                                            return props.onChange("age", e.target.value);
+                                        } },
+                                    agesList
+                                )
+                            )
+                        ),
+                        _react2.default.createElement(
+                            "div",
+                            { className: "col-md-6" },
+                            _react2.default.createElement(
+                                "div",
+                                { className: "form-group" },
+                                _react2.default.createElement(
+                                    "label",
+                                    null,
+                                    "\u0412\u0430\u0433\u043E\u0432\u0430 \u043A\u0430\u0442\u0435\u0433\u043E\u0440\u0456\u044F"
+                                ),
+                                _react2.default.createElement(
+                                    "select",
+                                    { value: weight, className: "form-control", onChange: function onChange(e) {
+                                            return props.onChange("weight", e.target.value);
+                                        } },
+                                    weightsList
+                                )
+                            )
+                        )
+                    ),
+                    _react2.default.createElement(
+                        "div",
+                        { className: "form-group" },
+                        _react2.default.createElement(
+                            "label",
+                            null,
+                            "\u0417\u043C\u0430\u0433\u0430\u043D\u043D\u044F, \u043D\u0430 \u044F\u043A\u0456 \u043F\u043E\u0434\u0430\u0454\u0442\u044C\u0441\u044F \u0437\u0430\u044F\u0432\u043A\u0430"
+                        ),
+                        _react2.default.createElement(
+                            "select",
+                            { value: request.game, className: "form-control", onChange: function onChange(e) {
+                                    return props.onChange("game", e.target.value);
+                                } },
+                            gamesList
+                        )
+                    )
+                ),
+                _react2.default.createElement(
+                    "div",
+                    { className: "col-md-6" },
+                    _react2.default.createElement(
+                        "div",
+                        { className: "form-group" },
+                        _react2.default.createElement(
+                            "p",
+                            { className: "bg-success" },
+                            _react2.default.createElement(
+                                "strong",
+                                null,
+                                "\u0417\u0430\u044F\u0432\u043B\u0435\u043D\u0456 \u0440\u0435\u0437\u0443\u043B\u044C\u0442\u0430\u0442\u0438"
+                            )
+                        ),
+                        _react2.default.createElement(
+                            "div",
+                            { className: "row" },
+                            _react2.default.createElement(
+                                "div",
+                                { className: "col-md-3" },
+                                _react2.default.createElement(
+                                    "label",
+                                    null,
+                                    "\u041F\u0440\u0438\u0441\u0456\u0434\u0430\u043D\u043D\u044F"
+                                ),
+                                _react2.default.createElement("input", { value: request.results.squat, type: "text", className: "form-control", placeholder: "00.00", disabled: type === "1", onChange: function onChange(e) {
+                                        return props.onChange("squat", e.target.value, "results");
+                                    } })
+                            ),
+                            _react2.default.createElement(
+                                "div",
+                                { className: "col-md-3" },
+                                _react2.default.createElement(
+                                    "label",
+                                    null,
+                                    "\u0416\u0438\u043C \u043B\u0435\u0436\u0430\u0447\u0438"
+                                ),
+                                _react2.default.createElement("input", { value: request.results.press, type: "text", className: "form-control", placeholder: "00.00", onChange: function onChange(e) {
+                                        return props.onChange("press", e.target.value, "results");
+                                    } })
+                            ),
+                            _react2.default.createElement(
+                                "div",
+                                { className: "col-md-3" },
+                                _react2.default.createElement(
+                                    "label",
+                                    null,
+                                    "\u0421\u0442\u0430\u043D\u043E\u0432\u0430 \u0442\u044F\u0433\u0430"
+                                ),
+                                _react2.default.createElement("input", { value: request.results.lift, type: "text", className: "form-control", placeholder: "00.00", disabled: type === "1", onChange: function onChange(e) {
+                                        return props.onChange("lift", e.target.value, "results");
+                                    } })
+                            ),
+                            _react2.default.createElement(
+                                "div",
+                                { className: "col-md-3" },
+                                _react2.default.createElement(
+                                    "label",
+                                    null,
+                                    "\u0421\u0443\u043C\u0430"
+                                ),
+                                _react2.default.createElement("input", { value: total, type: "text", className: "form-control", placeholder: "00.00", readOnly: true })
+                            )
+                        )
+                    )
+                )
             )
         )
     );
@@ -41382,7 +41682,7 @@ var transform;
 var options = {}
 options.transform = transform
 // add the styles to the DOM
-var update = __webpack_require__(37)(content, options);
+var update = __webpack_require__(28)(content, options);
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -41402,12 +41702,57 @@ if(false) {
 /* 333 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(36)(undefined);
+exports = module.exports = __webpack_require__(27)(undefined);
 // imports
 
 
 // module
 exports.push([module.i, ".blackout{\r\n    position: fixed;\r\n    top: 0;\r\n    bottom: 0;\r\n    left: 0;\r\n    right: 0;\r\n    background-color:rgba(0,0,0,0.8);\r\n    z-index: 10000;\r\n}\r\n.custom-modal{\r\n    background-color: #ffffff;\r\n    position: absolute;\r\n    top: 30%;\r\n    left: 50%;\r\n    min-width: 500px;\r\n    min-height: 200px;\r\n    border-radius: 5px;\r\n    padding: 4px 10px;\r\n    margin-left: -250px;\r\n}\r\n\r\n.custom-modal-header{\r\n    text-align: right;\r\n    padding-right: 5px;\r\n}\r\n\r\n.custom-modal-header .fa-times{\r\n    color: #9a9aaf;\r\n    cursor: pointer;\r\n}\r\n.custom-modal-header .fa-times:hover{\r\n    color: #68686f;\r\n}\r\n\r\n.custom-modal h6,\r\n.custom-modal h4{\r\n    margin: 5px 0 10px 0px;\r\n}", ""]);
+
+// exports
+
+
+/***/ }),
+/* 334 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(335);
+if(typeof content === 'string') content = [[module.i, content, '']];
+// Prepare cssTransformation
+var transform;
+
+var options = {}
+options.transform = transform
+// add the styles to the DOM
+var update = __webpack_require__(28)(content, options);
+if(content.locals) module.exports = content.locals;
+// Hot Module Replacement
+if(false) {
+	// When the styles change, update the <style> tags
+	if(!content.locals) {
+		module.hot.accept("!!../node_modules/css-loader/index.js!./requests.css", function() {
+			var newContent = require("!!../node_modules/css-loader/index.js!./requests.css");
+			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+			update(newContent);
+		});
+	}
+	// When the module is disposed, remove the <style> tags
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 335 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(27)(undefined);
+// imports
+
+
+// module
+exports.push([module.i, ".request-edit-modal{\r\n    top: 10%;\r\n    width: 60%;\r\n    margin-left: -30%;    \r\n}", ""]);
 
 // exports
 
