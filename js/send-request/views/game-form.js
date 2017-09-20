@@ -51,7 +51,7 @@ class GameForm extends React.Component{
                         </div>
                     </div>
                     <div className="form-group">
-                        <label></label>
+                        <label>Відбіркові змагання</label>
                         <select value={this.props.game.bGame} className="form-control" onChange={e => this.props.onChange("bGame", e.target.value)}>{bGamesList}</select>
                     </div>
                 </fieldset>

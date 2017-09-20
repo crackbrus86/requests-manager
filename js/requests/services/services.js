@@ -55,3 +55,10 @@ export const getAllRegions = () => {
         type: "POST"
     })
 }
+
+export const getAllBeforeGames = () => {
+    return jQuery.ajax({
+        url: gamesDir + "GetBeforeGames.php",
+        type: "POST"
+    })
+}

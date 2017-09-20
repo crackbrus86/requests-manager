@@ -42445,7 +42445,11 @@ var GameForm = function (_React$Component) {
                         _react2.default.createElement(
                             "div",
                             { className: "form-group" },
-                            _react2.default.createElement("label", null),
+                            _react2.default.createElement(
+                                "label",
+                                null,
+                                "\u0412\u0456\u0434\u0431\u0456\u0440\u043A\u043E\u0432\u0456 \u0437\u043C\u0430\u0433\u0430\u043D\u043D\u044F"
+                            ),
                             _react2.default.createElement(
                                 "select",
                                 { value: this.props.game.bGame, className: "form-control", onChange: function onChange(e) {
@@ -42882,7 +42886,7 @@ exports = module.exports = __webpack_require__(16)(undefined);
 
 
 // module
-exports.push([module.i, ".coachModal{\r\n    top: 10%;\r\n}\r\n\r\n.blackout{\r\n    overflow: auto;\r\n}\r\n\r\n/* .coachModal .coach-wrap{\r\n    position: absolute;\r\n    left: 10px;\r\n    right: 10px;\r\n    top: 65px;\r\n    overflow-y: scroll;\r\n    overflow-x: hidden;\r\n    padding-right: 10px;  \r\n    border-top: 1px solid #ccc;\r\n    border-bottom: 1px solid #ccc;\r\n    margin: 5px 0 20px;\r\n}\r\n\r\n.coachModal .coach-modal-footer{\r\n    position: absolute;\r\n    bottom: 10px;\r\n} */\r\n\r\n.coachModal .rdtPicker{\r\n    margin-top: -274px;\r\n}", ""]);
+exports.push([module.i, ".coachModal{\r\n    top: 10%;\r\n}\r\n\r\n.blackout{\r\n    overflow: auto;\r\n}\r\n\r\n.coachModal .rdtPicker{\r\n    margin-top: -274px;\r\n}", ""]);
 
 // exports
 

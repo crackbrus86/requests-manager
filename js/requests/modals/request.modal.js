@@ -1,6 +1,8 @@
 import React from "react";
 import Modal from "../../components/modal/modal";
 import moment from "moment";
+require("../../../css/react-datetime.css");
+import Datetime from "react-datetime";
 
 const ReqModal = (props) => {
     if(!props.target) return null;
@@ -16,8 +18,11 @@ const ReqModal = (props) => {
     var gamesList = props.games.map(g => <option key={g.id} value={g.id}>{g.name}</option>); 
     var total = parseFloat(request.results.squat) + parseFloat(request.results.press) + parseFloat(request.results.lift);
     var type = props.games.filter(g => g.id === request.game)[0].type;
+    var preGamesList = props.preGames.map(g => <option key={g.id} value={g.id}>{g.name}</option>);
+    var dopingDate = (request.doping.date)? new Date(request.doping.date) : null;
+    var coachesList = request.coach_details.map(c => <li key={c.id} value={c.id}>{c.surname + " " + c.name + " " + c.mName}<i className="fa fa-lg fa-times"></i></li>);
     return (<Modal target={props.target} onClose={props.onClose} className="request-edit-modal">
-        <h4>{"Редагувати заявку"}</h4>
+        <h3>{"Редагувати заявку"}</h3>
         <div className="row">
             <form>
             <div className="col-md-6">
@@ -73,10 +78,32 @@ const ReqModal = (props) => {
                             <input value={total} type="text" className="form-control" placeholder="00.00" readOnly={true} />
                         </div>
                     </div>
-                </div>                
+                </div>  
+                <div className="form-group">
+                    <label>Відбіркові змагання</label>
+                    <select value={request.pregame} className="form-control" onChange={e => props.onChange("pregame", e.target.value)}>{preGamesList}</select>
+                </div>  
+                <div className="form-group">
+                    <div><label>Чи здавав допінг-контроль?</label></div>
+                    <label className="radio-inline">
+                        <input type="radio" value="false" checked={!JSON.parse(request.doping.isPassed)} onChange={e => props.onChange("isPassed", e.target.value, "doping")} /> Ні
+                    </label>
+                    <label className="radio-inline">
+                        <input type="radio" value="true" checked={JSON.parse(request.doping.isPassed)} onChange={e => props.onChange("isPassed", e.target.value, "doping")} /> Так
+                    </label>
+                </div>  
+                <div className="form-group" hidden={!JSON.parse(request.doping.isPassed)}>
+                    <Datetime value={dopingDate} dateFormat="DD-MM-YYYY" timeFormat={false} closeOnSelect={true} maxLength="10" onChange={(v) => props.onChange("date", v.format("YYYY-MM-DD"), "doping")} />
+                </div>
             </div>
             </form>
         </div>
+        <div className="coachesList" hidden={!request.coaches.length}>
+                <h4>Тренери</h4>
+                <ul>
+                    {coachesList}
+                </ul>
+        </div>        
     </Modal>);
 }
 export default ReqModal;

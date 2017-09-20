@@ -17,6 +17,7 @@ class RequestsApp extends React.Component{
             weightCat: [],
             regions: [],
             games: [],
+            preGames: [],
             editRequest: null,
             filter: {
                 games: [],
@@ -58,6 +59,7 @@ class RequestsApp extends React.Component{
         if(parent){
             request[parent][field] = value;
             if(parent === "results") request["results"]["total"] = parseFloat(request["results"]["squat"]) + parseFloat(request["results"]["press"]) + parseFloat(request["results"]["lift"]);
+            if(parent === "doping" && field === "isPassed" && !JSON.parse(value)) request["doping"]["date"] = null;
         }else{
             request[field] = value;
         }        
@@ -73,11 +75,20 @@ class RequestsApp extends React.Component{
             this.onFielterChange("currentGame", JSON.parse(data)[0].id);
             this.setState({isLoading: false});
             this.setDefaultGame();
+            this.getPreGames();
             this.getCountOfAllRequests(); 
             this.getAgeCategories();
             this.getWeightCategories();
             this.getRegions();
         })
+    }
+
+    getPreGames(){
+        this.setState({isLoading: true});
+        services.getAllBeforeGames().then(data => {
+            this.setState({preGames: JSON.parse(data)});
+            this.setState({isLoading: false});
+        });
     }
 
     getAgeCategories(){
@@ -168,7 +179,7 @@ class RequestsApp extends React.Component{
             <ReqGrid data={this.state.requests} onEdit={this.onEdit} onDelete={() => null} />
             <Paging paging={this.state.paging} changePage={this.changePage} />
             <ReqModal target={this.state.editRequest} regions={this.state.regions} ages={this.state.ageCat} weights={this.state.weightCat} 
-            games={this.state.games} onClose={this.onClose} onChange={this.changeRequest} />
+            games={this.state.games} preGames={this.state.preGames} onClose={this.onClose} onChange={this.changeRequest} />
             <Preloader loading={this.state.isLoading} />
         </div>
     }
