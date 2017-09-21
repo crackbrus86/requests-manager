@@ -112,11 +112,18 @@ const ReqModal = (props) => {
                 <ul>
                     {coachesList}
                 </ul>
-                <span onClick={() => props.onChange("hideAdd", !request.hideAdd)} className="addCoach">Додати тренера</span>
-                <div hidden={request.hideAdd}>
+                <span onClick={() => props.onTcChange("hide", !props.tmpCoach.hide)} className="addCoach">Додати тренера</span>
+                <div hidden={props.tmpCoach.hide}>
                     <div className="form-group">
                         <label>Оберіть тренера</label>
-                        <select className="form-control">{allCoaches}</select>
+                        <select value={props.tmpCoach.id} className="form-control" onChange={e => props.onTcChange("id", e.target.value)}>{allCoaches}</select>
+                    </div>
+                    <div className="form-group">
+                        <label>Чи супроводжує на змагання</label>
+                        <div><input type="checkbox" checked={props.tmpCoach.follows} onChange={e => props.onTcChange("follows", e.target.checked)} /></div>
+                    </div>
+                    <div className="form-group">
+                        <button type="button" className="btn btn-default" onClick={() => props.onAdd()}><i className="fa fa-plus"></i> Додати тренера</button>
                     </div>
                 </div>
         </div>        

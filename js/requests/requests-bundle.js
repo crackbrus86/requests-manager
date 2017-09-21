@@ -39387,6 +39387,11 @@ var RequestsApp = function (_React$Component) {
             preGames: [],
             coaches: [],
             editRequest: null,
+            tmpCoach: {
+                hide: true,
+                id: null,
+                follows: false
+            },
             filter: {
                 games: [],
                 year: new Date(),
@@ -39407,6 +39412,8 @@ var RequestsApp = function (_React$Component) {
         _this.onClose = _this.closeRequest.bind(_this);
         _this.changeRequest = _this.onRequestChange.bind(_this);
         _this.deleteCoach = _this.onCoachDelete.bind(_this);
+        _this.onTcChange = _this.onTmpCoachChange.bind(_this);
+        _this.onCoachAdd = _this.onAddCoach.bind(_this);
         return _this;
     }
 
@@ -39459,78 +39466,120 @@ var RequestsApp = function (_React$Component) {
             this.setState({ editRequest: request });
         }
     }, {
+        key: "onTmpCoachChange",
+        value: function onTmpCoachChange(field, value) {
+            var tmp = this.state.tmpCoach;
+            tmp[field] = value;
+            this.setState({ tmpCoach: tmp });
+        }
+    }, {
+        key: "onAddCoach",
+        value: function onAddCoach() {
+            var _this2 = this;
+
+            var request = this.state.editRequest;
+            var coach = [parseInt(this.state.tmpCoach.id), JSON.stringify(this.state.tmpCoach.follows)];
+            var coaches = request.coaches;
+            var coach_details = request.coach_details;
+            var duplicates = false;
+            for (var i = 0; i < coaches.length; i++) {
+                if (coach[0] == coaches[i][0]) {
+                    alert("Увага! Цього тренера уже було додано!");
+                    duplicates = true;
+                }
+            }
+            if (!duplicates) {
+                coaches.push(coach);
+                var c = this.state.coaches.filter(function (x) {
+                    return x.id == _this2.state.tmpCoach.id;
+                })[0];
+                var coach_detail = { id: c.id, name: c.name, surname: c.surname, mName: c.mName };
+                coach_details.push(coach_detail);
+                request.coaches = coaches;
+                request.coach_details = coach_details;
+                this.setState({ editRequest: request });
+            }
+            var newTmpCoach = {
+                hide: false,
+                id: this.state.coaches[0].id,
+                follows: false
+            };
+            this.setState({ tmpCoach: newTmpCoach });
+        }
+    }, {
         key: "getGames",
         value: function getGames() {
-            var _this2 = this;
+            var _this3 = this;
 
             this.setState({ isLoading: true });
             services.getOpenedGames({ currentDay: (0, _moment2.default)(new Date()).format("YYYY-MM-DD") }).then(function (data) {
-                _this2.setState({ games: JSON.parse(data) });
-                _this2.onFielterChange("games", JSON.parse(data));
-                _this2.onFielterChange("currentGame", JSON.parse(data)[0].id);
-                _this2.setState({ isLoading: false });
-                _this2.setDefaultGame();
-                _this2.getPreGames();
-                _this2.getCountOfAllRequests();
-                _this2.getAgeCategories();
-                _this2.getWeightCategories();
-                _this2.getRegions();
-                _this2.getCoaches();
+                _this3.setState({ games: JSON.parse(data) });
+                _this3.onFielterChange("games", JSON.parse(data));
+                _this3.onFielterChange("currentGame", JSON.parse(data)[0].id);
+                _this3.setState({ isLoading: false });
+                _this3.setDefaultGame();
+                _this3.getPreGames();
+                _this3.getCountOfAllRequests();
+                _this3.getAgeCategories();
+                _this3.getWeightCategories();
+                _this3.getRegions();
+                _this3.getCoaches();
             });
         }
     }, {
         key: "getPreGames",
         value: function getPreGames() {
-            var _this3 = this;
+            var _this4 = this;
 
             this.setState({ isLoading: true });
             services.getAllBeforeGames().then(function (data) {
-                _this3.setState({ preGames: JSON.parse(data) });
-                _this3.setState({ isLoading: false });
+                _this4.setState({ preGames: JSON.parse(data) });
+                _this4.setState({ isLoading: false });
             });
         }
     }, {
         key: "getAgeCategories",
         value: function getAgeCategories() {
-            var _this4 = this;
+            var _this5 = this;
 
             this.setState({ isLoading: true });
             services.getAgeCategories().then(function (data) {
-                _this4.setState({ ageCat: JSON.parse(data) });
-                _this4.setState({ isLoading: false });
+                _this5.setState({ ageCat: JSON.parse(data) });
+                _this5.setState({ isLoading: false });
             });
         }
     }, {
         key: "getWeightCategories",
         value: function getWeightCategories() {
-            var _this5 = this;
+            var _this6 = this;
 
             this.setState({ isLoading: true });
             services.getWeightCategories().then(function (data) {
-                _this5.setState({ weightCat: JSON.parse(data) });
-                _this5.setState({ isLoading: false });
+                _this6.setState({ weightCat: JSON.parse(data) });
+                _this6.setState({ isLoading: false });
             });
         }
     }, {
         key: "getRegions",
         value: function getRegions() {
-            var _this6 = this;
+            var _this7 = this;
 
             this.setState({ isLoading: true });
             services.getAllRegions().then(function (data) {
-                _this6.setState({ regions: JSON.parse(data) });
-                _this6.setState({ isLoading: false });
+                _this7.setState({ regions: JSON.parse(data) });
+                _this7.setState({ isLoading: false });
             });
         }
     }, {
         key: "getCoaches",
         value: function getCoaches() {
-            var _this7 = this;
+            var _this8 = this;
 
             this.setState({ isLoading: true });
             services.getAllCoaches().then(function (data) {
-                _this7.setState({ coaches: JSON.parse(data) });
-                _this7.setState({ isLoading: false });
+                _this8.setState({ coaches: JSON.parse(data) });
+                _this8.onTmpCoachChange("id", _this8.state.coaches[0].id);
+                _this8.setState({ isLoading: false });
             });
         }
     }, {
@@ -39545,24 +39594,24 @@ var RequestsApp = function (_React$Component) {
     }, {
         key: "getCountOfAllRequests",
         value: function getCountOfAllRequests() {
-            var _this8 = this;
+            var _this9 = this;
 
             this.setState({ isLoading: true });
             services.getCountOfAllRequests({
                 game: this.state.filter.currentGame,
                 year: (0, _moment2.default)(this.state.filter.year).format("YYYY")
             }).then(function (data) {
-                var paging = _this8.state.paging;
+                var paging = _this9.state.paging;
                 paging.total = parseInt(data);
-                _this8.setState({ paging: paging });
-                _this8.setState({ isLoading: false });
-                _this8.getAllRequests();
+                _this9.setState({ paging: paging });
+                _this9.setState({ isLoading: false });
+                _this9.getAllRequests();
             });
         }
     }, {
         key: "getAllRequests",
         value: function getAllRequests() {
-            var _this9 = this;
+            var _this10 = this;
 
             this.setState({ isLoading: true });
             services.getAllRequests({
@@ -39571,21 +39620,20 @@ var RequestsApp = function (_React$Component) {
                 game: this.state.filter.currentGame,
                 year: (0, _moment2.default)(this.state.filter.year).format("YYYY")
             }).then(function (data) {
-                _this9.setState({ requests: JSON.parse(data) });
-                _this9.setState({ isLoading: false });
+                _this10.setState({ requests: JSON.parse(data) });
+                _this10.setState({ isLoading: false });
             });
         }
     }, {
         key: "editRequest",
         value: function editRequest(id) {
-            var _this10 = this;
+            var _this11 = this;
 
             this.setState({ isLoading: true });
             services.getRequest({ id: id }).then(function (data) {
                 var tmp = JSON.parse(data)[0];
-                tmp.hideAdd = true;
-                _this10.setState({ editRequest: tmp });
-                _this10.setState({ isLoading: false });
+                _this11.setState({ editRequest: tmp });
+                _this11.setState({ isLoading: false });
             });
         }
     }, {
@@ -39624,7 +39672,9 @@ var RequestsApp = function (_React$Component) {
                     } }),
                 _react2.default.createElement(_paging2.default, { paging: this.state.paging, changePage: this.changePage }),
                 _react2.default.createElement(_request2.default, { target: this.state.editRequest, regions: this.state.regions, ages: this.state.ageCat, weights: this.state.weightCat,
-                    games: this.state.games, preGames: this.state.preGames, coaches: this.state.coaches, onClose: this.onClose, onChange: this.changeRequest, onCoachDelete: this.deleteCoach }),
+                    games: this.state.games, preGames: this.state.preGames, coaches: this.state.coaches,
+                    tmpCoach: this.state.tmpCoach, onTcChange: this.onTcChange, onClose: this.onClose, onChange: this.changeRequest, onCoachDelete: this.deleteCoach,
+                    onAdd: this.onCoachAdd }),
                 _react2.default.createElement(_preloader2.default, { loading: this.state.isLoading })
             );
         }
@@ -40988,7 +41038,7 @@ var getAllBeforeGames = exports.getAllBeforeGames = function getAllBeforeGames()
 
 var getAllCoaches = exports.getAllCoaches = function getAllCoaches() {
     return jQuery.ajax({
-        url: coaDir + "GetAllCoaches.php",
+        url: coaDir + "GetCoachesList.php",
         type: "POST"
     });
 };
@@ -41761,13 +41811,13 @@ var ReqModal = function ReqModal(props) {
             _react2.default.createElement(
                 "span",
                 { onClick: function onClick() {
-                        return props.onChange("hideAdd", !request.hideAdd);
+                        return props.onTcChange("hide", !props.tmpCoach.hide);
                     }, className: "addCoach" },
                 "\u0414\u043E\u0434\u0430\u0442\u0438 \u0442\u0440\u0435\u043D\u0435\u0440\u0430"
             ),
             _react2.default.createElement(
                 "div",
-                { hidden: request.hideAdd },
+                { hidden: props.tmpCoach.hide },
                 _react2.default.createElement(
                     "div",
                     { className: "form-group" },
@@ -41778,8 +41828,38 @@ var ReqModal = function ReqModal(props) {
                     ),
                     _react2.default.createElement(
                         "select",
-                        { className: "form-control" },
+                        { value: props.tmpCoach.id, className: "form-control", onChange: function onChange(e) {
+                                return props.onTcChange("id", e.target.value);
+                            } },
                         allCoaches
+                    )
+                ),
+                _react2.default.createElement(
+                    "div",
+                    { className: "form-group" },
+                    _react2.default.createElement(
+                        "label",
+                        null,
+                        "\u0427\u0438 \u0441\u0443\u043F\u0440\u043E\u0432\u043E\u0434\u0436\u0443\u0454 \u043D\u0430 \u0437\u043C\u0430\u0433\u0430\u043D\u043D\u044F"
+                    ),
+                    _react2.default.createElement(
+                        "div",
+                        null,
+                        _react2.default.createElement("input", { type: "checkbox", checked: props.tmpCoach.follows, onChange: function onChange(e) {
+                                return props.onTcChange("follows", e.target.checked);
+                            } })
+                    )
+                ),
+                _react2.default.createElement(
+                    "div",
+                    { className: "form-group" },
+                    _react2.default.createElement(
+                        "button",
+                        { type: "button", className: "btn btn-default", onClick: function onClick() {
+                                return props.onAdd();
+                            } },
+                        _react2.default.createElement("i", { className: "fa fa-plus" }),
+                        " \u0414\u043E\u0434\u0430\u0442\u0438 \u0442\u0440\u0435\u043D\u0435\u0440\u0430"
                     )
                 )
             )
@@ -41944,7 +42024,7 @@ exports = module.exports = __webpack_require__(27)(undefined);
 
 
 // module
-exports.push([module.i, ".request-edit-modal{\r\n    top: 10%;\r\n    width: 60%;\r\n    margin-left: -30%;    \r\n}\r\n\r\n.coachesList ul li{\r\n    display: block;\r\n    list-style-type: none;\r\n    background-color: #51a7ff;\r\n    padding: 5px;\r\n    border-radius: 4px;\r\n    margin-top: 10px;\r\n    color: #fff;\r\n    text-shadow: 0 0 4px #000;\r\n    width: 50%;    \r\n}\r\n\r\n.coachesList ul li i.fa-times{\r\n    float: right;\r\n    margin: 4px;\r\n    cursor: pointer;\r\n}\r\n\r\n.coachesList ul li i.fa-times:hover{\r\n    color: #e4e4e4;\r\n}\r\n\r\n.addCoach{\r\n    color: #51a7ff;\r\n    font-size: 1.2em;\r\n    cursor: pointer;\r\n    text-decoration: underline;\r\n}\r\n\r\n.addCoach:hover{\r\n    text-decoration: none;\r\n}", ""]);
+exports.push([module.i, ".blackout{\r\n    overflow: auto;\r\n}\r\n.request-edit-modal{\r\n    top: 10%;\r\n    width: 60%;\r\n    margin-left: -30%;    \r\n}\r\n\r\n.coachesList{\r\n    width: 50%;\r\n    padding: 5px;\r\n    background-color: #fff3e0;\r\n    border-radius: 10px;\r\n}\r\n\r\n.coachesList ul li{\r\n    display: block;\r\n    list-style-type: none;\r\n    background-color: #51a7ff;\r\n    padding: 5px;\r\n    border-radius: 4px;\r\n    margin-top: 10px;\r\n    color: #fff;\r\n    text-shadow: 0 0 4px #000;  \r\n}\r\n\r\n.coachesList ul li i.fa-times{\r\n    float: right;\r\n    margin: 4px;\r\n    cursor: pointer;\r\n}\r\n\r\n.coachesList ul li i.fa-times:hover{\r\n    color: #e4e4e4;\r\n}\r\n\r\n.addCoach{\r\n    color: #51a7ff;\r\n    font-size: 1.2em;\r\n    cursor: pointer;\r\n    text-decoration: underline;\r\n}\r\n\r\n.addCoach:hover{\r\n    text-decoration: none;\r\n}", ""]);
 
 // exports
 

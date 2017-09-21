@@ -66,7 +66,7 @@ export const getAllBeforeGames = () => {
 
 export const getAllCoaches = () => {
     return jQuery.ajax({
-        url: coaDir + "GetAllCoaches.php",
+        url: coaDir + "GetCoachesList.php",
         type: "POST"
     })
 }

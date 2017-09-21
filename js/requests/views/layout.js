@@ -20,6 +20,11 @@ class RequestsApp extends React.Component{
             preGames: [],
             coaches: [],
             editRequest: null,
+            tmpCoach: {
+                hide: true,
+                id: null,
+                follows: false
+            },
             filter: {
                 games: [],
                 year: new Date(),
@@ -40,6 +45,8 @@ class RequestsApp extends React.Component{
         this.onClose = this.closeRequest.bind(this);
         this.changeRequest = this.onRequestChange.bind(this);
         this.deleteCoach = this.onCoachDelete.bind(this);
+        this.onTcChange = this.onTmpCoachChange.bind(this);
+        this.onCoachAdd = this.onAddCoach.bind(this);
     }
 
     changeCurrentPage(page){
@@ -78,6 +85,41 @@ class RequestsApp extends React.Component{
         var dTmp = details.filter(d => d.id !== id);
         request.coach_details = dTmp;
         this.setState({editRequest: request});
+    }
+
+    onTmpCoachChange(field, value){
+        var tmp = this.state.tmpCoach;
+        tmp[field] = value;
+        this.setState({tmpCoach: tmp});
+    }
+
+    onAddCoach(){
+        var request = this.state.editRequest;
+        var coach = [parseInt(this.state.tmpCoach.id), JSON.stringify(this.state.tmpCoach.follows)];
+        var coaches = request.coaches;
+        var coach_details = request.coach_details;
+        var duplicates = false;
+        for(var i = 0; i < coaches.length; i++){
+            if(coach[0] == coaches[i][0]) {
+                alert("Увага! Цього тренера уже було додано!");
+                duplicates = true;
+            }
+        }
+        if(!duplicates){
+            coaches.push(coach);
+            var c = this.state.coaches.filter(x => x.id == this.state.tmpCoach.id)[0];
+            var coach_detail = {id: c.id, name: c.name, surname: c.surname, mName: c.mName};
+            coach_details.push(coach_detail);
+            request.coaches = coaches;
+            request.coach_details = coach_details;
+            this.setState({editRequest: request});
+        }
+        var newTmpCoach = {
+            hide: false,
+            id: this.state.coaches[0].id,
+            follows: false
+        }
+        this.setState({tmpCoach: newTmpCoach});
     }
 
     getGames(){
@@ -133,6 +175,7 @@ class RequestsApp extends React.Component{
         this.setState({isLoading: true});
         services.getAllCoaches().then(data => {
             this.setState({coaches: JSON.parse(data)})
+            this.onTmpCoachChange("id", this.state.coaches[0].id);
             this.setState({isLoading: false});
         });
     }
@@ -176,7 +219,6 @@ class RequestsApp extends React.Component{
         this.setState({isLoading: true});
         services.getRequest({id: id}).then(data => {
             var tmp = JSON.parse(data)[0];
-            tmp.hideAdd = true;
             this.setState({editRequest: tmp});
             this.setState({isLoading: false});
         })
@@ -203,7 +245,9 @@ class RequestsApp extends React.Component{
             <ReqGrid data={this.state.requests} onEdit={this.onEdit} onDelete={() => null} />
             <Paging paging={this.state.paging} changePage={this.changePage} />
             <ReqModal target={this.state.editRequest} regions={this.state.regions} ages={this.state.ageCat} weights={this.state.weightCat} 
-            games={this.state.games} preGames={this.state.preGames} coaches={this.state.coaches} onClose={this.onClose} onChange={this.changeRequest} onCoachDelete={this.deleteCoach} />
+            games={this.state.games} preGames={this.state.preGames} coaches={this.state.coaches} 
+            tmpCoach={this.state.tmpCoach} onTcChange={this.onTcChange} onClose={this.onClose} onChange={this.changeRequest} onCoachDelete={this.deleteCoach} 
+            onAdd={this.onCoachAdd} />
             <Preloader loading={this.state.isLoading} />
         </div>
     }
