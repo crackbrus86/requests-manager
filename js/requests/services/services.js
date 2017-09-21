@@ -2,6 +2,7 @@ var gamesDir = "../wp-content/plugins/requests-manager/api/Games-Manager/";
 var reqDir = "../wp-content/plugins/requests-manager/api/Requests/";
 var catDir = "../wp-content/plugins/requests-manager/api/Categories-Manager/";
 var regDir = "../wp-content/plugins/requests-manager/api/Regions-Manager/";
+var coaDir = "../wp-content/plugins/requests-manager/api/Coaches/";
 
 export const getOpenedGames = (contract) => {
     return jQuery.ajax({
@@ -59,6 +60,13 @@ export const getAllRegions = () => {
 export const getAllBeforeGames = () => {
     return jQuery.ajax({
         url: gamesDir + "GetBeforeGames.php",
+        type: "POST"
+    })
+}
+
+export const getAllCoaches = () => {
+    return jQuery.ajax({
+        url: coaDir + "GetAllCoaches.php",
         type: "POST"
     })
 }

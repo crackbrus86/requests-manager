@@ -18,6 +18,7 @@ class RequestsApp extends React.Component{
             regions: [],
             games: [],
             preGames: [],
+            coaches: [],
             editRequest: null,
             filter: {
                 games: [],
@@ -38,6 +39,7 @@ class RequestsApp extends React.Component{
         this.onEdit = this.editRequest.bind(this);
         this.onClose = this.closeRequest.bind(this);
         this.changeRequest = this.onRequestChange.bind(this);
+        this.deleteCoach = this.onCoachDelete.bind(this);
     }
 
     changeCurrentPage(page){
@@ -67,6 +69,17 @@ class RequestsApp extends React.Component{
         console.log(this.state);  
     }
 
+    onCoachDelete(id){
+        var request = this.state.editRequest;
+        var coachesTmp = request.coaches;
+        var cTmp = coachesTmp.filter(c => c[0] != parseInt(id));
+        request.coaches = cTmp;
+        var details = request.coach_details;
+        var dTmp = details.filter(d => d.id !== id);
+        request.coach_details = dTmp;
+        this.setState({editRequest: request});
+    }
+
     getGames(){
         this.setState({isLoading: true});
         services.getOpenedGames({currentDay: moment(new Date()).format("YYYY-MM-DD")}).then(data => {
@@ -80,6 +93,7 @@ class RequestsApp extends React.Component{
             this.getAgeCategories();
             this.getWeightCategories();
             this.getRegions();
+            this.getCoaches();
         })
     }
 
@@ -113,6 +127,14 @@ class RequestsApp extends React.Component{
             this.setState({regions: JSON.parse(data)});
             this.setState({isLoading: false});
         })
+    }
+
+    getCoaches(){
+        this.setState({isLoading: true});
+        services.getAllCoaches().then(data => {
+            this.setState({coaches: JSON.parse(data)})
+            this.setState({isLoading: false});
+        });
     }
 
     setDefaultGame(){
@@ -153,7 +175,9 @@ class RequestsApp extends React.Component{
     editRequest(id){
         this.setState({isLoading: true});
         services.getRequest({id: id}).then(data => {
-            this.setState({editRequest: JSON.parse(data)[0]});
+            var tmp = JSON.parse(data)[0];
+            tmp.hideAdd = true;
+            this.setState({editRequest: tmp});
             this.setState({isLoading: false});
         })
     }
@@ -179,7 +203,7 @@ class RequestsApp extends React.Component{
             <ReqGrid data={this.state.requests} onEdit={this.onEdit} onDelete={() => null} />
             <Paging paging={this.state.paging} changePage={this.changePage} />
             <ReqModal target={this.state.editRequest} regions={this.state.regions} ages={this.state.ageCat} weights={this.state.weightCat} 
-            games={this.state.games} preGames={this.state.preGames} onClose={this.onClose} onChange={this.changeRequest} />
+            games={this.state.games} preGames={this.state.preGames} coaches={this.state.coaches} onClose={this.onClose} onChange={this.changeRequest} onCoachDelete={this.deleteCoach} />
             <Preloader loading={this.state.isLoading} />
         </div>
     }

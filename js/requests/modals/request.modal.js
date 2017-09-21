@@ -20,7 +20,16 @@ const ReqModal = (props) => {
     var type = props.games.filter(g => g.id === request.game)[0].type;
     var preGamesList = props.preGames.map(g => <option key={g.id} value={g.id}>{g.name}</option>);
     var dopingDate = (request.doping.date)? new Date(request.doping.date) : null;
-    var coachesList = request.coach_details.map(c => <li key={c.id} value={c.id}>{c.surname + " " + c.name + " " + c.mName}<i className="fa fa-lg fa-times"></i></li>);
+    var getCoachStatus = (id) => {
+        var temp = [];
+        var temp = temp.concat(request.coaches.filter(c => c[0] === parseInt(id)));
+        return (temp.length && JSON.parse(temp[0][1]))? "(супроводжує)" : "";
+    }
+    var coachesList = request.coach_details.map(c => <li key={c.id} value={c.id}>{c.surname + " " + c.name + " " + c.mName + " " + getCoachStatus(c.id)}
+        <i className="fa fa-lg fa-times" onClick={() => props.onCoachDelete(c.id)}></i></li>);
+
+    
+    var allCoaches = props.coaches.map(c => <option key={c.id} value={c.id}>{c.surname + " " + c.name + " " + c.mName}</option>);
     return (<Modal target={props.target} onClose={props.onClose} className="request-edit-modal">
         <h3>{"Редагувати заявку"}</h3>
         <div className="row">
@@ -103,6 +112,13 @@ const ReqModal = (props) => {
                 <ul>
                     {coachesList}
                 </ul>
+                <span onClick={() => props.onChange("hideAdd", !request.hideAdd)} className="addCoach">Додати тренера</span>
+                <div hidden={request.hideAdd}>
+                    <div className="form-group">
+                        <label>Оберіть тренера</label>
+                        <select className="form-control">{allCoaches}</select>
+                    </div>
+                </div>
         </div>        
     </Modal>);
 }

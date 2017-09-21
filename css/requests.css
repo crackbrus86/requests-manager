@@ -3,3 +3,36 @@
     width: 60%;
     margin-left: -30%;    
 }
+
+.coachesList ul li{
+    display: block;
+    list-style-type: none;
+    background-color: #51a7ff;
+    padding: 5px;
+    border-radius: 4px;
+    margin-top: 10px;
+    color: #fff;
+    text-shadow: 0 0 4px #000;
+    width: 50%;    
+}
+
+.coachesList ul li i.fa-times{
+    float: right;
+    margin: 4px;
+    cursor: pointer;
+}
+
+.coachesList ul li i.fa-times:hover{
+    color: #e4e4e4;
+}
+
+.addCoach{
+    color: #51a7ff;
+    font-size: 1.2em;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.addCoach:hover{
+    text-decoration: none;
+}

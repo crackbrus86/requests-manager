@@ -39385,6 +39385,7 @@ var RequestsApp = function (_React$Component) {
             regions: [],
             games: [],
             preGames: [],
+            coaches: [],
             editRequest: null,
             filter: {
                 games: [],
@@ -39405,6 +39406,7 @@ var RequestsApp = function (_React$Component) {
         _this.onEdit = _this.editRequest.bind(_this);
         _this.onClose = _this.closeRequest.bind(_this);
         _this.changeRequest = _this.onRequestChange.bind(_this);
+        _this.deleteCoach = _this.onCoachDelete.bind(_this);
         return _this;
     }
 
@@ -39441,6 +39443,22 @@ var RequestsApp = function (_React$Component) {
             console.log(this.state);
         }
     }, {
+        key: "onCoachDelete",
+        value: function onCoachDelete(id) {
+            var request = this.state.editRequest;
+            var coachesTmp = request.coaches;
+            var cTmp = coachesTmp.filter(function (c) {
+                return c[0] != parseInt(id);
+            });
+            request.coaches = cTmp;
+            var details = request.coach_details;
+            var dTmp = details.filter(function (d) {
+                return d.id !== id;
+            });
+            request.coach_details = dTmp;
+            this.setState({ editRequest: request });
+        }
+    }, {
         key: "getGames",
         value: function getGames() {
             var _this2 = this;
@@ -39457,6 +39475,7 @@ var RequestsApp = function (_React$Component) {
                 _this2.getAgeCategories();
                 _this2.getWeightCategories();
                 _this2.getRegions();
+                _this2.getCoaches();
             });
         }
     }, {
@@ -39504,6 +39523,17 @@ var RequestsApp = function (_React$Component) {
             });
         }
     }, {
+        key: "getCoaches",
+        value: function getCoaches() {
+            var _this7 = this;
+
+            this.setState({ isLoading: true });
+            services.getAllCoaches().then(function (data) {
+                _this7.setState({ coaches: JSON.parse(data) });
+                _this7.setState({ isLoading: false });
+            });
+        }
+    }, {
         key: "setDefaultGame",
         value: function setDefaultGame() {
             var filter = this.state.filter;
@@ -39515,24 +39545,24 @@ var RequestsApp = function (_React$Component) {
     }, {
         key: "getCountOfAllRequests",
         value: function getCountOfAllRequests() {
-            var _this7 = this;
+            var _this8 = this;
 
             this.setState({ isLoading: true });
             services.getCountOfAllRequests({
                 game: this.state.filter.currentGame,
                 year: (0, _moment2.default)(this.state.filter.year).format("YYYY")
             }).then(function (data) {
-                var paging = _this7.state.paging;
+                var paging = _this8.state.paging;
                 paging.total = parseInt(data);
-                _this7.setState({ paging: paging });
-                _this7.setState({ isLoading: false });
-                _this7.getAllRequests();
+                _this8.setState({ paging: paging });
+                _this8.setState({ isLoading: false });
+                _this8.getAllRequests();
             });
         }
     }, {
         key: "getAllRequests",
         value: function getAllRequests() {
-            var _this8 = this;
+            var _this9 = this;
 
             this.setState({ isLoading: true });
             services.getAllRequests({
@@ -39541,19 +39571,21 @@ var RequestsApp = function (_React$Component) {
                 game: this.state.filter.currentGame,
                 year: (0, _moment2.default)(this.state.filter.year).format("YYYY")
             }).then(function (data) {
-                _this8.setState({ requests: JSON.parse(data) });
-                _this8.setState({ isLoading: false });
+                _this9.setState({ requests: JSON.parse(data) });
+                _this9.setState({ isLoading: false });
             });
         }
     }, {
         key: "editRequest",
         value: function editRequest(id) {
-            var _this9 = this;
+            var _this10 = this;
 
             this.setState({ isLoading: true });
             services.getRequest({ id: id }).then(function (data) {
-                _this9.setState({ editRequest: JSON.parse(data)[0] });
-                _this9.setState({ isLoading: false });
+                var tmp = JSON.parse(data)[0];
+                tmp.hideAdd = true;
+                _this10.setState({ editRequest: tmp });
+                _this10.setState({ isLoading: false });
             });
         }
     }, {
@@ -39592,7 +39624,7 @@ var RequestsApp = function (_React$Component) {
                     } }),
                 _react2.default.createElement(_paging2.default, { paging: this.state.paging, changePage: this.changePage }),
                 _react2.default.createElement(_request2.default, { target: this.state.editRequest, regions: this.state.regions, ages: this.state.ageCat, weights: this.state.weightCat,
-                    games: this.state.games, preGames: this.state.preGames, onClose: this.onClose, onChange: this.changeRequest }),
+                    games: this.state.games, preGames: this.state.preGames, coaches: this.state.coaches, onClose: this.onClose, onChange: this.changeRequest, onCoachDelete: this.deleteCoach }),
                 _react2.default.createElement(_preloader2.default, { loading: this.state.isLoading })
             );
         }
@@ -40892,6 +40924,7 @@ var gamesDir = "../wp-content/plugins/requests-manager/api/Games-Manager/";
 var reqDir = "../wp-content/plugins/requests-manager/api/Requests/";
 var catDir = "../wp-content/plugins/requests-manager/api/Categories-Manager/";
 var regDir = "../wp-content/plugins/requests-manager/api/Regions-Manager/";
+var coaDir = "../wp-content/plugins/requests-manager/api/Coaches/";
 
 var getOpenedGames = exports.getOpenedGames = function getOpenedGames(contract) {
     return jQuery.ajax({
@@ -40949,6 +40982,13 @@ var getAllRegions = exports.getAllRegions = function getAllRegions() {
 var getAllBeforeGames = exports.getAllBeforeGames = function getAllBeforeGames() {
     return jQuery.ajax({
         url: gamesDir + "GetBeforeGames.php",
+        type: "POST"
+    });
+};
+
+var getAllCoaches = exports.getAllCoaches = function getAllCoaches() {
+    return jQuery.ajax({
+        url: coaDir + "GetAllCoaches.php",
         type: "POST"
     });
 };
@@ -41451,12 +41491,29 @@ var ReqModal = function ReqModal(props) {
         );
     });
     var dopingDate = request.doping.date ? new Date(request.doping.date) : null;
+    var getCoachStatus = function getCoachStatus(id) {
+        var temp = [];
+        var temp = temp.concat(request.coaches.filter(function (c) {
+            return c[0] === parseInt(id);
+        }));
+        return temp.length && JSON.parse(temp[0][1]) ? "(супроводжує)" : "";
+    };
     var coachesList = request.coach_details.map(function (c) {
         return _react2.default.createElement(
             "li",
             { key: c.id, value: c.id },
-            c.surname + " " + c.name + " " + c.mName,
-            _react2.default.createElement("i", { className: "fa fa-lg fa-times" })
+            c.surname + " " + c.name + " " + c.mName + " " + getCoachStatus(c.id),
+            _react2.default.createElement("i", { className: "fa fa-lg fa-times", onClick: function onClick() {
+                    return props.onCoachDelete(c.id);
+                } })
+        );
+    });
+
+    var allCoaches = props.coaches.map(function (c) {
+        return _react2.default.createElement(
+            "option",
+            { key: c.id, value: c.id },
+            c.surname + " " + c.name + " " + c.mName
         );
     });
     return _react2.default.createElement(
@@ -41700,6 +41757,31 @@ var ReqModal = function ReqModal(props) {
                 "ul",
                 null,
                 coachesList
+            ),
+            _react2.default.createElement(
+                "span",
+                { onClick: function onClick() {
+                        return props.onChange("hideAdd", !request.hideAdd);
+                    }, className: "addCoach" },
+                "\u0414\u043E\u0434\u0430\u0442\u0438 \u0442\u0440\u0435\u043D\u0435\u0440\u0430"
+            ),
+            _react2.default.createElement(
+                "div",
+                { hidden: request.hideAdd },
+                _react2.default.createElement(
+                    "div",
+                    { className: "form-group" },
+                    _react2.default.createElement(
+                        "label",
+                        null,
+                        "\u041E\u0431\u0435\u0440\u0456\u0442\u044C \u0442\u0440\u0435\u043D\u0435\u0440\u0430"
+                    ),
+                    _react2.default.createElement(
+                        "select",
+                        { className: "form-control" },
+                        allCoaches
+                    )
+                )
             )
         )
     );
@@ -41862,7 +41944,7 @@ exports = module.exports = __webpack_require__(27)(undefined);
 
 
 // module
-exports.push([module.i, ".request-edit-modal{\r\n    top: 10%;\r\n    width: 60%;\r\n    margin-left: -30%;    \r\n}", ""]);
+exports.push([module.i, ".request-edit-modal{\r\n    top: 10%;\r\n    width: 60%;\r\n    margin-left: -30%;    \r\n}\r\n\r\n.coachesList ul li{\r\n    display: block;\r\n    list-style-type: none;\r\n    background-color: #51a7ff;\r\n    padding: 5px;\r\n    border-radius: 4px;\r\n    margin-top: 10px;\r\n    color: #fff;\r\n    text-shadow: 0 0 4px #000;\r\n    width: 50%;    \r\n}\r\n\r\n.coachesList ul li i.fa-times{\r\n    float: right;\r\n    margin: 4px;\r\n    cursor: pointer;\r\n}\r\n\r\n.coachesList ul li i.fa-times:hover{\r\n    color: #e4e4e4;\r\n}\r\n\r\n.addCoach{\r\n    color: #51a7ff;\r\n    font-size: 1.2em;\r\n    cursor: pointer;\r\n    text-decoration: underline;\r\n}\r\n\r\n.addCoach:hover{\r\n    text-decoration: none;\r\n}", ""]);
 
 // exports
 
