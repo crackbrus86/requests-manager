@@ -47,6 +47,7 @@ class RequestsApp extends React.Component{
         this.deleteCoach = this.onCoachDelete.bind(this);
         this.onTcChange = this.onTmpCoachChange.bind(this);
         this.onCoachAdd = this.onAddCoach.bind(this);
+        this.onUpdate = this.updateRequest.bind(this);
     }
 
     changeCurrentPage(page){
@@ -120,6 +121,26 @@ class RequestsApp extends React.Component{
             follows: false
         }
         this.setState({tmpCoach: newTmpCoach});
+    }
+
+    updateRequest(){
+        this.setState({isLoading: true});
+        var request = this.state.editRequest;
+        services.updateRequest({
+            id: request.id,
+            age: request.age,
+            weight: request.weight,
+            game: request.game,
+            results: request.results,
+            pregame: request.pregame,
+            doping: request.doping,
+            coaches: request.coaches,
+            year: request.year
+        }).then(() => {
+            this.closeRequest();
+            this.getAllRequests();
+            this.setState({isLoading: false});
+        })
     }
 
     getGames(){
@@ -226,6 +247,7 @@ class RequestsApp extends React.Component{
 
     closeRequest(){
         this.setState({editRequest: null});
+        this.onTcChange("hide", true);
     }
 
     runFilter(){
@@ -247,7 +269,7 @@ class RequestsApp extends React.Component{
             <ReqModal target={this.state.editRequest} regions={this.state.regions} ages={this.state.ageCat} weights={this.state.weightCat} 
             games={this.state.games} preGames={this.state.preGames} coaches={this.state.coaches} 
             tmpCoach={this.state.tmpCoach} onTcChange={this.onTcChange} onClose={this.onClose} onChange={this.changeRequest} onCoachDelete={this.deleteCoach} 
-            onAdd={this.onCoachAdd} />
+            onAdd={this.onCoachAdd} onUpdate={this.onUpdate} />
             <Preloader loading={this.state.isLoading} />
         </div>
     }

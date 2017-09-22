@@ -70,3 +70,11 @@ export const getAllCoaches = () => {
         type: "POST"
     })
 }
+
+export const updateRequest = (contract) => {
+    return jQuery.ajax({
+        url: reqDir + "UpdateRequest.php",
+        type: "POST",
+        data: contract
+    })
+}

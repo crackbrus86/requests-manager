@@ -45,3 +45,7 @@
 .addCoach:hover{
     text-decoration: none;
 }
+
+.footer-update-button{
+    margin-right: 10px;
+}

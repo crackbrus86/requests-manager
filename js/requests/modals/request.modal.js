@@ -21,9 +21,11 @@ const ReqModal = (props) => {
     var preGamesList = props.preGames.map(g => <option key={g.id} value={g.id}>{g.name}</option>);
     var dopingDate = (request.doping.date)? new Date(request.doping.date) : null;
     var getCoachStatus = (id) => {
-        var temp = [];
-        var temp = temp.concat(request.coaches.filter(c => c[0] === parseInt(id)));
-        return (temp.length && JSON.parse(temp[0][1]))? "(супроводжує)" : "";
+        var coaches = request.coaches;
+        for(var i = 0; i < coaches.length; i++){
+            if(parseInt(coaches[i][0]) === parseInt(id) && JSON.parse(coaches[i][1])) return "(супроводжує)";
+        }
+        return "";
     }
     var coachesList = request.coach_details.map(c => <li key={c.id} value={c.id}>{c.surname + " " + c.name + " " + c.mName + " " + getCoachStatus(c.id)}
         <i className="fa fa-lg fa-times" onClick={() => props.onCoachDelete(c.id)}></i></li>);
@@ -126,6 +128,10 @@ const ReqModal = (props) => {
                         <button type="button" className="btn btn-default" onClick={() => props.onAdd()}><i className="fa fa-plus"></i> Додати тренера</button>
                     </div>
                 </div>
+        </div>
+        <div className="form-group text-right">
+            <button type="button" className="btn btn-primary footer-update-button" onClick={() => props.onUpdate()}>Оновити</button>
+            <button type="button" className="btn btn-default" onClick={() => props.onClose()}>Скасувати</button>
         </div>        
     </Modal>);
 }

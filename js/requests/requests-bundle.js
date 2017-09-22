@@ -39414,6 +39414,7 @@ var RequestsApp = function (_React$Component) {
         _this.deleteCoach = _this.onCoachDelete.bind(_this);
         _this.onTcChange = _this.onTmpCoachChange.bind(_this);
         _this.onCoachAdd = _this.onAddCoach.bind(_this);
+        _this.onUpdate = _this.updateRequest.bind(_this);
         return _this;
     }
 
@@ -39507,79 +39508,102 @@ var RequestsApp = function (_React$Component) {
             this.setState({ tmpCoach: newTmpCoach });
         }
     }, {
-        key: "getGames",
-        value: function getGames() {
+        key: "updateRequest",
+        value: function updateRequest() {
             var _this3 = this;
 
             this.setState({ isLoading: true });
-            services.getOpenedGames({ currentDay: (0, _moment2.default)(new Date()).format("YYYY-MM-DD") }).then(function (data) {
-                _this3.setState({ games: JSON.parse(data) });
-                _this3.onFielterChange("games", JSON.parse(data));
-                _this3.onFielterChange("currentGame", JSON.parse(data)[0].id);
+            var request = this.state.editRequest;
+            services.updateRequest({
+                id: request.id,
+                age: request.age,
+                weight: request.weight,
+                game: request.game,
+                results: request.results,
+                pregame: request.pregame,
+                doping: request.doping,
+                coaches: request.coaches,
+                year: request.year
+            }).then(function () {
+                _this3.closeRequest();
+                _this3.getAllRequests();
                 _this3.setState({ isLoading: false });
-                _this3.setDefaultGame();
-                _this3.getPreGames();
-                _this3.getCountOfAllRequests();
-                _this3.getAgeCategories();
-                _this3.getWeightCategories();
-                _this3.getRegions();
-                _this3.getCoaches();
+            });
+        }
+    }, {
+        key: "getGames",
+        value: function getGames() {
+            var _this4 = this;
+
+            this.setState({ isLoading: true });
+            services.getOpenedGames({ currentDay: (0, _moment2.default)(new Date()).format("YYYY-MM-DD") }).then(function (data) {
+                _this4.setState({ games: JSON.parse(data) });
+                _this4.onFielterChange("games", JSON.parse(data));
+                _this4.onFielterChange("currentGame", JSON.parse(data)[0].id);
+                _this4.setState({ isLoading: false });
+                _this4.setDefaultGame();
+                _this4.getPreGames();
+                _this4.getCountOfAllRequests();
+                _this4.getAgeCategories();
+                _this4.getWeightCategories();
+                _this4.getRegions();
+                _this4.getCoaches();
             });
         }
     }, {
         key: "getPreGames",
         value: function getPreGames() {
-            var _this4 = this;
+            var _this5 = this;
 
             this.setState({ isLoading: true });
             services.getAllBeforeGames().then(function (data) {
-                _this4.setState({ preGames: JSON.parse(data) });
-                _this4.setState({ isLoading: false });
+                _this5.setState({ preGames: JSON.parse(data) });
+                _this5.setState({ isLoading: false });
             });
         }
     }, {
         key: "getAgeCategories",
         value: function getAgeCategories() {
-            var _this5 = this;
+            var _this6 = this;
 
             this.setState({ isLoading: true });
             services.getAgeCategories().then(function (data) {
-                _this5.setState({ ageCat: JSON.parse(data) });
-                _this5.setState({ isLoading: false });
+                _this6.setState({ ageCat: JSON.parse(data) });
+                _this6.setState({ isLoading: false });
             });
         }
     }, {
         key: "getWeightCategories",
         value: function getWeightCategories() {
-            var _this6 = this;
+            var _this7 = this;
 
             this.setState({ isLoading: true });
             services.getWeightCategories().then(function (data) {
-                _this6.setState({ weightCat: JSON.parse(data) });
-                _this6.setState({ isLoading: false });
+                _this7.setState({ weightCat: JSON.parse(data) });
+                _this7.setState({ isLoading: false });
             });
         }
     }, {
         key: "getRegions",
         value: function getRegions() {
-            var _this7 = this;
+            var _this8 = this;
 
             this.setState({ isLoading: true });
             services.getAllRegions().then(function (data) {
-                _this7.setState({ regions: JSON.parse(data) });
-                _this7.setState({ isLoading: false });
+                _this8.setState({ regions: JSON.parse(data) });
+                _this8.setState({ isLoading: false });
             });
         }
     }, {
         key: "getCoaches",
         value: function getCoaches() {
-            var _this8 = this;
+            var _this9 = this;
 
             this.setState({ isLoading: true });
             services.getAllCoaches().then(function (data) {
-                _this8.setState({ coaches: JSON.parse(data) });
-                _this8.onTmpCoachChange("id", _this8.state.coaches[0].id);
-                _this8.setState({ isLoading: false });
+                _this9.setState({ coaches: JSON.parse(data) });
+                _this9.onTmpCoachChange("id", _this9.state.coaches[0].id);
+                _this9.setState({ isLoading: false });
             });
         }
     }, {
@@ -39594,24 +39618,24 @@ var RequestsApp = function (_React$Component) {
     }, {
         key: "getCountOfAllRequests",
         value: function getCountOfAllRequests() {
-            var _this9 = this;
+            var _this10 = this;
 
             this.setState({ isLoading: true });
             services.getCountOfAllRequests({
                 game: this.state.filter.currentGame,
                 year: (0, _moment2.default)(this.state.filter.year).format("YYYY")
             }).then(function (data) {
-                var paging = _this9.state.paging;
+                var paging = _this10.state.paging;
                 paging.total = parseInt(data);
-                _this9.setState({ paging: paging });
-                _this9.setState({ isLoading: false });
-                _this9.getAllRequests();
+                _this10.setState({ paging: paging });
+                _this10.setState({ isLoading: false });
+                _this10.getAllRequests();
             });
         }
     }, {
         key: "getAllRequests",
         value: function getAllRequests() {
-            var _this10 = this;
+            var _this11 = this;
 
             this.setState({ isLoading: true });
             services.getAllRequests({
@@ -39620,26 +39644,27 @@ var RequestsApp = function (_React$Component) {
                 game: this.state.filter.currentGame,
                 year: (0, _moment2.default)(this.state.filter.year).format("YYYY")
             }).then(function (data) {
-                _this10.setState({ requests: JSON.parse(data) });
-                _this10.setState({ isLoading: false });
+                _this11.setState({ requests: JSON.parse(data) });
+                _this11.setState({ isLoading: false });
             });
         }
     }, {
         key: "editRequest",
         value: function editRequest(id) {
-            var _this11 = this;
+            var _this12 = this;
 
             this.setState({ isLoading: true });
             services.getRequest({ id: id }).then(function (data) {
                 var tmp = JSON.parse(data)[0];
-                _this11.setState({ editRequest: tmp });
-                _this11.setState({ isLoading: false });
+                _this12.setState({ editRequest: tmp });
+                _this12.setState({ isLoading: false });
             });
         }
     }, {
         key: "closeRequest",
         value: function closeRequest() {
             this.setState({ editRequest: null });
+            this.onTcChange("hide", true);
         }
     }, {
         key: "runFilter",
@@ -39674,7 +39699,7 @@ var RequestsApp = function (_React$Component) {
                 _react2.default.createElement(_request2.default, { target: this.state.editRequest, regions: this.state.regions, ages: this.state.ageCat, weights: this.state.weightCat,
                     games: this.state.games, preGames: this.state.preGames, coaches: this.state.coaches,
                     tmpCoach: this.state.tmpCoach, onTcChange: this.onTcChange, onClose: this.onClose, onChange: this.changeRequest, onCoachDelete: this.deleteCoach,
-                    onAdd: this.onCoachAdd }),
+                    onAdd: this.onCoachAdd, onUpdate: this.onUpdate }),
                 _react2.default.createElement(_preloader2.default, { loading: this.state.isLoading })
             );
         }
@@ -41043,6 +41068,14 @@ var getAllCoaches = exports.getAllCoaches = function getAllCoaches() {
     });
 };
 
+var updateRequest = exports.updateRequest = function updateRequest(contract) {
+    return jQuery.ajax({
+        url: reqDir + "UpdateRequest.php",
+        type: "POST",
+        data: contract
+    });
+};
+
 /***/ }),
 /* 324 */
 /***/ (function(module, exports, __webpack_require__) {
@@ -41542,11 +41575,11 @@ var ReqModal = function ReqModal(props) {
     });
     var dopingDate = request.doping.date ? new Date(request.doping.date) : null;
     var getCoachStatus = function getCoachStatus(id) {
-        var temp = [];
-        var temp = temp.concat(request.coaches.filter(function (c) {
-            return c[0] === parseInt(id);
-        }));
-        return temp.length && JSON.parse(temp[0][1]) ? "(супроводжує)" : "";
+        var coaches = request.coaches;
+        for (var i = 0; i < coaches.length; i++) {
+            if (parseInt(coaches[i][0]) === parseInt(id) && JSON.parse(coaches[i][1])) return "(супроводжує)";
+        }
+        return "";
     };
     var coachesList = request.coach_details.map(function (c) {
         return _react2.default.createElement(
@@ -41863,6 +41896,24 @@ var ReqModal = function ReqModal(props) {
                     )
                 )
             )
+        ),
+        _react2.default.createElement(
+            "div",
+            { className: "form-group text-right" },
+            _react2.default.createElement(
+                "button",
+                { type: "button", className: "btn btn-primary footer-update-button", onClick: function onClick() {
+                        return props.onUpdate();
+                    } },
+                "\u041E\u043D\u043E\u0432\u0438\u0442\u0438"
+            ),
+            _react2.default.createElement(
+                "button",
+                { type: "button", className: "btn btn-default", onClick: function onClick() {
+                        return props.onClose();
+                    } },
+                "\u0421\u043A\u0430\u0441\u0443\u0432\u0430\u0442\u0438"
+            )
         )
     );
 };
@@ -42024,7 +42075,7 @@ exports = module.exports = __webpack_require__(27)(undefined);
 
 
 // module
-exports.push([module.i, ".blackout{\r\n    overflow: auto;\r\n}\r\n.request-edit-modal{\r\n    top: 10%;\r\n    width: 60%;\r\n    margin-left: -30%;    \r\n}\r\n\r\n.coachesList{\r\n    width: 50%;\r\n    padding: 5px;\r\n    background-color: #fff3e0;\r\n    border-radius: 10px;\r\n}\r\n\r\n.coachesList ul li{\r\n    display: block;\r\n    list-style-type: none;\r\n    background-color: #51a7ff;\r\n    padding: 5px;\r\n    border-radius: 4px;\r\n    margin-top: 10px;\r\n    color: #fff;\r\n    text-shadow: 0 0 4px #000;  \r\n}\r\n\r\n.coachesList ul li i.fa-times{\r\n    float: right;\r\n    margin: 4px;\r\n    cursor: pointer;\r\n}\r\n\r\n.coachesList ul li i.fa-times:hover{\r\n    color: #e4e4e4;\r\n}\r\n\r\n.addCoach{\r\n    color: #51a7ff;\r\n    font-size: 1.2em;\r\n    cursor: pointer;\r\n    text-decoration: underline;\r\n}\r\n\r\n.addCoach:hover{\r\n    text-decoration: none;\r\n}", ""]);
+exports.push([module.i, ".blackout{\r\n    overflow: auto;\r\n}\r\n.request-edit-modal{\r\n    top: 10%;\r\n    width: 60%;\r\n    margin-left: -30%;    \r\n}\r\n\r\n.coachesList{\r\n    width: 50%;\r\n    padding: 5px;\r\n    background-color: #fff3e0;\r\n    border-radius: 10px;\r\n}\r\n\r\n.coachesList ul li{\r\n    display: block;\r\n    list-style-type: none;\r\n    background-color: #51a7ff;\r\n    padding: 5px;\r\n    border-radius: 4px;\r\n    margin-top: 10px;\r\n    color: #fff;\r\n    text-shadow: 0 0 4px #000;  \r\n}\r\n\r\n.coachesList ul li i.fa-times{\r\n    float: right;\r\n    margin: 4px;\r\n    cursor: pointer;\r\n}\r\n\r\n.coachesList ul li i.fa-times:hover{\r\n    color: #e4e4e4;\r\n}\r\n\r\n.addCoach{\r\n    color: #51a7ff;\r\n    font-size: 1.2em;\r\n    cursor: pointer;\r\n    text-decoration: underline;\r\n}\r\n\r\n.addCoach:hover{\r\n    text-decoration: none;\r\n}\r\n\r\n.footer-update-button{\r\n    margin-right: 10px;\r\n}", ""]);
 
 // exports
 
