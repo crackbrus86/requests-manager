@@ -78,3 +78,11 @@ export const updateRequest = (contract) => {
         data: contract
     })
 }
+
+export const deleteRequest = (contract) => {
+    return jQuery.ajax({
+        url: reqDir + "DeleteRequest.php",
+        type: "POST",
+        data: contract
+    })
+}

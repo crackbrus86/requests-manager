@@ -7,6 +7,7 @@ import moment from "moment";
 import Paging from "../../components/paging/paging";
 import ReqModal from "../modals/request.modal";
 require("../../../css/requests.css");
+import Dialog from "../../components/modal/dialog";
 
 class RequestsApp extends React.Component{
     constructor(props){
@@ -20,6 +21,7 @@ class RequestsApp extends React.Component{
             preGames: [],
             coaches: [],
             editRequest: null,
+            dialog: null,
             tmpCoach: {
                 hide: true,
                 id: null,
@@ -48,6 +50,9 @@ class RequestsApp extends React.Component{
         this.onTcChange = this.onTmpCoachChange.bind(this);
         this.onCoachAdd = this.onAddCoach.bind(this);
         this.onUpdate = this.updateRequest.bind(this);
+        this.onDelete = this.deleteRequest.bind(this);
+        this.onCancel = this.cancelDelete.bind(this);
+        this.onConfirm = this.confirmDelete.bind(this);
     }
 
     changeCurrentPage(page){
@@ -138,8 +143,7 @@ class RequestsApp extends React.Component{
             year: request.year
         }).then(() => {
             this.closeRequest();
-            this.getAllRequests();
-            this.setState({isLoading: false});
+            this.getCountOfAllRequests();
         })
     }
 
@@ -149,7 +153,6 @@ class RequestsApp extends React.Component{
             this.setState({games: JSON.parse(data)});
             this.onFielterChange("games", JSON.parse(data));
             this.onFielterChange("currentGame", JSON.parse(data)[0].id);
-            this.setState({isLoading: false});
             this.setDefaultGame();
             this.getPreGames();
             this.getCountOfAllRequests(); 
@@ -161,43 +164,33 @@ class RequestsApp extends React.Component{
     }
 
     getPreGames(){
-        this.setState({isLoading: true});
         services.getAllBeforeGames().then(data => {
             this.setState({preGames: JSON.parse(data)});
-            this.setState({isLoading: false});
         });
     }
 
     getAgeCategories(){
-        this.setState({isLoading: true});
         services.getAgeCategories().then(data => {
             this.setState({ageCat: JSON.parse(data)});
-            this.setState({isLoading: false});
         })
     }
 
     getWeightCategories(){
-        this.setState({isLoading: true});
         services.getWeightCategories().then(data => {
             this.setState({weightCat: JSON.parse(data)});
-            this.setState({isLoading: false});
         })
     }
 
     getRegions(){
-        this.setState({isLoading: true});
         services.getAllRegions().then(data => {
             this.setState({regions: JSON.parse(data)});
-            this.setState({isLoading: false});
         })
     }
 
     getCoaches(){
-        this.setState({isLoading: true});
         services.getAllCoaches().then(data => {
             this.setState({coaches: JSON.parse(data)})
             this.onTmpCoachChange("id", this.state.coaches[0].id);
-            this.setState({isLoading: false});
         });
     }
 
@@ -218,7 +211,6 @@ class RequestsApp extends React.Component{
             var paging = this.state.paging;
             paging.total =parseInt(data);
             this.setState({paging: paging});
-            this.setState({isLoading: false});
             this.getAllRequests();
         })
     }
@@ -245,6 +237,25 @@ class RequestsApp extends React.Component{
         })
     }
 
+    deleteRequest(id){
+        this.setState({dialog: {
+            id: id,
+            text: "Ви впевнені що хочете видалити цю заявку?"
+        }})
+    }
+
+    cancelDelete(){
+        this.setState({dialog: null});
+    }
+
+    confirmDelete(){
+        this.setState({isLoading: true});
+        services.deleteRequest({id: this.state.dialog.id}).then(() => {
+            this.cancelDelete();
+            this.getCountOfAllRequests();
+        })
+    }
+
     closeRequest(){
         this.setState({editRequest: null});
         this.onTcChange("hide", true);
@@ -264,12 +275,13 @@ class RequestsApp extends React.Component{
                 <h4>Заявки</h4>
                 <Filter filter={this.state.filter} onChange={this.changeFilter} onFilter={this.onFilter} />
             </div>
-            <ReqGrid data={this.state.requests} onEdit={this.onEdit} onDelete={() => null} />
+            <ReqGrid data={this.state.requests} onEdit={this.onEdit} onDelete={this.onDelete} />
             <Paging paging={this.state.paging} changePage={this.changePage} />
             <ReqModal target={this.state.editRequest} regions={this.state.regions} ages={this.state.ageCat} weights={this.state.weightCat} 
             games={this.state.games} preGames={this.state.preGames} coaches={this.state.coaches} 
             tmpCoach={this.state.tmpCoach} onTcChange={this.onTcChange} onClose={this.onClose} onChange={this.changeRequest} onCoachDelete={this.deleteCoach} 
             onAdd={this.onCoachAdd} onUpdate={this.onUpdate} />
+            <Dialog dialog={this.state.dialog} onClose={this.onCancel} onConfirm={this.onConfirm} />
             <Preloader loading={this.state.isLoading} />
         </div>
     }

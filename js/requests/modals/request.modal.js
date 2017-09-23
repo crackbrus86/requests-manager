@@ -27,8 +27,8 @@ const ReqModal = (props) => {
         }
         return "";
     }
-    var coachesList = request.coach_details.map(c => <li key={c.id} value={c.id}>{c.surname + " " + c.name + " " + c.mName + " " + getCoachStatus(c.id)}
-        <i className="fa fa-lg fa-times" onClick={() => props.onCoachDelete(c.id)}></i></li>);
+    var coachesList = (request.coach_details)? request.coach_details.map(c => <li key={c.id} value={c.id}>{c.surname + " " + c.name + " " + c.mName + " " + getCoachStatus(c.id)}
+        <i className="fa fa-lg fa-times" onClick={() => props.onCoachDelete(c.id)}></i></li>) : null;
 
     
     var allCoaches = props.coaches.map(c => <option key={c.id} value={c.id}>{c.surname + " " + c.name + " " + c.mName}</option>);
@@ -114,7 +114,9 @@ const ReqModal = (props) => {
                 <ul>
                     {coachesList}
                 </ul>
-                <span onClick={() => props.onTcChange("hide", !props.tmpCoach.hide)} className="addCoach">Додати тренера</span>
+        </div>
+        <div className="coachAddForm">
+        <span onClick={() => props.onTcChange("hide", !props.tmpCoach.hide)} className="addCoach">Додати тренера</span>
                 <div hidden={props.tmpCoach.hide}>
                     <div className="form-group">
                         <label>Оберіть тренера</label>
@@ -128,7 +130,7 @@ const ReqModal = (props) => {
                         <button type="button" className="btn btn-default" onClick={() => props.onAdd()}><i className="fa fa-plus"></i> Додати тренера</button>
                     </div>
                 </div>
-        </div>
+        </div>        
         <div className="form-group text-right">
             <button type="button" className="btn btn-primary footer-update-button" onClick={() => props.onUpdate()}>Оновити</button>
             <button type="button" className="btn btn-default" onClick={() => props.onClose()}>Скасувати</button>
