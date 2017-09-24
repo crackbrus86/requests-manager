@@ -75,8 +75,8 @@ class RequestManager{
                 </div>
                 <div role="tabpanel" class="tab-pane" id="athletes">
                 <?php
-                    if(file_exists(RM__PLUGIN_DIR."/templates/users.php")){
-                        require_once(RM__PLUGIN_DIR."/templates/users.php");
+                    if(file_exists(RM__PLUGIN_DIR."/templates/new-users.php")){
+                        require_once(RM__PLUGIN_DIR."/templates/new-users.php");
                     }
                 ?>
                 </div>
