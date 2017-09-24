@@ -265,6 +265,33 @@ class RequestsApp extends React.Component{
         this.changeCurrentPage(1);
     }
 
+    exportGrid(){
+        this.openPreview();
+        jQuery(".preview").wordExport();
+        this.removePreview();
+    }
+
+    printGrid(){
+        this.openPreview();
+        jQuery.print(".preview");
+        this.removePreview();  
+    }
+
+    openPreview(){
+        jQuery("body").append("<div class='preview'></div>");
+        jQuery(".preview").html(jQuery("#reqGrid").html());
+        jQuery('.preview .btn-success, .preview .btn-danger').remove();
+    }
+
+    removePreview(){
+        jQuery(".preview").html();
+        jQuery(".preview").remove();
+    }
+
+    closePreview(){
+
+    }
+
     componentDidMount(){
         this.getGames();
     }
@@ -273,7 +300,18 @@ class RequestsApp extends React.Component{
         return <div className="row requests-wrapper">
             <div className="col-md-12 requests-content-section">
                 <h4>Заявки</h4>
-                <Filter filter={this.state.filter} onChange={this.changeFilter} onFilter={this.onFilter} />
+                <div className="row">
+                    <div className="col-md-10">
+                        <Filter filter={this.state.filter} onChange={this.changeFilter} onFilter={this.onFilter} />
+                    </div>
+                    <div className="col-md-2">
+                        <div className="export-box">
+                        <h4>Інші операції</h4>
+                        <button type="button" className="word-export btn btn-default" onClick={this.exportGrid.bind(this)} title="Експорт у Word"><i className="fa fa-file-word-o"></i></button>
+                        <button type="button" className="print-export btn btn-default" onClick={this.printGrid.bind(this)} title="Друк"><i className="fa fa-print"></i></button>
+                        </div>
+                    </div>                    
+                </div>
             </div>
             <ReqGrid data={this.state.requests} onEdit={this.onEdit} onDelete={this.onDelete} />
             <Paging paging={this.state.paging} changePage={this.changePage} />

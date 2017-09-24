@@ -63,7 +63,7 @@ const ReqGrid = (props) => {
             create_date: item.create_date
         }
     })
-    return (<div>
+    return (<div id="reqGrid">
         <Grid data={{columns, rows}} /> 
     </div>)
 }

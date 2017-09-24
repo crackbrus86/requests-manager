@@ -49,3 +49,48 @@
 .footer-update-button{
     margin-right: 10px;
 }
+
+.coachAddForm{
+    width: 50%;
+    padding: 5px;
+    background-color: #e2f2ff;
+    margin-top: 10px;  
+}
+
+.preview{
+    position: absolute; 
+    top: 0%; 
+    left: 0%; 
+    right: 0%; 
+    bottom: 0%; 
+    z-index: 100000; 
+    background-color: #fff;
+}
+
+.preview table thead tr th:nth-child(1),
+.preview table thead tr th:nth-child(2),
+.preview table tbody tr td:nth-child(1),
+.preview table tbody tr td:nth-child(2){
+    width: 0px!important;
+    padding: 0px!important;
+}
+
+.export-box{
+    margin: 10px 0 20px;
+    background-color: #f7f7f7;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 5px 5px;    
+}
+
+.export-box .btn{
+    margin-right: 10px;
+}
+.print-export i{
+    font-size: 25px;
+    color: #656565;    
+}
+.word-export i{
+    font-size: 25px;
+    color: #345297;
+}
