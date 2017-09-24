@@ -79,7 +79,6 @@ class RequestsApp extends React.Component{
             request[field] = value;
         }        
         this.setState({editRequest: request});
-        console.log(this.state);  
     }
 
     onCoachDelete(id){

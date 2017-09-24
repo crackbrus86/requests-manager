@@ -39456,7 +39456,6 @@ var RequestsApp = function (_React$Component) {
                 request[field] = value;
             }
             this.setState({ editRequest: request });
-            console.log(this.state);
         }
     }, {
         key: "onCoachDelete",
