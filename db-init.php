@@ -15,7 +15,8 @@
             `name` VARCHAR(500) NOT NULL,
             `type` INT,
             `year` VARCHAR(5),
-            `expire_day` DATE
+            `expire_day` DATE,
+            `active` VARCHAR(5)
         ) {$charset_collate}";
         dbDelta($createGamesTab);
         $tb_category_age = $wpdb->get_blog_prefix() . 'rm_category_age';

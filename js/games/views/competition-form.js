@@ -1,16 +1,15 @@
 import React from "react";
 import moment from "moment";
-require("../../../css/react-datetime.css");
-import Datetime from "react-datetime";
 import * as validation from "../../components/validation/validation";
 
 class GameForm extends React.Component{  
     render(){
-        var required = ["name", "type", "year", "expireDay"];
+        var required = ["name", "type", "year"];
         var types = [{id: 0, title: "пауерліфтинг"}, {id: 1, title: "жим лежачи"}];
         var typesList = types.map(type => <option key={type.id} value={type.id}>{type.title}</option>);
         var year = (this.props.game.year) ? this.props.game.year : "";
         var expiration = (this.props.game.expireDay)? new Date(this.props.game.expireDay) : null;
+        var active = (JSON.parse(this.props.game.active))?true:false;
         return <div>
             <h4>{ (this.props.game.id)? "Редагувати змагання" : "Створити змагання" }</h4>
             <form>
@@ -27,8 +26,8 @@ class GameForm extends React.Component{
                     <input type="number" value={year} className="form-control" placeholder="рік проведення" onChange={(e) => this.props.onChange("year", e.target.value)} />
                 </div>
                 <div className="form-group">
-                    <label>Крайній день подачі заявки  {validation.isFieldValid(this.props.game.expireDay, "Це поле є обов'язковим")}</label>
-                    <Datetime value={expiration} dateFormat="DD-MM-YYYY" timeFormat={false} onChange={(v) => this.props.onChange("expireDay", v.format("YYYY-MM-DD"))} closeOnSelect={true} />
+                    <label>Статус</label>
+                    <div><input type="checkbox" checked={active} onChange={e => this.props.onChange("active", e.target.checked)} /></div>
                 </div> 
                 <div className="form-group">
                     <button type="button" className="btn btn-primary" disabled={validation.isFormValid(this.props.game, required)} onClick={() => this.props.onSave()}>Зберегти</button>    

@@ -10,6 +10,15 @@ export const getUsersCount = () => {
 export const getAll = (contract) => {
     return jQuery.ajax({
         url: useDir + "GetAllUsers.php",
-        type: "POST"
+        type: "POST",
+        data: contract
+    })
+}
+
+export const getUser = (contract) => {
+    return jQuery.ajax({
+        url: useDir + "GetUserById.php",
+        type: "POST",
+        data: contract
     })
 }

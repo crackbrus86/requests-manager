@@ -34,7 +34,7 @@ class Competition extends React.Component{
                     name: item.name,
                     type: item.type,
                     year: item.year,
-                    expireDay: item.expire_day
+                    active: item.active
                 }
             });
             this.setState({target: target[0], loading: false});
@@ -46,7 +46,7 @@ class Competition extends React.Component{
             name: this.state.target.name,
             type: this.state.target.type,
             year: this.state.target.year,
-            expire_day: this.state.target.expireDay
+            active: this.state.target.active
         }
         if(this.state.target.id){
             contract.id = this.state.target.id;
@@ -69,7 +69,7 @@ class Competition extends React.Component{
             name: "",
             type: "0",
             year: null,
-            expireDay: null
+            active: "false"
         }})
     }
 

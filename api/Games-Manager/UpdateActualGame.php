@@ -6,7 +6,7 @@ foreach($_POST as $item => $value):
 endforeach;
 if(current_user_can('edit_others_pages')):
 	$wpdb->update($tb_name,
-    array('name' => $data['name'], 'type' => $data['type'], 'year' => $data['year'], 'expire_day' => $data['expire_day']),
+    array('name' => $data['name'], 'type' => $data['type'], 'year' => $data['year'], 'active' => $data['active']),
     array('id' => $data['id']),
     array('%s', '%d', '%s', '%s'),
     array('%d')

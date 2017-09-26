@@ -7,7 +7,7 @@ class GameGrid extends React.Component{
             {
                 title: "Назва",
                 field: "name",
-                width: "430px"
+                width: "410px"
             },
             {
                 title: "Тип",
@@ -17,8 +17,13 @@ class GameGrid extends React.Component{
             {
                 title: "Рік",
                 field: "year",
-                width: "110px"
-            },            
+                width: "70px"
+            },     
+            {
+                title: "Статус",
+                field: "active",
+                width: "60px"
+            },      
             {
                 title: "",
                 field: "id",
@@ -43,7 +48,8 @@ class GameGrid extends React.Component{
                 id: item.id,
                 name: item.name,
                 type: (item.type == "1")? "жим лежачи" : "пауерліфтинг",
-                year: item.year
+                year: item.year,
+                active: JSON.parse(item.active)? <i className="fa fa-plus-square-o"></i>:<i className="fa fa-minus-square-o"></i>
             }
         });
         return <Grid data={{columns, rows}} />       
