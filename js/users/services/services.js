@@ -1,4 +1,5 @@
 var useDir = "../wp-content/plugins/requests-manager/api/Users/";
+var regDir = "../wp-content/plugins/requests-manager/api/Regions-Manager/";
 
 export const getUsersCount = () => {
     return jQuery.ajax({
@@ -20,5 +21,12 @@ export const getUser = (contract) => {
         url: useDir + "GetUserById.php",
         type: "POST",
         data: contract
+    })
+}
+
+export const getRegions = () => {
+    return jQuery.ajax({
+        url: regDir + "GetAllRegions.php",
+        type: "POST"
     })
 }

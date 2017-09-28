@@ -4,6 +4,7 @@ import moment from "moment";
 import Preloader from "../../components/preloader/preloader";
 import UsersGrid from "./partial/users.grid";
 import Paging from "../../components/paging/paging";
+import UserModal from "../modals/users.modal";
 
 class UsersApp extends React.Component{
     constructor(props){
@@ -11,6 +12,7 @@ class UsersApp extends React.Component{
         this.state = {
             users: [],
             user: null,
+            regions: [],
             paging: {
                 total: 0,
                 current: 1,
@@ -21,6 +23,8 @@ class UsersApp extends React.Component{
         }
         this.onEdit = this.editUser.bind(this);
         this.onPage = this.goToPage.bind(this);
+        this.onClose = this.closeUser.bind(this);
+        this.onChange = this.changeUser.bind(this);
     }
 
     fetchUsers(){
@@ -59,6 +63,28 @@ class UsersApp extends React.Component{
         this.setState({user: JSON.parse(data)[0]});
     }
 
+    closeUser(){
+        this.setState({user: null});
+    }
+
+    changeUser(field, value){
+        var user = this.state.user;
+        user[field] = value;
+        this.setState({user: user});
+    }
+
+    getRegions(){
+        this.setState({isLoading: true});
+        services.getRegions().then(data => {
+            this.setRegions(data);
+            this.fetchUsers();
+        })
+    }
+
+    setRegions(regions){
+        this.setState({regions: JSON.parse(regions)});
+    }
+
     goToPage(page){
         var paging = this.state.paging;
         paging.current = page;
@@ -68,7 +94,7 @@ class UsersApp extends React.Component{
     }
 
     componentDidMount(){
-        this.fetchUsers();
+        this.getRegions();
     }
 
     render(){
@@ -78,6 +104,7 @@ class UsersApp extends React.Component{
                 <UsersGrid users={this.state.users} onEdit={this.onEdit} onDelete = {() => null} />
                 <Paging paging={this.state.paging} changePage={this.onPage} />
             </div>
+            <UserModal user={this.state.user} regions={this.state.regions} onClose={this.onClose} onChange={this.onChange} />
             <Preloader loading={this.state.isLoading}/>
         </div>
     }
