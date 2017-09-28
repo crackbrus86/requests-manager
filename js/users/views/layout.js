@@ -71,6 +71,7 @@ class UsersApp extends React.Component{
         var user = this.state.user;
         user[field] = value;
         this.setState({user: user});
+        console.log(this.state);
     }
 
     getRegions(){
