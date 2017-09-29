@@ -25,6 +25,7 @@ class UsersApp extends React.Component{
         this.onPage = this.goToPage.bind(this);
         this.onClose = this.closeUser.bind(this);
         this.onChange = this.changeUser.bind(this);
+        this.onUpdate = this.updateUser.bind(this);
     }
 
     fetchUsers(){
@@ -94,6 +95,30 @@ class UsersApp extends React.Component{
         this.fetchUsers();
     }
 
+    updateUser(){
+        this.setState({isLoading: true});
+        var user = this.state.user;
+        services.saveUser({
+            id: user.id,
+            region: user.region,
+            latLastName: user.latLastName,
+            latFirstName: user.latFirstName,
+            passSeria: user.passSeria,
+            passNo: user.passNo,
+            passExpire: user.passExpire,
+            iin: user.iin,
+            phone: user.phone,
+            email: user.email,
+            pnpId: user.pnpId,
+            pipId: user.pipId,
+            apId: user.apId
+        }).then(() => {
+            this.closeUser();
+            this.setState({isLoading: false});
+            this.fetchUsers();
+        })
+    }
+
     componentDidMount(){
         this.getRegions();
     }
@@ -105,7 +130,7 @@ class UsersApp extends React.Component{
                 <UsersGrid users={this.state.users} onEdit={this.onEdit} onDelete = {() => null} />
                 <Paging paging={this.state.paging} changePage={this.onPage} />
             </div>
-            <UserModal user={this.state.user} regions={this.state.regions} onClose={this.onClose} onChange={this.onChange} />
+            <UserModal user={this.state.user} regions={this.state.regions} onClose={this.onClose} onChange={this.onChange} onUpdate={this.onUpdate} />
             <Preloader loading={this.state.isLoading}/>
         </div>
     }

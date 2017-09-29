@@ -3,3 +3,7 @@
     width: 60%!important;
     margin-left: -30%!important;    
 }
+
+.custom-modal h6{
+    font-size: 25px;
+}

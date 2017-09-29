@@ -84,7 +84,7 @@ const UserModal = (props) => {
             </div>
         </div>
         <div className="form-group text-right">
-                <button type="button" className="btn btn-primary footer-update-button" onClick={() => null} disabled={validation.isFormValid(user, required)}>Оновити</button>
+                <button type="button" className="btn btn-primary footer-update-button" onClick={() => props.onUpdate()} disabled={validation.isFormValid(user, required)}>Оновити</button>
                 <button type="button" className="btn btn-default" onClick={() => props.onClose()}>Скасувати</button>                
             </div>        
     </Modal>);

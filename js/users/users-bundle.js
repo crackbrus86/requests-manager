@@ -39040,6 +39040,7 @@ var UsersApp = function (_React$Component) {
         _this.onPage = _this.goToPage.bind(_this);
         _this.onClose = _this.closeUser.bind(_this);
         _this.onChange = _this.changeUser.bind(_this);
+        _this.onUpdate = _this.updateUser.bind(_this);
         return _this;
     }
 
@@ -39127,6 +39128,33 @@ var UsersApp = function (_React$Component) {
             this.fetchUsers();
         }
     }, {
+        key: "updateUser",
+        value: function updateUser() {
+            var _this5 = this;
+
+            this.setState({ isLoading: true });
+            var user = this.state.user;
+            services.saveUser({
+                id: user.id,
+                region: user.region,
+                latLastName: user.latLastName,
+                latFirstName: user.latFirstName,
+                passSeria: user.passSeria,
+                passNo: user.passNo,
+                passExpire: user.passExpire,
+                iin: user.iin,
+                phone: user.phone,
+                email: user.email,
+                pnpId: user.pnpId,
+                pipId: user.pipId,
+                apId: user.apId
+            }).then(function () {
+                _this5.closeUser();
+                _this5.setState({ isLoading: false });
+                _this5.fetchUsers();
+            });
+        }
+    }, {
         key: "componentDidMount",
         value: function componentDidMount() {
             this.getRegions();
@@ -39150,7 +39178,7 @@ var UsersApp = function (_React$Component) {
                         } }),
                     _react2.default.createElement(_paging2.default, { paging: this.state.paging, changePage: this.onPage })
                 ),
-                _react2.default.createElement(_users4.default, { user: this.state.user, regions: this.state.regions, onClose: this.onClose, onChange: this.onChange }),
+                _react2.default.createElement(_users4.default, { user: this.state.user, regions: this.state.regions, onClose: this.onClose, onChange: this.onChange, onUpdate: this.onUpdate }),
                 _react2.default.createElement(_preloader2.default, { loading: this.state.isLoading })
             );
         }
@@ -39201,6 +39229,14 @@ var getRegions = exports.getRegions = function getRegions() {
     return jQuery.ajax({
         url: regDir + "GetAllRegions.php",
         type: "POST"
+    });
+};
+
+var saveUser = exports.saveUser = function saveUser(contract) {
+    return jQuery.ajax({
+        url: useDir + "SaveUser.php",
+        type: "POST",
+        data: contract
     });
 };
 
@@ -40209,7 +40245,7 @@ var UserModal = function UserModal(props) {
             _react2.default.createElement(
                 "button",
                 { type: "button", className: "btn btn-primary footer-update-button", onClick: function onClick() {
-                        return null;
+                        return props.onUpdate();
                     }, disabled: validation.isFormValid(user, required) },
                 "\u041E\u043D\u043E\u0432\u0438\u0442\u0438"
             ),
@@ -41991,7 +42027,7 @@ exports = module.exports = __webpack_require__(23)(undefined);
 
 
 // module
-exports.push([module.i, ".users-edit-modal{\r\n    top: 10%!important;\r\n    width: 60%!important;\r\n    margin-left: -30%!important;    \r\n}", ""]);
+exports.push([module.i, ".users-edit-modal{\r\n    top: 10%!important;\r\n    width: 60%!important;\r\n    margin-left: -30%!important;    \r\n}\r\n\r\n.custom-modal h6{\r\n    font-size: 25px;\r\n}", ""]);
 
 // exports
 

@@ -30,3 +30,11 @@ export const getRegions = () => {
         type: "POST"
     })
 }
+
+export const saveUser = (contract) => {
+    return jQuery.ajax({
+        url: useDir + "SaveUser.php",
+        type: "POST",
+        data: contract
+    })
+}
