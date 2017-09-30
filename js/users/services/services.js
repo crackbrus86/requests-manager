@@ -38,3 +38,11 @@ export const saveUser = (contract) => {
         data: contract
     })
 }
+
+export const deleteUser = (contract) => {
+    return jQuery.ajax({
+        url: useDir + "DeleteUser.php",
+        type: "POST",
+        data: contract
+    })
+}

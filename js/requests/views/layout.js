@@ -295,6 +295,10 @@ class RequestsApp extends React.Component{
         this.getGames();
     }
 
+    componentWillReceiveProps(props){
+        if(props.update) this.getGames();
+    }
+
     render(){
         return <div className="row requests-wrapper">
             <div className="col-md-12 requests-content-section">

@@ -5,6 +5,7 @@ import Preloader from "../../components/preloader/preloader";
 import UsersGrid from "./partial/users.grid";
 import Paging from "../../components/paging/paging";
 import UserModal from "../modals/users.modal";
+import Dialog from "../../components//modal/dialog";
 
 class UsersApp extends React.Component{
     constructor(props){
@@ -26,6 +27,9 @@ class UsersApp extends React.Component{
         this.onClose = this.closeUser.bind(this);
         this.onChange = this.changeUser.bind(this);
         this.onUpdate = this.updateUser.bind(this);
+        this.onDelete = this.deleteUser.bind(this);
+        this.onCancel = this.cancelDelete.bind(this);
+        this.onConfirm = this.confirmDialog.bind(this);
     }
 
     fetchUsers(){
@@ -119,6 +123,27 @@ class UsersApp extends React.Component{
         })
     }
 
+    deleteUser(id){
+        this.setState({dialog: {
+                id: id,
+                text: "Ви дійсно бажаєте видалити цього спортсмена?"
+            }
+        })
+    }
+
+    cancelDelete(){
+        this.setState({dialog: null})
+    }
+
+    confirmDialog(){
+        this.setState({isLoading: true});
+        services.deleteUser({id: this.state.dialog.id}).then(() => {
+            this.cancelDelete();
+            this.setState({isLoading: false});
+            this.fetchUsers();
+        })
+    }
+
     componentDidMount(){
         this.getRegions();
     }
@@ -127,10 +152,11 @@ class UsersApp extends React.Component{
         return <div className="row users-wrapper">
             <div className="col-md-12 users-content-section">
                 <h4>Спортсмени</h4>
-                <UsersGrid users={this.state.users} onEdit={this.onEdit} onDelete = {() => null} />
+                <UsersGrid users={this.state.users} onEdit={this.onEdit} onDelete = {this.onDelete} />
                 <Paging paging={this.state.paging} changePage={this.onPage} />
             </div>
             <UserModal user={this.state.user} regions={this.state.regions} onClose={this.onClose} onChange={this.onChange} onUpdate={this.onUpdate} />
+            <Dialog dialog={this.state.dialog} onClose={this.onCancel} onConfirm={this.onConfirm} />
             <Preloader loading={this.state.isLoading}/>
         </div>
     }

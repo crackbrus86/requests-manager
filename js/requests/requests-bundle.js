@@ -28095,7 +28095,11 @@ var _layout2 = _interopRequireDefault(_layout);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-(0, _reactDom.render)(_react2.default.createElement(_layout2.default, null), document.getElementById("requests-app"));
+(0, _reactDom.render)(_react2.default.createElement(_layout2.default, { update: false }), document.getElementById("requests-app"));
+
+jQuery('a[href="#requests"]').live('click', function () {
+    (0, _reactDom.render)(_react2.default.createElement(_layout2.default, { update: true }), document.getElementById("requests-app"));
+});
 
 /***/ }),
 /* 210 */
@@ -39723,6 +39727,11 @@ var RequestsApp = function (_React$Component) {
         key: "componentDidMount",
         value: function componentDidMount() {
             this.getGames();
+        }
+    }, {
+        key: "componentWillReceiveProps",
+        value: function componentWillReceiveProps(props) {
+            if (props.update) this.getGames();
         }
     }, {
         key: "render",
