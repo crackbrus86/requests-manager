@@ -5,7 +5,8 @@ import Preloader from "../../components/preloader/preloader";
 import UsersGrid from "./partial/users.grid";
 import Paging from "../../components/paging/paging";
 import UserModal from "../modals/users.modal";
-import Dialog from "../../components//modal/dialog";
+import Dialog from "../../components/modal/dialog";
+require("../../../css/users.css");
 
 class UsersApp extends React.Component{
     constructor(props){
@@ -30,6 +31,7 @@ class UsersApp extends React.Component{
         this.onDelete = this.deleteUser.bind(this);
         this.onCancel = this.cancelDelete.bind(this);
         this.onConfirm = this.confirmDialog.bind(this);
+        this.onDownload = this.getPhotos.bind(this);
     }
 
     fetchUsers(){
@@ -144,6 +146,18 @@ class UsersApp extends React.Component{
         })
     }
 
+    getPhotos(){
+        this.setState({isLoading: true});
+        services.getPhotos().then(data => {
+            this.setState({isLoading: false});
+            if(data === "false"){
+                alert("Фото не знайдені");
+            }else{
+                location.href = "../wp-content/plugins/requests-manager/api/Users/GetPhotos.php";
+            }            
+        });
+    }
+
     componentDidMount(){
         this.getRegions();
     }
@@ -152,6 +166,15 @@ class UsersApp extends React.Component{
         return <div className="row users-wrapper">
             <div className="col-md-12 users-content-section">
                 <h4>Спортсмени</h4>
+                <div className="row">
+                    <div className="col-md-2">
+                        <div className="export-box">
+                            <h4>Інші операції</h4>
+                            <button type="button" className="btn btn-default" onClick={this.onDownload} title="Скачати усі фото"><i className="fa fa-file-archive-o"></i></button>
+                        </div>  
+                    </div>
+                    <div className="col-md-10"></div>
+                </div>
                 <UsersGrid users={this.state.users} onEdit={this.onEdit} onDelete = {this.onDelete} />
                 <Paging paging={this.state.paging} changePage={this.onPage} />
             </div>

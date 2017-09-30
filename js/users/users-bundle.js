@@ -39006,7 +39006,7 @@ var _users3 = __webpack_require__(318);
 
 var _users4 = _interopRequireDefault(_users3);
 
-var _dialog = __webpack_require__(341);
+var _dialog = __webpack_require__(339);
 
 var _dialog2 = _interopRequireDefault(_dialog);
 
@@ -39019,6 +39019,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+__webpack_require__(342);
 
 var UsersApp = function (_React$Component) {
     _inherits(UsersApp, _React$Component);
@@ -39048,6 +39050,7 @@ var UsersApp = function (_React$Component) {
         _this.onDelete = _this.deleteUser.bind(_this);
         _this.onCancel = _this.cancelDelete.bind(_this);
         _this.onConfirm = _this.confirmDialog.bind(_this);
+        _this.onDownload = _this.getPhotos.bind(_this);
         return _this;
     }
 
@@ -39188,6 +39191,21 @@ var UsersApp = function (_React$Component) {
             });
         }
     }, {
+        key: "getPhotos",
+        value: function getPhotos() {
+            var _this7 = this;
+
+            this.setState({ isLoading: true });
+            services.getPhotos().then(function (data) {
+                _this7.setState({ isLoading: false });
+                if (data === "false") {
+                    alert("Фото не знайдені");
+                } else {
+                    location.href = "../wp-content/plugins/requests-manager/api/Users/GetPhotos.php";
+                }
+            });
+        }
+    }, {
         key: "componentDidMount",
         value: function componentDidMount() {
             this.getRegions();
@@ -39205,6 +39223,29 @@ var UsersApp = function (_React$Component) {
                         "h4",
                         null,
                         "\u0421\u043F\u043E\u0440\u0442\u0441\u043C\u0435\u043D\u0438"
+                    ),
+                    _react2.default.createElement(
+                        "div",
+                        { className: "row" },
+                        _react2.default.createElement(
+                            "div",
+                            { className: "col-md-2" },
+                            _react2.default.createElement(
+                                "div",
+                                { className: "export-box" },
+                                _react2.default.createElement(
+                                    "h4",
+                                    null,
+                                    "\u0406\u043D\u0448\u0456 \u043E\u043F\u0435\u0440\u0430\u0446\u0456\u0457"
+                                ),
+                                _react2.default.createElement(
+                                    "button",
+                                    { type: "button", className: "btn btn-default", onClick: this.onDownload, title: "\u0421\u043A\u0430\u0447\u0430\u0442\u0438 \u0443\u0441\u0456 \u0444\u043E\u0442\u043E" },
+                                    _react2.default.createElement("i", { className: "fa fa-file-archive-o" })
+                                )
+                            )
+                        ),
+                        _react2.default.createElement("div", { className: "col-md-10" })
                     ),
                     _react2.default.createElement(_users2.default, { users: this.state.users, onEdit: this.onEdit, onDelete: this.onDelete }),
                     _react2.default.createElement(_paging2.default, { paging: this.state.paging, changePage: this.onPage })
@@ -39277,6 +39318,13 @@ var deleteUser = exports.deleteUser = function deleteUser(contract) {
         url: useDir + "DeleteUser.php",
         type: "POST",
         data: contract
+    });
+};
+
+var getPhotos = exports.getPhotos = function getPhotos() {
+    return jQuery.ajax({
+        url: useDir + "GetPhotos.php",
+        type: "POST"
     });
 };
 
@@ -40051,8 +40099,6 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 __webpack_require__(337);
-
-__webpack_require__(339);
 
 
 var UserModal = function UserModal(props) {
@@ -42031,51 +42077,6 @@ exports.push([module.i, "/*!\r\n * https://github.com/YouCanBookMe/react-datetim
 /* 339 */
 /***/ (function(module, exports, __webpack_require__) {
 
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(340);
-if(typeof content === 'string') content = [[module.i, content, '']];
-// Prepare cssTransformation
-var transform;
-
-var options = {}
-options.transform = transform
-// add the styles to the DOM
-var update = __webpack_require__(19)(content, options);
-if(content.locals) module.exports = content.locals;
-// Hot Module Replacement
-if(false) {
-	// When the styles change, update the <style> tags
-	if(!content.locals) {
-		module.hot.accept("!!../node_modules/css-loader/index.js!./users.css", function() {
-			var newContent = require("!!../node_modules/css-loader/index.js!./users.css");
-			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-			update(newContent);
-		});
-	}
-	// When the module is disposed, remove the <style> tags
-	module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 340 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(18)(undefined);
-// imports
-
-
-// module
-exports.push([module.i, ".users-edit-modal{\r\n    top: 10%!important;\r\n    width: 60%!important;\r\n    margin-left: -30%!important;    \r\n}\r\n\r\n.custom-modal h6{\r\n    font-size: 25px;\r\n}", ""]);
-
-// exports
-
-
-/***/ }),
-/* 341 */
-/***/ (function(module, exports, __webpack_require__) {
-
 "use strict";
 
 
@@ -42097,7 +42098,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-__webpack_require__(342);
+__webpack_require__(340);
 
 var Dialog = function (_React$Component) {
     _inherits(Dialog, _React$Component);
@@ -42162,13 +42163,13 @@ var Dialog = function (_React$Component) {
 exports.default = Dialog;
 
 /***/ }),
-/* 342 */
+/* 340 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(343);
+var content = __webpack_require__(341);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -42193,7 +42194,7 @@ if(false) {
 }
 
 /***/ }),
-/* 343 */
+/* 341 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(18)(undefined);
@@ -42202,6 +42203,51 @@ exports = module.exports = __webpack_require__(18)(undefined);
 
 // module
 exports.push([module.i, ".dialog{\r\n    position: absolute;\r\n    top: 30%;\r\n    left: 50%;\r\n    min-width: 400px;\r\n    background-color: #fff;\r\n    margin-left: -200px;\r\n    padding: 5px 10px;\r\n    border-radius: 5px;\r\n}\r\n.dialog-body{\r\n    padding: 10px 0;\r\n}\r\n.dialog-header .icons{\r\n    text-align: right;\r\n}\r\n\r\n.dialog-header .icons .fa-times{\r\n    color: #9a9aaf;\r\n    cursor: pointer;\r\n}\r\n.dialog-header .icons .fa-times:hover{\r\n    color: #68686f;\r\n}\r\n.dialog-footer{\r\n    text-align: right;\r\n    padding-bottom: 5px;\r\n}\r\n.dialog-footer button{\r\n    margin-left: 10px;\r\n}", ""]);
+
+// exports
+
+
+/***/ }),
+/* 342 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(343);
+if(typeof content === 'string') content = [[module.i, content, '']];
+// Prepare cssTransformation
+var transform;
+
+var options = {}
+options.transform = transform
+// add the styles to the DOM
+var update = __webpack_require__(19)(content, options);
+if(content.locals) module.exports = content.locals;
+// Hot Module Replacement
+if(false) {
+	// When the styles change, update the <style> tags
+	if(!content.locals) {
+		module.hot.accept("!!../node_modules/css-loader/index.js!./users.css", function() {
+			var newContent = require("!!../node_modules/css-loader/index.js!./users.css");
+			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+			update(newContent);
+		});
+	}
+	// When the module is disposed, remove the <style> tags
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 343 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(18)(undefined);
+// imports
+
+
+// module
+exports.push([module.i, ".users-edit-modal{\r\n    top: 10%!important;\r\n    width: 60%!important;\r\n    margin-left: -30%!important;    \r\n}\r\n\r\n.custom-modal h6{\r\n    font-size: 25px;\r\n}\r\n\r\n.fa-file-archive-o{\r\n    font-size: 25px;\r\n    color: #b31b44;\r\n}", ""]);
 
 // exports
 

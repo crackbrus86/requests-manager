@@ -46,3 +46,10 @@ export const deleteUser = (contract) => {
         data: contract
     })
 }
+
+export const getPhotos = () => {
+    return jQuery.ajax({
+        url: useDir + "GetPhotos.php",
+        type: "POST"
+    })
+}

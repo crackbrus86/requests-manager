@@ -4,7 +4,6 @@ import moment from "moment";
 require("../../../css/react-datetime.css");
 import Datetime from "react-datetime";
 import PhotoLoader from "../../components/photo-loader/photo-loader";
-require("../../../css/users.css");
 import * as validation from "../../components/validation/validation";
 
 const UserModal = (props) => {
