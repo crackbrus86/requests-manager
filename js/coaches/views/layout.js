@@ -3,12 +3,16 @@ import * as services from "../services/services";
 import moment from "moment";
 import Preloader from "../../components/preloader/preloader";
 import CoachesGrid from "./partial/coaches.grid";
+import Paging from "../../components/paging/paging";
+import CoachModal from "../modals/coach.modal";
 
 class CoachesApp extends React.Component{
     constructor(props){
         super(props);
         this.state = {
             coaches: [],
+            coach: null,
+            regions: [],
             paging: {
                 total: 0,
                 current: 1,
@@ -17,6 +21,9 @@ class CoachesApp extends React.Component{
             },
             isLoading: false
         }
+        this.onEdit = this.editCoach.bind(this);
+        this.onPage = this.goToPage.bind(this);
+        this.onClose = this.closeCoach.bind(this);
     }
 
     fetchCoaches(){
@@ -44,19 +51,57 @@ class CoachesApp extends React.Component{
         this.setState({coaches: JSON.parse(data)});
     }
 
-    componentDidMount(){
+    editCoach(id){
+        this.setState({isLoading: true});
+        services.getCoach({id: id}).then(data => {
+            this.setCoach(data);
+            this.setState({isLoading: false});
+        })
+    }
+
+    setCoach(data){
+        this.setState({coach: JSON.parse(data)[0]});
+    }
+
+    closeCoach(){
+        this.setState({coach: null});
+    }
+
+    goToPage(page){
+        var paging = this.state.paging;
+        paging.current = page;
+        paging.offset = paging.perPage * paging.current - paging.perPage;
+        this.setState({paging: paging});
         this.fetchCoaches();
     }
 
+    getRegions(){
+        this.setState({isLoading: true});
+        services.getRegions().then(data => {
+            this.setRegions(data);
+            this.fetchCoaches();
+        })
+    }
+
+    setRegions(data){
+        this.setState({regions: JSON.parse(data)});
+    }
+
+    componentDidMount(){
+        this.getRegions();
+    }
+
     componentWillReceiveProps(props){
-        if(props.update) this.fetchCoaches();
+        if(props.update) this.getRegions();
     }
 
     render(){
         return <div className="row">
             <div className="col-md-12">
                 <h4>Тренери</h4>
-                <CoachesGrid coaches={this.state.coaches} onEdit={()=>null} onDelete={()=>null} />
+                <CoachesGrid coaches={this.state.coaches} onEdit={this.onEdit} onDelete={()=>null} />
+                <Paging paging={this.state.paging} changePage={this.onPage} />
+                <CoachModal coach={this.state.coach} onClose={this.onClose} />
                 <Preloader loading={this.state.isLoading} />
             </div>
         </div>
