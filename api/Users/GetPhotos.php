@@ -2,7 +2,10 @@
 require_once("../wpdb-connect.php");
 if(current_user_can('edit_others_pages')):
     $tb_users = $wpdb->get_blog_prefix()."rm_users";
-    $sql = $wpdb->prepare("SELECT first_name_pass AS name, last_name_pass AS surname, photo_national_pass_id, photo_international_pass_id, accreditation_photo_id FROM $tb_users", "");
+    $limit = $_GET["limit"];
+    $offset = $_GET["offset"];
+    $sql = $wpdb->prepare("SELECT first_name_pass AS name, last_name_pass AS surname, photo_national_pass_id, photo_international_pass_id, accreditation_photo_id 
+    FROM $tb_users LIMIT %d OFFSET %d", $limit, $offset);
     $users = $wpdb->get_results($sql);
 
     if(count($users)){
@@ -25,7 +28,6 @@ if(current_user_can('edit_others_pages')):
         }
     
         $zip->close();
-    
         header('Content-disposition: attachment; filename=Photos.zip');
         header('Content-type: application/zip');
         readfile($tmp_file);

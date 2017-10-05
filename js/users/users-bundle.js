@@ -39196,12 +39196,15 @@ var UsersApp = function (_React$Component) {
             var _this7 = this;
 
             this.setState({ isLoading: true });
-            services.getPhotos().then(function (data) {
+            services.getPhotos({
+                limit: this.state.paging.perPage,
+                offset: this.state.paging.offset
+            }).then(function (data) {
                 _this7.setState({ isLoading: false });
                 if (data === "false") {
                     alert("Фото не знайдені");
                 } else {
-                    location.href = "../wp-content/plugins/requests-manager/api/Users/GetPhotos.php";
+                    location.href = "../wp-content/plugins/requests-manager/api/Users/GetPhotos.php?limit=" + _this7.state.paging.perPage + "&offset=" + _this7.state.paging.offset;
                 }
             });
         }
@@ -39240,7 +39243,7 @@ var UsersApp = function (_React$Component) {
                                 ),
                                 _react2.default.createElement(
                                     "button",
-                                    { type: "button", className: "btn btn-default", onClick: this.onDownload, title: "\u0421\u043A\u0430\u0447\u0430\u0442\u0438 \u0443\u0441\u0456 \u0444\u043E\u0442\u043E" },
+                                    { type: "button", className: "btn btn-default", onClick: this.onDownload, title: "\u0421\u043A\u0430\u0447\u0430\u0442\u0438 \u0443\u0441\u0456 \u0444\u043E\u0442\u043E", disabled: !this.state.users.length },
                                     _react2.default.createElement("i", { className: "fa fa-file-archive-o" })
                                 )
                             )
@@ -39321,10 +39324,11 @@ var deleteUser = exports.deleteUser = function deleteUser(contract) {
     });
 };
 
-var getPhotos = exports.getPhotos = function getPhotos() {
+var getPhotos = exports.getPhotos = function getPhotos(contract) {
     return jQuery.ajax({
         url: useDir + "GetPhotos.php",
-        type: "POST"
+        type: "GET",
+        data: contract
     });
 };
 
