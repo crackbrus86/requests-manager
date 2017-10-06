@@ -4,8 +4,9 @@ if(current_user_can("edit_others_pages")){
     $tb_coaches = $wpdb->get_blog_prefix()."rm_coaches";
     $tb_requests = $wpdb->get_blog_prefix()."rm_requests";
     $id = strip_tags(stripslashes(trim($_POST["id"])));
-    $relatedRequests = $wpdb->get_results("SELECT id, coaches FROM $tb_requests WHERE coaches LIKE '%$id%'");
-    // $relatedRequests = json_encode($relatedRequests);
+    
+    $sql = $wpdb->prepare("SELECT id, coaches FROM $tb_requests WHERE coaches LIKE %s", "%".$id."%");
+    $relatedRequests = $wpdb->get_results($sql);
     foreach($relatedRequests as $item){
         $item->coaches = unserialize($item->coaches);
         foreach($item->coaches as $key => $coach){
@@ -14,12 +15,13 @@ if(current_user_can("edit_others_pages")){
             }
         }
         if(!count($item->coaches)){
-            $item->coaches = "individual" ;
+            $item->coaches = serialize($item->coaches);
         }else{
             $item->coaches = serialize($item->coaches);
         } 
-        $query = $wpdb->query("UPDATE $tb_requests SET coaches = '$item->coaches' WHERE id = '$item->id'");
+        $sql2 = $wpdb->prepare("UPDATE $tb_requests SET coaches = %s WHERE id = %d", $item->coaches, $item->id);
+        if($wpdb->query($sql2)) echo "Coach was unassigned";
     }
-    $query1 = $wpdb->query("DELETE FROM $tb_coaches WHERE id = '$id'");
-    print_r($query1);
+    $sql3 = $wpdb->prepare("DELETE FROM $tb_coaches WHERE id = %d", $id);
+    if($wpdb->query($sql3)) echo "Coach was removed";
 }

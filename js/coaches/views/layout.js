@@ -5,6 +5,8 @@ import Preloader from "../../components/preloader/preloader";
 import CoachesGrid from "./partial/coaches.grid";
 import Paging from "../../components/paging/paging";
 import CoachModal from "../modals/coach.modal";
+import Dialog from "../../components/modal/dialog";
+require("../../../css/coaches.css");
 
 class CoachesApp extends React.Component{
     constructor(props){
@@ -25,6 +27,10 @@ class CoachesApp extends React.Component{
         this.onPage = this.goToPage.bind(this);
         this.onClose = this.closeCoach.bind(this);
         this.onChange = this.changeCoach.bind(this);
+        this.onUpdate = this.updateCoach.bind(this);
+        this.onDelete = this.deleteCoach.bind(this);
+        this.onCancel = this.cancelDelete.bind(this);
+        this.onConfirm = this.confirmDelete.bind(this);
     }
 
     fetchCoaches(){
@@ -83,6 +89,50 @@ class CoachesApp extends React.Component{
         this.fetchCoaches();
     }
 
+    updateCoach(){
+        this.setState({isLoading: true});
+        var coach = this.state.coach;
+        services.saveCoach({
+            id: coach.id,
+            region: coach.region,
+            latSurname: coach.latSurname,
+            latFirstName: coach.latFirstName,
+            passSeria: coach.passSeria,
+            passNo: coach.passNo,
+            passExpire: coach.passExpire,
+            iin: coach.iin,
+            phone: coach.phone,
+            email: coach.email,
+            pnpId: coach.pnpId,
+            pipId: coach.pipId,
+            apId: coach.apId
+        }).then(() => {
+            this.closeCoach();
+            this.setState({isLoading: false});
+            this.fetchCoaches();
+        })
+    }
+
+    deleteCoach(id){
+        this.setState({dialog: {
+            id: id,
+            text: "Ви дійсно бажаєте видалити цього тренера?"
+        }})
+    }
+
+    cancelDelete(){
+        this.setState({dialog: null});
+    }
+
+    confirmDelete(){
+        this.setState({isLoading: true});
+        services.deleteCoach({id: this.state.dialog.id}).then(() => {
+            this.cancelDelete();
+            this.setState({isLoading: false});
+            this.fetchCoaches();
+        })
+    }
+
     getRegions(){
         this.setState({isLoading: true});
         services.getRegions().then(data => {
@@ -107,9 +157,10 @@ class CoachesApp extends React.Component{
         return <div className="row">
             <div className="col-md-12">
                 <h4>Тренери</h4>
-                <CoachesGrid coaches={this.state.coaches} onEdit={this.onEdit} onDelete={()=>null} />
+                <CoachesGrid coaches={this.state.coaches} onEdit={this.onEdit} onDelete={this.onDelete} />
                 <Paging paging={this.state.paging} changePage={this.onPage} />
-                <CoachModal coach={this.state.coach} regions={this.state.regions} onChange={this.onChange} onClose={this.onClose} />
+                <CoachModal coach={this.state.coach} regions={this.state.regions} onChange={this.onChange} onClose={this.onClose} onUpdate={this.onUpdate} />
+                <Dialog dialog={this.state.dialog} onClose={this.onCancel} onConfirm={this.onConfirm} />
                 <Preloader loading={this.state.isLoading} />
             </div>
         </div>

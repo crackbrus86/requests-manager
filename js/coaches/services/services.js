@@ -30,3 +30,19 @@ export const getRegions = () => {
         type: "POST"
     })
 }
+
+export const saveCoach = (contract) => {
+    return jQuery.ajax({
+        url: coaDir + "SaveCoach.php",
+        type: "POST",
+        data: contract
+    })
+}
+
+export const deleteCoach = (contract) => {
+    return jQuery.ajax({
+        url: coaDir + "DeleteCoach.php",
+        type: "POST",
+        data: contract
+    })
+}

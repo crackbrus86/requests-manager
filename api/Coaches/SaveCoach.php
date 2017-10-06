@@ -2,22 +2,26 @@
 require_once("../wpdb-connect.php");
 if(current_user_can("edit_others_pages")){
     $tb_coaches = $wpdb->get_blog_prefix()."rm_coaches";
-    $coachId = strip_tags(stripslashes(trim($_POST["id"])));
+    $id = strip_tags(stripslashes(trim($_POST["id"])));
     $region = strip_tags(stripslashes(trim($_POST["region"])));
-    $lastNamePass = strip_tags(stripslashes(trim($_POST["lastNamePass"])));
-    $firstNamePass = strip_tags(stripslashes(trim($_POST["firstNamePass"])));
-    $seria = strip_tags(stripslashes(trim($_POST["seria"])));
-    $passNumb = strip_tags(stripslashes(trim($_POST["passNumb"])));
+    $latSurname = strip_tags(stripslashes(trim($_POST["latSurname"])));
+    $latFirstName = strip_tags(stripslashes(trim($_POST["latFirstName"])));
+    $passSeria = strip_tags(stripslashes(trim($_POST["passSeria"])));
+    $passNo = strip_tags(stripslashes(trim($_POST["passNo"])));
     $passExpire = strip_tags(stripslashes(trim($_POST["passExpire"])));
-    $indNumber = strip_tags(stripslashes(trim($_POST["indNumber"])));
+    $iin = strip_tags(stripslashes(trim($_POST["iin"])));
     $phone = strip_tags(stripslashes(trim($_POST["phone"])));
     $email = strip_tags(stripslashes(trim($_POST["email"])));
-    $natPassId = strip_tags(stripslashes(trim($_POST["natPassId"])));
-    $forPassId = strip_tags(stripslashes(trim($_POST["forPassId"])));
-    $accId = strip_tags(stripslashes(trim($_POST["accId"])));
-    $query = $wpdb->query("UPDATE $tb_coaches SET region = '$region', last_name_pass = '$lastNamePass', first_name_pass = '$firstNamePass',
-    serial_number_pass = '$seria', number_pass = '$passNumb', expiration_date_pass = '$passExpire', individual_number = '$indNumber',
-    phone = '$phone', email = '$email', photo_national_pass_id = '$natPassId', photo_international_pass_id = '$forPassId',  accreditation_photo_id = '$accId'
-    WHERE id = '$coachId'");
-    print_r($query);
+    $pnpId = strip_tags(stripslashes(trim($_POST["pnpId"])));
+    $pipId = strip_tags(stripslashes(trim($_POST["pipId"])));
+    $apId = strip_tags(stripslashes(trim($_POST["apId"])));
+
+    $sql = $wpdb->prepare("UPDATE $tb_coaches SET region = %d, last_name_pass = %s, first_name_pass = %s, serial_number_pass = %s, 
+    number_pass = %s, expiration_date_pass = %s, individual_number = %s, phone = %s, email = %s, photo_national_pass_id = %d, 
+    photo_international_pass_id = %d, accreditation_photo_id = %d WHERE id = %d", $region, $latSurname, $latFirstName, $passSeria,
+    $passNo, $passExpire, $iin, $phone, $email, $pnpId, $pipId, $apId, $id);
+
+    if($wpdb->query($sql)){
+        echo "Coach was updated";
+    }
 }
