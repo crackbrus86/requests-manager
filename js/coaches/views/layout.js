@@ -24,6 +24,7 @@ class CoachesApp extends React.Component{
         this.onEdit = this.editCoach.bind(this);
         this.onPage = this.goToPage.bind(this);
         this.onClose = this.closeCoach.bind(this);
+        this.onChange = this.changeCoach.bind(this);
     }
 
     fetchCoaches(){
@@ -67,6 +68,13 @@ class CoachesApp extends React.Component{
         this.setState({coach: null});
     }
 
+    changeCoach(field, value){
+        var coach = this.state.coach;
+        coach[field] = value;
+        this.setState({coach: coach});
+        console.log(this.state);
+    }
+
     goToPage(page){
         var paging = this.state.paging;
         paging.current = page;
@@ -101,7 +109,7 @@ class CoachesApp extends React.Component{
                 <h4>Тренери</h4>
                 <CoachesGrid coaches={this.state.coaches} onEdit={this.onEdit} onDelete={()=>null} />
                 <Paging paging={this.state.paging} changePage={this.onPage} />
-                <CoachModal coach={this.state.coach} onClose={this.onClose} />
+                <CoachModal coach={this.state.coach} regions={this.state.regions} onChange={this.onChange} onClose={this.onClose} />
                 <Preloader loading={this.state.isLoading} />
             </div>
         </div>
