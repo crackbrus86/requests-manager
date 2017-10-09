@@ -24,4 +24,8 @@ if(current_user_can("edit_others_pages")){
     }
     $sql3 = $wpdb->prepare("DELETE FROM $tb_coaches WHERE id = %d", $id);
     if($wpdb->query($sql3)) echo "Coach was removed";
+
+    $tb_visa = $wpdb->get_blog_prefix()."rm_visa";
+    $sql4 = $wpdb->prepare("DELETE FROM $tb_visa WHERE owner_type = %s AND owner_id = %d", "coach", $id);
+    if($wpdb->query($sql4)) echo "Coach visa records were removed";
 }

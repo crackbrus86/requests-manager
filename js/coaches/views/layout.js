@@ -31,6 +31,7 @@ class CoachesApp extends React.Component{
         this.onDelete = this.deleteCoach.bind(this);
         this.onCancel = this.cancelDelete.bind(this);
         this.onConfirm = this.confirmDelete.bind(this);
+        this.onDownload = this.getPhotos.bind(this);
     }
 
     fetchCoaches(){
@@ -78,7 +79,6 @@ class CoachesApp extends React.Component{
         var coach = this.state.coach;
         coach[field] = value;
         this.setState({coach: coach});
-        console.log(this.state);
     }
 
     goToPage(page){
@@ -145,6 +145,21 @@ class CoachesApp extends React.Component{
         this.setState({regions: JSON.parse(data)});
     }
 
+    getPhotos(){
+        this.setState({isLoading: true});
+        services.getPhotos({
+            limit: this.state.paging.perPage,
+            offset: this.state.paging.offset
+        }).then(data => {
+            this.setState({isLoading: false});
+            if(data == "false"){
+                alert("Фото не знайдені");
+            }else{
+                location.href = "../wp-content/plugins/requests-manager/api/Coaches/GetPhotos.php?limit=" + this.state.paging.perPage + "&offset=" + this.state.paging.offset;
+            }
+        })
+    }
+
     componentDidMount(){
         this.getRegions();
     }
@@ -157,6 +172,15 @@ class CoachesApp extends React.Component{
         return <div className="row">
             <div className="col-md-12">
                 <h4>Тренери</h4>
+                <div className="row">
+                    <div className="col-md-2">
+                        <div className="export-box">
+                            <h4>Інші операції</h4>
+                            <button type="button" className="btn btn-default" onClick={this.onDownload} title="Скачати усі фото" disabled={!this.state.coaches.length}><i className="fa fa-file-archive-o"></i></button>
+                        </div>  
+                    </div>
+                    <div className="col-md-10"></div>
+                </div>                
                 <CoachesGrid coaches={this.state.coaches} onEdit={this.onEdit} onDelete={this.onDelete} />
                 <Paging paging={this.state.paging} changePage={this.onPage} />
                 <CoachModal coach={this.state.coach} regions={this.state.regions} onChange={this.onChange} onClose={this.onClose} onUpdate={this.onUpdate} />

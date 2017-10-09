@@ -39050,6 +39050,7 @@ var CoachesApp = function (_React$Component) {
         _this.onDelete = _this.deleteCoach.bind(_this);
         _this.onCancel = _this.cancelDelete.bind(_this);
         _this.onConfirm = _this.confirmDelete.bind(_this);
+        _this.onDownload = _this.getPhotos.bind(_this);
         return _this;
     }
 
@@ -39190,6 +39191,24 @@ var CoachesApp = function (_React$Component) {
             this.setState({ regions: JSON.parse(data) });
         }
     }, {
+        key: "getPhotos",
+        value: function getPhotos() {
+            var _this7 = this;
+
+            this.setState({ isLoading: true });
+            services.getPhotos({
+                limit: this.state.paging.perPage,
+                offset: this.state.paging.offset
+            }).then(function (data) {
+                _this7.setState({ isLoading: false });
+                if (data == "false") {
+                    alert("Фото не знайдені");
+                } else {
+                    location.href = "../wp-content/plugins/requests-manager/api/Coaches/GetPhotos.php?limit=" + _this7.state.paging.perPage + "&offset=" + _this7.state.paging.offset;
+                }
+            });
+        }
+    }, {
         key: "componentDidMount",
         value: function componentDidMount() {
             this.getRegions();
@@ -39212,6 +39231,29 @@ var CoachesApp = function (_React$Component) {
                         "h4",
                         null,
                         "\u0422\u0440\u0435\u043D\u0435\u0440\u0438"
+                    ),
+                    _react2.default.createElement(
+                        "div",
+                        { className: "row" },
+                        _react2.default.createElement(
+                            "div",
+                            { className: "col-md-2" },
+                            _react2.default.createElement(
+                                "div",
+                                { className: "export-box" },
+                                _react2.default.createElement(
+                                    "h4",
+                                    null,
+                                    "\u0406\u043D\u0448\u0456 \u043E\u043F\u0435\u0440\u0430\u0446\u0456\u0457"
+                                ),
+                                _react2.default.createElement(
+                                    "button",
+                                    { type: "button", className: "btn btn-default", onClick: this.onDownload, title: "\u0421\u043A\u0430\u0447\u0430\u0442\u0438 \u0443\u0441\u0456 \u0444\u043E\u0442\u043E", disabled: !this.state.coaches.length },
+                                    _react2.default.createElement("i", { className: "fa fa-file-archive-o" })
+                                )
+                            )
+                        ),
+                        _react2.default.createElement("div", { className: "col-md-10" })
                     ),
                     _react2.default.createElement(_coaches2.default, { coaches: this.state.coaches, onEdit: this.onEdit, onDelete: this.onDelete }),
                     _react2.default.createElement(_paging2.default, { paging: this.state.paging, changePage: this.onPage }),
@@ -39283,6 +39325,14 @@ var deleteCoach = exports.deleteCoach = function deleteCoach(contract) {
     return jQuery.ajax({
         url: coaDir + "DeleteCoach.php",
         type: "POST",
+        data: contract
+    });
+};
+
+var getPhotos = exports.getPhotos = function getPhotos(contract) {
+    return jQuery.ajax({
+        url: coaDir + "GetPhotos.php",
+        type: "GET",
         data: contract
     });
 };
@@ -40074,7 +40124,7 @@ var CoachModal = function CoachModal(props) {
         );
     });
     var expireDate = coach.passExpire ? new Date(coach.passExpire) : null;
-    var required = ["latSurname", "latFirstName", "passSeria", "passNo", "iin", "phone", "email", "pnpId", "pipId", "apId"];
+    var required = ["latSurname", "latFirstName", "region", "passSeria", "passNo", "iin", "phone", "email", "pnpId", "pipId", "apId"];
     return _react2.default.createElement(
         _modal2.default,
         { target: props.coach, onClose: props.onClose, className: "coaches-edit-modal" },
@@ -40115,13 +40165,19 @@ var CoachModal = function CoachModal(props) {
                     _react2.default.createElement(
                         "label",
                         null,
-                        "\u041E\u0431\u043B\u0430\u0441\u0442\u044C"
+                        "\u041E\u0431\u043B\u0430\u0441\u0442\u044C",
+                        validation.isFieldValid(parseInt(coach.region), "Це поле є обов'язковим")
                     ),
                     _react2.default.createElement(
                         "select",
                         { value: coach.region, className: "form-control", onChange: function onChange(e) {
                                 return props.onChange("region", e.target.value);
                             } },
+                        _react2.default.createElement(
+                            "option",
+                            { key: 0, value: 0 },
+                            "-\u043D\u0435 \u043E\u0431\u0440\u0430\u043D\u043E"
+                        ),
                         regionsList
                     )
                 ),

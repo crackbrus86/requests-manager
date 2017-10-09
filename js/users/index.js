@@ -3,5 +3,5 @@ import {render} from "react-dom";
 import UsersApp from "./views/layout";
 
 jQuery('a[href="#athletes"]').live("click", () => {
-    render(<UsersApp />, document.getElementById("users-app"));
+    render(<UsersApp update={true} />, document.getElementById("users-app"));
 });

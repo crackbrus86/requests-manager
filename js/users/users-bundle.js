@@ -27746,7 +27746,7 @@ var _layout2 = _interopRequireDefault(_layout);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 jQuery('a[href="#athletes"]').live("click", function () {
-    (0, _reactDom.render)(_react2.default.createElement(_layout2.default, null), document.getElementById("users-app"));
+    (0, _reactDom.render)(_react2.default.createElement(_layout2.default, { update: true }), document.getElementById("users-app"));
 });
 
 /***/ }),
@@ -39110,7 +39110,6 @@ var UsersApp = function (_React$Component) {
             var user = this.state.user;
             user[field] = value;
             this.setState({ user: user });
-            console.log(this.state);
         }
     }, {
         key: "getRegions",
@@ -39212,6 +39211,11 @@ var UsersApp = function (_React$Component) {
         key: "componentDidMount",
         value: function componentDidMount() {
             this.getRegions();
+        }
+    }, {
+        key: "componentWillReceiveProps",
+        value: function componentWillReceiveProps(props) {
+            if (props.update) this.getRegions();
         }
     }, {
         key: "render",
@@ -40176,7 +40180,7 @@ var UserModal = function UserModal(props) {
                     _react2.default.createElement(
                         "label",
                         null,
-                        "\u041F\u0440\u0456\u0437\u0432\u0438\u0449\u0435 \u044F\u043A \u0443 \u0437\u0430\u043A\u043E\u0440\u0434\u043E\u043D\u043D\u043E\u043C\u0443",
+                        "\u041F\u0440\u0456\u0437\u0432\u0438\u0449\u0435 \u044F\u043A \u0443 \u0437\u0430\u043A\u043E\u0440\u0434\u043E\u043D\u043D\u043E\u043C\u0443 \u043F\u0430\u0441\u043F\u043E\u0440\u0442\u0456",
                         validation.isFieldValid(user.latLastName, "Це поле є обов'язковим")
                     ),
                     _react2.default.createElement("input", { type: "text", value: user.latLastName, className: "form-control", onChange: function onChange(e) {

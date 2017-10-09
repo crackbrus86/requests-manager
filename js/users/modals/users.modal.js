@@ -32,7 +32,7 @@ const UserModal = (props) => {
                     <select value={user.region} className="form-control" onChange={e => props.onChange("region", e.target.value) }>{regionsList}</select>
                 </div>
                 <div className="form-group">
-                    <label>Прізвище як у закордонному{validation.isFieldValid(user.latLastName, "Це поле є обов'язковим")}</label>
+                    <label>Прізвище як у закордонному паспорті{validation.isFieldValid(user.latLastName, "Це поле є обов'язковим")}</label>
                     <input type="text" value={user.latLastName} className="form-control" onChange={e => props.onChange("latLastName", e.target.value)} />
                 </div>
                 <div className="form-group">

@@ -14,7 +14,7 @@ const CoachModal = (props) => {
     var born = moment(new Date(coach.born)).format("DD-MM-YYYY");
     var regionsList = props.regions.map(r => <option key={r.id} value={r.id}>{r.region}</option>);
     var expireDate = (coach.passExpire)? new Date(coach.passExpire):null;
-    var required = ["latSurname", "latFirstName", "passSeria", "passNo", "iin", "phone", "email", "pnpId", "pipId", "apId"];
+    var required = ["latSurname", "latFirstName", "region", "passSeria", "passNo", "iin", "phone", "email", "pnpId", "pipId", "apId"];
     return(<Modal target={props.coach} onClose={props.onClose} className="coaches-edit-modal">
         <h3>{"Редагувати дані тренера"}</h3>
         <div className="row">
@@ -28,8 +28,11 @@ const CoachModal = (props) => {
                     <input type="text" value={born} className="form-control" readOnly={true} />
                 </div>
                 <div className="form-group">
-                    <label>Область</label>
-                    <select value={coach.region} className="form-control" onChange={e => props.onChange("region", e.target.value)}>{regionsList}</select>
+                    <label>Область{validation.isFieldValid(parseInt(coach.region), "Це поле є обов'язковим")}</label>
+                    <select value={coach.region} className="form-control" onChange={e => props.onChange("region", e.target.value)}>
+                        <option key={0} value={0}>-не обрано</option>
+                        {regionsList}
+                    </select>
                 </div>
                 <div className="form-group">
                     <label>Прізвище як у закордонному паспорті{validation.isFieldValid(coach.latSurname, "Це поле є обов'язковим")}</label>

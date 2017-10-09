@@ -46,3 +46,11 @@ export const deleteCoach = (contract) => {
         data: contract
     })
 }
+
+export const getPhotos = (contract) => {
+    return jQuery.ajax({
+        url: coaDir + "GetPhotos.php",
+        type: "GET",
+        data: contract
+    })
+}

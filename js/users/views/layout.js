@@ -78,7 +78,6 @@ class UsersApp extends React.Component{
         var user = this.state.user;
         user[field] = value;
         this.setState({user: user});
-        console.log(this.state);
     }
 
     getRegions(){
@@ -163,6 +162,10 @@ class UsersApp extends React.Component{
 
     componentDidMount(){
         this.getRegions();
+    }
+
+    componentWillReceiveProps(props){
+        if(props.update) this.getRegions();
     }
 
     render(){

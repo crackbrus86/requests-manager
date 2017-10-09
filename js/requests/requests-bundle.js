@@ -39602,7 +39602,7 @@ var RequestsApp = function (_React$Component) {
 
             services.getAllCoaches().then(function (data) {
                 _this9.setState({ coaches: JSON.parse(data) });
-                _this9.onTmpCoachChange("id", _this9.state.coaches[0].id);
+                if (_this9.state.coaches.length) _this9.onTmpCoachChange("id", _this9.state.coaches[0].id);
             });
         }
     }, {

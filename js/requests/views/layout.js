@@ -189,7 +189,7 @@ class RequestsApp extends React.Component{
     getCoaches(){
         services.getAllCoaches().then(data => {
             this.setState({coaches: JSON.parse(data)})
-            this.onTmpCoachChange("id", this.state.coaches[0].id);
+            if(this.state.coaches.length) this.onTmpCoachChange("id", this.state.coaches[0].id);
         });
     }
 
