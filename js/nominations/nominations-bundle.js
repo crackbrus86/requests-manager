@@ -38838,6 +38838,7 @@ var NomApp = function (_React$Component) {
             isLoading: false
         };
         _this.onFilterChange = _this.changeFilter.bind(_this);
+        _this.onRunFilter = _this.getNominations.bind(_this);
         return _this;
     }
 
@@ -38860,6 +38861,21 @@ var NomApp = function (_React$Component) {
             });
         }
     }, {
+        key: "getNominations",
+        value: function getNominations() {
+            var _this3 = this;
+
+            this.setState({ isLoading: true });
+            var filter = this.state.filter;
+            services.getNominations({
+                game: filter.currentGame.length ? filter.currentGame : filter.games[0].id,
+                year: new Date(filter.year).getFullYear()
+            }).then(function (data) {
+                _this3.setState({ isLoading: false });
+                console.log(JSON.parse(data));
+            });
+        }
+    }, {
         key: "componentDidMount",
         value: function componentDidMount() {
             this.getGames();
@@ -38867,8 +38883,6 @@ var NomApp = function (_React$Component) {
     }, {
         key: "render",
         value: function render() {
-            var _this3 = this;
-
             return _react2.default.createElement(
                 "div",
                 { className: "row" },
@@ -38886,9 +38900,7 @@ var NomApp = function (_React$Component) {
                         _react2.default.createElement(
                             "div",
                             { className: "col-md-10" },
-                            _react2.default.createElement(_nominations2.default, { filter: this.state.filter, onChange: this.onFilterChange, onFilter: function onFilter() {
-                                    console.log(_this3.state.filter);
-                                } })
+                            _react2.default.createElement(_nominations2.default, { filter: this.state.filter, onChange: this.onFilterChange, onFilter: this.onRunFilter })
                         ),
                         _react2.default.createElement("div", { className: "col-md-2" })
                     ),
@@ -40668,11 +40680,20 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 var gamDir = "../wp-content/plugins/requests-manager/api/Games-Manager/";
+var nomDir = "../wp-content/plugins/requests-manager/api/Nominations/";
 
 var getGames = exports.getGames = function getGames() {
     return jQuery.ajax({
         url: gamDir + "GetOpenedActualGames.php",
         type: "POST"
+    });
+};
+
+var getNominations = exports.getNominations = function getNominations(contract) {
+    return jQuery.ajax({
+        url: nomDir + "GetNominations.php",
+        type: "POST",
+        data: contract
     });
 };
 
