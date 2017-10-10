@@ -16,7 +16,8 @@ foreach($_FILES as $file) {
                 $file_name = $file['name'];
                 $tmp_file_name = explode(".", $file_name);
                 $ext = $tmp_file_name[(count($tmp_file_name) - 1)]; 
-                $new_file_name =  transliteration(str_replace('.'.$ext, '', $file_name)).'.'.$ext;
+                $str_unique = time();
+                $new_file_name =  transliteration(str_replace('.'.$ext, '', $file_name)).$str_unique.'.'.$ext;
 			if(!move_uploaded_file($file['tmp_name'], ABSPATH .'/wp-content/uploads/pictures/'.$new_file_name))
 				die("Error");
 			else 
