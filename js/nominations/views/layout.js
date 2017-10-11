@@ -2,6 +2,7 @@ import React from "react";
 import NomFilter from "./partial/nominations.filter";
 import * as services from "../services/services";
 import Preloader from "../../components/preloader/preloader";
+import NomGrid from "./partial/nominations.grid";
 
 class NomApp extends React.Component{
     constructor(props){
@@ -12,7 +13,10 @@ class NomApp extends React.Component{
                 year: new Date(),
                 currentGame: {}
             },
-            isLoading: false
+            isLoading: false,
+            nominations: [],
+            divisions: [],
+            game: null
         }
         this.onFilterChange = this.changeFilter.bind(this);
         this.onRunFilter = this.getNominations.bind(this);
@@ -27,20 +31,34 @@ class NomApp extends React.Component{
     getGames(){
         this.setState({isLoading: true});
         services.getGames().then(data => {
-            this.setState({isLoading: false});
             this.changeFilter("games", JSON.parse(data));
+            this.getDivisions();
         })
     }
 
     getNominations(){
         this.setState({isLoading: true});
         var filter = this.state.filter;
+        this.getCurrentGame();
         services.getNominations({
             game: (filter.currentGame.length)? filter.currentGame : filter.games[0].id,
             year: (new Date(filter.year)).getFullYear()
         }).then(data => {
             this.setState({isLoading: false});
-            console.log(JSON.parse(data));
+            this.setState({nominations: JSON.parse(data)});
+        })
+    }
+
+    getCurrentGame(){
+        var filter = this.state.filter;
+        var currentGameId = (filter.currentGame.length)? filter.currentGame : filter.games[0].id;
+        this.setState({game: filter.games.filter(x => x.id == currentGameId)[0]});
+    }
+
+    getDivisions(){
+        services.getDivisions().then(data => {
+            this.setState({divisions: JSON.parse(data)});
+            this.setState({isLoading: false});
         })
     }
 
@@ -60,6 +78,7 @@ class NomApp extends React.Component{
 
                     </div>
                 </div>
+                <NomGrid nominations={this.state.nominations} divisions={this.state.divisions} game={this.state.game} />
                 <Preloader loading={this.state.isLoading} />
             </div>
         </div>

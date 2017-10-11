@@ -5244,6 +5244,16 @@ module.exports = ExecutionEnvironment;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+
+
+module.exports = __webpack_require__(19);
+
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
 /* WEBPACK VAR INJECTION */(function(process) {/**
  * Copyright 2016-present, Facebook, Inc.
  * All rights reserved.
@@ -5623,16 +5633,6 @@ var ReactComponentTreeHook = {
 
 module.exports = ReactComponentTreeHook;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
-
-/***/ }),
-/* 9 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = __webpack_require__(19);
-
 
 /***/ }),
 /* 10 */
@@ -6968,7 +6968,7 @@ module.exports = PooledClass;
 
 
 
-var React = __webpack_require__(9);
+var React = __webpack_require__(8);
 var factory = __webpack_require__(63);
 
 if (typeof React === 'undefined') {
@@ -9480,7 +9480,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
   function setupBinding(root, factory) {
     if (true) {
       // AMD. Register as an anonymous module.
-      !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(9),__webpack_require__(64),__webpack_require__(18)], __WEBPACK_AMD_DEFINE_RESULT__ = function(React, ReactDom, createReactClass) {
+      !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(8),__webpack_require__(64),__webpack_require__(18)], __WEBPACK_AMD_DEFINE_RESULT__ = function(React, ReactDom, createReactClass) {
         if (!createReactClass) createReactClass = React.createClass;
         return factory(root, React, ReactDom, createReactClass);
       }.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
@@ -12193,7 +12193,7 @@ module.exports = getIteratorFn;
 
 
 var ReactCurrentOwner = __webpack_require__(12);
-var ReactComponentTreeHook = __webpack_require__(8);
+var ReactComponentTreeHook = __webpack_require__(9);
 var ReactElement = __webpack_require__(16);
 
 var checkReactTypeSpec = __webpack_require__(212);
@@ -27550,7 +27550,7 @@ return zhTw;
 "use strict";
 
 
-var _react = __webpack_require__(9);
+var _react = __webpack_require__(8);
 
 var _react2 = _interopRequireDefault(_react);
 
@@ -28334,7 +28334,7 @@ if (typeof process !== 'undefined' && process.env && process.env.NODE_ENV === 't
   // https://github.com/facebook/react/issues/7240
   // Remove the inline requires when we don't need them anymore:
   // https://github.com/facebook/react/pull/7178
-  ReactComponentTreeHook = __webpack_require__(8);
+  ReactComponentTreeHook = __webpack_require__(9);
 }
 
 var loggedTypeFailures = {};
@@ -28376,7 +28376,7 @@ function checkReactTypeSpec(typeSpecs, values, location, componentName, element,
 
         if (process.env.NODE_ENV !== 'production') {
           if (!ReactComponentTreeHook) {
-            ReactComponentTreeHook = __webpack_require__(8);
+            ReactComponentTreeHook = __webpack_require__(9);
           }
           if (debugID !== null) {
             componentStackInfo = ReactComponentTreeHook.getStackAddendumByID(debugID);
@@ -30020,7 +30020,7 @@ module.exports = ReactOwner;
 
 var ReactInvalidSetStateWarningHook = __webpack_require__(231);
 var ReactHostOperationHistoryHook = __webpack_require__(232);
-var ReactComponentTreeHook = __webpack_require__(8);
+var ReactComponentTreeHook = __webpack_require__(9);
 var ExecutionEnvironment = __webpack_require__(7);
 
 var performanceNow = __webpack_require__(233);
@@ -34134,7 +34134,7 @@ if (typeof process !== 'undefined' && process.env && process.env.NODE_ENV === 't
   // https://github.com/facebook/react/issues/7240
   // Remove the inline requires when we don't need them anymore:
   // https://github.com/facebook/react/pull/7178
-  ReactComponentTreeHook = __webpack_require__(8);
+  ReactComponentTreeHook = __webpack_require__(9);
 }
 
 function instantiateChild(childInstances, child, name, selfDebugID) {
@@ -34142,7 +34142,7 @@ function instantiateChild(childInstances, child, name, selfDebugID) {
   var keyUnique = childInstances[name] === undefined;
   if (process.env.NODE_ENV !== 'production') {
     if (!ReactComponentTreeHook) {
-      ReactComponentTreeHook = __webpack_require__(8);
+      ReactComponentTreeHook = __webpack_require__(9);
     }
     if (!keyUnique) {
       process.env.NODE_ENV !== 'production' ? warning(false, 'flattenChildren(...): Encountered two children with the same key, ' + '`%s`. Child keys must be unique; when two children share a key, only ' + 'the first child will be used.%s', KeyEscapeUtils.unescape(name), ReactComponentTreeHook.getStackAddendumByID(selfDebugID)) : void 0;
@@ -35199,7 +35199,7 @@ if (typeof process !== 'undefined' && process.env && process.env.NODE_ENV === 't
   // https://github.com/facebook/react/issues/7240
   // Remove the inline requires when we don't need them anymore:
   // https://github.com/facebook/react/pull/7178
-  ReactComponentTreeHook = __webpack_require__(8);
+  ReactComponentTreeHook = __webpack_require__(9);
 }
 
 var loggedTypeFailures = {};
@@ -35241,7 +35241,7 @@ function checkReactTypeSpec(typeSpecs, values, location, componentName, element,
 
         if (process.env.NODE_ENV !== 'production') {
           if (!ReactComponentTreeHook) {
-            ReactComponentTreeHook = __webpack_require__(8);
+            ReactComponentTreeHook = __webpack_require__(9);
           }
           if (debugID !== null) {
             componentStackInfo = ReactComponentTreeHook.getStackAddendumByID(debugID);
@@ -35417,7 +35417,7 @@ if (typeof process !== 'undefined' && process.env && process.env.NODE_ENV === 't
   // https://github.com/facebook/react/issues/7240
   // Remove the inline requires when we don't need them anymore:
   // https://github.com/facebook/react/pull/7178
-  ReactComponentTreeHook = __webpack_require__(8);
+  ReactComponentTreeHook = __webpack_require__(9);
 }
 
 /**
@@ -35433,7 +35433,7 @@ function flattenSingleChildIntoContext(traverseContext, child, name, selfDebugID
     var keyUnique = result[name] === undefined;
     if (process.env.NODE_ENV !== 'production') {
       if (!ReactComponentTreeHook) {
-        ReactComponentTreeHook = __webpack_require__(8);
+        ReactComponentTreeHook = __webpack_require__(9);
       }
       if (!keyUnique) {
         process.env.NODE_ENV !== 'production' ? warning(false, 'flattenChildren(...): Encountered two children with the same key, ' + '`%s`. Child keys must be unique; when two children share a key, only ' + 'the first child will be used.%s', KeyEscapeUtils.unescape(name), ReactComponentTreeHook.getStackAddendumByID(selfDebugID)) : void 0;
@@ -38535,7 +38535,7 @@ module.exports = ReactMount.renderSubtreeIntoContainer;
 
 var DOMProperty = __webpack_require__(15);
 var EventPluginRegistry = __webpack_require__(29);
-var ReactComponentTreeHook = __webpack_require__(8);
+var ReactComponentTreeHook = __webpack_require__(9);
 
 var warning = __webpack_require__(3);
 
@@ -38651,7 +38651,7 @@ module.exports = ReactDOMUnknownPropertyHook;
 
 
 
-var ReactComponentTreeHook = __webpack_require__(8);
+var ReactComponentTreeHook = __webpack_require__(9);
 
 var warning = __webpack_require__(3);
 
@@ -38701,7 +38701,7 @@ module.exports = ReactDOMNullInputValuePropHook;
 
 
 var DOMProperty = __webpack_require__(15);
-var ReactComponentTreeHook = __webpack_require__(8);
+var ReactComponentTreeHook = __webpack_require__(9);
 
 var warning = __webpack_require__(3);
 
@@ -38795,7 +38795,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _react = __webpack_require__(9);
+var _react = __webpack_require__(8);
 
 var _react2 = _interopRequireDefault(_react);
 
@@ -38810,6 +38810,10 @@ var services = _interopRequireWildcard(_services);
 var _preloader = __webpack_require__(323);
 
 var _preloader2 = _interopRequireDefault(_preloader);
+
+var _nominations3 = __webpack_require__(326);
+
+var _nominations4 = _interopRequireDefault(_nominations3);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -38835,7 +38839,10 @@ var NomApp = function (_React$Component) {
                 year: new Date(),
                 currentGame: {}
             },
-            isLoading: false
+            isLoading: false,
+            nominations: [],
+            divisions: [],
+            game: null
         };
         _this.onFilterChange = _this.changeFilter.bind(_this);
         _this.onRunFilter = _this.getNominations.bind(_this);
@@ -38856,8 +38863,8 @@ var NomApp = function (_React$Component) {
 
             this.setState({ isLoading: true });
             services.getGames().then(function (data) {
-                _this2.setState({ isLoading: false });
                 _this2.changeFilter("games", JSON.parse(data));
+                _this2.getDivisions();
             });
         }
     }, {
@@ -38867,12 +38874,32 @@ var NomApp = function (_React$Component) {
 
             this.setState({ isLoading: true });
             var filter = this.state.filter;
+            this.getCurrentGame();
             services.getNominations({
                 game: filter.currentGame.length ? filter.currentGame : filter.games[0].id,
                 year: new Date(filter.year).getFullYear()
             }).then(function (data) {
                 _this3.setState({ isLoading: false });
-                console.log(JSON.parse(data));
+                _this3.setState({ nominations: JSON.parse(data) });
+            });
+        }
+    }, {
+        key: "getCurrentGame",
+        value: function getCurrentGame() {
+            var filter = this.state.filter;
+            var currentGameId = filter.currentGame.length ? filter.currentGame : filter.games[0].id;
+            this.setState({ game: filter.games.filter(function (x) {
+                    return x.id == currentGameId;
+                })[0] });
+        }
+    }, {
+        key: "getDivisions",
+        value: function getDivisions() {
+            var _this4 = this;
+
+            services.getDivisions().then(function (data) {
+                _this4.setState({ divisions: JSON.parse(data) });
+                _this4.setState({ isLoading: false });
             });
         }
     }, {
@@ -38904,6 +38931,7 @@ var NomApp = function (_React$Component) {
                         ),
                         _react2.default.createElement("div", { className: "col-md-2" })
                     ),
+                    _react2.default.createElement(_nominations4.default, { nominations: this.state.nominations, divisions: this.state.divisions, game: this.state.game }),
                     _react2.default.createElement(_preloader2.default, { loading: this.state.isLoading })
                 )
             );
@@ -38926,7 +38954,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _react = __webpack_require__(9);
+var _react = __webpack_require__(8);
 
 var _react2 = _interopRequireDefault(_react);
 
@@ -39022,7 +39050,7 @@ var assign = __webpack_require__(90),
 	PropTypes = __webpack_require__(308),
     createClass = __webpack_require__(18),
 	moment = __webpack_require__(0),
-	React = __webpack_require__(9),
+	React = __webpack_require__(8),
 	CalendarContainer = __webpack_require__(312)
 ;
 
@@ -39848,7 +39876,7 @@ webpackContext.id = 311;
 "use strict";
 
 
-var React = __webpack_require__(9),
+var React = __webpack_require__(8),
   createClass = __webpack_require__(18),
   DaysView = __webpack_require__(313),
   MonthsView = __webpack_require__(314),
@@ -39879,7 +39907,7 @@ module.exports = CalendarContainer;
 "use strict";
 
 
-var React = __webpack_require__(9),
+var React = __webpack_require__(8),
     createClass = __webpack_require__(18),
 	moment = __webpack_require__(0),
 	onClickOutside = __webpack_require__(35)
@@ -40030,7 +40058,7 @@ module.exports = DateTimePickerDays;
 "use strict";
 
 
-var React = __webpack_require__(9),
+var React = __webpack_require__(8),
     createClass = __webpack_require__(18),
 	onClickOutside = __webpack_require__(35)
 ;
@@ -40144,7 +40172,7 @@ module.exports = DateTimePickerMonths;
 "use strict";
 
 
-var React = __webpack_require__(9),
+var React = __webpack_require__(8),
     createClass = __webpack_require__(18),
 	onClickOutside = __webpack_require__(35)
 ;
@@ -40256,7 +40284,7 @@ module.exports = DateTimePickerYears;
 "use strict";
 
 
-var React = __webpack_require__(9),
+var React = __webpack_require__(8),
     createClass = __webpack_require__(18),
 	assign = __webpack_require__(90),
   onClickOutside = __webpack_require__(35)
@@ -40681,6 +40709,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 var gamDir = "../wp-content/plugins/requests-manager/api/Games-Manager/";
 var nomDir = "../wp-content/plugins/requests-manager/api/Nominations/";
+var catDir = "../wp-content/plugins/requests-manager/api/Categories-Manager/";
 
 var getGames = exports.getGames = function getGames() {
     return jQuery.ajax({
@@ -40697,6 +40726,13 @@ var getNominations = exports.getNominations = function getNominations(contract) 
     });
 };
 
+var getDivisions = exports.getDivisions = function getDivisions() {
+    return jQuery.ajax({
+        url: catDir + "GetAgeCategories.php",
+        type: "POST"
+    });
+};
+
 /***/ }),
 /* 323 */
 /***/ (function(module, exports, __webpack_require__) {
@@ -40710,7 +40746,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _react = __webpack_require__(9);
+var _react = __webpack_require__(8);
 
 var _react2 = _interopRequireDefault(_react);
 
@@ -40797,6 +40833,283 @@ exports = module.exports = __webpack_require__(54)(undefined);
 exports.push([module.i, ".blackout{\r\n    position: fixed;\r\n    top: 0;\r\n    bottom: 0;\r\n    left: 0;\r\n    right: 0;\r\n    background-color:rgba(0,0,0,0.8);\r\n    z-index: 10000;\r\n}\r\n.spinner-wrap{\r\n        position: absolute;\r\n    top: 50%;\r\n    left: 50%;\r\n}\r\n.spinner-wrap .fa-spin{\r\n    color: #6c6fff;\r\n}", ""]);
 
 // exports
+
+
+/***/ }),
+/* 326 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _react = __webpack_require__(8);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _moment = __webpack_require__(0);
+
+var _moment2 = _interopRequireDefault(_moment);
+
+var _grid = __webpack_require__(327);
+
+var _grid2 = _interopRequireDefault(_grid);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var NomGrid = function NomGrid(props) {
+    if (!props.nominations.length && props.game) return _react2.default.createElement(
+        "p",
+        null,
+        "\u041D\u0435\u043C\u0430\u0454 \u0436\u043E\u0434\u043D\u043E\u0433\u043E \u0437\u0430\u043F\u0438\u0441\u0443 \u0434\u043B\u044F \u0446\u0438\u0445 \u0437\u043C\u0430\u0433\u0430\u043D\u044C"
+    );
+    var nameColumns = [{
+        title: "Class",
+        field: "wClass",
+        width: "100px"
+    }, {
+        title: "Family Name",
+        field: "lastName",
+        width: "200px"
+    }, {
+        title: "First Name",
+        field: "firstName",
+        width: "200px"
+    }, {
+        title: "Birthday",
+        field: "born",
+        width: "100px"
+    }, {
+        title: "",
+        field: "",
+        width: "*"
+    }];
+    var resultColumns = [];
+    if (props.game) {
+        resultColumns = props.game.type === "0" ? [{
+            title: "SQ",
+            field: "squat"
+        }, {
+            title: "BP",
+            field: "press"
+        }, {
+            title: "DL",
+            field: "lift"
+        }, {
+            title: "TOTAL",
+            field: "total"
+        }] : [{
+            title: "BP",
+            field: "press"
+        }];
+    }
+
+    var columns = nameColumns.concat(resultColumns);
+
+    var divisionsList = props.divisions.map(function (d) {
+        var divTmpNom = props.nominations.filter(function (n) {
+            return n.divisionId == d.id;
+        });
+        if (divTmpNom.length) {
+            var rows = divTmpNom.map(function (x) {
+                return {
+                    wClass: x.weightClass,
+                    lastName: x.lastName,
+                    firstName: x.firstName,
+                    born: (0, _moment2.default)(new Date(x.born)).format("DD-MM-YYYY")
+                };
+            });
+            return _react2.default.createElement(
+                "div",
+                { key: d.id },
+                d.title,
+                _react2.default.createElement(_grid2.default, { data: { columns: columns, rows: rows } })
+            );
+        }
+    });
+    return _react2.default.createElement(
+        "div",
+        null,
+        divisionsList
+    );
+};
+exports.default = NomGrid;
+
+/***/ }),
+/* 327 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(8);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var classNames = __webpack_require__(328);
+
+var Grid = function (_React$Component) {
+    _inherits(Grid, _React$Component);
+
+    function Grid() {
+        _classCallCheck(this, Grid);
+
+        return _possibleConstructorReturn(this, (Grid.__proto__ || Object.getPrototypeOf(Grid)).apply(this, arguments));
+    }
+
+    _createClass(Grid, [{
+        key: "getCells",
+        value: function getCells(row) {
+            var cells = [];
+            this.props.data.columns.forEach(function (column) {
+                var counter = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+
+                counter++;
+                if (column.button) {
+                    var color = column.button === "edit" ? "success" : "danger";
+                    var buttonTitle = column.button[0].toUpperCase() + column.button.slice(1);
+                    cells.push(_react2.default.createElement(
+                        "td",
+                        { key: counter, width: column.width },
+                        _react2.default.createElement(
+                            "button",
+                            { type: "button", className: classNames("btn", "btn-" + color), "data-rel": row[column.field], onClick: function onClick(v) {
+                                    return column.action(v);
+                                } },
+                            buttonTitle
+                        )
+                    ));
+                } else {
+                    cells.push(_react2.default.createElement(
+                        "td",
+                        { key: counter, width: column.width },
+                        row[column.field]
+                    ));
+                }
+            });
+            return cells;
+        }
+    }, {
+        key: "render",
+        value: function render() {
+            var _this2 = this;
+
+            var cols = this.props.data.columns.map(function (column) {
+                var counter = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+
+                counter++;
+                return _react2.default.createElement(
+                    "th",
+                    { key: counter, width: column.width },
+                    column.title
+                );
+            });
+            var rows = this.props.data.rows.map(function (row) {
+                var counter = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+
+                counter++;
+                return _react2.default.createElement(
+                    "tr",
+                    { key: counter },
+                    _this2.getCells(row)
+                );
+            });
+            return _react2.default.createElement(
+                "table",
+                { className: "table table-striped" },
+                _react2.default.createElement(
+                    "thead",
+                    null,
+                    _react2.default.createElement(
+                        "tr",
+                        null,
+                        cols
+                    )
+                ),
+                _react2.default.createElement(
+                    "tbody",
+                    null,
+                    rows
+                )
+            );
+        }
+    }]);
+
+    return Grid;
+}(_react2.default.Component);
+
+exports.default = Grid;
+
+/***/ }),
+/* 328 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
+  Copyright (c) 2016 Jed Watson.
+  Licensed under the MIT License (MIT), see
+  http://jedwatson.github.io/classnames
+*/
+/* global define */
+
+(function () {
+	'use strict';
+
+	var hasOwn = {}.hasOwnProperty;
+
+	function classNames () {
+		var classes = [];
+
+		for (var i = 0; i < arguments.length; i++) {
+			var arg = arguments[i];
+			if (!arg) continue;
+
+			var argType = typeof arg;
+
+			if (argType === 'string' || argType === 'number') {
+				classes.push(arg);
+			} else if (Array.isArray(arg)) {
+				classes.push(classNames.apply(null, arg));
+			} else if (argType === 'object') {
+				for (var key in arg) {
+					if (hasOwn.call(arg, key) && arg[key]) {
+						classes.push(key);
+					}
+				}
+			}
+		}
+
+		return classes.join(' ');
+	}
+
+	if (typeof module !== 'undefined' && module.exports) {
+		module.exports = classNames;
+	} else if (true) {
+		// register as 'classnames', consistent with npm package name
+		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function () {
+			return classNames;
+		}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	} else {
+		window.classNames = classNames;
+	}
+}());
 
 
 /***/ })
