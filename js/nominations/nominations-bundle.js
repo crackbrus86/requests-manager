@@ -38903,6 +38903,33 @@ var NomApp = function (_React$Component) {
             });
         }
     }, {
+        key: "exportGrid",
+        value: function exportGrid() {
+            this.openPreview();
+            jQuery(".preview").wordExport();
+            this.removePreview();
+        }
+    }, {
+        key: "printGrid",
+        value: function printGrid() {
+            this.openPreview();
+            jQuery.print(".preview");
+            this.removePreview();
+        }
+    }, {
+        key: "openPreview",
+        value: function openPreview() {
+            jQuery("body").append("<div class='preview'></div>");
+            jQuery(".preview").html(jQuery("#nomGrid").html());
+            jQuery('.preview .btn-success, .preview .btn-danger').remove();
+        }
+    }, {
+        key: "removePreview",
+        value: function removePreview() {
+            jQuery(".preview").html();
+            jQuery(".preview").remove();
+        }
+    }, {
         key: "componentDidMount",
         value: function componentDidMount() {
             this.getGames();
@@ -38929,9 +38956,35 @@ var NomApp = function (_React$Component) {
                             { className: "col-md-10" },
                             _react2.default.createElement(_nominations2.default, { filter: this.state.filter, onChange: this.onFilterChange, onFilter: this.onRunFilter })
                         ),
-                        _react2.default.createElement("div", { className: "col-md-2" })
+                        _react2.default.createElement(
+                            "div",
+                            { className: "col-md-2" },
+                            _react2.default.createElement(
+                                "div",
+                                { className: "export-box" },
+                                _react2.default.createElement(
+                                    "h4",
+                                    null,
+                                    "\u0406\u043D\u0448\u0456 \u043E\u043F\u0435\u0440\u0430\u0446\u0456\u0457"
+                                ),
+                                _react2.default.createElement(
+                                    "button",
+                                    { type: "button", className: "word-export btn btn-default", onClick: this.exportGrid.bind(this), title: "\u0415\u043A\u0441\u043F\u043E\u0440\u0442 \u0443 Word" },
+                                    _react2.default.createElement("i", { className: "fa fa-file-word-o" })
+                                ),
+                                _react2.default.createElement(
+                                    "button",
+                                    { type: "button", className: "print-export btn btn-default", onClick: this.printGrid.bind(this), title: "\u0414\u0440\u0443\u043A" },
+                                    _react2.default.createElement("i", { className: "fa fa-print" })
+                                )
+                            )
+                        )
                     ),
-                    _react2.default.createElement(_nominations4.default, { nominations: this.state.nominations, divisions: this.state.divisions, game: this.state.game }),
+                    _react2.default.createElement(
+                        "div",
+                        { id: "nomGrid" },
+                        _react2.default.createElement(_nominations4.default, { nominations: this.state.nominations, divisions: this.state.divisions, game: this.state.game })
+                    ),
                     _react2.default.createElement(_preloader2.default, { loading: this.state.isLoading })
                 )
             );

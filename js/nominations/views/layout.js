@@ -62,6 +62,29 @@ class NomApp extends React.Component{
         })
     }
 
+    exportGrid(){
+        this.openPreview();
+        jQuery(".preview").wordExport();
+        this.removePreview();
+    }
+
+    printGrid(){
+        this.openPreview();
+        jQuery.print(".preview");
+        this.removePreview();  
+    }
+
+    openPreview(){
+        jQuery("body").append("<div class='preview'></div>");
+        jQuery(".preview").html(jQuery("#nomGrid").html());
+        jQuery('.preview .btn-success, .preview .btn-danger').remove();
+    }
+
+    removePreview(){
+        jQuery(".preview").html();
+        jQuery(".preview").remove();
+    }    
+
     componentDidMount(){
         this.getGames();
     }
@@ -75,10 +98,14 @@ class NomApp extends React.Component{
                         <NomFilter filter={this.state.filter} onChange={this.onFilterChange} onFilter={this.onRunFilter} />
                     </div>
                     <div className="col-md-2">
-
+                        <div className="export-box">
+                        <h4>Інші операції</h4>
+                        <button type="button" className="word-export btn btn-default" onClick={this.exportGrid.bind(this)} title="Експорт у Word"><i className="fa fa-file-word-o"></i></button>
+                        <button type="button" className="print-export btn btn-default" onClick={this.printGrid.bind(this)} title="Друк"><i className="fa fa-print"></i></button>                        
+                        </div>
                     </div>
                 </div>
-                <NomGrid nominations={this.state.nominations} divisions={this.state.divisions} game={this.state.game} />
+                <div id="nomGrid"><NomGrid nominations={this.state.nominations} divisions={this.state.divisions} game={this.state.game} /></div>
                 <Preloader loading={this.state.isLoading} />
             </div>
         </div>
