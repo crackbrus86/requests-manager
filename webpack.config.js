@@ -1,7 +1,7 @@
 module.exports = {
-    entry: "./js/nominations/index.js",
+    entry: "./js/delegation/index.js",
     output: {
-        filename: "./js/nominations/nominations-bundle.js"
+        filename: "./js/delegation/delegation-bundle.js"
     },
     module: {
         loaders: [

@@ -96,8 +96,8 @@ class RequestManager{
                 </div>
                 <div role="tabpanel" class="tab-pane" id="delegation">
                 <?php   
-                    if(file_exists(RM__PLUGIN_DIR."/templates/delegation.php")){
-                        require_once(RM__PLUGIN_DIR."/templates/delegation.php");
+                    if(file_exists(RM__PLUGIN_DIR."/templates/new-delegation.php")){
+                        require_once(RM__PLUGIN_DIR."/templates/new-delegation.php");
                     }
                 ?>
                 </div>
