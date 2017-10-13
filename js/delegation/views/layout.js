@@ -12,9 +12,11 @@ class DlgApp extends React.Component{
                 current: {},
                 year: new Date()
             },
-            isLoading: false
+            isLoading: false,
+            members: []
         }
         this.onFilterChange = this.changeFilter.bind(this);
+        this.runFilter = this.getDelegation.bind(this);
     }
 
     changeFilter(field, value){
@@ -29,7 +31,19 @@ class DlgApp extends React.Component{
             this.changeFilter("games", JSON.parse(data));
             this.setState({isLoading: false});
         })
-    }   
+    }  
+    
+    getDelegation(){
+        this.setState({isLoading: true});
+        var filter = this.state.filter;
+        services.getDelegation({
+            game: (filter.current.length)? filter.current : filter.games[0].id,
+            year: (new Date(filter.year)).getFullYear()
+        }).then(data => {
+            console.log(JSON.parse(data));
+            this.setState({isLoading: false});
+        })
+    }
     
     componentDidMount(){
         this.getGames();
@@ -41,7 +55,7 @@ class DlgApp extends React.Component{
                 <h4>Делегація</h4>
                 <div className="row">
                     <div className="col-md-10">
-                        <DlgFilter filter={this.state.filter} onChange={this.onFilterChange} onFilter={() => null} />
+                        <DlgFilter filter={this.state.filter} onChange={this.onFilterChange} onFilter={this.runFilter} />
                     </div>
                     <div className="col-md-2">
 

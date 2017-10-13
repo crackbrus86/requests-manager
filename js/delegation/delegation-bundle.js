@@ -38833,9 +38833,11 @@ var DlgApp = function (_React$Component) {
                 current: {},
                 year: new Date()
             },
-            isLoading: false
+            isLoading: false,
+            members: []
         };
         _this.onFilterChange = _this.changeFilter.bind(_this);
+        _this.runFilter = _this.getDelegation.bind(_this);
         return _this;
     }
 
@@ -38855,6 +38857,21 @@ var DlgApp = function (_React$Component) {
             services.getGames().then(function (data) {
                 _this2.changeFilter("games", JSON.parse(data));
                 _this2.setState({ isLoading: false });
+            });
+        }
+    }, {
+        key: "getDelegation",
+        value: function getDelegation() {
+            var _this3 = this;
+
+            this.setState({ isLoading: true });
+            var filter = this.state.filter;
+            services.getDelegation({
+                game: filter.current.length ? filter.current : filter.games[0].id,
+                year: new Date(filter.year).getFullYear()
+            }).then(function (data) {
+                console.log(JSON.parse(data));
+                _this3.setState({ isLoading: false });
             });
         }
     }, {
@@ -38882,9 +38899,7 @@ var DlgApp = function (_React$Component) {
                         _react2.default.createElement(
                             "div",
                             { className: "col-md-10" },
-                            _react2.default.createElement(_delegation2.default, { filter: this.state.filter, onChange: this.onFilterChange, onFilter: function onFilter() {
-                                    return null;
-                                } })
+                            _react2.default.createElement(_delegation2.default, { filter: this.state.filter, onChange: this.onFilterChange, onFilter: this.runFilter })
                         ),
                         _react2.default.createElement("div", { className: "col-md-2" })
                     ),
@@ -40766,11 +40781,20 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 var gamDir = "../wp-content/plugins/requests-manager/api/Games-Manager/";
+var dlgDir = "../wp-content/plugins/requests-manager/api/Delegation/";
 
 var getGames = exports.getGames = function getGames() {
     return jQuery.ajax({
         url: gamDir + "GetOpenedActualGames.php",
         type: "POST"
+    });
+};
+
+var getDelegation = exports.getDelegation = function getDelegation(contract) {
+    return jQuery.ajax({
+        url: dlgDir + "GetDelegation.php",
+        type: "POST",
+        data: contract
     });
 };
 
