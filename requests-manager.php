@@ -103,8 +103,8 @@ class RequestManager{
                 </div>
                 <div role="tabpanel" class="tab-pane" id="visaSupport">
                 <?php   
-                    if(file_exists(RM__PLUGIN_DIR."/templates/visa.php")){
-                        require_once(RM__PLUGIN_DIR."/templates/visa.php");
+                    if(file_exists(RM__PLUGIN_DIR."/templates/new-visa.php")){
+                        require_once(RM__PLUGIN_DIR."/templates/new-visa.php");
                     }
                 ?>
                 </div>                                                
