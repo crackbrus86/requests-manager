@@ -16,6 +16,7 @@ class VisaApp extends React.Component{
             records: []
         }
         this.onFilterChange = this.changeFilter.bind(this);
+        this.runFilter = this.getVisaRecords.bind(this);
     }
 
     changeFilter(field, value){
@@ -32,6 +33,19 @@ class VisaApp extends React.Component{
         })
     }
 
+    getVisaRecords(){
+        this.setState({isLoading: true});
+        var filter = this.state.filter;
+        services.getAllVisaRecords({
+            event: (filter.current.length)? filter.current : filter.games[0].id,
+            year: (new Date(filter.year)).getFullYear()
+        }).then(data => {
+            this.setState({records: JSON.parse(data)});
+            this.setState({isLoading: false});
+            console.log(this.state);
+        })
+    }
+
     componentWillMount(){
         this.getGames();
     }
@@ -42,7 +56,7 @@ class VisaApp extends React.Component{
                 <h4>Візова підтримка</h4>
                 <div className="row">
                     <div className="col-md-10">
-                        <VisaFilter filter={this.state.filter} onChange={this.onFilterChange} onFilter={()=>null} />
+                        <VisaFilter filter={this.state.filter} onChange={this.onFilterChange} onFilter={this.runFilter} />
                     </div>
                     <div className="col-md-2"></div>
                 </div>

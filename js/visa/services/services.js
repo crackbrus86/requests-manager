@@ -7,3 +7,11 @@ export const getGames = () => {
         type: "POST"
     })
 }
+
+export const getAllVisaRecords = (contract) => {
+    return jQuery.ajax({
+        url: visDir + "GetAllVisaRecords.php",
+        type: "POST",
+        data: contract
+    })
+}
