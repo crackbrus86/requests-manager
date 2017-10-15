@@ -1,0 +1,24 @@
+.visa-type{
+    display: block;
+    margin: 0 auto;
+    width: 30px;
+    height: 30px;
+    padding: 2px 0 2px 0;
+    font-weight: 600;
+    font-size: 18px;
+    text-shadow: 0 0 1px #000;    
+    text-align: center;
+    border-radius: 4px;
+    border: 2px solid #fff;
+    box-shadow: 0 0 1px 0px #000;
+}
+
+.visa-type.sheng{
+    background-color: #2196F3;
+    color: #ffe500;        
+}
+
+.visa-type.usa{
+    background-color: #ff0231;
+    color: #fff; 
+}

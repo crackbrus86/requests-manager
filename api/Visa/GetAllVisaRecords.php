@@ -30,7 +30,8 @@
         FROM $tb_visa AS v
         JOIN $tb_coaches AS c
         ON v.owner_id = c.id      
-        WHERE v.owner_type = 'coach' AND v.event = %d AND v.year = %s", $event, $year, $event, $year);
+        WHERE v.owner_type = 'coach' AND v.event = %d AND v.year = %s
+        ORDER BY surname ASC", $event, $year, $event, $year);
         $result = $wpdb->get_results($sql);
         $visa_records = json_encode($result);
         print_r($visa_records);
