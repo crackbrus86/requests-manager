@@ -5,6 +5,7 @@ import VisaFilter from "./partial/visa.filter";
 import VisaGrid from "./partial/visa.grid";
 require("../../../css/visa.css");
 import VisaModal from "../modal/visa.modal";
+import Dialog from "../../components/modal/dialog";
 
 class VisaApp extends React.Component{
     constructor(props){
@@ -18,7 +19,8 @@ class VisaApp extends React.Component{
             isLoading: false,
             records: [],
             game: null,
-            visa: null
+            visa: null,
+            dialog: null
         }
         this.onFilterChange = this.changeFilter.bind(this);
         this.runFilter = this.getVisaRecords.bind(this);
@@ -26,6 +28,9 @@ class VisaApp extends React.Component{
         this.onClose = this.closeVisa.bind(this);
         this.onChange = this.changeVisa.bind(this);
         this.onUpdate = this.updateVisa.bind(this);
+        this.onDelete = this.deleteVisa.bind(this);
+        this.onCancel = this.cancelDeleting.bind(this);
+        this.onConfirm = this.confirmDeleting.bind(this);
     }
 
     changeFilter(field, value){
@@ -97,6 +102,49 @@ class VisaApp extends React.Component{
         })
     }
 
+    deleteVisa(id){
+        this.setState({dialog: {
+            id: id,
+            text: "Ви дійсно хочете видалити цю візу?"
+        }});
+    }
+
+    cancelDeleting(){
+        this.setState({dialog: null});
+    }
+
+    confirmDeleting(){
+        this.setState({isLoading: true});
+        services.deleteVisa({id: this.state.dialog.id}).then(() => {
+            this.setState({isLoading: false});
+            this.cancelDeleting();
+            this.getVisaRecords();
+        })
+    }
+
+    exportGrid(){
+        this.openPreview();
+        jQuery(".preview").wordExport();
+        this.removePreview();
+    }
+
+    printGrid(){
+        this.openPreview();
+        jQuery.print(".preview");
+        this.removePreview();  
+    }
+
+    openPreview(){
+        jQuery("body").append("<div class='preview'></div>");
+        jQuery(".preview").html(jQuery("#visaGrid").html());
+        jQuery('.preview .btn-success, .preview .btn-danger').remove();
+    }
+
+    removePreview(){
+        jQuery(".preview").html();
+        jQuery(".preview").remove();
+    } 
+
     componentWillMount(){
         this.getGames();
     }
@@ -109,10 +157,17 @@ class VisaApp extends React.Component{
                     <div className="col-md-10">
                         <VisaFilter filter={this.state.filter} onChange={this.onFilterChange} onFilter={this.runFilter} />
                     </div>
-                    <div className="col-md-2"></div>
+                    <div className="col-md-2">
+                        <div className="export-box">
+                            <h4>Інші операції</h4>
+                            <button type="button" className="word-export btn btn-default" onClick={this.exportGrid.bind(this)} title="Експорт у Word"><i className="fa fa-file-word-o"></i></button>
+                            <button type="button" className="print-export btn btn-default" onClick={this.printGrid.bind(this)} title="Друк"><i className="fa fa-print"></i></button>                        
+                        </div>                        
+                    </div>
                 </div>
-                <VisaGrid records={this.state.records} game={this.state.game} onEdit={this.onEdit} onDelete={()=>null} />
+                <VisaGrid records={this.state.records} game={this.state.game} onEdit={this.onEdit} onDelete={this.onDelete} />
                 <VisaModal visa={this.state.visa} onClose={this.onClose} onChange={this.onChange} onUpdate={this.onUpdate} />
+                <Dialog dialog={this.state.dialog} onClose={this.onCancel} onConfirm={this.onConfirm} />
                 <Preloader loading={this.state.isLoading} />
             </div>
         </div>

@@ -23,3 +23,11 @@ export const updateVisa = (contract) => {
         data: contract
     })
 }
+
+export const deleteVisa = (contract) => {
+    return jQuery.ajax({
+        url: visDir + "DeleteVisa.php",
+        type: "POST",
+        data: contract
+    })
+}
