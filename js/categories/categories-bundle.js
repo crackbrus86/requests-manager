@@ -10490,12 +10490,13 @@ var Modal = function (_React$Component) {
         key: "render",
         value: function render() {
             if (!this.props.target) return null;
+            var className = this.props.className ? "custom-modal " + this.props.className : "custom-modal";
             return _react2.default.createElement(
                 "div",
                 { className: "blackout" },
                 _react2.default.createElement(
                     "div",
-                    { className: "custom-modal" },
+                    { className: className },
                     _react2.default.createElement(
                         "div",
                         { className: "custom-modal-dialog" },
@@ -10530,7 +10531,7 @@ exports.default = Modal;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.isFieldValid = exports.isFormValid = undefined;
+exports.isEmailValid = exports.isFieldValid = exports.isFormValid = undefined;
 
 var _react = __webpack_require__(7);
 
@@ -10559,6 +10560,30 @@ var isFieldValid = exports.isFieldValid = function isFieldValid(field) {
             "sub",
             null,
             text
+        )
+    );
+};
+
+var isEmailValid = exports.isEmailValid = function isEmailValid(field) {
+    if (!field) return _react2.default.createElement(
+        "i",
+        { className: "invalid" },
+        "*",
+        _react2.default.createElement(
+            "sub",
+            null,
+            "Це поле є обов'язковим"
+        )
+    );
+    var pattern = new RegExp(/^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i);
+    if (!pattern.test(field)) return _react2.default.createElement(
+        "i",
+        { className: "invalid" },
+        "*",
+        _react2.default.createElement(
+            "sub",
+            null,
+            "Не вірно вказано email"
         )
     );
 };
@@ -23787,7 +23812,7 @@ exports = module.exports = __webpack_require__(25)(undefined);
 
 
 // module
-exports.push([module.i, ".blackout{\r\n    position: fixed;\r\n    top: 0;\r\n    bottom: 0;\r\n    left: 0;\r\n    right: 0;\r\n    background-color:rgba(0,0,0,0.8);\r\n    z-index: 10000;\r\n}\r\n.custom-modal{\r\n    background-color: #ffffff;\r\n    position: absolute;\r\n    top: 30%;\r\n    left: 50%;\r\n    min-width: 500px;\r\n    min-height: 200px;\r\n    border-radius: 5px;\r\n    padding: 4px 10px;\r\n    margin-left: -250px;\r\n}\r\n\r\n.custom-modal-header{\r\n    text-align: right;\r\n    padding-right: 5px;\r\n}\r\n\r\n.custom-modal-header .fa-times{\r\n    color: #9a9aaf;\r\n    cursor: pointer;\r\n}\r\n.custom-modal-header .fa-times:hover{\r\n    color: #68686f;\r\n}", ""]);
+exports.push([module.i, ".blackout{\r\n    position: fixed;\r\n    top: 0;\r\n    bottom: 0;\r\n    left: 0;\r\n    right: 0;\r\n    background-color:rgba(0,0,0,0.8);\r\n    z-index: 10000;\r\n}\r\n.custom-modal{\r\n    background-color: #ffffff;\r\n    position: absolute;\r\n    top: 30%;\r\n    left: 50%;\r\n    min-width: 500px;\r\n    min-height: 200px;\r\n    border-radius: 5px;\r\n    padding: 4px 10px;\r\n    margin-left: -250px;\r\n}\r\n\r\n.custom-modal-header{\r\n    text-align: right;\r\n    padding-right: 5px;\r\n}\r\n\r\n.custom-modal-header .fa-times{\r\n    color: #9a9aaf;\r\n    cursor: pointer;\r\n}\r\n.custom-modal-header .fa-times:hover{\r\n    color: #68686f;\r\n}\r\n\r\n.custom-modal h6,\r\n.custom-modal h4{\r\n    margin: 5px 0 10px 0px;\r\n}", ""]);
 
 // exports
 
@@ -24063,7 +24088,7 @@ exports = module.exports = __webpack_require__(25)(undefined);
 
 
 // module
-exports.push([module.i, ".spinner-wrap{\r\n        position: absolute;\r\n    top: 50%;\r\n    left: 50%;\r\n}\r\n.spinner-wrap .fa-spin{\r\n    color: #6c6fff;\r\n}", ""]);
+exports.push([module.i, ".blackout{\r\n    position: fixed;\r\n    top: 0;\r\n    bottom: 0;\r\n    left: 0;\r\n    right: 0;\r\n    background-color:rgba(0,0,0,0.8);\r\n    z-index: 10000;\r\n}\r\n.spinner-wrap{\r\n        position: absolute;\r\n    top: 50%;\r\n    left: 50%;\r\n}\r\n.spinner-wrap .fa-spin{\r\n    color: #6c6fff;\r\n}", ""]);
 
 // exports
 
@@ -24240,7 +24265,7 @@ var WeightCategories = function (_React$Component) {
         value: function createTarget() {
             this.setState({ target: {
                     title_w: "",
-                    parent: this.props.ageCategories[0],
+                    parent: this.props.ageCategories[0].id,
                     ageCategories: this.props.ageCategories
                 } });
         }
@@ -24250,6 +24275,7 @@ var WeightCategories = function (_React$Component) {
             var newTarget = this.state.target;
             newTarget[fieldName] = value;
             this.setState({ target: newTarget });
+            console.log(this.state);
         }
     }, {
         key: "setDialog",

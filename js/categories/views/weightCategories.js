@@ -64,7 +64,7 @@ class WeightCategories extends React.Component{
     createTarget(){
         this.setState({target: {
             title_w: "",
-            parent: this.props.ageCategories[0],
+            parent: this.props.ageCategories[0].id,
             ageCategories: this.props.ageCategories
         }})
     }
@@ -73,6 +73,7 @@ class WeightCategories extends React.Component{
         var newTarget = this.state.target;
         newTarget[fieldName] = value;
         this.setState({target: newTarget});
+        console.log(this.state);
     }    
 
     setDialog(id){

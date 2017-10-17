@@ -1,6 +1,7 @@
 <?php
 include_once("../wpdb-connect.php");
-$tb_name = $wpdb->get_blog_prefix() . 'rm_category_weight';
-$weightCategories = $wpdb->get_results("SELECT * FROM $tb_name");
-$return = json_encode($weightCategories);
-print_r($return);
+$tb_weight_categories = $wpdb->get_blog_prefix() . 'rm_category_weight';
+$sql = $wpdb->prepare("SELECT * FROM $tb_weight_categories", "");
+$result = $wpdb->get_results($sql);
+$weightCategories = json_encode($result);
+print_r($weightCategories);

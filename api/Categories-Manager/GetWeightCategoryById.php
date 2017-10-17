@@ -1,7 +1,8 @@
 <?php
 include_once("../wpdb-connect.php");
-$id =$_POST['id'];
-$tb_name = $wpdb->get_blog_prefix() . 'rm_category_weight';
-$newtable = $wpdb->get_results( "SELECT * FROM $tb_name WHERE id=$id" );
-$return = json_encode($newtable);
-print_r($return);
+$id = strip_tags(stripslashes(trim($_POST["id"])));
+$tb_weight_categories = $wpdb->get_blog_prefix() . 'rm_category_weight';
+$sql = $wpdb->prepare("SELECT * FROM $tb_weight_categories WHERE id= %d", $id);
+$result = $wpdb->get_results($sql);
+$weightCategory = json_encode($result);
+print_r($weightCategory);
