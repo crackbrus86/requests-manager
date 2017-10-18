@@ -22893,7 +22893,8 @@ var OthersView = function (_React$Component) {
 
             var contract = {
                 name: this.state.president.name,
-                region: this.state.president.region
+                region: this.state.president.region,
+                email: this.state.president.email
             };
             if (this.state.president.id) contract.id = this.state.president.id;
             this.setState({ loading: true });
@@ -23054,7 +23055,7 @@ var OthersForm = function (_React$Component) {
         value: function render() {
             var _this2 = this;
 
-            var required = ["name", "region"];
+            var required = ["name", "region", "email"];
             var regionsList = this.props.regions.map(function (item) {
                 return _react2.default.createElement(
                     "option",
@@ -23062,6 +23063,7 @@ var OthersForm = function (_React$Component) {
                     item.region
                 );
             });
+            var adminEmail = this.props.president.email ? this.props.president.email : "";
             return _react2.default.createElement(
                 "div",
                 null,
@@ -23101,6 +23103,19 @@ var OthersForm = function (_React$Component) {
                         "div",
                         { className: "form-group" },
                         _react2.default.createElement(
+                            "label",
+                            null,
+                            "Email \u0430\u0434\u043C\u0456\u043D\u0456\u0441\u0442\u0440\u0430\u0442\u043E\u0440\u0430 ",
+                            validation.isEmailValid(adminEmail)
+                        ),
+                        _react2.default.createElement("input", { type: "text", value: adminEmail, className: "form-control", onChange: function onChange(e) {
+                                return _this2.props.onChange("email", e.target.value);
+                            } })
+                    ),
+                    _react2.default.createElement(
+                        "div",
+                        { className: "form-group" },
+                        _react2.default.createElement(
                             "button",
                             { type: "button", className: "btn btn-primary", disabled: validation.isFormValid(this.props.president, required), onClick: function onClick() {
                                     return _this2.props.onSave();
@@ -23128,7 +23143,7 @@ exports.default = OthersForm;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.isFieldValid = exports.isFormValid = undefined;
+exports.isEmailValid = exports.isFieldValid = exports.isFormValid = undefined;
 
 var _react = __webpack_require__(20);
 
@@ -23157,6 +23172,30 @@ var isFieldValid = exports.isFieldValid = function isFieldValid(field) {
             "sub",
             null,
             text
+        )
+    );
+};
+
+var isEmailValid = exports.isEmailValid = function isEmailValid(field) {
+    if (!field) return _react2.default.createElement(
+        "i",
+        { className: "invalid" },
+        "*",
+        _react2.default.createElement(
+            "sub",
+            null,
+            "Це поле є обов'язковим"
+        )
+    );
+    var pattern = new RegExp(/^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i);
+    if (!pattern.test(field)) return _react2.default.createElement(
+        "i",
+        { className: "invalid" },
+        "*",
+        _react2.default.createElement(
+            "sub",
+            null,
+            "Не вірно вказано email"
         )
     );
 };
@@ -23398,7 +23437,7 @@ exports = module.exports = __webpack_require__(82)(undefined);
 
 
 // module
-exports.push([module.i, ".spinner-wrap{\r\n        position: absolute;\r\n    top: 50%;\r\n    left: 50%;\r\n}\r\n.spinner-wrap .fa-spin{\r\n    color: #6c6fff;\r\n}", ""]);
+exports.push([module.i, ".blackout{\r\n    position: fixed;\r\n    top: 0;\r\n    bottom: 0;\r\n    left: 0;\r\n    right: 0;\r\n    background-color:rgba(0,0,0,0.8);\r\n    z-index: 10000;\r\n}\r\n.spinner-wrap{\r\n        position: absolute;\r\n    top: 50%;\r\n    left: 50%;\r\n}\r\n.spinner-wrap .fa-spin{\r\n    color: #6c6fff;\r\n}", ""]);
 
 // exports
 

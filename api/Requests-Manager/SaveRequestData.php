@@ -13,6 +13,12 @@ $user["middleName"] = clearSlashes($user["middleName"]);
 
 $tb_users = $wpdb->get_blog_prefix()."rm_users";
 $tb_visa = $wpdb->get_blog_prefix()."rm_visa";
+$tb_others = $wpdb->get_blog_prefix()."rm_others";
+
+$sql = $wpdb->prepare("SELECT config_email AS email FROM $tb_others", "");
+$result = $wpdb->get_results($sql);
+$admEmail = $result[0]->email;
+
 if($user["id"]){
     $sql = $wpdb->prepare("UPDATE $tb_users SET region = %d, last_name = %s, first_name = %s, middle_name = %s, birth_date = %s, 
         last_name_pass = %s, first_name_pass = %s, serial_number_pass = %s, number_pass = %s, expiration_date_pass = %s, 
@@ -112,6 +118,7 @@ $requestContent->currentCompetition, $requestContent->disciplines, $requestConte
 if($wpdb->query($sql)){
     echo "Request has been sent successfully!";
     sendEmail($user["email"], getFullName($user));
+    sendNotification($admEmail, getFullName($user));
 }
 
 function saveVisa($table, $visa, $ownerType, $ownerId, $event, $year){
@@ -147,5 +154,14 @@ function sendEmail($email = "", $fullName = ""){
     $for = $email;
     $subject = "Федерація пауерліфтингу України";
     $message = "Шановний $fullName, Вашу заявку було прийнято. Найближчим часом з Вами зв'яжеться представник федерації для уточнення даних.";
+    mail($for, $subject, $message, $header);
+}
+
+function sendNotification($email, $fullName = ""){
+    $header = "From: \"Admin\"\n";
+    $header .= "Content-type: text/plain; charset=\"utf-8\"";
+    $for = $email;
+    $subject = "Федерація пауерліфтингу України";
+    $message = "Отримано нову заявку від $fullName.";
     mail($for, $subject, $message, $header);
 }

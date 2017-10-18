@@ -7,10 +7,10 @@ if(current_user_can('edit_others_pages')):
     $tb_category_weight = $wpdb->get_blog_prefix() . 'rm_category_weight';
     $tb_games = $wpdb->get_blog_prefix() . 'rm_actual_games';
 
-    $limit = strip_tags(stripcslashes(trim($_POST['limit'])));
-    $offset = strip_tags(stripcslashes(trim($_POST['offset'])));
-    $game = strip_tags(stripcslashes(trim($_POST['game'])));
-    $year = esc_sql(strip_tags(stripcslashes(trim($_POST['year']))));
+    $limit = strip_tags(stripslashes(trim($_POST['limit'])));
+    $offset = strip_tags(stripslashes(trim($_POST['offset'])));
+    $game = strip_tags(stripslashes(trim($_POST['game'])));
+    $year = esc_sql(strip_tags(stripslashes(trim($_POST['year']))));
     $requests = $wpdb->get_results( "SELECT $tb_request.id, $tb_user.first_name, $tb_user.last_name, $tb_category_age.title, 
     $tb_category_weight.title_w, $tb_games.name, $tb_request.create_date 
     FROM $tb_request 

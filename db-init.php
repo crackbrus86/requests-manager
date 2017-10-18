@@ -100,7 +100,8 @@
         $createOthersTab = "CREATE TABLE IF NOT EXISTS {$tb_others} (
             `id` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
             `president_name` VARCHAR(250),
-            `president_region` INT
+            `president_region` INT,
+            `config_email` VARCHAR(200)
         ) {$charset_collate}";
         dbDelta($createOthersTab);
         $tb_visa = $wpdb->get_blog_prefix()."rm_visa";

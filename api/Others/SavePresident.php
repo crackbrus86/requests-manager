@@ -6,8 +6,8 @@ if(current_user_can("edit_others_pages")){
         $data[$item] = strip_tags(stripcslashes(trim($value)));
     }
     if(!$data["id"]){
-        $query = $wpdb->query("INSERT INTO $tb_others (president_name, president_region) VALUES ('$data[name]', '$data[region]')");
+        $query = $wpdb->query("INSERT INTO $tb_others (president_name, president_region, config_email) VALUES ('$data[name]', '$data[region]', '$data[email]')");
     }else{
-        $query = $wpdb->query("UPDATE $tb_others SET president_name = '$data[name]', president_region = '$data[region]' WHERE id = $data[id]");
+        $query = $wpdb->query("UPDATE $tb_others SET president_name = '$data[name]', president_region = '$data[region]', config_email = '$data[email]'  WHERE id = $data[id]");
     }
 }

@@ -1,6 +1,6 @@
 <?php
     include_once("../wpdb-connect.php");
-    if(current_user_can("edit_others_posts")){
+    if(current_user_can("edit_others_pages")){
         $tb_visa = $wpdb->get_blog_prefix()."rm_visa";
         $tb_users = $wpdb->get_blog_prefix()."rm_users";
         $tb_coaches = $wpdb->get_blog_prefix()."rm_coaches";

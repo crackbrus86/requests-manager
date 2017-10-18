@@ -14,7 +14,8 @@ class OthersView extends React.Component{
     savePresident(){
         var contract = {
             name: this.state.president.name,
-            region: this.state.president.region
+            region: this.state.president.region,
+            email: this.state.president.email
         }
         if(this.state.president.id) contract.id = this.state.president.id;
         this.setState({loading: true});
