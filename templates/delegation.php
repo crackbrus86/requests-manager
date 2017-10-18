@@ -1,37 +1,11 @@
-<div class="row delegation-wrapper">
-    <div class="col-md-12 delegation-content-section">
-        <h4>Делегація</h4>
-        <div style="margin: 10px 0 20px; background-color: #f7f7f7; border: 1px solid #ccc; border-radius: 4px; padding: 5px 5px;">
-            <h4>Фільтрувати</h4>
-            <form class="form-inline" id="filterDelegation" style="float: left;">
-                <div class="form-group">
-                    <label for="competitionFilterDelegation">Змагання</label>
-                    <select class="form-control" id="competitionFilterDelegation">
-                    <option></option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="startDateDelegation">Від:</label>
-                    <input type="date" class="form-control" id="startDateDelegation" maxlength="10" placeholder="дд.мм.рррр" />
-                </div>
-                <div class="form-group">
-                    <label for="endDateDelegation">До:</label>
-                    <input type="date" class="form-control" id="endDateDelegation" maxlength="10" placeholder="дд.мм.рррр" />
-                </div>
-                <button type="button" class="btn btn-info" id="runFilterDelegation">Фільтрувати</button>
-            </form>
-            <div class="row">
-                <div class="col-md-2"></div>
-                <div class="col-md-1"><button class="word-export-delegation btn btn-default"> Експорт в Word </button></div>
-                <div class="col-md-1"><button class="print-delegation btn btn-default"> Друкувати </button></div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <div id="delegationGrid">
-
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+<?php
+    wp_register_script( 'file_saver_script', plugins_url( '../js/FileSaver.min.js', __FILE__ ) );
+    wp_enqueue_script(  'file_saver_script');   
+    wp_register_script( 'wordexport_script', plugins_url( '../js/jquery.wordexport.js', __FILE__ ) );
+    wp_enqueue_script(  'wordexport_script'); 
+    wp_register_script( 'print_script', plugins_url( '../js/jQuery.print.js', __FILE__ ) );
+    wp_enqueue_script(  'print_script'); 
+    wp_register_script( 'delegation_entry_script', plugins_url( '../js/delegation/delegation-bundle.js', __FILE__ ) );
+    wp_enqueue_script(  'delegation_entry_script'); 
+?>
+<div id="dlg-app"></div>

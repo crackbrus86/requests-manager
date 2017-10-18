@@ -21,14 +21,6 @@ function buildRequestsForm(){
 
 add_shortcode('RequestsForm', 'buildRequestsForm');
 
-function buildRequestsFormReact(){   
-    if(file_exists(RM__PLUGIN_DIR."/templates/request-form-react.php")){
-        require_once(RM__PLUGIN_DIR."/templates/request-form-react.php");
-    }
-}
-
-add_shortcode('RequestsFormReact', 'buildRequestsFormReact');
-
 class RequestManager{
     
     function initSettings(){
@@ -49,9 +41,6 @@ class RequestManager{
 
     function requestEditor(){
         RequestManager::includeBootstrap();
-        // if(file_exists(RM__PLUGIN_DIR."/templates/templates-modules.php")){
-        //    require_once(RM__PLUGIN_DIR."/templates/templates-modules.php");
-        // }
         ?>   
         <div class="container-fluid">
             <h2>Менеджер заявок</h2>
@@ -68,43 +57,43 @@ class RequestManager{
             <div class="tab-content">
                 <div role="tabpanel" class="tab-pane active" id="requests">
                 <?php   
-                    if(file_exists(RM__PLUGIN_DIR."/templates/new-requests.php")){
-                        require_once(RM__PLUGIN_DIR."/templates/new-requests.php");
+                    if(file_exists(RM__PLUGIN_DIR."/templates/requests.php")){
+                        require_once(RM__PLUGIN_DIR."/templates/requests.php");
                     }
                 ?>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="athletes">
                 <?php
-                    if(file_exists(RM__PLUGIN_DIR."/templates/new-users.php")){
-                        require_once(RM__PLUGIN_DIR."/templates/new-users.php");
+                    if(file_exists(RM__PLUGIN_DIR."/templates/users.php")){
+                        require_once(RM__PLUGIN_DIR."/templates/users.php");
                     }
                 ?>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="coaches">
                     <?php
-                        if(file_exists(RM__PLUGIN_DIR."/templates/new-coaches.php")){
-                            require_once(RM__PLUGIN_DIR."/templates/new-coaches.php");
+                        if(file_exists(RM__PLUGIN_DIR."/templates/coaches.php")){
+                            require_once(RM__PLUGIN_DIR."/templates/coaches.php");
                         }
                     ?>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="nominations">
                 <?php   
-                    if(file_exists(RM__PLUGIN_DIR."/templates/new-nominations.php")){
-                        require_once(RM__PLUGIN_DIR."/templates/new-nominations.php");
+                    if(file_exists(RM__PLUGIN_DIR."/templates/nominations.php")){
+                        require_once(RM__PLUGIN_DIR."/templates/nominations.php");
                     }
                 ?>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="delegation">
                 <?php   
-                    if(file_exists(RM__PLUGIN_DIR."/templates/new-delegation.php")){
-                        require_once(RM__PLUGIN_DIR."/templates/new-delegation.php");
+                    if(file_exists(RM__PLUGIN_DIR."/templates/delegation.php")){
+                        require_once(RM__PLUGIN_DIR."/templates/delegation.php");
                     }
                 ?>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="visaSupport">
                 <?php   
-                    if(file_exists(RM__PLUGIN_DIR."/templates/new-visa.php")){
-                        require_once(RM__PLUGIN_DIR."/templates/new-visa.php");
+                    if(file_exists(RM__PLUGIN_DIR."/templates/visa.php")){
+                        require_once(RM__PLUGIN_DIR."/templates/visa.php");
                     }
                 ?>
                 </div>                                                

@@ -1,33 +1,11 @@
-<div class="row nominations-wrapper">
-    <div class="col-md-12 nominations-content-section">
-        <h4>Номінації</h4>
-        <div style="margin: 10px 0 20px; background-color: #f7f7f7; border: 1px solid #ccc; border-radius: 4px; padding: 5px 5px;">
-            <h4>Фільтрувати номінації</h4>
-            <form class="form-inline" id="filterNom" style="float: left;">
-                <div class="form-group">
-                    <label for="competitionFilterNom">Змагання</label>
-                    <select class="form-control" id="competitionFilterNom">
-                    <option></option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="startDateNom">Від:</label>
-                    <input type="date" class="form-control" id="startDateNom" maxlength="10" placeholder="дд.мм.рррр" />
-                </div>
-                <div class="form-group">
-                    <label for="endDateNom">До:</label>
-                    <input type="date" class="form-control" id="endDateNom" maxlength="10" placeholder="дд.мм.рррр" />
-                </div>
-                <button type="button" class="btn btn-info" id="runFilterNom">Фільтрувати</button>
-            </form>
-            <div class="row">
-                <div class="col-md-2"></div>
-                <div class="col-md-1"><button class="word-export-nom btn btn-default"> Експорт в Word </button></div>
-                <div class="col-md-1"><button class="print-nom btn btn-default"> Друкувати </button></div>
-            </div>
-        </div>
-        <div id="nominationsGrids">
-
-        </div>
-    </div>
-</div>
+<?php
+    wp_register_script( 'file_saver_script', plugins_url( '../js/FileSaver.min.js', __FILE__ ) );
+    wp_enqueue_script(  'file_saver_script');   
+    wp_register_script( 'wordexport_script', plugins_url( '../js/jquery.wordexport.js', __FILE__ ) );
+    wp_enqueue_script(  'wordexport_script'); 
+    wp_register_script( 'print_script', plugins_url( '../js/jQuery.print.js', __FILE__ ) );
+    wp_enqueue_script(  'print_script'); 
+    wp_register_script( 'nominations_entry_script', plugins_url( '../js/nominations/nominations-bundle.js', __FILE__ ) );
+    wp_enqueue_script(  'nominations_entry_script'); 
+?>
+<div id="nom-app"></div>
