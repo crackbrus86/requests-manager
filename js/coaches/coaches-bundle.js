@@ -39111,7 +39111,6 @@ var CoachesApp = function (_React$Component) {
             var coach = this.state.coach;
             coach[field] = value;
             this.setState({ coach: coach });
-            console.log(this.state);
         }
     }, {
         key: "goToPage",

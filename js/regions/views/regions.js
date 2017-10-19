@@ -70,7 +70,7 @@ class RegionsView extends React.Component{
 
     setDialod(id){
         this.setState({dialog: {
-            text: "Ви впевнені що хочете видалити це змаганя?",
+            text: "Ви впевнені що хочете видалити цю область?",
             id: id
         }})
     }
