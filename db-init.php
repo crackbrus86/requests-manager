@@ -93,7 +93,7 @@
             `pre_competition` INT NOT NULL,
             `coaches` VARCHAR(500) NOT NULL,
             `doping` VARCHAR(250) NOT NULL,
-            'year' VARCHAR(4)
+            `year` VARCHAR(4)
         ) {$charset_collate}";
         dbDelta($createRequestsTab);
         $tb_others = $wpdb->get_blog_prefix()."rm_others";
