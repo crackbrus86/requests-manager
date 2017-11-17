@@ -39427,6 +39427,7 @@ var RequestsApp = function (_React$Component) {
         _this.onDelete = _this.deleteRequest.bind(_this);
         _this.onCancel = _this.cancelDelete.bind(_this);
         _this.onConfirm = _this.confirmDelete.bind(_this);
+        _this.onDownload = _this.getPhotos.bind(_this);
         return _this;
     }
 
@@ -39721,8 +39722,24 @@ var RequestsApp = function (_React$Component) {
             jQuery(".preview").remove();
         }
     }, {
-        key: "closePreview",
-        value: function closePreview() {}
+        key: "getPhotos",
+        value: function getPhotos() {
+            var _this14 = this;
+
+            this.setState({ isLoading: true });
+            services.getPhotos({
+                offset: this.state.paging.offset,
+                limit: this.state.paging.perPage,
+                game: this.state.filter.currentGame
+            }).then(function (data) {
+                _this14.setState({ isLoading: false });
+                if (data === "false") {
+                    alert("Фото не знайдені");
+                } else {
+                    location.href = "../wp-content/plugins/requests-manager/api/Requests/GetPhotos.php?limit=" + _this14.state.paging.perPage + "&offset=" + _this14.state.paging.offset + "&game=" + _this14.state.filter.currentGame;
+                }
+            });
+        }
     }, {
         key: "componentDidMount",
         value: function componentDidMount() {
@@ -39775,6 +39792,11 @@ var RequestsApp = function (_React$Component) {
                                     "button",
                                     { type: "button", className: "print-export btn btn-default", onClick: this.printGrid.bind(this), title: "\u0414\u0440\u0443\u043A" },
                                     _react2.default.createElement("i", { className: "fa fa-print" })
+                                ),
+                                _react2.default.createElement(
+                                    "button",
+                                    { type: "button", className: "btn btn-default", onClick: this.onDownload, title: "\u0421\u043A\u0430\u0447\u0430\u0442\u0438 \u0443\u0441\u0456 \u0444\u043E\u0442\u043E", disabled: !this.state.requests.length },
+                                    _react2.default.createElement("i", { className: "fa fa-file-archive-o" })
                                 )
                             )
                         )
@@ -41167,6 +41189,14 @@ var deleteRequest = exports.deleteRequest = function deleteRequest(contract) {
     return jQuery.ajax({
         url: reqDir + "DeleteRequest.php",
         type: "POST",
+        data: contract
+    });
+};
+
+var getPhotos = exports.getPhotos = function getPhotos(contract) {
+    return jQuery.ajax({
+        url: reqDir + "GetPhotos.php",
+        type: "GET",
         data: contract
     });
 };

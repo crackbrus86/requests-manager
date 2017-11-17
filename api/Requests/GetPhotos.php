@@ -2,9 +2,10 @@
 require_once("../wpdb-connect.php");
 if(current_user_can("edit_others_pages")):
     $tb_requests = $wpdb->get_blog_prefix()."rm_requests";
-    $limit = $_POST["limit"];
-    $offset = $_POST["offset"];
-    $sql = $wpdb->prepare("SELECT user_id, coaches FROM $tb_requests LIMIT %d OFFSET %d", $limit, $offset);
+    $limit = $_GET["limit"];
+    $offset = $_GET["offset"];
+    $game = $_GET["game"];
+    $sql = $wpdb->prepare("SELECT user_id, coaches FROM $tb_requests WHERE current_competition = %d LIMIT %d OFFSET %d", $game, $limit, $offset);
     $results = $wpdb->get_results($sql);      
     $usersId = Array();
     $coachesId = Array();

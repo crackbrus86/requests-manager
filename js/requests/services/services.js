@@ -86,3 +86,11 @@ export const deleteRequest = (contract) => {
         data: contract
     })
 }
+
+export const getPhotos = (contract) => {
+    return jQuery.ajax({
+        url: reqDir + "GetPhotos.php",
+        type: "GET",
+        data: contract
+    })
+}

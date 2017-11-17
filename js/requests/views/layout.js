@@ -53,6 +53,7 @@ class RequestsApp extends React.Component{
         this.onDelete = this.deleteRequest.bind(this);
         this.onCancel = this.cancelDelete.bind(this);
         this.onConfirm = this.confirmDelete.bind(this);
+        this.onDownload = this.getPhotos.bind(this);
     }
 
     changeCurrentPage(page){
@@ -287,8 +288,21 @@ class RequestsApp extends React.Component{
         jQuery(".preview").remove();
     }
 
-    closePreview(){
-
+    getPhotos(){
+        this.setState({isLoading: true});
+        services.getPhotos({
+            offset: this.state.paging.offset,
+            limit: this.state.paging.perPage,
+            game: this.state.filter.currentGame
+        }).then(data => {
+            this.setState({isLoading: false});
+            if(data === "false"){
+                alert("Фото не знайдені");
+            }else{
+                location.href = "../wp-content/plugins/requests-manager/api/Requests/GetPhotos.php?limit=" + 
+                this.state.paging.perPage + "&offset=" + this.state.paging.offset + "&game=" + this.state.filter.currentGame;
+            }
+        })
     }
 
     componentDidMount(){
@@ -312,6 +326,7 @@ class RequestsApp extends React.Component{
                         <h4>Інші операції</h4>
                         <button type="button" className="word-export btn btn-default" onClick={this.exportGrid.bind(this)} title="Експорт у Word"><i className="fa fa-file-word-o"></i></button>
                         <button type="button" className="print-export btn btn-default" onClick={this.printGrid.bind(this)} title="Друк"><i className="fa fa-print"></i></button>
+                        <button type="button" className="btn btn-default" onClick={this.onDownload} title="Скачати усі фото" disabled={!this.state.requests.length}><i className="fa fa-file-archive-o"></i></button>
                         </div>
                     </div>                    
                 </div>

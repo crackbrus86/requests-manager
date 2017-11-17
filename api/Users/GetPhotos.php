@@ -31,6 +31,7 @@ if(current_user_can('edit_others_pages')):
         header('Content-disposition: attachment; filename=Photos.zip');
         header('Content-type: application/zip');
         readfile($tmp_file);
+        unlink($tmp_file);
     }else{
         echo "false";
     }
