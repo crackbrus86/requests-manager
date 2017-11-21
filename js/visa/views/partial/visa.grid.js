@@ -8,7 +8,7 @@ const VisaGrid = (props) => {
     var columns = [
         {
             title: "",
-            field: "id",
+            field: "visaId",
             button: "edit",
             width: "80px",
             action: (e) => {
@@ -17,7 +17,7 @@ const VisaGrid = (props) => {
         },
         {
             title: "",
-            field: "id",
+            field: "visaId",
             button: "delete",
             width: "80px",
             action: (e) => {
@@ -26,7 +26,7 @@ const VisaGrid = (props) => {
         },
         {
             title: "Тип візи",
-            field: "type",
+            field: "visaType",
             width: "80px",
         },
         {
@@ -46,7 +46,7 @@ const VisaGrid = (props) => {
         },
         {
             title: "Номер паспорта",
-            field: "pass",
+            field: "passNo",
             width: "150px"
         },
         {
@@ -65,16 +65,25 @@ const VisaGrid = (props) => {
             width: "*"
         }
     ];
-    var rows = props.records.map(x => {
+    var visaRecords = props.records.filter(x => !!x.fullName.trim());
+    var rows = visaRecords.map(x => {
+        var visaT = "";
+        if(x.visaType){
+            visaT = (x.visaType === "0")? <div className="visa-type sheng" title="Шенген">{"Ш"}</div> : <div className="visa-type usa" title="США">{"С"}</div>
+        }
+        var visaE = "";
+        if(x.visaExpires){
+            visaE = moment(new Date(x.visaExpires)).format("DD-MM-YYYY");
+        }
         return {
-            id: x.id,
-            type: (x.type === "0")? <div className="visa-type sheng" title="Шенген">{"Ш"}</div> : <div className="visa-type usa" title="США">{"С"}</div>,
-            fullName: x.surname + " " + x.name,
+            visaId: x.visaId,
+            visaType: visaT,
+            fullName: x.fullName,
             role: x.role.replace(x.role[0], x.role[0].toUpperCase()),
             born: moment(new Date(x.born)).format("DD-MM-YYYY"),
-            pass: x.pass,
+            passNo: x.passNo,
             passExpires: moment(new Date(x.passExpires)).format("DD-MM-YYYY"),
-            visaExpires: moment(new Date(x.visaExpires)).format("DD-MM-YYYY")
+            visaExpires: visaE
         }
     });
     return(<div id="visaGrid">

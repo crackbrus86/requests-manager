@@ -41003,7 +41003,7 @@ var VisaGrid = function VisaGrid(props) {
     );
     var columns = [{
         title: "",
-        field: "id",
+        field: "visaId",
         button: "edit",
         width: "80px",
         action: function action(e) {
@@ -41011,7 +41011,7 @@ var VisaGrid = function VisaGrid(props) {
         }
     }, {
         title: "",
-        field: "id",
+        field: "visaId",
         button: "delete",
         width: "80px",
         action: function action(e) {
@@ -41019,7 +41019,7 @@ var VisaGrid = function VisaGrid(props) {
         }
     }, {
         title: "Тип візи",
-        field: "type",
+        field: "visaType",
         width: "80px"
     }, {
         title: "Прізвище, Ім'я",
@@ -41035,7 +41035,7 @@ var VisaGrid = function VisaGrid(props) {
         width: "150px"
     }, {
         title: "Номер паспорта",
-        field: "pass",
+        field: "passNo",
         width: "150px"
     }, {
         title: "Термін дії паспорта",
@@ -41050,10 +41050,13 @@ var VisaGrid = function VisaGrid(props) {
         field: "",
         width: "*"
     }];
-    var rows = props.records.map(function (x) {
-        return {
-            id: x.id,
-            type: x.type === "0" ? _react2.default.createElement(
+    var visaRecords = props.records.filter(function (x) {
+        return !!x.fullName.trim();
+    });
+    var rows = visaRecords.map(function (x) {
+        var visaT = "";
+        if (x.visaType) {
+            visaT = x.visaType === "0" ? _react2.default.createElement(
                 "div",
                 { className: "visa-type sheng", title: "\u0428\u0435\u043D\u0433\u0435\u043D" },
                 "Ш"
@@ -41061,13 +41064,21 @@ var VisaGrid = function VisaGrid(props) {
                 "div",
                 { className: "visa-type usa", title: "\u0421\u0428\u0410" },
                 "С"
-            ),
-            fullName: x.surname + " " + x.name,
+            );
+        }
+        var visaE = "";
+        if (x.visaExpires) {
+            visaE = (0, _moment2.default)(new Date(x.visaExpires)).format("DD-MM-YYYY");
+        }
+        return {
+            visaId: x.visaId,
+            visaType: visaT,
+            fullName: x.fullName,
             role: x.role.replace(x.role[0], x.role[0].toUpperCase()),
             born: (0, _moment2.default)(new Date(x.born)).format("DD-MM-YYYY"),
-            pass: x.pass,
+            passNo: x.passNo,
             passExpires: (0, _moment2.default)(new Date(x.passExpires)).format("DD-MM-YYYY"),
-            visaExpires: (0, _moment2.default)(new Date(x.visaExpires)).format("DD-MM-YYYY")
+            visaExpires: visaE
         };
     });
     return _react2.default.createElement(
