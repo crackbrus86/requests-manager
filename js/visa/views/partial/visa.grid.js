@@ -10,6 +10,7 @@ const VisaGrid = (props) => {
             title: "",
             field: "visaId",
             button: "edit",
+            hide: "hasVisa",
             width: "80px",
             action: (e) => {
                 props.onEdit(e.target.dataset["rel"]);
@@ -19,6 +20,7 @@ const VisaGrid = (props) => {
             title: "",
             field: "visaId",
             button: "delete",
+            hide: "hasVisa",
             width: "80px",
             action: (e) => {
                 props.onDelete(e.target.dataset["rel"]);
@@ -79,6 +81,7 @@ const VisaGrid = (props) => {
             visaId: x.visaId,
             visaType: visaT,
             fullName: x.fullName,
+            hasVisa: !!x.visaId ? false : true,
             role: x.role.replace(x.role[0], x.role[0].toUpperCase()),
             born: moment(new Date(x.born)).format("DD-MM-YYYY"),
             passNo: x.passNo,

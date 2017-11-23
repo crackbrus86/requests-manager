@@ -9,8 +9,9 @@ class Grid extends React.Component{
             if(column.button) {
                 var color = (column.button === "edit")? "success" : "danger";
                 var buttonTitle = column.button[0].toUpperCase() + column.button.slice(1);
+                var hide = (row[column.hide]) ? { display: "none" } : {};
                 cells.push(<td key={counter} width={column.width}>
-                    <button type="button" className={classNames("btn", "btn-" + color)} data-rel={row[column.field]} onClick={(v) => column.action(v)}>{buttonTitle}</button>
+                    <button type="button" className={classNames("btn", "btn-" + color)} data-rel={row[column.field]} style={hide} onClick={(v) => column.action(v)}>{buttonTitle}</button>
                 </td>)
             }else{
                 cells.push(<td key={counter} width={column.width}>{row[column.field]}</td>)

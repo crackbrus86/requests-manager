@@ -7,7 +7,6 @@ import Datetime from "react-datetime";
 const VisaModal = (props) => {
     if(!props.visa) return null;
     var visa = props.visa;
-    var fullName = visa.surname + " " + visa.name;
     var types = [{id: "0", text: "Шенгенська віза"}, {id: "1", text: "Віза США"}];
     var typesList = types.map(x => <option key={x.id} value={x.id}>{x.text}</option>);
     var expireDate = moment(new Date(visa.expires)).format("DD-MM-YYYY");
@@ -16,7 +15,7 @@ const VisaModal = (props) => {
         <form>
             <div className="form-group">
                 <label>Прізвище, Ім'я</label>
-                <input type="text" value={fullName} className="form-control" readOnly={true} /> 
+                <input type="text" value={visa.fullName} className="form-control" readOnly={true} /> 
             </div>
             <div className="form-group">
                 <label>Тип візи</label>

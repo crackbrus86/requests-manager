@@ -67,12 +67,11 @@ class VisaApp extends React.Component{
     }   
     
     editVisa(id){
-        var tmp = this.state.records.filter(x => x.id == id)[0];
+        var tmp = this.state.records.filter(x => x.visaId == id)[0];
         var visa = {
-            id: tmp.id,
-            name: tmp.name,
-            surname: tmp.surname,
-            type: tmp.type,
+            id: tmp.visaId,
+            fullName: tmp.fullName,
+            type: tmp.visaType,
             expires: tmp.visaExpires
         };
         this.setState({visa: visa});
@@ -163,6 +162,11 @@ class VisaApp extends React.Component{
                             <button type="button" className="word-export btn btn-default" onClick={this.exportGrid.bind(this)} title="Експорт у Word"><i className="fa fa-file-word-o"></i></button>
                             <button type="button" className="print-export btn btn-default" onClick={this.printGrid.bind(this)} title="Друк"><i className="fa fa-print"></i></button>                        
                         </div>                        
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-md-12">
+                    <button type="button" className="btn btn-success" disabled={!this.state.records.length}><i className="fa fa-plus"></i> Додати візу</button>
                     </div>
                 </div>
                 <VisaGrid records={this.state.records} game={this.state.game} onEdit={this.onEdit} onDelete={this.onDelete} />

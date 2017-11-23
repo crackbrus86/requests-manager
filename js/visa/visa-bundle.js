@@ -39390,13 +39390,12 @@ var VisaApp = function (_React$Component) {
         key: "editVisa",
         value: function editVisa(id) {
             var tmp = this.state.records.filter(function (x) {
-                return x.id == id;
+                return x.visaId == id;
             })[0];
             var visa = {
-                id: tmp.id,
-                name: tmp.name,
-                surname: tmp.surname,
-                type: tmp.type,
+                id: tmp.visaId,
+                fullName: tmp.fullName,
+                type: tmp.visaType,
                 expires: tmp.visaExpires
             };
             this.setState({ visa: visa });
@@ -39530,6 +39529,20 @@ var VisaApp = function (_React$Component) {
                                     { type: "button", className: "print-export btn btn-default", onClick: this.printGrid.bind(this), title: "\u0414\u0440\u0443\u043A" },
                                     _react2.default.createElement("i", { className: "fa fa-print" })
                                 )
+                            )
+                        )
+                    ),
+                    _react2.default.createElement(
+                        "div",
+                        { className: "row" },
+                        _react2.default.createElement(
+                            "div",
+                            { className: "col-md-12" },
+                            _react2.default.createElement(
+                                "button",
+                                { type: "button", className: "btn btn-success", disabled: !this.state.records.length },
+                                _react2.default.createElement("i", { className: "fa fa-plus" }),
+                                " \u0414\u043E\u0434\u0430\u0442\u0438 \u0432\u0456\u0437\u0443"
                             )
                         )
                     ),
@@ -41005,6 +41018,7 @@ var VisaGrid = function VisaGrid(props) {
         title: "",
         field: "visaId",
         button: "edit",
+        hide: "hasVisa",
         width: "80px",
         action: function action(e) {
             props.onEdit(e.target.dataset["rel"]);
@@ -41013,6 +41027,7 @@ var VisaGrid = function VisaGrid(props) {
         title: "",
         field: "visaId",
         button: "delete",
+        hide: "hasVisa",
         width: "80px",
         action: function action(e) {
             props.onDelete(e.target.dataset["rel"]);
@@ -41074,6 +41089,7 @@ var VisaGrid = function VisaGrid(props) {
             visaId: x.visaId,
             visaType: visaT,
             fullName: x.fullName,
+            hasVisa: !!x.visaId ? false : true,
             role: x.role.replace(x.role[0], x.role[0].toUpperCase()),
             born: (0, _moment2.default)(new Date(x.born)).format("DD-MM-YYYY"),
             passNo: x.passNo,
@@ -41136,12 +41152,13 @@ var Grid = function (_React$Component) {
                 if (column.button) {
                     var color = column.button === "edit" ? "success" : "danger";
                     var buttonTitle = column.button[0].toUpperCase() + column.button.slice(1);
+                    var hide = row[column.hide] ? { display: "none" } : {};
                     cells.push(_react2.default.createElement(
                         "td",
                         { key: counter, width: column.width },
                         _react2.default.createElement(
                             "button",
-                            { type: "button", className: classNames("btn", "btn-" + color), "data-rel": row[column.field], onClick: function onClick(v) {
+                            { type: "button", className: classNames("btn", "btn-" + color), "data-rel": row[column.field], style: hide, onClick: function onClick(v) {
                                     return column.action(v);
                                 } },
                             buttonTitle
@@ -41298,7 +41315,6 @@ __webpack_require__(207);
 var VisaModal = function VisaModal(props) {
     if (!props.visa) return null;
     var visa = props.visa;
-    var fullName = visa.surname + " " + visa.name;
     var types = [{ id: "0", text: "Шенгенська віза" }, { id: "1", text: "Віза США" }];
     var typesList = types.map(function (x) {
         return _react2.default.createElement(
@@ -41327,7 +41343,7 @@ var VisaModal = function VisaModal(props) {
                     null,
                     "\u041F\u0440\u0456\u0437\u0432\u0438\u0449\u0435, \u0406\u043C'\u044F"
                 ),
-                _react2.default.createElement("input", { type: "text", value: fullName, className: "form-control", readOnly: true })
+                _react2.default.createElement("input", { type: "text", value: visa.fullName, className: "form-control", readOnly: true })
             ),
             _react2.default.createElement(
                 "div",
