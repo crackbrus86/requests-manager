@@ -6,6 +6,7 @@ import VisaGrid from "./partial/visa.grid";
 require("../../../css/visa.css");
 import VisaModal from "../modal/visa.modal";
 import Dialog from "../../components/modal/dialog";
+import moment from "moment";
 
 class VisaApp extends React.Component{
     constructor(props){
@@ -31,6 +32,9 @@ class VisaApp extends React.Component{
         this.onDelete = this.deleteVisa.bind(this);
         this.onCancel = this.cancelDeleting.bind(this);
         this.onConfirm = this.confirmDeleting.bind(this);
+        this.onCreate = this.addVisa.bind(this);
+        this.onSelectOwner = this.selectOwner.bind(this);
+        this.onInsert = this.insertVisa.bind(this);
     }
 
     changeFilter(field, value){
@@ -77,6 +81,18 @@ class VisaApp extends React.Component{
         this.setState({visa: visa});
     }
 
+    addVisa(){
+        var persons = this.state.records.filter(x => !x.visaId && x.fullName !== " ");
+        var visa = {
+            id: null,
+            type: 0,
+            expires: moment(new Date()).format('YYYY-MM-DD'),
+            persons: persons,
+            defaultPerson: (persons.length > 0 ) ? persons[0].id + " " + persons[0].role : ""
+        }
+        this.setState({visa: visa});
+    }
+
     closeVisa(){
         this.setState({visa: null})
     }
@@ -85,6 +101,30 @@ class VisaApp extends React.Component{
         var visa = this.state.visa;
         visa[field] = value;
         this.setState({visa: visa});
+    }
+
+    selectOwner(str){
+        var tmpVisa = this.state.visa;
+        tmpVisa.defaultPerson = str;
+        this.setState({visa: tmpVisa});
+    }
+
+    insertVisa(){
+        this.setState({isLoading: true});
+        var visa = this.state.visa;
+        var ownerArr = visa.defaultPerson.split(" ");
+        services.insertVisa({
+            ownerType: ownerArr[1],
+            ownerId: ownerArr[0],
+            type: visa.type,
+            term: visa.expires,
+            event: this.state.game.id,
+            year: this.state.game.year
+        }).then(() => {
+            this.closeVisa();
+            this.setState({isLoading: false});
+            this.getVisaRecords();
+        });
     }
 
     updateVisa(){
@@ -166,11 +206,11 @@ class VisaApp extends React.Component{
                 </div>
                 <div className="row">
                     <div className="col-md-12">
-                    <button type="button" className="btn btn-success" disabled={!this.state.records.length}><i className="fa fa-plus"></i> Додати візу</button>
+                    <button type="button" className="btn btn-success" disabled={!this.state.records.length} onClick={this.onCreate}><i className="fa fa-plus"></i> Додати візу</button>
                     </div>
                 </div>
                 <VisaGrid records={this.state.records} game={this.state.game} onEdit={this.onEdit} onDelete={this.onDelete} />
-                <VisaModal visa={this.state.visa} onClose={this.onClose} onChange={this.onChange} onUpdate={this.onUpdate} />
+                <VisaModal visa={this.state.visa} onClose={this.onClose} onChange={this.onChange} onUpdate={this.onUpdate} onInsert={this.onInsert} onSelectOwner={this.onSelectOwner} />
                 <Dialog dialog={this.state.dialog} onClose={this.onCancel} onConfirm={this.onConfirm} />
                 <Preloader loading={this.state.isLoading} />
             </div>

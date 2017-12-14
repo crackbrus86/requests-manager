@@ -39299,6 +39299,10 @@ var _dialog = __webpack_require__(333);
 
 var _dialog2 = _interopRequireDefault(_dialog);
 
+var _moment = __webpack_require__(0);
+
+var _moment2 = _interopRequireDefault(_moment);
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -39340,6 +39344,9 @@ var VisaApp = function (_React$Component) {
         _this.onDelete = _this.deleteVisa.bind(_this);
         _this.onCancel = _this.cancelDeleting.bind(_this);
         _this.onConfirm = _this.confirmDeleting.bind(_this);
+        _this.onCreate = _this.addVisa.bind(_this);
+        _this.onSelectOwner = _this.selectOwner.bind(_this);
+        _this.onInsert = _this.insertVisa.bind(_this);
         return _this;
     }
 
@@ -39401,6 +39408,21 @@ var VisaApp = function (_React$Component) {
             this.setState({ visa: visa });
         }
     }, {
+        key: "addVisa",
+        value: function addVisa() {
+            var persons = this.state.records.filter(function (x) {
+                return !x.visaId && x.fullName !== " ";
+            });
+            var visa = {
+                id: null,
+                type: 0,
+                expires: (0, _moment2.default)(new Date()).format('YYYY-MM-DD'),
+                persons: persons,
+                defaultPerson: persons.length > 0 ? persons[0].id + " " + persons[0].role : ""
+            };
+            this.setState({ visa: visa });
+        }
+    }, {
         key: "closeVisa",
         value: function closeVisa() {
             this.setState({ visa: null });
@@ -39413,9 +39435,37 @@ var VisaApp = function (_React$Component) {
             this.setState({ visa: visa });
         }
     }, {
+        key: "selectOwner",
+        value: function selectOwner(str) {
+            var tmpVisa = this.state.visa;
+            tmpVisa.defaultPerson = str;
+            this.setState({ visa: tmpVisa });
+        }
+    }, {
+        key: "insertVisa",
+        value: function insertVisa() {
+            var _this4 = this;
+
+            this.setState({ isLoading: true });
+            var visa = this.state.visa;
+            var ownerArr = visa.defaultPerson.split(" ");
+            services.insertVisa({
+                ownerType: ownerArr[1],
+                ownerId: ownerArr[0],
+                type: visa.type,
+                term: visa.expires,
+                event: this.state.game.id,
+                year: this.state.game.year
+            }).then(function () {
+                _this4.closeVisa();
+                _this4.setState({ isLoading: false });
+                _this4.getVisaRecords();
+            });
+        }
+    }, {
         key: "updateVisa",
         value: function updateVisa() {
-            var _this4 = this;
+            var _this5 = this;
 
             this.setState({ isLoading: true });
             var visa = this.state.visa;
@@ -39424,9 +39474,9 @@ var VisaApp = function (_React$Component) {
                 type: visa.type,
                 expires: visa.expires
             }).then(function () {
-                _this4.closeVisa();
-                _this4.setState({ isLoading: false });
-                _this4.getVisaRecords();
+                _this5.closeVisa();
+                _this5.setState({ isLoading: false });
+                _this5.getVisaRecords();
             });
         }
     }, {
@@ -39445,13 +39495,13 @@ var VisaApp = function (_React$Component) {
     }, {
         key: "confirmDeleting",
         value: function confirmDeleting() {
-            var _this5 = this;
+            var _this6 = this;
 
             this.setState({ isLoading: true });
             services.deleteVisa({ id: this.state.dialog.id }).then(function () {
-                _this5.setState({ isLoading: false });
-                _this5.cancelDeleting();
-                _this5.getVisaRecords();
+                _this6.setState({ isLoading: false });
+                _this6.cancelDeleting();
+                _this6.getVisaRecords();
             });
         }
     }, {
@@ -39540,14 +39590,14 @@ var VisaApp = function (_React$Component) {
                             { className: "col-md-12" },
                             _react2.default.createElement(
                                 "button",
-                                { type: "button", className: "btn btn-success", disabled: !this.state.records.length },
+                                { type: "button", className: "btn btn-success", disabled: !this.state.records.length, onClick: this.onCreate },
                                 _react2.default.createElement("i", { className: "fa fa-plus" }),
                                 " \u0414\u043E\u0434\u0430\u0442\u0438 \u0432\u0456\u0437\u0443"
                             )
                         )
                     ),
                     _react2.default.createElement(_visa4.default, { records: this.state.records, game: this.state.game, onEdit: this.onEdit, onDelete: this.onDelete }),
-                    _react2.default.createElement(_visa6.default, { visa: this.state.visa, onClose: this.onClose, onChange: this.onChange, onUpdate: this.onUpdate }),
+                    _react2.default.createElement(_visa6.default, { visa: this.state.visa, onClose: this.onClose, onChange: this.onChange, onUpdate: this.onUpdate, onInsert: this.onInsert, onSelectOwner: this.onSelectOwner }),
                     _react2.default.createElement(_dialog2.default, { dialog: this.state.dialog, onClose: this.onCancel, onConfirm: this.onConfirm }),
                     _react2.default.createElement(_preloader2.default, { loading: this.state.isLoading })
                 )
@@ -39796,6 +39846,14 @@ var updateVisa = exports.updateVisa = function updateVisa(contract) {
 var deleteVisa = exports.deleteVisa = function deleteVisa(contract) {
     return jQuery.ajax({
         url: visDir + "DeleteVisa.php",
+        type: "POST",
+        data: contract
+    });
+};
+
+var insertVisa = exports.insertVisa = function insertVisa(contract) {
+    return jQuery.ajax({
+        url: visDir + "InsertVisa.php",
         type: "POST",
         data: contract
     });
@@ -41324,6 +41382,13 @@ var VisaModal = function VisaModal(props) {
         );
     });
     var expireDate = (0, _moment2.default)(new Date(visa.expires)).format("DD-MM-YYYY");
+    var personsList = visa.persons ? visa.persons.map(function (x) {
+        return _react2.default.createElement(
+            "option",
+            { key: x.id + " " + x.role, value: x.id + " " + x.role },
+            x.fullName
+        );
+    }) : [];
     return _react2.default.createElement(
         _modal2.default,
         { target: props.visa, onClose: props.onClose },
@@ -41343,7 +41408,14 @@ var VisaModal = function VisaModal(props) {
                     null,
                     "\u041F\u0440\u0456\u0437\u0432\u0438\u0449\u0435, \u0406\u043C'\u044F"
                 ),
-                _react2.default.createElement("input", { type: "text", value: visa.fullName, className: "form-control", readOnly: true })
+                personsList.length > 0 ? _react2.default.createElement(
+                    "select",
+                    { className: "form-control", value: visa.defaultPerson, onChange: function onChange(e) {
+                            return props.onSelectOwner(e.target.value);
+                        } },
+                    _react2.default.createElement("option", null),
+                    personsList
+                ) : _react2.default.createElement("input", { type: "text", value: visa.fullName, className: "form-control", readOnly: true })
             ),
             _react2.default.createElement(
                 "div",
@@ -41376,12 +41448,18 @@ var VisaModal = function VisaModal(props) {
             _react2.default.createElement(
                 "div",
                 { className: "form-group text-right" },
-                _react2.default.createElement(
+                !!visa.id ? _react2.default.createElement(
                     "button",
                     { type: "button", className: "btn btn-primary footer-update-button", onClick: function onClick() {
                             return props.onUpdate();
                         } },
                     "\u041E\u043D\u043E\u0432\u0438\u0442\u0438"
+                ) : _react2.default.createElement(
+                    "button",
+                    { type: "button", className: "btn btn-primary footer-update-button", disabled: !visa.defaultPerson.length, onClick: function onClick() {
+                            return props.onInsert();
+                        } },
+                    "\u0414\u043E\u0434\u0430\u0442\u0438"
                 ),
                 _react2.default.createElement(
                     "button",
