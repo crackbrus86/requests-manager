@@ -16,9 +16,13 @@ import SendButton from "./send-button";
 class RequestForm extends React.Component{
     constructor(props){
         super(props);
+        this.state = {
+            verify: null
+        }
         this.onUserChange = this.changeUserField.bind(this);
         this.onUserDataChange = this.changeUserDataField.bind(this);
-        this.onUserLoad = this.getUserData.bind(this);
+        // this.onUserLoad = this.getUserData.bind(this);
+        this.onNext = this.getNext.bind(this);
         this.onGameChange = this.changeGameField.bind(this);
         this.onCoachStatusChange = this.changeCoachStatus.bind(this);
         this.onCloseModal = this.closeCoachModal.bind(this);
@@ -33,6 +37,7 @@ class RequestForm extends React.Component{
         this.onDopControlChange = this.changeDopingControl.bind(this);
         this.onSend = this.sendRequest.bind(this);
         this.onReload = this.reloadPage.bind(this);
+        this.verifyOff = this.closeVerify.bind(this);
     }
 
     changeCoachStatus(value){
@@ -222,6 +227,54 @@ class RequestForm extends React.Component{
             this.setState({showCoachData: true});
             this.setState({loading: false});
         })
+    }
+
+    getNext(){
+        var contract = {
+            surname: this.state.user.lastName,
+            firstName: this.state.user.firstName,
+            middleName: this.state.user.middleName,
+            birthDate: this.state.user.birthDate
+        }
+        this.setState({loading: true});
+        services.verifyUser(contract).then(output => {
+            this.setState({loading: false});
+            output = JSON.parse(output);
+            if(output.status){
+                this.setState({verify: { code: "", userId: output.target }});
+            }else{
+                this.setDefaultUserData(this.state.regions[0].id);
+                var newUD = this.state.userData;
+                newUD.visa = {
+                    hasVisa: "false",
+                    type: 0,
+                    term: null
+                }                
+                this.showUserData();
+                this.showGameData();
+            }
+        });
+    }
+
+    checkUserExists(){
+        this.setState({loading: true});
+        services.checkUserExists({
+            userId: this.state.verify.userId,
+            code: this.state.verify.code
+        }).then(() => {
+            this.setState({loading: false});
+            this.closeVerify();
+        });
+    }
+
+    closeVerify(){
+        this.setState({verify: null});
+    }
+
+    verifyCodeSet(newCode){
+        var newVerify = this.state.verify;
+        newVerify.code = newCode;
+        this.setState({verify: newVerify});
     }
 
     getUserData(){
@@ -446,7 +499,7 @@ class RequestForm extends React.Component{
         var required = ["accreditation_photo_id", "email", "expiration_date_pass", "first_name_pass", "individual_number", "last_name_pass", "number_pass",
                         "phone", "photo_international_pass_id", "photo_national_pass_id", "region", "serial_number_pass"];        
         return <div>
-            <NameForm person={this.state.user} onChange={this.onUserChange} onNext={this.onUserLoad} isReadOnly={this.state.showUserData} />
+            <NameForm person={this.state.user} onChange={this.onUserChange} onNext={this.onNext} isReadOnly={this.state.showUserData} />
             <PersonalForm isVisible={this.state.showUserData} person={this.state.userData} regions={this.state.regions} onChange={this.onUserDataChange} />
             <GameForm isVisible={this.state.showGameData} game={this.state.gameData} ageCategories={this.state.ageCategories} 
             actualGames={this.state.actualGames} beforeGames={this.state.beforeGames} weightCategories={this.state.weightCategories} onChange={this.onGameChange} />
@@ -469,6 +522,15 @@ class RequestForm extends React.Component{
                 <div className="request-success">Заявку було успішно надіслано!</div>
                 <div className="form-group">
                     <button type="button" className="btn btn-default reload-btn" onClick={this.onReload}>Ok</button>
+                </div>
+            </Modal>
+            <Modal target={this.state.verify} onClose={this.verifyOff}>
+                <div><p>Перевірте Ваш email та введіть відправлений перевірочний код:</p></div>
+                <div className="form-group">
+                    <input type="text" value={this.state.verify ? this.state.verify.code : ""} onChange={e => this.verifyCodeSet(e.target.value)} />
+                </div>
+                <div className="form-group">
+                    <button type="button" className="btn btn-default reload-btn" onClick={this.checkUserExists.bind(this)}>Перевірити</button>
                 </div>
             </Modal>
             <Preloader loading={this.state.loading} />

@@ -63,3 +63,18 @@ export const saveRequestData = (contract) => {
     })
 }
 
+export const verifyUser = (contract) => {
+    return jQuery.ajax({
+        url: dir + "VerifyUser.php",
+        type: "POST",
+        data: contract
+    })
+}
+
+export const checkUserExists = (contract) => {
+    return jQuery.ajax({
+        url: dir + "CheckUserExists.php",
+        type: "POST",
+        data: contract
+    })
+}

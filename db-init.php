@@ -115,3 +115,10 @@
             `year` VARCHAR(5)
         ) {$charset_collate}";
         dbDelta($createVisaTab);
+        $tb_verify = $wpdb->get_blog_prefix()."rm_verify";
+        $createVerifyTab = "CREATE TABLE IF NOT EXISTS {$tb_verify} (
+            `id` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+            `user_id` BIGINT NOT NULL,
+            `code` INT NOT NULL
+        ) {$charset_collate}";
+        dbDelta($createVerifyTab);

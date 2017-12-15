@@ -39535,9 +39535,13 @@ var RequestForm = function (_React$Component) {
 
         var _this = _possibleConstructorReturn(this, (RequestForm.__proto__ || Object.getPrototypeOf(RequestForm)).call(this, props));
 
+        _this.state = {
+            verify: null
+        };
         _this.onUserChange = _this.changeUserField.bind(_this);
         _this.onUserDataChange = _this.changeUserDataField.bind(_this);
-        _this.onUserLoad = _this.getUserData.bind(_this);
+        // this.onUserLoad = this.getUserData.bind(this);
+        _this.onNext = _this.getNext.bind(_this);
         _this.onGameChange = _this.changeGameField.bind(_this);
         _this.onCoachStatusChange = _this.changeCoachStatus.bind(_this);
         _this.onCloseModal = _this.closeCoachModal.bind(_this);
@@ -39552,6 +39556,7 @@ var RequestForm = function (_React$Component) {
         _this.onDopControlChange = _this.changeDopingControl.bind(_this);
         _this.onSend = _this.sendRequest.bind(_this);
         _this.onReload = _this.reloadPage.bind(_this);
+        _this.verifyOff = _this.closeVerify.bind(_this);
         return _this;
     }
 
@@ -39779,9 +39784,65 @@ var RequestForm = function (_React$Component) {
             });
         }
     }, {
+        key: "getNext",
+        value: function getNext() {
+            var _this8 = this;
+
+            var contract = {
+                surname: this.state.user.lastName,
+                firstName: this.state.user.firstName,
+                middleName: this.state.user.middleName,
+                birthDate: this.state.user.birthDate
+            };
+            this.setState({ loading: true });
+            services.verifyUser(contract).then(function (output) {
+                _this8.setState({ loading: false });
+                output = JSON.parse(output);
+                if (output.status) {
+                    _this8.setState({ verify: { code: "", userId: output.target } });
+                } else {
+                    _this8.setDefaultUserData(_this8.state.regions[0].id);
+                    var newUD = _this8.state.userData;
+                    newUD.visa = {
+                        hasVisa: "false",
+                        type: 0,
+                        term: null
+                    };
+                    _this8.showUserData();
+                    _this8.showGameData();
+                }
+            });
+        }
+    }, {
+        key: "checkUserExists",
+        value: function checkUserExists() {
+            var _this9 = this;
+
+            this.setState({ loading: true });
+            services.checkUserExists({
+                userId: this.state.verify.userId,
+                code: this.state.verify.code
+            }).then(function () {
+                _this9.setState({ loading: false });
+                _this9.closeVerify();
+            });
+        }
+    }, {
+        key: "closeVerify",
+        value: function closeVerify() {
+            this.setState({ verify: null });
+        }
+    }, {
+        key: "verifyCodeSet",
+        value: function verifyCodeSet(newCode) {
+            var newVerify = this.state.verify;
+            newVerify.code = newCode;
+            this.setState({ verify: newVerify });
+        }
+    }, {
         key: "getUserData",
         value: function getUserData() {
-            var _this8 = this;
+            var _this10 = this;
 
             var conract = {
                 surname: this.state.user.lastName,
@@ -39792,17 +39853,17 @@ var RequestForm = function (_React$Component) {
             this.setState({ loading: true });
             this.setDefaultUserData(this.state.regions[0].id);
             services.getUserData(conract).then(function (data) {
-                if (data != "null") _this8.setState({ userData: JSON.parse(data) });
-                var newUD = _this8.state.userData;
+                if (data != "null") _this10.setState({ userData: JSON.parse(data) });
+                var newUD = _this10.state.userData;
                 newUD.visa = {
                     hasVisa: "false",
                     type: 0,
                     term: null
                 };
-                _this8.setState({ userData: newUD });
-                _this8.showUserData();
-                _this8.showGameData();
-                _this8.setState({ loading: false });
+                _this10.setState({ userData: newUD });
+                _this10.showUserData();
+                _this10.showGameData();
+                _this10.setState({ loading: false });
             });
         }
     }, {
@@ -39866,10 +39927,10 @@ var RequestForm = function (_React$Component) {
     }, {
         key: "sendRequest",
         value: function sendRequest() {
-            var _this9 = this;
+            var _this11 = this;
 
             var actualGame = this.state.actualGames.filter(function (item) {
-                return item.id === _this9.state.gameData.aGame;
+                return item.id === _this11.state.gameData.aGame;
             });
             var contract = {
                 user: {
@@ -39915,8 +39976,8 @@ var RequestForm = function (_React$Component) {
             };
             this.setState({ loading: true });
             services.saveRequestData(contract).then(function (data) {
-                _this9.setState({ loading: false });
-                _this9.setState({ sent: true });
+                _this11.setState({ loading: false });
+                _this11.setState({ sent: true });
             });
         }
     }, {
@@ -40020,12 +40081,14 @@ var RequestForm = function (_React$Component) {
     }, {
         key: "render",
         value: function render() {
+            var _this12 = this;
+
             var requiredGeneral = ["firstName", "lastName", "middleName", "birthDate"];
             var required = ["accreditation_photo_id", "email", "expiration_date_pass", "first_name_pass", "individual_number", "last_name_pass", "number_pass", "phone", "photo_international_pass_id", "photo_national_pass_id", "region", "serial_number_pass"];
             return _react2.default.createElement(
                 "div",
                 null,
-                _react2.default.createElement(_nameForm2.default, { person: this.state.user, onChange: this.onUserChange, onNext: this.onUserLoad, isReadOnly: this.state.showUserData }),
+                _react2.default.createElement(_nameForm2.default, { person: this.state.user, onChange: this.onUserChange, onNext: this.onNext, isReadOnly: this.state.showUserData }),
                 _react2.default.createElement(_personalForm2.default, { isVisible: this.state.showUserData, person: this.state.userData, regions: this.state.regions, onChange: this.onUserDataChange }),
                 _react2.default.createElement(_gameForm2.default, { isVisible: this.state.showGameData, game: this.state.gameData, ageCategories: this.state.ageCategories,
                     actualGames: this.state.actualGames, beforeGames: this.state.beforeGames, weightCategories: this.state.weightCategories, onChange: this.onGameChange }),
@@ -40072,6 +40135,35 @@ var RequestForm = function (_React$Component) {
                             "button",
                             { type: "button", className: "btn btn-default reload-btn", onClick: this.onReload },
                             "Ok"
+                        )
+                    )
+                ),
+                _react2.default.createElement(
+                    _modal2.default,
+                    { target: this.state.verify, onClose: this.verifyOff },
+                    _react2.default.createElement(
+                        "div",
+                        null,
+                        _react2.default.createElement(
+                            "p",
+                            null,
+                            "\u041F\u0435\u0440\u0435\u0432\u0456\u0440\u0442\u0435 \u0412\u0430\u0448 email \u0442\u0430 \u0432\u0432\u0435\u0434\u0456\u0442\u044C \u0432\u0456\u0434\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u0438\u0439 \u043F\u0435\u0440\u0435\u0432\u0456\u0440\u043E\u0447\u043D\u0438\u0439 \u043A\u043E\u0434:"
+                        )
+                    ),
+                    _react2.default.createElement(
+                        "div",
+                        { className: "form-group" },
+                        _react2.default.createElement("input", { type: "text", value: this.state.verify ? this.state.verify.code : "", onChange: function onChange(e) {
+                                return _this12.verifyCodeSet(e.target.value);
+                            } })
+                    ),
+                    _react2.default.createElement(
+                        "div",
+                        { className: "form-group" },
+                        _react2.default.createElement(
+                            "button",
+                            { type: "button", className: "btn btn-default reload-btn", onClick: this.checkUserExists.bind(this) },
+                            "\u041F\u0435\u0440\u0435\u0432\u0456\u0440\u0438\u0442\u0438"
                         )
                     )
                 ),
@@ -42701,6 +42793,22 @@ var getCoachData = exports.getCoachData = function getCoachData(contract) {
 var saveRequestData = exports.saveRequestData = function saveRequestData(contract) {
     return jQuery.ajax({
         url: dir + "SaveRequestData.php",
+        type: "POST",
+        data: contract
+    });
+};
+
+var verifyUser = exports.verifyUser = function verifyUser(contract) {
+    return jQuery.ajax({
+        url: dir + "VerifyUser.php",
+        type: "POST",
+        data: contract
+    });
+};
+
+var checkUserExists = exports.checkUserExists = function checkUserExists(contract) {
+    return jQuery.ajax({
+        url: dir + "CheckUserExists.php",
         type: "POST",
         data: contract
     });
