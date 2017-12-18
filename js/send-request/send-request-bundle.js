@@ -42633,7 +42633,7 @@ var CoachesSection = function (_React$Component) {
                             _react2.default.createElement("input", { type: "radio", value: "false", checked: this.props.hasCoach === "false", onChange: function onChange(e) {
                                     return _this2.props.onChange(e.target.value);
                                 } }),
-                            " \u0406\u043D\u0434\u0438\u0432\u0456\u0434\u0443\u0430\u043B\u044C\u043D\u043E"
+                            " \u041E\u0441\u043E\u0431\u0438\u0441\u0442\u043E"
                         ),
                         _react2.default.createElement(
                             "label",

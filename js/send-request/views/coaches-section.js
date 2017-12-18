@@ -13,7 +13,7 @@ class CoachesSection extends React.Component{
                 <legend>Дані тренера</legend>
                 <div className="form-group">
                     <label className="radio-inline">
-                        <input type="radio" value="false" checked={this.props.hasCoach === "false"} onChange={e => this.props.onChange(e.target.value)} /> Індивідуально
+                        <input type="radio" value="false" checked={this.props.hasCoach === "false"} onChange={e => this.props.onChange(e.target.value)} /> Особисто
                     </label>
                     <label className="radio-inline">
                         <input type="radio" value="true" checked={this.props.hasCoach === "true"} onChange={e => this.props.onChange(e.target.value)} /> Тренер
