@@ -21,7 +21,6 @@ class RequestForm extends React.Component{
         }
         this.onUserChange = this.changeUserField.bind(this);
         this.onUserDataChange = this.changeUserDataField.bind(this);
-        // this.onUserLoad = this.getUserData.bind(this);
         this.onNext = this.getNext.bind(this);
         this.onGameChange = this.changeGameField.bind(this);
         this.onCoachStatusChange = this.changeCoachStatus.bind(this);
@@ -230,6 +229,7 @@ class RequestForm extends React.Component{
     }
 
     getNext(){
+        if(!!this.state.showUserData) return;
         var contract = {
             surname: this.state.user.lastName,
             firstName: this.state.user.firstName,
@@ -261,9 +261,13 @@ class RequestForm extends React.Component{
         services.checkUserExists({
             userId: this.state.verify.userId,
             code: this.state.verify.code
-        }).then(() => {
-            this.setState({loading: false});
+        }).then(data => {
+            this.setState({userData: JSON.parse(data)});
             this.closeVerify();
+            this.showUserData();
+            this.showGameData();
+            this.setState({loading: false});    
+            console.log(this.state);        
         });
     }
 
@@ -275,30 +279,6 @@ class RequestForm extends React.Component{
         var newVerify = this.state.verify;
         newVerify.code = newCode;
         this.setState({verify: newVerify});
-    }
-
-    getUserData(){
-        var conract = {
-            surname: this.state.user.lastName,
-            firstName: this.state.user.firstName,
-            middleName: this.state.user.middleName,
-            birthDate: this.state.user.birthDate
-        }
-        this.setState({loading: true});
-        this.setDefaultUserData(this.state.regions[0].id);
-        services.getUserData(conract).then(data => {
-            if(data != "null") this.setState({userData: JSON.parse(data)});
-            var newUD = this.state.userData;
-            newUD.visa = {
-                hasVisa: "false",
-                type: 0,
-                term: null
-            }
-            this.setState({userData: newUD});
-            this.showUserData();
-            this.showGameData();
-            this.setState({loading: false});
-        }) 
     }
 
     setDefaultUserData(regionId = ""){
@@ -525,12 +505,13 @@ class RequestForm extends React.Component{
                 </div>
             </Modal>
             <Modal target={this.state.verify} onClose={this.verifyOff}>
+                <h4>Перевірка email</h4>
                 <div><p>Перевірте Ваш email та введіть відправлений перевірочний код:</p></div>
                 <div className="form-group">
-                    <input type="text" value={this.state.verify ? this.state.verify.code : ""} onChange={e => this.verifyCodeSet(e.target.value)} />
+                    <input type="text"className="form-control" value={this.state.verify ? this.state.verify.code : ""} onChange={e => this.verifyCodeSet(e.target.value)} />
                 </div>
                 <div className="form-group">
-                    <button type="button" className="btn btn-default reload-btn" onClick={this.checkUserExists.bind(this)}>Перевірити</button>
+                    <button type="button" className="btn btn-default reload-btn" onClick={this.checkUserExists.bind(this)}>Підтвердити</button>
                 </div>
             </Modal>
             <Preloader loading={this.state.loading} />

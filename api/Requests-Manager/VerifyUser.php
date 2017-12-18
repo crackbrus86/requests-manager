@@ -15,6 +15,8 @@
     if($user){
         $code = mt_rand(1000, 9999);
         $tb_verify = $wpdb->get_blog_prefix()."rm_verify";
+        $delete = $wpdb->prepare("DELETE FROM $tb_verify WHERE user_id = %d", $user->id);
+        $wpdb->query($delete);
         $insert = $wpdb->prepare("INSERT INTO $tb_verify (user_id, code) VALUES (%d, %d)", $user->id, $code);
         if($wpdb->query($insert)) {
             $header = "From: \"Admin\"\n <senter@sender.com>";
