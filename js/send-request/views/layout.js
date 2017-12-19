@@ -214,8 +214,10 @@ class RequestForm extends React.Component{
         this.setState({loading: true});
         this.setDefaultCoachData(this.state.regions[0].id);
         services.getCoachData(contract).then(data => {
-            if(data != "null") this.setState({coachData: JSON.parse(data)});
+            // if(data != "null") this.setState({coachData: JSON.parse(data)});
+            var cd = JSON.parse(data);
             var newCD = this.state.coachData;
+            newCD.id = cd.id;
             newCD.visa = {
                 hasVisa: "false",
                 type: 0,

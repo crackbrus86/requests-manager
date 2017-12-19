@@ -39769,8 +39769,10 @@ var RequestForm = function (_React$Component) {
             this.setState({ loading: true });
             this.setDefaultCoachData(this.state.regions[0].id);
             services.getCoachData(contract).then(function (data) {
-                if (data != "null") _this7.setState({ coachData: JSON.parse(data) });
+                // if(data != "null") this.setState({coachData: JSON.parse(data)});
+                var cd = JSON.parse(data);
                 var newCD = _this7.state.coachData;
+                newCD.id = cd.id;
                 newCD.visa = {
                     hasVisa: "false",
                     type: 0,

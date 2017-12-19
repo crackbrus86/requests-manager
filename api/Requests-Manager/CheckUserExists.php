@@ -28,7 +28,7 @@
         $tb_regions = $wpdb->get_blog_prefix()."rm_regions";
         $regionId = $wpdb->get_row("SELECT id FROM $tb_regions LIMIT 1");
         $user = new stdClass();
-        $user->id = null;
+        $user->id = $userId;
         $user->region = $regionId->id;
         $user->last_name_pass = "";
         $user->first_name_pass = "";

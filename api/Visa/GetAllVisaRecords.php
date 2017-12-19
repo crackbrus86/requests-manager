@@ -24,7 +24,7 @@
             }
         }
         $coaches = array_map("unserialize", array_unique(array_map("serialize", $coaches)));     
-        $results = array_merge($users, $coaches);
+        $results = array_merge($users, $coaches);        
         foreach($results as $result){
             $visa = getVisaRecord($result, $event, $year);
             $result->visaId = ($visa) ? $visa->visaId : null;
@@ -45,9 +45,11 @@
 
     function filterCoaches($coaches){
         $tmp = array();
-        foreach($coaches as $coach){
-            if($coach[1] === "true") array_push($tmp, $coach[0]);
-        } 
+        if(count($coaches) > 0):
+            foreach($coaches as $coach){
+                if($coach[1] === "true") array_push($tmp, $coach[0]);
+            } 
+        endif;
         return $tmp;     
     }
 
