@@ -53,7 +53,6 @@ class RequestForm extends React.Component{
         var dopControl = this.state.dopingControl;
         dopControl[field] = value;
         this.setState({dopingControl: dopControl});
-        console.log(this.state);
     }
 
     changeCoachIsFollowing(value){
@@ -85,8 +84,7 @@ class RequestForm extends React.Component{
         }else{
             newCoachData[fieldName] = value;
         }
-        this.setState({coachData: newCoachData}); 
-        console.log(this.state);       
+        this.setState({coachData: newCoachData});      
     }     
 
     changeUserDataField(fieldName, value, fieldParent = null){
@@ -96,8 +94,7 @@ class RequestForm extends React.Component{
         }else{
             newUserData[fieldName] = value;
         }
-        this.setState({userData: newUserData}); 
-        console.log(this.state);       
+        this.setState({userData: newUserData});     
     } 
     
     changeGameField(fieldName, value, fieldParent = null){
@@ -111,8 +108,7 @@ class RequestForm extends React.Component{
         }else{
             newGame[fieldName] = value;
         }
-        this.setState({gameData: newGame});
-        console.log(this.state);          
+        this.setState({gameData: newGame});          
     }
 
     appendCoach(){
@@ -149,7 +145,6 @@ class RequestForm extends React.Component{
         }
         this.setState({coaches: coaches});
         this.closeCoachModal();
-        console.log(this.state);
     }
 
     removeCoach(index){
@@ -214,10 +209,8 @@ class RequestForm extends React.Component{
         this.setState({loading: true});
         this.setDefaultCoachData(this.state.regions[0].id);
         services.getCoachData(contract).then(data => {
-            // if(data != "null") this.setState({coachData: JSON.parse(data)});
-            var cd = JSON.parse(data);
+            if(data != "null") this.setState({coachData: JSON.parse(data)});
             var newCD = this.state.coachData;
-            newCD.id = cd.id;
             newCD.visa = {
                 hasVisa: "false",
                 type: 0,
@@ -268,8 +261,7 @@ class RequestForm extends React.Component{
             this.closeVerify();
             this.showUserData();
             this.showGameData();
-            this.setState({loading: false});    
-            console.log(this.state);        
+            this.setState({loading: false});      
         });
     }
 

@@ -39577,7 +39577,6 @@ var RequestForm = function (_React$Component) {
             var dopControl = this.state.dopingControl;
             dopControl[field] = value;
             this.setState({ dopingControl: dopControl });
-            console.log(this.state);
         }
     }, {
         key: "changeCoachIsFollowing",
@@ -39615,7 +39614,6 @@ var RequestForm = function (_React$Component) {
                 newCoachData[fieldName] = value;
             }
             this.setState({ coachData: newCoachData });
-            console.log(this.state);
         }
     }, {
         key: "changeUserDataField",
@@ -39629,7 +39627,6 @@ var RequestForm = function (_React$Component) {
                 newUserData[fieldName] = value;
             }
             this.setState({ userData: newUserData });
-            console.log(this.state);
         }
     }, {
         key: "changeGameField",
@@ -39647,7 +39644,6 @@ var RequestForm = function (_React$Component) {
                 newGame[fieldName] = value;
             }
             this.setState({ gameData: newGame });
-            console.log(this.state);
         }
     }, {
         key: "appendCoach",
@@ -39685,7 +39681,6 @@ var RequestForm = function (_React$Component) {
             }
             this.setState({ coaches: coaches });
             this.closeCoachModal();
-            console.log(this.state);
         }
     }, {
         key: "removeCoach",
@@ -39769,10 +39764,8 @@ var RequestForm = function (_React$Component) {
             this.setState({ loading: true });
             this.setDefaultCoachData(this.state.regions[0].id);
             services.getCoachData(contract).then(function (data) {
-                // if(data != "null") this.setState({coachData: JSON.parse(data)});
-                var cd = JSON.parse(data);
+                if (data != "null") _this7.setState({ coachData: JSON.parse(data) });
                 var newCD = _this7.state.coachData;
-                newCD.id = cd.id;
                 newCD.visa = {
                     hasVisa: "false",
                     type: 0,
@@ -39830,7 +39823,6 @@ var RequestForm = function (_React$Component) {
                 _this9.showUserData();
                 _this9.showGameData();
                 _this9.setState({ loading: false });
-                console.log(_this9.state);
             });
         }
     }, {
