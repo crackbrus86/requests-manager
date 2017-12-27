@@ -27562,7 +27562,7 @@ var _layout2 = _interopRequireDefault(_layout);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-jQuery("a[href=#nominations]").live("click", function () {
+jQuery("a[href='#nominations']").live("click", function () {
     (0, _reactDom.render)(_react2.default.createElement(_layout2.default, { update: true }), document.getElementById("nom-app"));
 });
 
@@ -41081,12 +41081,13 @@ var Grid = function (_React$Component) {
                 if (column.button) {
                     var color = column.button === "edit" ? "success" : "danger";
                     var buttonTitle = column.button[0].toUpperCase() + column.button.slice(1);
+                    var hide = row[column.hide] ? { display: "none" } : {};
                     cells.push(_react2.default.createElement(
                         "td",
                         { key: counter, width: column.width },
                         _react2.default.createElement(
                             "button",
-                            { type: "button", className: classNames("btn", "btn-" + color), "data-rel": row[column.field], onClick: function onClick(v) {
+                            { type: "button", className: classNames("btn", "btn-" + color), "data-rel": row[column.field], style: hide, onClick: function onClick(v) {
                                     return column.action(v);
                                 } },
                             buttonTitle

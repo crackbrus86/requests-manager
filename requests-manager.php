@@ -6,7 +6,7 @@ Version: 1.0
 Author: Salivon Eugene
 */
 
-define( 'RM__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
+define( 'RMI__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 add_action("admin_menu", array("RequestManager", "initSettings"));
 add_action("admin_init", array("RequestManager", "InitDB"));
 
@@ -14,8 +14,8 @@ wp_register_style('font-awesome', plugins_url( '/css/font-awesome.min.css', __FI
 wp_enqueue_style( 'font-awesome');
 
 function buildRequestsForm(){   
-    if(file_exists(RM__PLUGIN_DIR."/templates/request-form.php")){
-        require_once(RM__PLUGIN_DIR."/templates/request-form.php");
+    if(file_exists(RMI__PLUGIN_DIR."/templates/request-form.php")){
+        require_once(RMI__PLUGIN_DIR."/templates/request-form.php");
     }
 }
 
@@ -29,7 +29,7 @@ class RequestManager{
     }
 
 	function InitDB(){
-        require_once(RM__PLUGIN_DIR."/db-init.php");
+        require_once(RMI__PLUGIN_DIR."/db-init.php");
 	}
 
     function includeBootstrap(){
@@ -57,43 +57,43 @@ class RequestManager{
             <div class="tab-content">
                 <div role="tabpanel" class="tab-pane active" id="requests">
                 <?php   
-                    if(file_exists(RM__PLUGIN_DIR."/templates/requests.php")){
-                        require_once(RM__PLUGIN_DIR."/templates/requests.php");
+                    if(file_exists(RMI__PLUGIN_DIR."/templates/requests.php")){
+                        require_once(RMI__PLUGIN_DIR."/templates/requests.php");
                     }
                 ?>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="athletes">
                 <?php
-                    if(file_exists(RM__PLUGIN_DIR."/templates/users.php")){
-                        require_once(RM__PLUGIN_DIR."/templates/users.php");
+                    if(file_exists(RMI__PLUGIN_DIR."/templates/users.php")){
+                        require_once(RMI__PLUGIN_DIR."/templates/users.php");
                     }
                 ?>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="coaches">
                     <?php
-                        if(file_exists(RM__PLUGIN_DIR."/templates/coaches.php")){
-                            require_once(RM__PLUGIN_DIR."/templates/coaches.php");
+                        if(file_exists(RMI__PLUGIN_DIR."/templates/coaches.php")){
+                            require_once(RMI__PLUGIN_DIR."/templates/coaches.php");
                         }
                     ?>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="nominations">
                 <?php   
-                    if(file_exists(RM__PLUGIN_DIR."/templates/nominations.php")){
-                        require_once(RM__PLUGIN_DIR."/templates/nominations.php");
+                    if(file_exists(RMI__PLUGIN_DIR."/templates/nominations.php")){
+                        require_once(RMI__PLUGIN_DIR."/templates/nominations.php");
                     }
                 ?>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="delegation">
                 <?php   
-                    if(file_exists(RM__PLUGIN_DIR."/templates/delegation.php")){
-                        require_once(RM__PLUGIN_DIR."/templates/delegation.php");
+                    if(file_exists(RMI__PLUGIN_DIR."/templates/delegation.php")){
+                        require_once(RMI__PLUGIN_DIR."/templates/delegation.php");
                     }
                 ?>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="visaSupport">
                 <?php   
-                    if(file_exists(RM__PLUGIN_DIR."/templates/visa.php")){
-                        require_once(RM__PLUGIN_DIR."/templates/visa.php");
+                    if(file_exists(RMI__PLUGIN_DIR."/templates/visa.php")){
+                        require_once(RMI__PLUGIN_DIR."/templates/visa.php");
                     }
                 ?>
                 </div>                                                
@@ -120,29 +120,29 @@ class RequestManager{
             <div class="tab-content">
                 <div role="tabpanel" class="tab-pane active" id="games">
                 <?php   
-                    if(file_exists(RM__PLUGIN_DIR."/templates/games-manager.php")){
-                        require_once(RM__PLUGIN_DIR."/templates/games-manager.php");
+                    if(file_exists(RMI__PLUGIN_DIR."/templates/games-manager.php")){
+                        require_once(RMI__PLUGIN_DIR."/templates/games-manager.php");
                     }
                 ?>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="categories">
                 <?php   
-                    if(file_exists(RM__PLUGIN_DIR."/templates/categories-manager.php")){
-                        require_once(RM__PLUGIN_DIR."/templates/categories-manager.php");
+                    if(file_exists(RMI__PLUGIN_DIR."/templates/categories-manager.php")){
+                        require_once(RMI__PLUGIN_DIR."/templates/categories-manager.php");
                     }
                 ?>                
                 </div>
                 <div role="tabpanel" class="tab-pane" id="regions">
                 <?php 
-                    if(file_exists(RM__PLUGIN_DIR."/templates/regions-manager.php")){
-                        require_once(RM__PLUGIN_DIR."/templates/regions-manager.php");
+                    if(file_exists(RMI__PLUGIN_DIR."/templates/regions-manager.php")){
+                        require_once(RMI__PLUGIN_DIR."/templates/regions-manager.php");
                     }
                 ?>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="others">
                 <?php
-                    if(file_exists(RM__PLUGIN_DIR."/templates/others.php")){
-                        require_once(RM__PLUGIN_DIR."/templates/others.php");
+                    if(file_exists(RMI__PLUGIN_DIR."/templates/others.php")){
+                        require_once(RMI__PLUGIN_DIR."/templates/others.php");
                     }
                 ?>
                 </div>
