@@ -41330,12 +41330,13 @@ var Grid = function (_React$Component) {
                 if (column.button) {
                     var color = column.button === "edit" ? "success" : "danger";
                     var buttonTitle = column.button[0].toUpperCase() + column.button.slice(1);
+                    var hide = row[column.hide] ? { display: "none" } : {};
                     cells.push(_react2.default.createElement(
                         "td",
                         { key: counter, width: column.width },
                         _react2.default.createElement(
                             "button",
-                            { type: "button", className: classNames("btn", "btn-" + color), "data-rel": row[column.field], onClick: function onClick(v) {
+                            { type: "button", className: classNames("btn", "btn-" + color), "data-rel": row[column.field], style: hide, onClick: function onClick(v) {
                                     return column.action(v);
                                 } },
                             buttonTitle
@@ -41856,7 +41857,7 @@ var ReqModal = function ReqModal(props) {
                                 _react2.default.createElement(
                                     "label",
                                     null,
-                                    "\u041F\u0440\u0438\u0441\u0456\u0434\u0430\u043D\u043D\u044F"
+                                    "\u041F\u0440\u0438\u0441\u0456\u0434."
                                 ),
                                 _react2.default.createElement("input", { value: request.results.squat, type: "text", className: "form-control", placeholder: "00.00", disabled: type === "1", onChange: function onChange(e) {
                                         return props.onChange("squat", e.target.value, "results");
@@ -41868,7 +41869,7 @@ var ReqModal = function ReqModal(props) {
                                 _react2.default.createElement(
                                     "label",
                                     null,
-                                    "\u0416\u0438\u043C \u043B\u0435\u0436\u0430\u0447\u0438"
+                                    "\u0416\u0438\u043C"
                                 ),
                                 _react2.default.createElement("input", { value: request.results.press, type: "text", className: "form-control", placeholder: "00.00", onChange: function onChange(e) {
                                         return props.onChange("press", e.target.value, "results");
@@ -41880,7 +41881,7 @@ var ReqModal = function ReqModal(props) {
                                 _react2.default.createElement(
                                     "label",
                                     null,
-                                    "\u0421\u0442\u0430\u043D\u043E\u0432\u0430 \u0442\u044F\u0433\u0430"
+                                    "\u0422\u044F\u0433\u0430"
                                 ),
                                 _react2.default.createElement("input", { value: request.results.lift, type: "text", className: "form-control", placeholder: "00.00", disabled: type === "1", onChange: function onChange(e) {
                                         return props.onChange("lift", e.target.value, "results");
@@ -42338,7 +42339,7 @@ exports = module.exports = __webpack_require__(23)(undefined);
 
 
 // module
-exports.push([module.i, ".blackout{\r\n    overflow: auto;\r\n}\r\n.request-edit-modal{\r\n    top: 10%!important;\r\n    width: 60%!important;\r\n    margin-left: -30%!important;    \r\n}\r\n\r\n.coachesList{\r\n    width: 50%;\r\n    padding: 5px;\r\n    background-color: #fff3e0;\r\n    border-radius: 10px;\r\n}\r\n\r\n.coachesList ul li{\r\n    display: block;\r\n    list-style-type: none;\r\n    background-color: #51a7ff;\r\n    padding: 5px;\r\n    border-radius: 4px;\r\n    margin-top: 10px;\r\n    color: #fff;\r\n    text-shadow: 0 0 4px #000;  \r\n}\r\n\r\n.coachesList ul li i.fa-times{\r\n    float: right;\r\n    margin: 4px;\r\n    cursor: pointer;\r\n}\r\n\r\n.coachesList ul li i.fa-times:hover{\r\n    color: #e4e4e4;\r\n}\r\n\r\n.addCoach{\r\n    color: #51a7ff;\r\n    font-size: 1.2em;\r\n    cursor: pointer;\r\n    text-decoration: underline;\r\n}\r\n\r\n.addCoach:hover{\r\n    text-decoration: none;\r\n}\r\n\r\n.footer-update-button{\r\n    margin-right: 10px;\r\n}\r\n\r\n.coachAddForm{\r\n    width: 50%;\r\n    padding: 5px;\r\n    background-color: #e2f2ff;\r\n    margin-top: 10px;  \r\n}\r\n\r\n.preview{\r\n    position: absolute; \r\n    top: 0%; \r\n    left: 0%; \r\n    right: 0%; \r\n    bottom: 0%; \r\n    z-index: 100000; \r\n    background-color: #fff;\r\n}\r\n\r\n.preview table thead tr th:nth-child(1),\r\n.preview table thead tr th:nth-child(2),\r\n.preview table tbody tr td:nth-child(1),\r\n.preview table tbody tr td:nth-child(2){\r\n    width: 0px!important;\r\n    padding: 0px!important;\r\n}\r\n\r\n.export-box{\r\n    margin: 10px 0 20px;\r\n    background-color: #f7f7f7;\r\n    border: 1px solid #ccc;\r\n    border-radius: 4px;\r\n    padding: 5px 5px;    \r\n}\r\n\r\n.export-box .btn{\r\n    margin-right: 10px;\r\n}\r\n.print-export i{\r\n    font-size: 25px;\r\n    color: #656565;    \r\n}\r\n.word-export i{\r\n    font-size: 25px;\r\n    color: #345297;\r\n}", ""]);
+exports.push([module.i, ".blackout{\r\n    overflow: auto;\r\n}\r\n.request-edit-modal{\r\n    top: 10%!important;\r\n    width: 80%!important;\r\n    margin-left: -40%!important;    \r\n}\r\n\r\n.coachesList{\r\n    width: 50%;\r\n    padding: 5px;\r\n    background-color: #fff3e0;\r\n    border-radius: 10px;\r\n}\r\n\r\n.coachesList ul li{\r\n    display: block;\r\n    list-style-type: none;\r\n    background-color: #51a7ff;\r\n    padding: 5px;\r\n    border-radius: 4px;\r\n    margin-top: 10px;\r\n    color: #fff;\r\n    text-shadow: 0 0 4px #000;  \r\n}\r\n\r\n.coachesList ul li i.fa-times{\r\n    float: right;\r\n    margin: 4px;\r\n    cursor: pointer;\r\n}\r\n\r\n.coachesList ul li i.fa-times:hover{\r\n    color: #e4e4e4;\r\n}\r\n\r\n.addCoach{\r\n    color: #51a7ff;\r\n    font-size: 1.2em;\r\n    cursor: pointer;\r\n    text-decoration: underline;\r\n}\r\n\r\n.addCoach:hover{\r\n    text-decoration: none;\r\n}\r\n\r\n.footer-update-button{\r\n    margin-right: 10px;\r\n}\r\n\r\n.coachAddForm{\r\n    width: 50%;\r\n    padding: 5px;\r\n    background-color: #e2f2ff;\r\n    margin-top: 10px;  \r\n}\r\n\r\n.preview{\r\n    position: absolute; \r\n    top: 0%; \r\n    left: 0%; \r\n    right: 0%; \r\n    bottom: 0%; \r\n    z-index: 100000; \r\n    background-color: #fff;\r\n}\r\n\r\n.preview table thead tr th:nth-child(1),\r\n.preview table thead tr th:nth-child(2),\r\n.preview table tbody tr td:nth-child(1),\r\n.preview table tbody tr td:nth-child(2){\r\n    width: 0px!important;\r\n    padding: 0px!important;\r\n}\r\n\r\n.export-box{\r\n    margin: 10px 0 20px;\r\n    background-color: #f7f7f7;\r\n    border: 1px solid #ccc;\r\n    border-radius: 4px;\r\n    padding: 5px 5px;    \r\n}\r\n\r\n.export-box .btn{\r\n    margin-right: 10px;\r\n    margin-bottom: 5px;\r\n}\r\n.print-export i{\r\n    font-size: 25px;\r\n    color: #656565;    \r\n}\r\n.word-export i{\r\n    font-size: 25px;\r\n    color: #345297;\r\n}", ""]);
 
 // exports
 

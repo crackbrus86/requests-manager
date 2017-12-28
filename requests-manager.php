@@ -34,15 +34,17 @@ class RequestManager{
 
     function includeBootstrap(){
         wp_register_style('rm_bootstrap', plugins_url( '/css/bootstrap.css', __FILE__ ));
-        wp_enqueue_style( 'rm_bootstrap');
-        wp_register_script( 'bootstrap', plugins_url( '/js/bootstrap.js', __FILE__ ) );
-        wp_enqueue_script(  'bootstrap'); 
+        wp_enqueue_style('rm_bootstrap');
+        wp_register_script('bootstrap', plugins_url( '/js/bootstrap.js', __FILE__ ) );
+        wp_enqueue_script('bootstrap'); 
+        wp_register_style('rm_admin', plugins_url('/css/rm-admin.css',__FILE__));
+        wp_enqueue_style('rm_admin');
     }
 
     function requestEditor(){
         RequestManager::includeBootstrap();
         ?>   
-        <div class="container-fluid">
+        <div class="container-fluid rm-admin">
             <h2>Менеджер заявок</h2>
             <!-- Nav tabs -->
             <ul class="nav nav-tabs" role="tablist">
@@ -105,7 +107,7 @@ class RequestManager{
     function requestManagerSettings(){
         RequestManager::includeBootstrap();      
         ?>
-        <div class="container-fluid">
+        <div class="container-fluid rm-admin">
             <h2>Основні налаштування</h2>
 
             <!-- Nav tabs -->

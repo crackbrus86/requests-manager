@@ -73,15 +73,15 @@ const ReqModal = (props) => {
                     <p className="bg-success"><strong>Заявлені результати</strong></p>
                     <div className="row">
                         <div className="col-md-3">
-                            <label>Присідання</label>
+                            <label>Присід.</label>
                             <input value={request.results.squat} type="text" className="form-control" placeholder="00.00" disabled={type === "1"} onChange={e => props.onChange("squat", e.target.value, "results")} />
                         </div>
                         <div className="col-md-3">
-                            <label>Жим лежачи</label>
+                            <label>Жим</label>
                             <input value={request.results.press} type="text" className="form-control" placeholder="00.00" onChange={e => props.onChange("press", e.target.value, "results")} />
                         </div>
                         <div className="col-md-3">
-                            <label>Станова тяга</label>
+                            <label>Тяга</label>
                             <input value={request.results.lift} type="text" className="form-control" placeholder="00.00" disabled={type === "1"} onChange={e => props.onChange("lift", e.target.value, "results")} />                                
                         </div>
                         <div className="col-md-3">

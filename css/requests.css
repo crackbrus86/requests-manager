@@ -3,8 +3,8 @@
 }
 .request-edit-modal{
     top: 10%!important;
-    width: 60%!important;
-    margin-left: -30%!important;    
+    width: 80%!important;
+    margin-left: -40%!important;    
 }
 
 .coachesList{
@@ -85,6 +85,7 @@
 
 .export-box .btn{
     margin-right: 10px;
+    margin-bottom: 5px;
 }
 .print-export i{
     font-size: 25px;
