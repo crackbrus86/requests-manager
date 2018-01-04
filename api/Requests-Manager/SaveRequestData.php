@@ -149,19 +149,25 @@ function clearSlashes($value){
 }
 
 function sendEmail($email = "", $fullName = ""){
-    $header = "From: \"Admin\"\n";
-    $header .= "Content-type: text/plain; charset=\"utf-8\"";
+    $headers  = 'MIME-Version: 1.0' . "\r\n";
+    $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+    $headers .= 'From: Eudemo <crackbrus86@gmail.com>' . "\r\n";
+    $headers .= 'Cc: ' . "\r\n";
+    $headers .= 'Bcc: ' . "\r\n";
     $for = $email;
     $subject = "Федерація пауерліфтингу України";
     $message = "Шановний $fullName, Вашу заявку було прийнято. Найближчим часом з Вами зв'яжеться представник федерації для уточнення даних.";
-    mail($for, $subject, $message, $header);
+    mail($for, $subject, $message, $headers);
 }
 
 function sendNotification($email, $fullName = ""){
-    $header = "From: \"Admin\"\n";
-    $header .= "Content-type: text/plain; charset=\"utf-8\"";
+    $headers  = 'MIME-Version: 1.0' . "\r\n";
+    $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+    $headers .= 'From: Eudemo <crackbrus86@gmail.com>' . "\r\n";
+    $headers .= 'Cc: ' . "\r\n";
+    $headers .= 'Bcc: ' . "\r\n";
     $for = $email;
     $subject = "Федерація пауерліфтингу України";
     $message = "Отримано нову заявку від $fullName.";
-    mail($for, $subject, $message, $header);
+    mail($for, $subject, $message, $headers);
 }

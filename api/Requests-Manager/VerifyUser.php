@@ -19,12 +19,15 @@
         $wpdb->query($delete);
         $insert = $wpdb->prepare("INSERT INTO $tb_verify (user_id, code) VALUES (%d, %d)", $user->id, $code);
         if($wpdb->query($insert)) {
-            $header = "From: \"Admin\"\n <senter@sender.com>";
-            $header .= "Content-type: text/plain; charset=\"utf-8\"";
+            $headers  = 'MIME-Version: 1.0' . "\r\n";
+            $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+            $headers .= 'From: Eudemo <crackbrus86@gmail.com>' . "\r\n";
+            $headers .= 'Cc: ' . "\r\n";
+            $headers .= 'Bcc: ' . "\r\n";
             $for = $user->email;
             $subject = "Підтвердження email";
             $message = "Ваш код доступу: $code";
-            mail($for, $subject, $message, $header);
+            mail($for, $subject, $message, $headers);
             $output->status = 1;        
         }
     }
