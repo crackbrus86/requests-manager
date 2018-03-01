@@ -14701,12 +14701,13 @@ var Grid = function (_React$Component) {
                 if (column.button) {
                     var color = column.button === "edit" ? "success" : "danger";
                     var buttonTitle = column.button[0].toUpperCase() + column.button.slice(1);
+                    var hide = row[column.hide] ? { display: "none" } : {};
                     cells.push(_react2.default.createElement(
                         "td",
                         { key: counter, width: column.width },
                         _react2.default.createElement(
                             "button",
-                            { type: "button", className: classNames("btn", "btn-" + color), "data-rel": row[column.field], onClick: function onClick(v) {
+                            { type: "button", className: classNames("btn", "btn-" + color), "data-rel": row[column.field], style: hide, onClick: function onClick(v) {
                                     return column.action(v);
                                 } },
                             buttonTitle
@@ -39290,9 +39291,9 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 		module.exports = classNames;
 	} else if (true) {
 		// register as 'classnames', consistent with npm package name
-		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function () {
+		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = (function () {
 			return classNames;
-		}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+		}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 	} else {
 		window.classNames = classNames;
@@ -39794,7 +39795,7 @@ var Competition = function (_React$Component) {
                 name: this.state.target.name,
                 type: this.state.target.type,
                 year: this.state.target.year,
-                active: this.state.target.active
+                active: this.state.target.active ? this.state.target.active : 'false'
             };
             if (this.state.target.id) {
                 contract.id = this.state.target.id;

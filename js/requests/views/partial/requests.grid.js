@@ -1,5 +1,6 @@
 import React from "react";
 import Grid from "../../../components/grid/grid";
+import moment from "moment";
 
 const ReqGrid = (props) => {
     var columns = [
@@ -60,7 +61,7 @@ const ReqGrid = (props) => {
             title: item.title,
             title_w: item.title_w,
             name: item.name,
-            create_date: item.create_date
+            create_date: moment(new Date(item.create_date)).format("DD/MM/YYYY")
         }
     })
     return (<div id="reqGrid">

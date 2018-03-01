@@ -46,7 +46,7 @@ class Competition extends React.Component{
             name: this.state.target.name,
             type: this.state.target.type,
             year: this.state.target.year,
-            active: this.state.target.active
+            active: (this.state.target.active)? this.state.target.active : 'false'
         }
         if(this.state.target.id){
             contract.id = this.state.target.id;

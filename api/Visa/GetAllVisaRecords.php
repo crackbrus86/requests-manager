@@ -37,7 +37,7 @@
 
     function fillArray($table, $record, $type){
         global $wpdb;
-        $sql = $wpdb->prepare("SELECT id,CONCAT(first_name_pass,' ',last_name_pass) AS fullName, %s AS role,
+        $sql = $wpdb->prepare("SELECT id, UPPER(CONCAT(last_name_pass,' ',first_name_pass)) AS fullName, %s AS role,
         birth_date AS born, CONCAT(serial_number_pass,number_pass) AS passNo,
         expiration_date_pass AS passExpires FROM $table WHERE id = %d", $type, $record);
         return $wpdb->get_row($sql);

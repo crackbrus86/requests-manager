@@ -9921,10 +9921,10 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
   function setupBinding(root, factory) {
     if (true) {
       // AMD. Register as an anonymous module.
-      !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(7),__webpack_require__(64),__webpack_require__(20)], __WEBPACK_AMD_DEFINE_RESULT__ = function(React, ReactDom, createReactClass) {
+      !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(7),__webpack_require__(64),__webpack_require__(20)], __WEBPACK_AMD_DEFINE_RESULT__ = (function(React, ReactDom, createReactClass) {
         if (!createReactClass) createReactClass = React.createClass;
         return factory(root, React, ReactDom, createReactClass);
-      }.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+      }).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
     } else if (typeof exports === 'object') {
       // Node. Note that this does not work with strict
@@ -27599,9 +27599,9 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 		module.exports = classNames;
 	} else if (true) {
 		// register as 'classnames', consistent with npm package name
-		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function () {
+		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = (function () {
 			return classNames;
-		}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+		}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 	} else {
 		window.classNames = classNames;
@@ -39826,7 +39826,7 @@ var CoachesGrid = function CoachesGrid(props) {
             name: coach.name,
             surname: coach.surname,
             mName: coach.mName,
-            born: (0, _moment2.default)(new Date(coach.born)).format("DD-MM-YYYY")
+            born: (0, _moment2.default)(new Date(coach.born)).format("DD/MM/YYYY")
         };
     });
     return _react2.default.createElement(
@@ -39884,12 +39884,13 @@ var Grid = function (_React$Component) {
                 if (column.button) {
                     var color = column.button === "edit" ? "success" : "danger";
                     var buttonTitle = column.button[0].toUpperCase() + column.button.slice(1);
+                    var hide = row[column.hide] ? { display: "none" } : {};
                     cells.push(_react2.default.createElement(
                         "td",
                         { key: counter, width: column.width },
                         _react2.default.createElement(
                             "button",
-                            { type: "button", className: classNames("btn", "btn-" + color), "data-rel": row[column.field], onClick: function onClick(v) {
+                            { type: "button", className: classNames("btn", "btn-" + color), "data-rel": row[column.field], style: hide, onClick: function onClick(v) {
                                     return column.action(v);
                                 } },
                             buttonTitle

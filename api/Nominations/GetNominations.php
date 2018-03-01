@@ -10,8 +10,8 @@ if(current_user_can("edit_others_posts")):
     $year = strip_tags(stripslashes(trim($_POST["year"])));
 
     $sql = $wpdb->prepare("SELECT $tb_requests.age_category AS divisionId, $tb_divisions.title AS division,
-    $tb_requests.weight_category AS weightClassId, $tb_weightClass.title_w AS weightClass, $tb_users.last_name_pass AS lastName,
-    $tb_users.first_name_pass AS firstName, $tb_users.birth_date AS born, $tb_requests.disciplines AS results
+    $tb_requests.weight_category AS weightClassId, $tb_weightClass.title_w AS weightClass, UPPER($tb_users.last_name_pass) AS lastName,
+    UPPER($tb_users.first_name_pass) AS firstName, $tb_users.birth_date AS born, $tb_requests.disciplines AS results
     FROM $tb_requests
         JOIN $tb_users
             ON $tb_requests.user_id = $tb_users.id

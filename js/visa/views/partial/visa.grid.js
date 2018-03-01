@@ -75,7 +75,7 @@ const VisaGrid = (props) => {
         }
         var visaE = "";
         if(x.visaExpires){
-            visaE = moment(new Date(x.visaExpires)).format("DD-MM-YYYY");
+            visaE = moment(new Date(x.visaExpires)).format("DD/MM/YYYY");
         }
         return {
             visaId: x.visaId,
@@ -83,9 +83,9 @@ const VisaGrid = (props) => {
             fullName: x.fullName,
             hasVisa: !!x.visaId ? false : true,
             role: x.role.replace(x.role[0], x.role[0].toUpperCase()),
-            born: moment(new Date(x.born)).format("DD-MM-YYYY"),
+            born: moment(new Date(x.born)).format("DD/MM/YYYY"),
             passNo: x.passNo,
-            passExpires: moment(new Date(x.passExpires)).format("DD-MM-YYYY"),
+            passExpires: moment(new Date(x.passExpires)).format("DD/MM/YYYY"),
             visaExpires: visaE
         }
     });

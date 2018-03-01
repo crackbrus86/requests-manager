@@ -50,7 +50,7 @@ const UsersGrid = (props) => {
             lastName: user.lastName,
             firstName: user.firstName,
             mName: user.mName,
-            born: moment(new Date(user.born)).format("DD-MM-YYYY")
+            born: moment(new Date(user.born)).format("DD/MM/YYYY")
         }
     })
     return (<div><Grid data={{columns, rows}} /></div>)

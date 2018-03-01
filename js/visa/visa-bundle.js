@@ -9921,10 +9921,10 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
   function setupBinding(root, factory) {
     if (true) {
       // AMD. Register as an anonymous module.
-      !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(7),__webpack_require__(64),__webpack_require__(18)], __WEBPACK_AMD_DEFINE_RESULT__ = function(React, ReactDom, createReactClass) {
+      !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(7),__webpack_require__(64),__webpack_require__(18)], __WEBPACK_AMD_DEFINE_RESULT__ = (function(React, ReactDom, createReactClass) {
         if (!createReactClass) createReactClass = React.createClass;
         return factory(root, React, ReactDom, createReactClass);
-      }.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+      }).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
     } else if (typeof exports === 'object') {
       // Node. Note that this does not work with strict
@@ -39455,7 +39455,7 @@ var VisaApp = function (_React$Component) {
                 type: visa.type,
                 term: visa.expires,
                 event: this.state.game.id,
-                year: this.state.game.year
+                year: this.state.filter.year
             }).then(function () {
                 _this4.closeVisa();
                 _this4.setState({ isLoading: false });
@@ -41141,7 +41141,7 @@ var VisaGrid = function VisaGrid(props) {
         }
         var visaE = "";
         if (x.visaExpires) {
-            visaE = (0, _moment2.default)(new Date(x.visaExpires)).format("DD-MM-YYYY");
+            visaE = (0, _moment2.default)(new Date(x.visaExpires)).format("DD/MM/YYYY");
         }
         return {
             visaId: x.visaId,
@@ -41149,9 +41149,9 @@ var VisaGrid = function VisaGrid(props) {
             fullName: x.fullName,
             hasVisa: !!x.visaId ? false : true,
             role: x.role.replace(x.role[0], x.role[0].toUpperCase()),
-            born: (0, _moment2.default)(new Date(x.born)).format("DD-MM-YYYY"),
+            born: (0, _moment2.default)(new Date(x.born)).format("DD/MM/YYYY"),
             passNo: x.passNo,
-            passExpires: (0, _moment2.default)(new Date(x.passExpires)).format("DD-MM-YYYY"),
+            passExpires: (0, _moment2.default)(new Date(x.passExpires)).format("DD/MM/YYYY"),
             visaExpires: visaE
         };
     });
@@ -41328,9 +41328,9 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 		module.exports = classNames;
 	} else if (true) {
 		// register as 'classnames', consistent with npm package name
-		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function () {
+		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = (function () {
 			return classNames;
-		}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+		}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 	} else {
 		window.classNames = classNames;

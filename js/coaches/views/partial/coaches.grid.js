@@ -50,7 +50,7 @@ const CoachesGrid = (props) => {
             name: coach.name,
             surname: coach.surname,
             mName: coach.mName,
-            born: moment(new Date(coach.born)).format("DD-MM-YYYY")
+            born: moment(new Date(coach.born)).format("DD/MM/YYYY")
         }
     })
     return(<div><Grid data={{columns, rows}}/></div>)

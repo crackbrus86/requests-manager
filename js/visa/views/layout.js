@@ -119,7 +119,7 @@ class VisaApp extends React.Component{
             type: visa.type,
             term: visa.expires,
             event: this.state.game.id,
-            year: this.state.game.year
+            year: this.state.filter.year
         }).then(() => {
             this.closeVisa();
             this.setState({isLoading: false});

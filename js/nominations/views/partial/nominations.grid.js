@@ -98,7 +98,7 @@ const NomGrid = (props) => {
                     wClass: x.weightClass,
                     lastName: x.lastName,
                     firstName: x.firstName,
-                    born: moment(new Date(x.born)).format("DD-MM-YYYY")
+                    born: moment(new Date(x.born)).format("DD/MM/YYYY")
                 };
                 if(props.game.type=="0"){
                     row.squat = x.results.squat,
