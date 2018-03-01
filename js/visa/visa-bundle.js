@@ -39327,7 +39327,7 @@ var VisaApp = function (_React$Component) {
             filter: {
                 games: [],
                 current: {},
-                year: new Date()
+                year: new Date().getFullYear().toString()
             },
             isLoading: false,
             records: [],
