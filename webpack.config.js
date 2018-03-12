@@ -1,7 +1,7 @@
 module.exports = {
-    entry: "./js/visa/index.js",
+    entry: "./js/requests/index.js",
     output: {
-        filename: "./js/visa/visa-bundle.js"
+        filename: "./js/requests/requests-bundle.js"
     },
     module: {
         loaders: [

@@ -39404,7 +39404,8 @@ var RequestsApp = function (_React$Component) {
             filter: {
                 games: [],
                 year: new Date(),
-                currentGame: {}
+                currentGame: {},
+                filterGames: []
             },
             paging: {
                 total: 0,
@@ -39428,6 +39429,8 @@ var RequestsApp = function (_React$Component) {
         _this.onCancel = _this.cancelDelete.bind(_this);
         _this.onConfirm = _this.confirmDelete.bind(_this);
         _this.onDownload = _this.getPhotos.bind(_this);
+        _this.addToFilter = _this.addToFilter.bind(_this);
+        _this.removeFromFilter = _this.removeFromFilter.bind(_this);
         return _this;
     }
 
@@ -39551,6 +39554,8 @@ var RequestsApp = function (_React$Component) {
                 _this4.setState({ games: JSON.parse(data) });
                 _this4.onFielterChange("games", JSON.parse(data));
                 _this4.onFielterChange("currentGame", JSON.parse(data)[0].id);
+                _this4.onFielterChange("filterGames", []);
+                _this4.onFielterChange("year", new Date());
                 _this4.setDefaultGame();
                 _this4.getPreGames();
                 _this4.getCountOfAllRequests();
@@ -39622,8 +39627,10 @@ var RequestsApp = function (_React$Component) {
 
             this.setState({ isLoading: true });
             services.getCountOfAllRequests({
-                game: this.state.filter.currentGame,
-                year: (0, _moment2.default)(this.state.filter.year).format("YYYY")
+                year: (0, _moment2.default)(this.state.filter.year).format("YYYY"),
+                games: this.state.filter.filterGames.length ? this.state.filter.filterGames.map(function (g) {
+                    return g.id;
+                }) : [this.state.filter.currentGame]
             }).then(function (data) {
                 var paging = _this10.state.paging;
                 paging.total = parseInt(data);
@@ -39640,7 +39647,9 @@ var RequestsApp = function (_React$Component) {
             services.getAllRequests({
                 limit: this.state.paging.perPage,
                 offset: this.state.paging.offset,
-                game: this.state.filter.currentGame,
+                games: this.state.filter.filterGames.length ? this.state.filter.filterGames.map(function (g) {
+                    return g.id;
+                }) : [this.state.filter.currentGame],
                 year: (0, _moment2.default)(this.state.filter.year).format("YYYY")
             }).then(function (data) {
                 _this11.setState({ requests: JSON.parse(data) });
@@ -39688,6 +39697,33 @@ var RequestsApp = function (_React$Component) {
         value: function closeRequest() {
             this.setState({ editRequest: null });
             this.onTcChange("hide", true);
+        }
+    }, {
+        key: "addToFilter",
+        value: function addToFilter() {
+            var filter = this.state.filter;
+            var currentIndex = filter.games.findIndex(function (g) {
+                return g.id === filter.currentGame;
+            });
+            filter.filterGames.push(filter.games[currentIndex]);
+            filter.games = filter.games.filter(function (x) {
+                return x !== filter.games[currentIndex];
+            });
+            filter.currentGame = null;
+            this.setState({ filter: filter });
+        }
+    }, {
+        key: "removeFromFilter",
+        value: function removeFromFilter(game) {
+            var filter = this.state.filter;
+            var removeIndex = filter.filterGames.findIndex(function (g) {
+                return g.id === game.id;
+            });
+            filter.filterGames = filter.filterGames.filter(function (g) {
+                return g !== filter.filterGames[removeIndex];
+            });
+            filter.games.push(game);
+            this.setState({ filter: filter });
         }
     }, {
         key: "runFilter",
@@ -39770,7 +39806,7 @@ var RequestsApp = function (_React$Component) {
                         _react2.default.createElement(
                             "div",
                             { className: "col-md-10" },
-                            _react2.default.createElement(_filter2.default, { filter: this.state.filter, onChange: this.changeFilter, onFilter: this.onFilter })
+                            _react2.default.createElement(_filter2.default, { filter: this.state.filter, onChange: this.changeFilter, onFilter: this.onFilter, filterGames: this.state.filter.filterGames, addToFilter: this.addToFilter, removeFromFilter: this.removeFromFilter })
                         ),
                         _react2.default.createElement(
                             "div",
@@ -39855,6 +39891,21 @@ var Filter = function Filter(props) {
             game.name
         );
     });
+    var filterGames = props.filterGames.map(function (fg, index) {
+        return _react2.default.createElement(
+            "div",
+            { key: index },
+            _react2.default.createElement(
+                "p",
+                { className: "game-in-filter" },
+                fg.name,
+                _react2.default.createElement("i", { className: "fa fa-close", onClick: function onClick() {
+                        return props.removeFromFilter(fg);
+                    } })
+            )
+        );
+    });
+    var currentGame = props.filter.currentGame ? props.filter.currentGame : 0;
     return _react2.default.createElement(
         "div",
         { className: "filter-box" },
@@ -39865,30 +39916,56 @@ var Filter = function Filter(props) {
         ),
         _react2.default.createElement(
             "form",
-            { className: "form-inline" },
+            null,
             _react2.default.createElement(
-                "div",
-                { className: "form-group" },
+                "fieldset",
+                null,
                 _react2.default.createElement(
-                    "label",
+                    "legend",
                     null,
-                    "\u0417\u043C\u0430\u0433\u0430\u043D\u043D\u044F"
+                    "\u0424\u0456\u043B\u044C\u0442\u0440 \u043F\u043E \u0437\u043C\u0430\u0433\u0430\u043D\u043D\u044F\u043C"
                 ),
                 _react2.default.createElement(
                     "div",
                     null,
+                    filterGames
+                ),
+                _react2.default.createElement(
+                    "div",
+                    { className: "form-group" },
                     _react2.default.createElement(
-                        "select",
-                        { value: props.filter.currentGame, className: "form-control", onChange: function onChange(e) {
-                                return props.onChange("currentGame", e.target.value);
-                            } },
-                        gameList
+                        "label",
+                        null,
+                        "\u0417\u043C\u0430\u0433\u0430\u043D\u043D\u044F"
+                    ),
+                    _react2.default.createElement(
+                        "div",
+                        null,
+                        _react2.default.createElement(
+                            "select",
+                            { value: currentGame, className: "form-control", onChange: function onChange(e) {
+                                    return props.onChange("currentGame", e.target.value);
+                                } },
+                            _react2.default.createElement("option", { value: 0 }),
+                            gameList
+                        )
+                    )
+                ),
+                _react2.default.createElement(
+                    "div",
+                    { className: "form-group" },
+                    _react2.default.createElement(
+                        "button",
+                        { type: "button", className: "btn btn-link", onClick: function onClick(e) {
+                                return props.addToFilter();
+                            }, disabled: !props.filter.currentGame },
+                        "+ \u0414\u043E\u0434\u0430\u0442\u0438 \u0437\u043C\u0430\u0433\u0430\u043D\u043D\u044F"
                     )
                 )
             ),
             _react2.default.createElement(
                 "div",
-                { className: "form-group" },
+                { className: "form-group year-filter" },
                 _react2.default.createElement(
                     "label",
                     null,
@@ -41089,7 +41166,7 @@ exports = module.exports = __webpack_require__(23)(undefined);
 
 
 // module
-exports.push([module.i, ".filter-box{\r\n    margin: 10px 0 20px; \r\n    background-color: #f7f7f7; \r\n    border: 1px solid #ccc; \r\n    border-radius: 4px; \r\n    padding: 5px 5px;\r\n}\r\n\r\n.filter-box form .form-group{\r\n    margin-right: 10px;\r\n}\r\n\r\n.filter-box form .rdt input{\r\n    padding: 2px 4px;\r\n    height: 28px;\r\n}\r\n\r\n.filter-box form .btn-info{\r\n    padding: 2px 10px;\r\n    margin-top: 25px;\r\n}", ""]);
+exports.push([module.i, ".filter-box{\r\n    margin: 10px 0 20px; \r\n    background-color: #f7f7f7; \r\n    border: 1px solid #ccc; \r\n    border-radius: 4px; \r\n    padding: 5px 5px;\r\n}\r\n\r\n.filter-box form .form-group{\r\n    margin-right: 10px;\r\n    margin-bottom: 10px;\r\n}\r\n\r\n.filter-box form .rdt input{\r\n    padding: 2px 4px;\r\n    height: 28px;\r\n}\r\n\r\n.filter-box form .btn-info{\r\n    padding: 2px 10px;\r\n    margin-top: 25px;\r\n}\r\n\r\n\r\n.filter-box fieldset{\r\n    border: 1px solid #ccc;\r\n    padding: 5px 0 0 10px;\r\n}\r\n\r\n.filter-box fieldset legend{\r\n    font-size: 14px;\r\n    border: none;\r\n    width: auto;\r\n    margin: 0;\r\n    font-weight: 600;\r\n}\r\n.filter-box .form-group.year-filter{\r\n    width: 200px;\r\n}\r\n.filter-box p.game-in-filter{\r\n    margin-bottom: 2px;\r\n}\r\n.filter-box p.game-in-filter i.fa-close{\r\n    color: #bd1a1a;\r\n    margin: 0px 5px;\r\n    cursor: pointer;\r\n}\r\n.filter-box p.game-in-filter i.fa-close:hover{\r\n    color: #fd0f0f;\r\n}", ""]);
 
 // exports
 

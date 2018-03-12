@@ -6,16 +6,34 @@ require("../../../../css/filter.css");
 
 const Filter = (props) => {
     var gameList = props.filter.games.map(game => <option key={game.id} value={game.id}>{game.name}</option>)
+    var filterGames = props.filterGames.map((fg, index) => 
+        <div key={index}>
+            <p className="game-in-filter">{fg.name}
+            <i className="fa fa-close" onClick={() => props.removeFromFilter(fg)}></i></p>
+        </div>)
+    var currentGame = (props.filter.currentGame)? props.filter.currentGame : 0;
     return (<div className="filter-box">
         <h4>Фільтрувати заявки</h4>
-        <form className="form-inline">
+        <form>
+            <fieldset>
+                <legend>Фільтр по змаганням</legend>
+            <div>
+                {filterGames}
+            </div>
             <div className="form-group">
                 <label>Змагання</label>
                 <div>
-                    <select value={props.filter.currentGame} className="form-control" onChange={e => props.onChange("currentGame", e.target.value)}>{gameList}</select>
+                    <select value={currentGame} className="form-control" onChange={e => props.onChange("currentGame", e.target.value)}>
+                    <option value={0}></option>
+                    {gameList}
+                    </select>
                 </div>
             </div>
             <div className="form-group">
+                <button type="button" className="btn btn-link" onClick={e => props.addToFilter()} disabled={!props.filter.currentGame}>+ Додати змагання</button>
+            </div>
+            </fieldset>
+            <div className="form-group year-filter">
                 <label>Рік проведення</label>
                 <Datetime value={props.filter.year} dateFormat="YYYY" timeFormat={false} closeOnSelect={true} onChange={(v) => props.onChange("year", v.format("YYYY"))} />
             </div>

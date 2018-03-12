@@ -30,7 +30,8 @@ class RequestsApp extends React.Component{
             filter: {
                 games: [],
                 year: new Date(),
-                currentGame: {}
+                currentGame: {},
+                filterGames: []
             },
             paging: {
                 total: 0,
@@ -54,6 +55,8 @@ class RequestsApp extends React.Component{
         this.onCancel = this.cancelDelete.bind(this);
         this.onConfirm = this.confirmDelete.bind(this);
         this.onDownload = this.getPhotos.bind(this);
+        this.addToFilter = this.addToFilter.bind(this);
+        this.removeFromFilter = this.removeFromFilter.bind(this);
     }
 
     changeCurrentPage(page){
@@ -153,6 +156,8 @@ class RequestsApp extends React.Component{
             this.setState({games: JSON.parse(data)});
             this.onFielterChange("games", JSON.parse(data));
             this.onFielterChange("currentGame", JSON.parse(data)[0].id);
+            this.onFielterChange("filterGames", []);
+            this.onFielterChange("year", new Date());
             this.setDefaultGame();
             this.getPreGames();
             this.getCountOfAllRequests(); 
@@ -205,8 +210,8 @@ class RequestsApp extends React.Component{
     getCountOfAllRequests(){
         this.setState({isLoading: true});
         services.getCountOfAllRequests({
-            game: this.state.filter.currentGame,
-            year: moment(this.state.filter.year).format("YYYY")
+            year: moment(this.state.filter.year).format("YYYY"),
+            games: (this.state.filter.filterGames.length)? this.state.filter.filterGames.map(g => g.id) : [this.state.filter.currentGame],
         }).then(data => {
             var paging = this.state.paging;
             paging.total =parseInt(data);
@@ -220,7 +225,7 @@ class RequestsApp extends React.Component{
         services.getAllRequests({
             limit: this.state.paging.perPage,
             offset: this.state.paging.offset,
-            game: this.state.filter.currentGame,
+            games: (this.state.filter.filterGames.length)? this.state.filter.filterGames.map(g => g.id) : [this.state.filter.currentGame],
             year: moment(this.state.filter.year).format("YYYY")
         }).then(data => {
             this.setState({requests: JSON.parse(data)});
@@ -259,6 +264,23 @@ class RequestsApp extends React.Component{
     closeRequest(){
         this.setState({editRequest: null});
         this.onTcChange("hide", true);
+    }
+
+    addToFilter(){
+        var filter = this.state.filter;
+        var currentIndex = filter.games.findIndex(g => g.id === filter.currentGame);
+        filter.filterGames.push(filter.games[currentIndex]);
+        filter.games = filter.games.filter(x => x !== filter.games[currentIndex]);
+        filter.currentGame = null;
+        this.setState({filter: filter});
+    }
+
+    removeFromFilter(game){
+        var filter = this.state.filter;
+        var removeIndex = filter.filterGames.findIndex(g => g.id === game.id);
+        filter.filterGames = filter.filterGames.filter(g => g !== filter.filterGames[removeIndex]);
+        filter.games.push(game);
+        this.setState({filter: filter});
     }
 
     runFilter(){
@@ -319,7 +341,7 @@ class RequestsApp extends React.Component{
                 <h4>Заявки</h4>
                 <div className="row">
                     <div className="col-md-10">
-                        <Filter filter={this.state.filter} onChange={this.changeFilter} onFilter={this.onFilter} />
+                        <Filter filter={this.state.filter} onChange={this.changeFilter} onFilter={this.onFilter} filterGames={this.state.filter.filterGames} addToFilter={this.addToFilter} removeFromFilter={this.removeFromFilter} />
                     </div>
                     <div className="col-md-2">
                         <div className="export-box">

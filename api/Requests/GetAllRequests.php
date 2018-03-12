@@ -10,6 +10,7 @@ if(current_user_can('edit_others_pages')):
     $limit = strip_tags(stripslashes(trim($_POST['limit'])));
     $offset = strip_tags(stripslashes(trim($_POST['offset'])));
     $game = strip_tags(stripslashes(trim($_POST['game'])));
+    $games = implode(',', $_POST['games']);
     $year = esc_sql(strip_tags(stripslashes(trim($_POST['year']))));
     $requests = $wpdb->get_results( "SELECT $tb_request.id, $tb_user.first_name, $tb_user.last_name, $tb_category_age.title, 
     $tb_category_weight.title_w, $tb_games.name, $tb_request.create_date 
@@ -22,7 +23,7 @@ if(current_user_can('edit_others_pages')):
             ON $tb_request.weight_category = $tb_category_weight.id
         JOIN $tb_games
             ON $tb_request.current_competition = $tb_games.id 
-    WHERE $tb_request.year = $year AND $tb_request.current_competition = $game
+    WHERE $tb_request.year = $year AND $tb_request.current_competition IN ($games)
     ORDER BY $tb_request.create_date DESC
     LIMIT $limit OFFSET $offset");
     $return = json_encode($requests);
