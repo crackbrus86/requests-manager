@@ -8,7 +8,7 @@ if(current_user_can("edit_others_pages")):
     $sql = $wpdb->prepare("SELECT DISTINCT us.email FROM $tb_requests rq
         JOIN $tb_users us
             ON us.id = rq.user_id
-        WHERE rq.current_competition IN (%s) AND rq.year = %s", $games, $year);
+        WHERE rq.current_competition IN (".$games.") AND rq.year = %s", $year);
     $result = $wpdb->get_results($sql);
-    print_r(json_encode($result));
+    echo json_encode($result);
 endif;
