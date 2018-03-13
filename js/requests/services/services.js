@@ -94,3 +94,11 @@ export const getPhotos = (contract) => {
         data: contract
     })
 }
+
+export const getEmails = (contract) => {
+    return jQuery.ajax({
+        url: reqDir + "GetUsersEmail.php",
+        type: "POST",
+        data: contract
+    })
+}

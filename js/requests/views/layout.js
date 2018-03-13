@@ -6,6 +6,7 @@ import Preloader from "../../components/preloader/preloader";
 import moment from "moment";
 import Paging from "../../components/paging/paging";
 import ReqModal from "../modals/request.modal";
+import EmailsModal from "../modals/emails.modal";
 require("../../../css/requests.css");
 import Dialog from "../../components/modal/dialog";
 
@@ -20,6 +21,7 @@ class RequestsApp extends React.Component{
             games: [],
             preGames: [],
             coaches: [],
+            emails: [],
             editRequest: null,
             dialog: null,
             tmpCoach: {
@@ -57,6 +59,8 @@ class RequestsApp extends React.Component{
         this.onDownload = this.getPhotos.bind(this);
         this.addToFilter = this.addToFilter.bind(this);
         this.removeFromFilter = this.removeFromFilter.bind(this);
+        this.onGetEmails = this.getEmails.bind(this);
+        this.onCloseEmails = this.resetEmails.bind(this);
     }
 
     changeCurrentPage(page){
@@ -233,6 +237,22 @@ class RequestsApp extends React.Component{
         })
     }
 
+    getEmails(){
+        this.setState({isLoading: true});
+        services.getEmails({
+            games: (this.state.filter.filterGames.length)? this.state.filter.filterGames.map(g => g.id) : [this.state.filter.currentGame],
+            year: moment(this.state.filter.year).format("YYYY")
+        }).then(data => {
+            this.setState({isLoading: false});
+            var emails = JSON.parse(data).map(x => x.email);
+            this.setState({emails: emails});
+        })
+    }
+
+    resetEmails(){
+        this.setState({emails: []});
+    }
+
     editRequest(id){
         this.setState({isLoading: true});
         services.getRequest({id: id}).then(data => {
@@ -349,6 +369,7 @@ class RequestsApp extends React.Component{
                         <button type="button" className="word-export btn btn-default" onClick={this.exportGrid.bind(this)} title="Експорт у Word"><i className="fa fa-file-word-o"></i></button>
                         <button type="button" className="print-export btn btn-default" onClick={this.printGrid.bind(this)} title="Друк"><i className="fa fa-print"></i></button>
                         <button type="button" className="btn btn-default" onClick={this.onDownload} title="Скачати усі фото" disabled={!this.state.requests.length}><i className="fa fa-file-archive-o"></i></button>
+                        <button type="button" className="btn btn-default" onClick={this.onGetEmails} title="Отримати email-и учасників"><i className="fa fa-envelope"></i></button>
                         </div>
                     </div>                    
                 </div>
@@ -359,6 +380,7 @@ class RequestsApp extends React.Component{
             games={this.state.games} preGames={this.state.preGames} coaches={this.state.coaches} 
             tmpCoach={this.state.tmpCoach} onTcChange={this.onTcChange} onClose={this.onClose} onChange={this.changeRequest} onCoachDelete={this.deleteCoach} 
             onAdd={this.onCoachAdd} onUpdate={this.onUpdate} />
+            <EmailsModal emails={this.state.emails} onClose={this.onCloseEmails} />
             <Dialog dialog={this.state.dialog} onClose={this.onCancel} onConfirm={this.onConfirm} />
             <Preloader loading={this.state.isLoading} />
         </div>
