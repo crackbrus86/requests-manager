@@ -11,7 +11,7 @@ const Filter = (props) => {
             <p className="game-in-filter">{fg.name}
             <i className="fa fa-close" onClick={() => props.removeFromFilter(fg)}></i></p>
         </div>)
-    var currentGame = (props.filter.currentGame)? props.filter.currentGame : 0;
+    var currentGame = parseInt(props.filter.currentGame)? props.filter.currentGame : 0;
     return (<div className="filter-box">
         <h4>Фільтрувати заявки</h4>
         <form>
@@ -30,7 +30,7 @@ const Filter = (props) => {
                 </div>
             </div>
             <div className="form-group">
-                <button type="button" className="btn btn-link" onClick={e => props.addToFilter()} disabled={!props.filter.currentGame}>+ Додати змагання</button>
+                <button type="button" className="btn btn-link" onClick={e => props.addToFilter()} disabled={!currentGame}>+ Додати змагання</button>
             </div>
             </fieldset>
             <div className="form-group year-filter">

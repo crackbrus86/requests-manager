@@ -40013,7 +40013,7 @@ var Filter = function Filter(props) {
             )
         );
     });
-    var currentGame = props.filter.currentGame ? props.filter.currentGame : 0;
+    var currentGame = parseInt(props.filter.currentGame) ? props.filter.currentGame : 0;
     return _react2.default.createElement(
         "div",
         { className: "filter-box" },
@@ -40066,7 +40066,7 @@ var Filter = function Filter(props) {
                         "button",
                         { type: "button", className: "btn btn-link", onClick: function onClick(e) {
                                 return props.addToFilter();
-                            }, disabled: !props.filter.currentGame },
+                            }, disabled: !currentGame },
                         "+ \u0414\u043E\u0434\u0430\u0442\u0438 \u0437\u043C\u0430\u0433\u0430\u043D\u043D\u044F"
                     )
                 )
