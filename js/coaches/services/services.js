@@ -54,3 +54,11 @@ export const getPhotos = (contract) => {
         data: contract
     })
 }
+
+export const runFilter = (contract) => {
+    return jQuery.ajax({
+        url: coaDir + "FilterCoaches.php",
+        type: "POST",
+        data: contract
+    })
+}

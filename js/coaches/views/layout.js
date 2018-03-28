@@ -6,6 +6,7 @@ import CoachesGrid from "./partial/coaches.grid";
 import Paging from "../../components/paging/paging";
 import CoachModal from "../modals/coach.modal";
 import Dialog from "../../components/modal/dialog";
+import SharedFilter from "../../components/shared-filter/shared-filter";
 require("../../../css/coaches.css");
 
 class CoachesApp extends React.Component{
@@ -18,10 +19,12 @@ class CoachesApp extends React.Component{
             paging: {
                 total: 0,
                 current: 1,
-                perPage: 10,
+                perPage: 1,
                 offset: 0
             },
-            isLoading: false
+            isLoading: false,
+            filterText: '',
+            isFiltered: false
         }
         this.onEdit = this.editCoach.bind(this);
         this.onPage = this.goToPage.bind(this);
@@ -32,6 +35,22 @@ class CoachesApp extends React.Component{
         this.onCancel = this.cancelDelete.bind(this);
         this.onConfirm = this.confirmDelete.bind(this);
         this.onDownload = this.getPhotos.bind(this);
+        this.handleFilterTextChange = (text) => {
+            this.setState({filterText: text});
+        }
+        this.handleFilterRun = () => {
+            if(!this.state.filterText.length){
+                this.setState({isFiltered: false}, () => this.getRegions());
+            }else{
+                this.setState({isLoading: true});
+                services.runFilter({
+                    search: this.state.filterText
+                }).then((data) => {
+                    this.setCoaches(data);
+                    this.setState({isLoading: false, isFiltered: true});
+                })
+            }
+        }
     }
 
     fetchCoaches(){
@@ -173,6 +192,12 @@ class CoachesApp extends React.Component{
             <div className="col-md-12">
                 <h4>Тренери</h4>
                 <div className="row">
+                    <div className="col-md-10">
+                        <SharedFilter
+                        filterText={this.state.filterText}
+                        onFilterTextChange={this.handleFilterTextChange}
+                        onFilterRun={this.handleFilterRun} />
+                    </div>
                     <div className="col-md-2">
                         <div className="export-box">
                             <h4>Інші операції</h4>
@@ -182,7 +207,7 @@ class CoachesApp extends React.Component{
                     <div className="col-md-10"></div>
                 </div>                
                 <CoachesGrid coaches={this.state.coaches} onEdit={this.onEdit} onDelete={this.onDelete} />
-                <Paging paging={this.state.paging} changePage={this.onPage} />
+                {!this.state.isFiltered && <Paging paging={this.state.paging} changePage={this.onPage} />}
                 <CoachModal coach={this.state.coach} regions={this.state.regions} onChange={this.onChange} onClose={this.onClose} onUpdate={this.onUpdate} />
                 <Dialog dialog={this.state.dialog} onClose={this.onCancel} onConfirm={this.onConfirm} />
                 <Preloader loading={this.state.isLoading} />

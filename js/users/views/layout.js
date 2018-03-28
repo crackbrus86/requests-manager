@@ -2,6 +2,7 @@ import React from "react";
 import * as services from "../services/services";
 import moment from "moment";
 import Preloader from "../../components/preloader/preloader";
+import SharedFilter from "../../components/shared-filter/shared-filter";
 import UsersGrid from "./partial/users.grid";
 import Paging from "../../components/paging/paging";
 import UserModal from "../modals/users.modal";
@@ -18,10 +19,12 @@ class UsersApp extends React.Component{
             paging: {
                 total: 0,
                 current: 1,
-                perPage: 10,
+                perPage: 5,
                 offset: 0
             },
-            isLoading: false            
+            isLoading: false,
+            filterText: '' ,
+            isFiltered: false          
         }
         this.onEdit = this.editUser.bind(this);
         this.onPage = this.goToPage.bind(this);
@@ -32,6 +35,22 @@ class UsersApp extends React.Component{
         this.onCancel = this.cancelDelete.bind(this);
         this.onConfirm = this.confirmDialog.bind(this);
         this.onDownload = this.getPhotos.bind(this);
+        this.handleFilterTextChange = (text) => {
+            this.setState({filterText: text});
+        }
+        this.handleFilterRun = () => {
+            if(!this.state.filterText.length){
+                this.setState({isFiltered: false}, () => this.getRegions());
+            }else{
+                this.setState({isLoading: true});
+                services.runFilter({
+                    search: this.state.filterText
+                }).then((data) => {
+                    this.setUsers(data);
+                    this.setState({isLoading: false, isFiltered: true});
+                })
+            }
+        }
     }
 
     fetchUsers(){
@@ -47,6 +66,8 @@ class UsersApp extends React.Component{
             })
         })
     }
+
+
 
     setPagesTotal(count){
         var paging = this.state.paging;
@@ -173,6 +194,12 @@ class UsersApp extends React.Component{
             <div className="col-md-12 users-content-section">
                 <h4>Спортсмени</h4>
                 <div className="row">
+                    <div className="col-md-10">
+                        <SharedFilter 
+                        filterText={this.state.filterText}
+                        onFilterTextChange={this.handleFilterTextChange}
+                        onFilterRun={this.handleFilterRun} />
+                    </div>
                     <div className="col-md-2">
                         <div className="export-box">
                             <h4>Інші операції</h4>
@@ -182,7 +209,7 @@ class UsersApp extends React.Component{
                     <div className="col-md-10"></div>
                 </div>
                 <UsersGrid users={this.state.users} onEdit={this.onEdit} onDelete = {this.onDelete} />
-                <Paging paging={this.state.paging} changePage={this.onPage} />
+                {(!this.state.isFiltered) ? <Paging paging={this.state.paging} changePage={this.onPage} /> : null}
             </div>
             <UserModal user={this.state.user} regions={this.state.regions} onClose={this.onClose} onChange={this.onChange} onUpdate={this.onUpdate} />
             <Dialog dialog={this.state.dialog} onClose={this.onCancel} onConfirm={this.onConfirm} />
