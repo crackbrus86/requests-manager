@@ -39041,7 +39041,7 @@ var UsersApp = function (_React$Component) {
             paging: {
                 total: 0,
                 current: 1,
-                perPage: 5,
+                perPage: 10,
                 offset: 0
             },
             isLoading: false,

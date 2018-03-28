@@ -39041,7 +39041,7 @@ var CoachesApp = function (_React$Component) {
             paging: {
                 total: 0,
                 current: 1,
-                perPage: 1,
+                perPage: 10,
                 offset: 0
             },
             isLoading: false,
