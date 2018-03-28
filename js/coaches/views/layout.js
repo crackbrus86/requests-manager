@@ -19,7 +19,7 @@ class CoachesApp extends React.Component{
             paging: {
                 total: 0,
                 current: 1,
-                perPage: 1,
+                perPage: 10,
                 offset: 0
             },
             isLoading: false,
