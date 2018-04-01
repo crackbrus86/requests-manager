@@ -11,6 +11,11 @@ class Paging extends React.Component{
             count: 0,
             pages: []
         }
+        this.handlePageChange = (e) => {
+            if(e.target.dataset["rel"] !== '...'){
+                this.props.changePage(e.target.dataset["rel"]);
+            }
+        }
     }
     setupCount(){
         this.setState({count: Math.ceil(this.state.total / this.state.perPage)})
@@ -23,6 +28,34 @@ class Paging extends React.Component{
         this.setState({pages: pages});
     }
 
+    fPages(){
+        var count = this.state.count;
+        var current = parseInt(this.state.current);
+        var pages = [];
+        if(count > 6){
+            var start = [1, 2, 3];
+            var end = [count - 2, count - 1, count];
+            var middle = [];
+            if(current > 2 && (current < (count - 1))){
+                var prev = current - 1;
+                var next = current + 1;
+                if(prev > 4) middle.push('...');
+                if(prev > 3) middle.push(prev);
+                if(current > 3 && current < (count - 2)) middle.push(current);
+                if(next < count -2) middle.push(next);
+                if(count - 2 - next > 1) middle.push('...');
+            }else{
+                middle.push('...');
+            }
+            pages = pages.concat(start, middle, end);
+        }else{
+            for(var i = 1; i <= this.state.count; i++){
+                pages.push(i);
+            }
+        }
+        this.setState({pages: pages});
+    }
+
     componentWillReceiveProps(nextProps){
         this.setState({
             perPage: nextProps.paging.perPage,
@@ -30,14 +63,14 @@ class Paging extends React.Component{
             current: nextProps.paging.current            
         });
         this.setupCount();
-        this.fetchPages();        
+        this.fPages();        
     }
 
     render(){
-        var pageLinks = this.state.pages.map(page => {
+        var pageLinks = this.state.pages.map((page, index) => {
             var className = (page == this.state.current)? "active" : null;
-            return <li key={page} className={classNames(className)}>
-                    <a href="javascript:void(0)" data-rel={page} onClick={(e) => this.props.changePage(e.target.dataset["rel"])}>{page}</a>
+            return <li key={index} className={classNames(className)}>
+                    <a href="javascript:void(0)" data-rel={page} onClick={this.handlePageChange}>{page}</a>
                 </li>
         })
         if(this.state.count < 2) return null;

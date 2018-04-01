@@ -40039,6 +40039,11 @@ var Paging = function (_React$Component) {
             count: 0,
             pages: []
         };
+        _this.handlePageChange = function (e) {
+            if (e.target.dataset["rel"] !== '...') {
+                _this.props.changePage(e.target.dataset["rel"]);
+            }
+        };
         return _this;
     }
 
@@ -40057,6 +40062,35 @@ var Paging = function (_React$Component) {
             this.setState({ pages: pages });
         }
     }, {
+        key: "fPages",
+        value: function fPages() {
+            var count = this.state.count;
+            var current = parseInt(this.state.current);
+            var pages = [];
+            if (count > 6) {
+                var start = [1, 2, 3];
+                var end = [count - 2, count - 1, count];
+                var middle = [];
+                if (current > 2 && current < count - 1) {
+                    var prev = current - 1;
+                    var next = current + 1;
+                    if (prev > 4) middle.push('...');
+                    if (prev > 3) middle.push(prev);
+                    if (current > 3 && current < count - 2) middle.push(current);
+                    if (next < count - 2) middle.push(next);
+                    if (count - 2 - next > 1) middle.push('...');
+                } else {
+                    middle.push('...');
+                }
+                pages = pages.concat(start, middle, end);
+            } else {
+                for (var i = 1; i <= this.state.count; i++) {
+                    pages.push(i);
+                }
+            }
+            this.setState({ pages: pages });
+        }
+    }, {
         key: "componentWillReceiveProps",
         value: function componentWillReceiveProps(nextProps) {
             this.setState({
@@ -40065,23 +40099,21 @@ var Paging = function (_React$Component) {
                 current: nextProps.paging.current
             });
             this.setupCount();
-            this.fetchPages();
+            this.fPages();
         }
     }, {
         key: "render",
         value: function render() {
             var _this2 = this;
 
-            var pageLinks = this.state.pages.map(function (page) {
+            var pageLinks = this.state.pages.map(function (page, index) {
                 var className = page == _this2.state.current ? "active" : null;
                 return _react2.default.createElement(
                     "li",
-                    { key: page, className: classNames(className) },
+                    { key: index, className: classNames(className) },
                     _react2.default.createElement(
                         "a",
-                        { href: "javascript:void(0)", "data-rel": page, onClick: function onClick(e) {
-                                return _this2.props.changePage(e.target.dataset["rel"]);
-                            } },
+                        { href: "javascript:void(0)", "data-rel": page, onClick: _this2.handlePageChange },
                         page
                     )
                 );
