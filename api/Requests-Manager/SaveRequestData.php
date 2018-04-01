@@ -148,10 +148,18 @@ function clearSlashes($value){
     return stripslashes(stripslashes($value));
 }
 
+function getConfigEmail(){
+    global $wpdb;
+    $tb_others = $wpdb->get_blog_prefix()."rm_others";
+    $sql = "SELECT config_email AS email FROM $tb_others";
+    return $wpdb->get_var($sql);
+}
+
 function sendEmail($email = "", $fullName = ""){
+    $configEmail = getConfigEmail();
     $headers  = 'MIME-Version: 1.0' . "\r\n";
     $headers .= 'Content-type: text/html; charset=utf-8' . "\r\n";
-    $headers .= 'From: Eudemo <crackbrus86@gmail.com>' . "\r\n";
+    $headers .= 'From: Eudemo <' . $configEmail . '>' . "\r\n";
     $headers .= 'Cc: ' . "\r\n";
     $headers .= 'Bcc: ' . "\r\n";
     $for = $email;
@@ -161,9 +169,10 @@ function sendEmail($email = "", $fullName = ""){
 }
 
 function sendNotification($email, $fullName = ""){
+    $configEmail = getConfigEmail();
     $headers  = 'MIME-Version: 1.0' . "\r\n";
     $headers .= 'Content-type: text/html; charset=utf-8' . "\r\n";
-    $headers .= 'From: Eudemo <crackbrus86@gmail.com>' . "\r\n";
+    $headers .= 'From: Eudemo <' . $configEmail . '>' . "\r\n";
     $headers .= 'Cc: ' . "\r\n";
     $headers .= 'Bcc: ' . "\r\n";
     $for = $email;
