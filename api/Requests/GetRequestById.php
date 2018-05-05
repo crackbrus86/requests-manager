@@ -6,7 +6,7 @@ if(current_user_can("edit_others_pages")){
     $tbReg = $wpdb->get_blog_prefix() . "rm_regions";
     $tbCoa = $wpdb->get_blog_prefix().'rm_coaches';
     $id = esc_sql($_POST["id"]);
-    $sql = $wpdb->prepare("SELECT $tbReq.id AS id, $tbUse.first_name AS name, $tbUse.last_name AS surname,
+    $sql = $wpdb->prepare("SELECT $tbReq.id AS id, $tbUse.id AS userId, $tbUse.first_name AS name, $tbUse.last_name AS surname,
     $tbUse.middle_name AS mName, $tbUse.birth_date AS born, $tbUse.region, $tbReq.age_category AS age, $tbReq.weight_category AS weight,
     $tbReq.current_competition AS game, $tbReq.pre_competition AS pregame, $tbReq.disciplines AS results, $tbReq.doping AS doping, $tbReq.coaches AS coaches,
     $tbReq.year

@@ -6,10 +6,10 @@ require("../../../css/games.css");
 class Games extends React.Component{
     render(){
         return <div className="row">
-            <div className="col-md-6">
+            <div className="col-md-5">
                 <PreCompetition />
             </div>
-            <div className="col-md-6">
+            <div className="col-md-7">
                 <Competition />
             </div>
         </div>

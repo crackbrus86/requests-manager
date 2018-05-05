@@ -5,6 +5,7 @@ include_once("RequestModel.php");
 $user = esc_sql($_POST["user"]);
 $request = esc_sql($_POST["request"]);
 $dopingControl = esc_sql($_POST["dopingControl"]);
+$profile = esc_sql($_POST["profile"]);
 $requestContent = new RequestBody();
 
 $user["lastName"] = clearSlashes($user["lastName"]);
@@ -14,6 +15,7 @@ $user["middleName"] = clearSlashes($user["middleName"]);
 $tb_users = $wpdb->get_blog_prefix()."rm_users";
 $tb_visa = $wpdb->get_blog_prefix()."rm_visa";
 $tb_others = $wpdb->get_blog_prefix()."rm_others";
+$tb_profiles = $wpdb->get_blog_prefix()."rm_profiles";
 
 $sql = $wpdb->prepare("SELECT config_email AS email FROM $tb_others", "");
 $result = $wpdb->get_results($sql);
@@ -32,6 +34,7 @@ if($user["id"]){
         echo "Participant is updated";
     }
     saveVisa($tb_visa, $user["visa"], "athlete", $user["id"], $request["event"], $request["eventYear"]);    
+    saveProfile($tb_profiles, $profile);
 }else{
     $sql = $wpdb->prepare("INSERT INTO $tb_users (region, last_name, first_name, middle_name, birth_date, last_name_pass, first_name_pass, 
         serial_number_pass, number_pass, expiration_date_pass, individual_number, phone, email, photo_national_pass_id, photo_international_pass_id, 
@@ -44,6 +47,7 @@ if($user["id"]){
         echo "Participant is saved";
         $user["id"] = $wpdb->insert_id;
         saveVisa($tb_visa, $user["visa"], "athlete", $user["id"], $request["event"], $request["eventYear"]);
+        saveProfile($tb_profiles, $profile, $user['id']);
     }    
 }
 
@@ -137,6 +141,25 @@ function saveVisa($table, $visa, $ownerType, $ownerId, $event, $year){
     }
     if($wpdb->query($sqlVisa)){
         echo "Visa is saved\n";
+    }
+}
+
+function saveProfile($table, $profile, $userId = null){
+    global $wpdb;
+    if(!$profile['userId']) $profile['userId'] = $userId;
+    if($profile['profileId']){
+        $sql = $wpdb->prepare("UPDATE $table SET Name = %s, Surname = %s, Nation = %s, Gender = %s, Age = %s, Category = %s, Experience = %s, Squat = %s,
+        BenchPress = %s, Deadlift = %s, Total = %s, Job = %s, Photo = %d WHERE ProfileId = %d", $profile['name'], $profile['surname'],
+        $profile['nation'], $profile['gender'], $profile['age'], $profile['category'], $profile['experience'], $profile['squat'], $profile['benchPress'], 
+        $profile['deadlift'], $profile['total'], $profile['job'], $profile['photo'], $profile['profileId']);
+    }else{
+        $sql = $wpdb->prepare("INSERT INTO $table (UserId, Name, Surname, Nation, Gender, Age, Category, Experience, Squat,
+        BenchPress, Deadlift, Total, Job, Photo) VALUES(%d, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %d)", $profile['userId'], 
+        $profile['name'], $profile['surname'], $profile['nation'], $profile['gender'], $profile['age'], $profile['category'], $profile['experience'], 
+        $profile['squat'], $profile['benchPress'], $profile['deadlift'], $profile['total'], $profile['job'], $profile['photo']);
+    }
+    if($wpdb->query($sql)){
+        echo "Profile is saved\n";
     }
 }
 

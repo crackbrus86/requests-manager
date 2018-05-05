@@ -10,6 +10,7 @@ class GameForm extends React.Component{
         var year = (this.props.game.year) ? this.props.game.year : "";
         var expiration = (this.props.game.expireDay)? new Date(this.props.game.expireDay) : null;
         var active = (JSON.parse(this.props.game.active))?true:false;
+        var area = this.props.game.area || "euro";
         return <div>
             <h4>{ (this.props.game.id)? "Редагувати змагання" : "Створити змагання" }</h4>
             <form>
@@ -21,6 +22,13 @@ class GameForm extends React.Component{
                     <label>Тип змагань</label>
                     <select value={this.props.game.type} className="form-control" onChange={(e) => this.props.onChange("type", e.target.value)}>{typesList}</select>
                 </div> 
+                <div className="form-group">
+                    <label>Ранг змагань</label>
+                    <select value={area} className="form-control" onChange={(e) => this.props.onChange("area", e.target.value)}>
+                        <option key="1" value="euro">Європейські</option>
+                        <option key="2" value="world">Світові</option>
+                    </select>
+                </div>
                 <div className="form-group">
                     <label>Рік проведення {validation.isFieldValid(this.props.game.year, "Це поле є обов'язковим")}</label>
                     <input type="number" value={year} className="form-control" placeholder="рік проведення" onChange={(e) => this.props.onChange("year", e.target.value)} />

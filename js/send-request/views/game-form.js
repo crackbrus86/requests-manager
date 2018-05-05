@@ -1,6 +1,26 @@
 import React from "react";
+import {ProfileControl} from "../../components/profile/profile.control";
+import {ProfileViewer} from "../../components/profile/profile.viewer";
+import Modal from "../../components/modal/modal";
+import "../../../css/profile.css";
 
 class GameForm extends React.Component{
+    constructor(props){
+        super(props);
+        this.state = {
+            showProfile: false
+        }
+        this.handlePreview = () => {
+            this.setState({showProfile: true});
+        }
+        this.handleProfileClose = () => {
+            this.setState({showProfile: false});
+        }
+        this.handleProfileUpdate = (profile) => {
+            this.setState({showProfile: false}, () => this.props.updateProfile(profile));
+        }
+    }
+
     render(){
         if(!this.props.isVisible) return null;
         var ageCatList = (this.props.ageCategories)? this.props.ageCategories.map(item => <option key={item.id} value={item.id}>{item.title}</option>) : null;
@@ -9,6 +29,7 @@ class GameForm extends React.Component{
         var aGamesList = (this.props.actualGames)? this.props.actualGames.map(item => <option key={item.id} value={item.id}>{item.name}</option>) : null;
         var bGamesList = (this.props.beforeGames)? this.props.beforeGames.map(item => <option key={item.id} value={item.id}>{item.name}</option>) : null;
         var type = (this.props.actualGames)? this.props.actualGames.filter(item => item.id === this.props.game.aGame)[0]["type"] : "0";
+        var area = this.props.actualGames.length ? this.props.actualGames.filter(x => x.id === this.props.game.aGame)[0]["area"] : null;
         return <div>
             <form>
                 <fieldset>
@@ -55,6 +76,10 @@ class GameForm extends React.Component{
                         <select value={this.props.game.bGame} className="form-control" onChange={e => this.props.onChange("bGame", e.target.value)}>{bGamesList}</select>
                     </div>
                 </fieldset>
+                <Modal target={this.state.showProfile} onClose={this.handleProfileClose} className="profile-modal">
+                    <ProfileViewer profile={this.props.profile} area={area} onSubmit={this.handleProfileUpdate} canPrint={false} />
+                </Modal>
+                <ProfileControl profile={this.props.profile} area={area} action={this.handlePreview} />
             </form>
         </div>
     }

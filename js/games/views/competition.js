@@ -34,6 +34,7 @@ class Competition extends React.Component{
                     name: item.name,
                     type: item.type,
                     year: item.year,
+                    area:item.area,
                     active: item.active
                 }
             });
@@ -46,6 +47,7 @@ class Competition extends React.Component{
             name: this.state.target.name,
             type: this.state.target.type,
             year: this.state.target.year,
+            area: this.state.target.area,
             active: (this.state.target.active)? this.state.target.active : 'false'
         }
         if(this.state.target.id){
@@ -69,6 +71,7 @@ class Competition extends React.Component{
             name: "",
             type: "0",
             year: null,
+            area: "euro",
             active: "false"
         }})
     }

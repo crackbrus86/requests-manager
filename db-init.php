@@ -16,7 +16,8 @@
             `type` INT,
             `year` VARCHAR(5),
             `expire_day` DATE,
-            `active` VARCHAR(5)
+            `active` VARCHAR(5),
+            `area` VARCHAR(5)
         ) {$charset_collate}";
         dbDelta($createGamesTab);
         $tb_category_age = $wpdb->get_blog_prefix() . 'rm_category_age';
@@ -122,3 +123,22 @@
             `code` INT NOT NULL
         ) {$charset_collate}";
         dbDelta($createVerifyTab);
+        $tb_profiles = $wpdb->get_blog_prefix() . "rm_profiles";
+        $createProfilesTab = "CREATE TABLE IF NOT EXISTS {$tb_profiles} (
+            `ProfileId` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+            `UserId` BIGINT NOT NULL,
+            `Name` VARCHAR(30),
+            `Surname` VARCHAR(50),
+            `Nation` VARCHAR(30),
+            `Gender` VARCHAR(6),
+            `Age` INT,
+            `Category` VARCHAR(30),
+            `Experience` VARCHAR(3),
+            `Squat` VARCHAR(10),
+            `BenchPress` VARCHAR(10),
+            `Deadlift` VARCHAR(10),
+            `Total` VARCHAR(10),
+            `Job` VARCHAR(200),
+            `Photo` BIGINT
+        ) {$charset_collate}";
+        dbDelta($createProfilesTab);

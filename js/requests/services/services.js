@@ -3,6 +3,7 @@ var reqDir = "../wp-content/plugins/requests-manager/api/Requests/";
 var catDir = "../wp-content/plugins/requests-manager/api/Categories-Manager/";
 var regDir = "../wp-content/plugins/requests-manager/api/Regions-Manager/";
 var coaDir = "../wp-content/plugins/requests-manager/api/Coaches/";
+var profDir = "../wp-content/plugins/requests-manager/api/Profiles/";
 
 export const getOpenedGames = (contract) => {
     return jQuery.ajax({
@@ -101,4 +102,25 @@ export const getEmails = (contract) => {
         type: "POST",
         data: contract
     })
+}
+
+export const getProfile = (contract) => {
+    return jQuery.ajax({
+        url: profDir + "GetProfile.php",
+        type: "POST",
+        data: contract
+    })
+}
+
+export const saveProfile = (contract) => {
+    return !!contract.profile.profileId ? jQuery.ajax({
+        url: profDir + 'UpdateProfile.php',
+        type: "POST",
+        data: contract
+    }):
+    jQuery.ajax({
+        url: profDir + "CreateProfile.php",
+        type: "POST",
+        data: contract
+    });
 }

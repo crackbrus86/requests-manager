@@ -17,11 +17,14 @@
 
     if($match){
         $tb_users = $wpdb->get_blog_prefix()."rm_users";
+        $tb_profiles = $wpdb->get_blog_prefix() . "rm_profiles";
         $getUser = $wpdb->prepare("SELECT  id, region, last_name_pass, first_name_pass, serial_number_pass, number_pass, 
         expiration_date_pass, individual_number, phone, email, photo_national_pass_id, 
         photo_international_pass_id, accreditation_photo_id FROM $tb_users WHERE id = %d", $userId);
         $user = $wpdb->get_row($getUser);
         $user->visa = $visa;
+        $getProfile = $wpdb->prepare("SELECT * FROM $tb_profiles WHERE UserId = %d", $userId);
+        $user->profile = $wpdb->get_row($getProfile);
         $return = json_encode($user);
         echo $return;        
     }else{
@@ -42,6 +45,7 @@
         $user->photo_international_pass_id = "";
         $user->accreditation_photo_id = "";
         $user->visa = $visa;
+        $user->profile = null;
         $return = json_encode($user);
         echo $return; 
     }

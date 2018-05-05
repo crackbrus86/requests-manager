@@ -40,7 +40,7 @@ class NameForm extends React.Component{
                 <div className="form-group">
                     <label>Дата народження {validation.isFieldValid(birthDate, "Це поле є обов'язковим")}</label>
                     {datetime}
-                </div>
+                </div>                
                 {footer}
             </form>
         </div>

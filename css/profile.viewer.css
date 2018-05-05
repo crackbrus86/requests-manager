@@ -1,0 +1,76 @@
+.profile-logo img{
+    width: 150px;
+}
+.profile-title h2{
+    font-size: 16px;
+    color: #3767d6;
+    font-weight: 600;
+    font-style: italic;
+    text-align: center;
+}
+.profile-content{
+    display: flex;
+    width: 700px;
+    flex-wrap: wrap;
+}
+
+.profile-content input[type='text'],
+.profile-content input[type='number']{
+    background: #fff;
+    border: none;
+    border-bottom: 1px solid #a2a2a2;
+    line-height: 14px;
+    margin: 0 15px 5px 5px;
+    padding-bottom: 0;
+    box-shadow: none;
+}
+.profile-content label{
+    display: flex;
+    flex-flow: column-reverse;
+}
+.profile-content .main-info{
+    width: 100%;
+}
+.profile-content .profile-content-row{
+    display: flex;
+    width: 100%;
+}
+.profile-content .profile-content-col{
+    display: flex;
+    width: 50%;
+}
+
+.profile-content .fa-spin{
+    font-size: 35px;
+    color: #3767d6;
+}
+
+.profile-content .profile-content-photo{
+    width: 100%;
+}
+
+.profile-content .profile-content-photo .wrap-photo{
+    display: block;
+    margin: 0 10%;
+}
+.profile-content .profile-content-photo 
+.wrap-photo .fa-trash{
+    position: absolute;
+    margin: 0 4px;
+    color: #ec7a7a;
+    cursor: pointer;
+}
+
+.profile-content .profile-content-photo 
+.wrap-photo .fa-trash:hover{
+    color: #a92c2c;
+}
+
+.profile-footer{
+    padding: 10px;
+    text-align: center;
+}
+
+.profile-footer button{
+    margin: 0 5px;
+}

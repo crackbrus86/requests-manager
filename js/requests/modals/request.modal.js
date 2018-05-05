@@ -3,6 +3,9 @@ import Modal from "../../components/modal/modal";
 import moment from "moment";
 require("../../../css/react-datetime.css");
 import Datetime from "react-datetime";
+import {ProfileControl} from "../../components/profile/profile.control";
+import {ProfileViewer} from "../../components/profile/profile.viewer";
+import "../../../css/profile.css";
 
 const ReqModal = (props) => {
     if(!props.target) return null;
@@ -32,7 +35,9 @@ const ReqModal = (props) => {
 
     
     var allCoaches = props.coaches.map(c => <option key={c.id} value={c.id}>{c.surname + " " + c.name + " " + c.mName}</option>);
-    return (<Modal target={props.target} onClose={props.onClose} className="request-edit-modal">
+    var area = props.games.filter(x => x.id == request.game)[0].area;
+    return (<div>
+        <Modal target={props.target} onClose={props.onClose} className="request-edit-modal">
         <h3>{"Редагувати заявку"}</h3>
         <div className="row">
             <form>
@@ -106,6 +111,9 @@ const ReqModal = (props) => {
                 <div className="form-group" hidden={!JSON.parse(request.doping.isPassed)}>
                     <Datetime value={dopingDate} dateFormat="DD-MM-YYYY" timeFormat={false} closeOnSelect={true} maxLength="10" onChange={(v) => props.onChange("date", v.format("YYYY-MM-DD"), "doping")} />
                 </div>
+                <div className="form-group">
+                    <ProfileControl profile={props.profile} area={area} action={() => props.onProfilePreview()} />
+                </div>
             </div>
             </form>
         </div>
@@ -135,6 +143,10 @@ const ReqModal = (props) => {
             <button type="button" className="btn btn-primary footer-update-button" onClick={() => props.onUpdate()}>Оновити</button>
             <button type="button" className="btn btn-default" onClick={() => props.onClose()}>Скасувати</button>
         </div>        
-    </Modal>);
+    </Modal>
+    <Modal target={props.showProfile} onClose={() => props.onProfileClose()}  className="profile-modal">
+        <ProfileViewer profile={props.profile} area={area} onSubmit={props.onSubmit.bind(this)} canPrint={true} />
+    </Modal>
+    </div>);
 }
 export default ReqModal;

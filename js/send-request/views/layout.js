@@ -17,6 +17,7 @@ class RequestForm extends React.Component{
     constructor(props){
         super(props);
         this.state = {
+            profile: null,
             verify: null
         }
         this.onUserChange = this.changeUserField.bind(this);
@@ -37,6 +38,7 @@ class RequestForm extends React.Component{
         this.onSend = this.sendRequest.bind(this);
         this.onReload = this.reloadPage.bind(this);
         this.verifyOff = this.closeVerify.bind(this);
+        this.onUpdateProfile = this.updateProfile.bind(this);
     }
 
     changeCoachStatus(value){
@@ -257,7 +259,33 @@ class RequestForm extends React.Component{
             userId: this.state.verify.userId,
             code: this.state.verify.code
         }).then(data => {
-            this.setState({userData: JSON.parse(data)});
+            var userData = JSON.parse(data);
+            var profile = !userData.profile ? null : {};
+            if(!!profile){
+                for(var key in userData.profile){
+                    profile[key] = userData.profile[key];
+                }
+            }
+            delete userData.profile;
+            this.setState({userData: userData}, () => {                
+                if(profile) this.setState({profile: {
+                    profileId: profile.ProfileId,
+                    userId: profile.UserId,
+                    name: profile.Name,
+                    surname: profile.Surname,
+                    nation: profile.Nation,
+                    gender: profile.Gender,
+                    age: profile.Age,
+                    category: profile.Category,
+                    experience: profile.Experience,
+                    squat: profile.Squat,
+                    benchPress: profile.BenchPress,
+                    deadlift: profile.Deadlift,
+                    total: profile.Total,
+                    job: profile.Job,
+                    photo: profile.Photo
+                }});
+            });
             this.closeVerify();
             this.showUserData();
             this.showGameData();
@@ -350,6 +378,7 @@ class RequestForm extends React.Component{
                 visa: this.state.userData.visa              
             },
             coaches: this.state.coaches,
+            profile: this.state.profile,
             request: {
                 ageCat: this.state.gameData.ageCat,
                 weightCat: this.state.gameData.weightCat,
@@ -440,6 +469,11 @@ class RequestForm extends React.Component{
         this.setDefaultCoachData();
     }
 
+    updateProfile(profile){
+        profile.userId = !!profile.userId ? profile.userId : this.state.userData.id;
+        this.setState({profile: profile});
+    }
+
     componentWillMount(){
         this.setState({user:{
             firstName: "",
@@ -476,10 +510,11 @@ class RequestForm extends React.Component{
             <NameForm person={this.state.user} onChange={this.onUserChange} onNext={this.onNext} isReadOnly={this.state.showUserData} />
             <PersonalForm isVisible={this.state.showUserData} person={this.state.userData} regions={this.state.regions} onChange={this.onUserDataChange} />
             <GameForm isVisible={this.state.showGameData} game={this.state.gameData} ageCategories={this.state.ageCategories} 
-            actualGames={this.state.actualGames} beforeGames={this.state.beforeGames} weightCategories={this.state.weightCategories} onChange={this.onGameChange} />
+            actualGames={this.state.actualGames} beforeGames={this.state.beforeGames} weightCategories={this.state.weightCategories} onChange={this.onGameChange}
+            profile={this.state.profile} updateProfile={this.onUpdateProfile} />
             <CoachesSection isVisible={this.state.showGameData} coaches={this.state.coaches} hasCoach={this.state.hasCoach} onChange={this.onCoachStatusChange} openCoachModal={this.openModal} editCoach={this.onCoachEdit} removeCoach={this.onCoachRemove} />
             <DopingControlForm isVisible={this.state.showUserData} data={this.state.dopingControl} onChange={this.onDopControlChange} />
-            <SendButton isVisible={this.state.showUserData} userData={this.state.userData} visa={this.state.userData.visa} doping={this.state.dopingControl} onSend={this.onSend} />
+            <SendButton isVisible={this.state.showUserData} userData={this.state.userData} visa={this.state.userData.visa} profile={this.state.profile} doping={this.state.dopingControl} onSend={this.onSend} />
             <Modal target={this.state.modalCoach} onClose={this.onCloseModal} className="coachModal">
                 <h4>Введіть дані тренера</h4>
                 <div className="coach-wrap">

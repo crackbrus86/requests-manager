@@ -38927,12 +38927,12 @@ var Games = function (_React$Component) {
                 { className: "row" },
                 _react2.default.createElement(
                     "div",
-                    { className: "col-md-6" },
+                    { className: "col-md-5" },
                     _react2.default.createElement(_preCompetition2.default, null)
                 ),
                 _react2.default.createElement(
                     "div",
-                    { className: "col-md-6" },
+                    { className: "col-md-7" },
                     _react2.default.createElement(_competition2.default, null)
                 )
             );
@@ -39780,6 +39780,7 @@ var Competition = function (_React$Component) {
                         name: item.name,
                         type: item.type,
                         year: item.year,
+                        area: item.area,
                         active: item.active
                     };
                 });
@@ -39795,6 +39796,7 @@ var Competition = function (_React$Component) {
                 name: this.state.target.name,
                 type: this.state.target.type,
                 year: this.state.target.year,
+                area: this.state.target.area,
                 active: this.state.target.active ? this.state.target.active : 'false'
             };
             if (this.state.target.id) {
@@ -39819,6 +39821,7 @@ var Competition = function (_React$Component) {
                     name: "",
                     type: "0",
                     year: null,
+                    area: "euro",
                     active: "false"
                 } });
         }
@@ -39958,11 +39961,15 @@ var GameGrid = function (_React$Component) {
             var columns = [{
                 title: "Назва",
                 field: "name",
-                width: "410px"
+                width: "440px"
             }, {
                 title: "Тип",
                 field: "type",
                 width: "110px"
+            }, {
+                title: "Ранг",
+                field: "area",
+                width: "120px"
             }, {
                 title: "Рік",
                 field: "year",
@@ -39989,10 +39996,22 @@ var GameGrid = function (_React$Component) {
                 }
             }];
             var rows = this.props.data.map(function (item) {
+                var area;
+                switch (item.area) {
+                    case "euro":
+                        area = "європейські";
+                        break;
+                    case "world":
+                        area = "світові";
+                        break;
+                    default:
+                        area = "";
+                }
                 return {
                     id: item.id,
                     name: item.name,
                     type: item.type == "1" ? "жим лежачи" : "пауерліфтинг",
+                    area: area,
                     year: item.year,
                     active: JSON.parse(item.active) ? _react2.default.createElement("i", { className: "fa fa-plus-square-o" }) : _react2.default.createElement("i", { className: "fa fa-minus-square-o" })
                 };
@@ -40067,6 +40086,7 @@ var GameForm = function (_React$Component) {
             var year = this.props.game.year ? this.props.game.year : "";
             var expiration = this.props.game.expireDay ? new Date(this.props.game.expireDay) : null;
             var active = JSON.parse(this.props.game.active) ? true : false;
+            var area = this.props.game.area || "euro";
             return _react2.default.createElement(
                 "div",
                 null,
@@ -40105,6 +40125,31 @@ var GameForm = function (_React$Component) {
                                     return _this2.props.onChange("type", e.target.value);
                                 } },
                             typesList
+                        )
+                    ),
+                    _react2.default.createElement(
+                        "div",
+                        { className: "form-group" },
+                        _react2.default.createElement(
+                            "label",
+                            null,
+                            "\u0420\u0430\u043D\u0433 \u0437\u043C\u0430\u0433\u0430\u043D\u044C"
+                        ),
+                        _react2.default.createElement(
+                            "select",
+                            { value: area, className: "form-control", onChange: function onChange(e) {
+                                    return _this2.props.onChange("area", e.target.value);
+                                } },
+                            _react2.default.createElement(
+                                "option",
+                                { key: "1", value: "euro" },
+                                "\u0404\u0432\u0440\u043E\u043F\u0435\u0439\u0441\u044C\u043A\u0456"
+                            ),
+                            _react2.default.createElement(
+                                "option",
+                                { key: "2", value: "world" },
+                                "\u0421\u0432\u0456\u0442\u043E\u0432\u0456"
+                            )
                         )
                     ),
                     _react2.default.createElement(
