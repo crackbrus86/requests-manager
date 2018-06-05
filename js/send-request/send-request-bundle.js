@@ -39674,6 +39674,12 @@ var RequestForm = function (_React$Component) {
                 }
             } else {
                 newGame[fieldName] = value;
+                if (fieldName === "ageCat" && this.state.weightCategories.length) {
+                    var wc = this.state.weightCategories.filter(function (cat) {
+                        return cat.parent == value;
+                    });
+                    this.changeGameField("weightCat", wc[0].id);
+                }
             }
             this.setState({ gameData: newGame });
         }
@@ -43217,7 +43223,7 @@ exports = module.exports = __webpack_require__(12)(undefined);
 
 
 // module
-exports.push([module.i, ".profile-logo img{\r\n    width: 150px;\r\n}\r\n.profile-title h2{\r\n    font-size: 16px;\r\n    color: #3767d6;\r\n    font-weight: 600;\r\n    font-style: italic;\r\n    text-align: center;\r\n}\r\n.profile-content{\r\n    display: flex;\r\n    width: 700px;\r\n    flex-wrap: wrap;\r\n}\r\n\r\n.profile-content input[type='text'],\r\n.profile-content input[type='number']{\r\n    background: #fff;\r\n    border: none;\r\n    border-bottom: 1px solid #a2a2a2;\r\n    line-height: 14px;\r\n    margin: 0 15px 5px 5px;\r\n    padding-bottom: 0;\r\n}\r\n.profile-content label{\r\n    display: flex;\r\n    flex-flow: column-reverse;\r\n}\r\n.profile-content .main-info{\r\n    width: 100%;\r\n}\r\n.profile-content .profile-content-row{\r\n    display: flex;\r\n    width: 100%;\r\n}\r\n.profile-content .profile-content-col{\r\n    display: flex;\r\n    width: 50%;\r\n}\r\n\r\n.profile-content .fa-spin{\r\n    font-size: 35px;\r\n    color: #3767d6;\r\n}\r\n\r\n.profile-content .profile-content-photo{\r\n    width: 100%;\r\n}\r\n\r\n.profile-content .profile-content-photo .wrap-photo{\r\n    display: block;\r\n    margin: 0 10%;\r\n}\r\n.profile-content .profile-content-photo \r\n.wrap-photo .fa-trash{\r\n    position: absolute;\r\n    margin: 0 4px;\r\n    color: #ec7a7a;\r\n    cursor: pointer;\r\n}\r\n\r\n.profile-content .profile-content-photo \r\n.wrap-photo .fa-trash:hover{\r\n    color: #a92c2c;\r\n}\r\n\r\n.profile-footer{\r\n    padding: 10px;\r\n    text-align: center;\r\n}\r\n\r\n.profile-footer button{\r\n    margin: 0 5px;\r\n}\r\n", ""]);
+exports.push([module.i, ".profile-logo img{\r\n    width: 150px;\r\n}\r\n.profile-title h2{\r\n    font-size: 16px;\r\n    color: #3767d6;\r\n    font-weight: 600;\r\n    font-style: italic;\r\n    text-align: center;\r\n}\r\n.profile-content{\r\n    display: flex;\r\n    width: 700px;\r\n    flex-wrap: wrap;\r\n}\r\n\r\n.profile-content input[type='text'],\r\n.profile-content input[type='number']{\r\n    background: #fff;\r\n    border: none;\r\n    border-bottom: 1px solid #a2a2a2;\r\n    line-height: 14px;\r\n    margin: 0 15px 5px 5px;\r\n    padding-bottom: 0;\r\n    box-shadow: none;\r\n}\r\n.profile-content label{\r\n    display: flex;\r\n    flex-flow: column-reverse;\r\n}\r\n.profile-content .main-info{\r\n    width: 100%;\r\n}\r\n.profile-content .profile-content-row{\r\n    display: flex;\r\n    width: 100%;\r\n}\r\n.profile-content .profile-content-col{\r\n    display: flex;\r\n    width: 50%;\r\n}\r\n\r\n.profile-content .fa-spin{\r\n    font-size: 35px;\r\n    color: #3767d6;\r\n}\r\n\r\n.profile-content .profile-content-photo{\r\n    width: 100%;\r\n}\r\n\r\n.profile-content .profile-content-photo .wrap-photo{\r\n    display: block;\r\n    margin: 0 10%;\r\n}\r\n.profile-content .profile-content-photo \r\n.wrap-photo .fa-trash{\r\n    position: absolute;\r\n    margin: 0 4px;\r\n    color: #ec7a7a;\r\n    cursor: pointer;\r\n}\r\n\r\n.profile-content .profile-content-photo \r\n.wrap-photo .fa-trash:hover{\r\n    color: #a92c2c;\r\n}\r\n\r\n.profile-footer{\r\n    padding: 10px;\r\n    text-align: center;\r\n}\r\n\r\n.profile-footer button{\r\n    margin: 0 5px;\r\n}\r\n", ""]);
 
 // exports
 
@@ -43317,7 +43323,7 @@ exports = module.exports = __webpack_require__(12)(undefined);
 
 
 // module
-exports.push([module.i, ".profile-modal{\r\n    margin-bottom: 50px;\r\n    margin-bottom: 50px;\r\n    top: 10%;\r\n}", ""]);
+exports.push([module.i, ".profile-modal{\r\n    margin-bottom: 50px!important;\r\n    top: 10%!important;\r\n}", ""]);
 
 // exports
 

@@ -34,14 +34,14 @@ class Competition extends React.Component{
                     name: item.name,
                     type: item.type,
                     year: item.year,
-                    area:item.area,
+                    area:item.area || 'euro',
                     active: item.active
                 }
             });
             this.setState({target: target[0], loading: false});
         })
     }
-
+    
     saveTarget(){
         var contract = {
             name: this.state.target.name,

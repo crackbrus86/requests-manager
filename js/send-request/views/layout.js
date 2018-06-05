@@ -109,6 +109,10 @@ class RequestForm extends React.Component{
             } 
         }else{
             newGame[fieldName] = value;
+            if(fieldName === "ageCat" && this.state.weightCategories.length){
+                let wc = this.state.weightCategories.filter(cat => cat.parent == value);
+                this.changeGameField("weightCat", wc[0].id);
+            }
         }
         this.setState({gameData: newGame});          
     }

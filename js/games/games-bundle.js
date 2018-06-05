@@ -39780,7 +39780,7 @@ var Competition = function (_React$Component) {
                         name: item.name,
                         type: item.type,
                         year: item.year,
-                        area: item.area,
+                        area: item.area || 'euro',
                         active: item.active
                     };
                 });
