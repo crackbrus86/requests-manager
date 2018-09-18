@@ -26,7 +26,7 @@ class GameForm extends React.Component{
         var ageCatList = (this.props.ageCategories)? this.props.ageCategories.map(item => <option key={item.id} value={item.id}>{item.title}</option>) : null;
         var weightCats = (this.props.weightCategories)? this.props.weightCategories.filter( item => item.parent == this.props.game.ageCat) : null;
         var weightCatList = weightCats.map(item => <option key={item.id} value={item.id}>{item.title_w}</option>);
-        var aGamesList = (this.props.actualGames)? this.props.actualGames.map(item => <option key={item.id} value={item.id}>{item.name}</option>) : null;
+        var aGamesList = (this.props.actualGames)? this.props.actualGames.map(item => <option key={item.id} value={item.id}>{item.name} ({item.year})</option>) : null;
         var bGamesList = (this.props.beforeGames)? this.props.beforeGames.map(item => <option key={item.id} value={item.id}>{item.name}</option>) : null;
         var type = (this.props.actualGames)? this.props.actualGames.filter(item => item.id === this.props.game.aGame)[0]["type"] : "0";
         var area = this.props.actualGames.length ? this.props.actualGames.filter(x => x.id === this.props.game.aGame)[0]["area"] : null;

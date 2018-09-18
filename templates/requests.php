@@ -5,7 +5,7 @@
     wp_enqueue_script(  'wordexport_script'); 
     wp_register_script( 'print_script', plugins_url( '../js/jQuery.print.js', __FILE__ ) );
     wp_enqueue_script(  'print_script');   
-    wp_register_script( 'requests_entry_script', plugins_url( '../js/requests/requests-bundle.js', __FILE__ ) );
+    wp_register_script( 'requests_entry_script', plugins_url( '../js/dist/requests-bundle.js', __FILE__ ) );
     wp_enqueue_script(  'requests_entry_script'); 
 ?>          
 <div id="requests-app"></div>
