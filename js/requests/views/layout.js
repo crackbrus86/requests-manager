@@ -259,14 +259,19 @@ class RequestsApp extends React.Component{
 
     getEmails(){
         this.setState({isLoading: true});
-        services.getEmails({
-            games: (this.state.filter.filterGames.length)? this.state.filter.filterGames.map(g => g.id) : [this.state.filter.currentGame],
-            year: moment(this.state.filter.year).format("YYYY")
-        }).then(data => {
-            this.setState({isLoading: false});
+        var contract = {
+                games: (this.state.filter.filterGames.length)? this.state.filter.filterGames.map(g => g.id) : [this.state.filter.currentGame],
+                year: moment(this.state.filter.year).format("YYYY")
+            }
+        services.getEmails(contract).then(data => {
             var emails = JSON.parse(data).map(x => x.email);
-            this.setState({emails: emails});
-        })
+            services.getCoachesEmails(contract).then((coachData) => {
+                var coachEmails = JSON.parse(coachData).map(x => x.email);
+                emails = emails.concat(coachEmails);
+                this.setState({isLoading: false});            
+                this.setState({emails: emails});
+            });
+        });
     }
 
     resetEmails(){

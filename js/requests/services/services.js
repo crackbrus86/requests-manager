@@ -104,6 +104,14 @@ export const getEmails = (contract) => {
     })
 }
 
+export const getCoachesEmails = (contract) => {
+    return jQuery.ajax({
+        url: reqDir + "GetCoachesEmail.php",
+        type: "POST",
+        data: contract
+    })
+}
+
 export const getProfile = (contract) => {
     return jQuery.ajax({
         url: profDir + "GetProfile.php",
