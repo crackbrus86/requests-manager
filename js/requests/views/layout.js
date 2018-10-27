@@ -23,7 +23,6 @@ class RequestsApp extends React.Component{
             coaches: [],
             emails: [],
             editRequest: null,
-            profile: null,
             dialog: null,
             tmpCoach: {
                 hide: true,
@@ -42,8 +41,7 @@ class RequestsApp extends React.Component{
                 perPage: 10,
                 offset: 0
             },
-            isLoading: false,
-            showProfile: false
+            isLoading: false
         }
         this.changeFilter = this.onFielterChange.bind(this);
         this.changePage = this.changeCurrentPage.bind(this);
@@ -63,24 +61,6 @@ class RequestsApp extends React.Component{
         this.removeFromFilter = this.removeFromFilter.bind(this);
         this.onGetEmails = this.getEmails.bind(this);
         this.onCloseEmails = this.resetEmails.bind(this);
-        this.handleProfilePreview = () => {
-            this.setState({showProfile: true});
-        }
-        this.handleProfileClose = () => {
-            this.setState({showProfile: false});
-        }
-        this.handleProfileSaving = (profile) => {
-            this.setState({isLoading: true, showProfile: false});
-            if(!profile.userId) profile.userId = this.state.editRequest.userId;
-            services.saveProfile({profile: profile}).then(() => {
-                services.getProfile({
-                    userId: this.state.editRequest.userId
-                 }).then((data) => {
-                    var profile = this.mapServerModel(JSON.parse(data));
-                    this.setState({profile: profile, isLoading: false});
-                })
-            })
-        }
     }
 
     changeCurrentPage(page){
@@ -282,15 +262,8 @@ class RequestsApp extends React.Component{
         this.setState({isLoading: true});
         services.getRequest({id: id}).then(data => {
             var tmp = JSON.parse(data)[0];
-            this.setState({editRequest: tmp});
-        }).then(() => {
-           services.getProfile({
-               userId: this.state.editRequest.userId
-            }).then((data) => {
-                var profile = !!JSON.parse(data) ? this.mapServerModel(JSON.parse(data)) : null;
-                this.setState({profile: profile, isLoading: false});
-            })
-        })
+            this.setState({editRequest: tmp, isLoading: false});
+        });
     }
 
     mapServerModel(sModel){
@@ -419,9 +392,7 @@ class RequestsApp extends React.Component{
             <ReqModal target={this.state.editRequest} regions={this.state.regions} ages={this.state.ageCat} weights={this.state.weightCat} 
             games={this.state.games} preGames={this.state.preGames} coaches={this.state.coaches} 
             tmpCoach={this.state.tmpCoach} onTcChange={this.onTcChange} onClose={this.onClose} onChange={this.changeRequest} onCoachDelete={this.deleteCoach} 
-            onAdd={this.onCoachAdd} onUpdate={this.onUpdate} profile={this.state.profile} showProfile={this.state.showProfile}
-            onProfilePreview={this.handleProfilePreview} onProfileClose={this.handleProfileClose}
-            onSubmit={this.handleProfileSaving} />
+            onAdd={this.onCoachAdd} onUpdate={this.onUpdate} />
             <EmailsModal emails={this.state.emails} onClose={this.onCloseEmails} />
             <Dialog dialog={this.state.dialog} onClose={this.onCancel} onConfirm={this.onConfirm} />
             <Preloader loading={this.state.isLoading} />

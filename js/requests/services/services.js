@@ -111,24 +111,3 @@ export const getCoachesEmails = (contract) => {
         data: contract
     })
 }
-
-export const getProfile = (contract) => {
-    return jQuery.ajax({
-        url: profDir + "GetProfile.php",
-        type: "POST",
-        data: contract
-    })
-}
-
-export const saveProfile = (contract) => {
-    return !!contract.profile.profileId ? jQuery.ajax({
-        url: profDir + 'UpdateProfile.php',
-        type: "POST",
-        data: contract
-    }):
-    jQuery.ajax({
-        url: profDir + "CreateProfile.php",
-        type: "POST",
-        data: contract
-    });
-}
