@@ -7,6 +7,7 @@ import moment from "moment";
 import Paging from "../../components/paging/paging";
 import ReqModal from "../modals/request.modal";
 import EmailsModal from "../modals/emails.modal";
+import PhoneNumbersModal from "../modals/phone.numbers.modal"
 require("../../../css/requests.css");
 import Dialog from "../../components/modal/dialog";
 
@@ -22,6 +23,7 @@ class RequestsApp extends React.Component{
             preGames: [],
             coaches: [],
             emails: [],
+            phoneNumbers: [],
             editRequest: null,
             dialog: null,
             tmpCoach: {
@@ -61,6 +63,8 @@ class RequestsApp extends React.Component{
         this.removeFromFilter = this.removeFromFilter.bind(this);
         this.onGetEmails = this.getEmails.bind(this);
         this.onCloseEmails = this.resetEmails.bind(this);
+        this.onGetPhoneNumbers = this.getPhoneNumbers.bind(this);
+        this.onClosePhoneNumbers = this.resetPhoneNumbers.bind(this);
     }
 
     changeCurrentPage(page){
@@ -258,6 +262,27 @@ class RequestsApp extends React.Component{
         this.setState({emails: []});
     }
 
+    getPhoneNumbers(){
+        this.setState({isLoading: true});
+        var contract = {
+            games: (this.state.filter.filterGames.length)? this.state.filter.filterGames.map(g => g.id) : [this.state.filter.currentGame],
+            year: moment(this.state.filter.year).format("YYYY")
+        }
+        services.getUsersPhoneNumbers(contract).then(data => {
+            var phoneNumbers = JSON.parse(data).map(x => x.phone);
+            services.getCoachesPhoneNumbers(contract).then(coachData => {
+                var coachPhoneNumbers = JSON.parse(coachData).map(x => x.phone);
+                phoneNumbers = phoneNumbers.concat(coachPhoneNumbers);
+                this.setState({isLoading: false});
+                this.setState({phoneNumbers: phoneNumbers});
+            })
+        })
+    }
+
+    resetPhoneNumbers(){
+        this.setState({phoneNumbers: []});
+    }
+
     editRequest(id){
         this.setState({isLoading: true});
         services.getRequest({id: id}).then(data => {
@@ -383,6 +408,7 @@ class RequestsApp extends React.Component{
                         <button type="button" className="print-export btn btn-default" onClick={this.printGrid.bind(this)} title="Друк"><i className="fa fa-print"></i></button>
                         <button type="button" className="btn btn-default" onClick={this.onDownload} title="Скачати усі фото" disabled={!this.state.requests.length}><i className="fa fa-file-archive-o"></i></button>
                         <button type="button" className="btn btn-default" onClick={this.onGetEmails} title="Отримати email-и учасників"><i className="fa fa-envelope"></i></button>
+                        <button type="button" className="btn btn-default" onClick={this.onGetPhoneNumbers} title="Отримати телефонні номери учасників"><i className="fa fa-mobile"></i></button>
                         </div>
                     </div>                    
                 </div>
@@ -394,6 +420,7 @@ class RequestsApp extends React.Component{
             tmpCoach={this.state.tmpCoach} onTcChange={this.onTcChange} onClose={this.onClose} onChange={this.changeRequest} onCoachDelete={this.deleteCoach} 
             onAdd={this.onCoachAdd} onUpdate={this.onUpdate} />
             <EmailsModal emails={this.state.emails} onClose={this.onCloseEmails} />
+            <PhoneNumbersModal numbers={this.state.phoneNumbers} onClose={this.onClosePhoneNumbers} />
             <Dialog dialog={this.state.dialog} onClose={this.onCancel} onConfirm={this.onConfirm} />
             <Preloader loading={this.state.isLoading} />
         </div>

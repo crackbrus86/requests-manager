@@ -111,3 +111,19 @@ export const getCoachesEmails = (contract) => {
         data: contract
     })
 }
+
+export const getUsersPhoneNumbers = (contract) => {
+    return jQuery.ajax({
+        url: reqDir + "GetUsersPhoneNumbers.php",
+        type: "POST",
+        data: contract
+    });
+}
+
+export const getCoachesPhoneNumbers = (contract) => {
+    return jQuery.ajax({
+        url: reqDir + "GetCoachesPhoneNumbers.php",
+        type: "POST",
+        data: contract
+    })
+}
