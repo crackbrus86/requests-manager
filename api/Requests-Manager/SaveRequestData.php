@@ -5,6 +5,7 @@ include_once("RequestModel.php");
 $user = esc_sql($_POST["user"]);
 $request = esc_sql($_POST["request"]);
 $dopingControl = esc_sql($_POST["dopingControl"]);
+$passports = esc_sql($_POST["passports"]);
 $requestContent = new RequestBody();
 
 $user["lastName"] = clearSlashes($user["lastName"]);
@@ -14,6 +15,7 @@ $user["middleName"] = clearSlashes($user["middleName"]);
 $tb_users = $wpdb->get_blog_prefix()."rm_users";
 $tb_visa = $wpdb->get_blog_prefix()."rm_visa";
 $tb_others = $wpdb->get_blog_prefix()."rm_others";
+$tb_for_passport = $wpdb->get_blog_prefix() . "rm_for_passport";
 
 $sql = $wpdb->prepare("SELECT config_email AS email FROM $tb_others", "");
 $result = $wpdb->get_results($sql);
@@ -49,12 +51,13 @@ if($user["id"]){
 
 $requestContent->userId = $user["id"];
 $requestContent->coaches = array();
+savePassports($passports, $requestContent->userId, $tb_for_passport);
 
 $coaches = ($_POST["coaches"]) ? esc_sql($_POST["coaches"]) : null;
 
-echo "<pre>";
-print_r($coaches);
-echo "</pre>"; 
+// echo "<pre>";
+// print_r($coaches);
+// echo "</pre>"; 
 
 if($coaches){
     $tb_coaches = $wpdb->get_blog_prefix()."rm_coaches";
@@ -137,6 +140,22 @@ function saveVisa($table, $visa, $ownerType, $ownerId, $event, $year){
     }
     if($wpdb->query($sqlVisa)){
         echo "Visa is saved\n";
+    }
+}
+
+function savePassports($passports, $userId, $table){
+    global $wpdb;
+    if(!count($passports)) return;
+    for($i = 0; $i < count($passports); $i++)
+    {
+        $passport = $passports[$i];
+        if($passport->id)
+        {
+            $sql = $wpdb->prepare("UPDATE $table SET UserId = %d, SerialNumber = %s, PassportNumber = %s, PassportPhotoId = %d WHERE ForPassportId = %d", $userId, $passport["seria"], $passport["no"], $passport["photoId"], $passport["id"]);
+        }else{
+            $sql = $wpdb->prepare("INSERT INTO $table (UserId, SerialNumber, PassportNumber, PassportPhotoId) VALUES (%d, %s, %s, %d)", $userId, $passport["seria"], $passport["no"], $passport["photoId"]);
+        }
+        $wpdb->query($sql);
     }
 }
 

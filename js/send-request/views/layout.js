@@ -37,6 +37,7 @@ class RequestForm extends React.Component{
         this.onSend = this.sendRequest.bind(this);
         this.onReload = this.reloadPage.bind(this);
         this.verifyOff = this.closeVerify.bind(this);
+        this.onPassportsUpdate = this.updatePassports.bind(this);
     }
 
     changeCoachStatus(value){
@@ -355,6 +356,7 @@ class RequestForm extends React.Component{
                 visa: this.state.userData.visa              
             },
             coaches: this.state.coaches,
+            passports: this.state.passports,
             request: {
                 ageCat: this.state.gameData.ageCat,
                 weightCat: this.state.gameData.weightCat,
@@ -459,6 +461,7 @@ class RequestForm extends React.Component{
         modalCoach: null,
         showCoachData: false,
         coaches: [],
+        passports: [],
         dopingControl: {
             isPassed: "false",
             date: null
@@ -473,13 +476,17 @@ class RequestForm extends React.Component{
         this.getBeforeGames();
     }
 
+    updatePassports(passports){
+        this.setState({passports: passports}, () => console.log(this.state));
+    }
+
     render(){
         var requiredGeneral = ["firstName", "lastName", "middleName", "birthDate"];
         var required = ["accreditation_photo_id", "email", "expiration_date_pass", "first_name_pass", "individual_number", "last_name_pass", "number_pass",
                         "phone", "photo_international_pass_id", "photo_national_pass_id", "region", "serial_number_pass"];        
         return <div>
             <NameForm person={this.state.user} onChange={this.onUserChange} onNext={this.onNext} isReadOnly={this.state.showUserData} />
-            <PersonalForm isVisible={this.state.showUserData} person={this.state.userData} regions={this.state.regions} onChange={this.onUserDataChange} />
+            <PersonalForm isVisible={this.state.showUserData} person={this.state.userData} passports={this.state.passports} onPassUpdate={this.onPassportsUpdate} regions={this.state.regions} onChange={this.onUserDataChange} />
             <GameForm isVisible={this.state.showGameData} game={this.state.gameData} ageCategories={this.state.ageCategories} 
             actualGames={this.state.actualGames} beforeGames={this.state.beforeGames} weightCategories={this.state.weightCategories} onChange={this.onGameChange} />
             <CoachesSection isVisible={this.state.showGameData} coaches={this.state.coaches} hasCoach={this.state.hasCoach} onChange={this.onCoachStatusChange} openCoachModal={this.openModal} editCoach={this.onCoachEdit} removeCoach={this.onCoachRemove} />

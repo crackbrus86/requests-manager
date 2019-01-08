@@ -142,3 +142,12 @@
             `Photo` BIGINT
         ) {$charset_collate}";
         dbDelta($createProfilesTab);
+        $tb_for_passport = $wpdb->get_blog_prefix() . "rm_for_passport";
+        $createForPassportTable = "CREATE TABLE IF NOT EXISTS {$tb_for_passport} (
+            `ForPassportId` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+            `UserId` BIGINT NOT NULL,
+            `SerialNumber` VARCHAR(4),
+            `PassportNumber` VARCHAR(6),
+            `PassportPhotoId` BIGINT(20)
+        ) {$charset_collate}";
+        dbDelta($createForPassportTable);
