@@ -1,5 +1,5 @@
 import React from "react";
-import PhotoLoader from "../../components/photo-loader/photo-loader";
+import PhotoLoader from "../photo-loader/photo-loader";
 
 class ForeignPassportsComponent extends React.Component{
     constructor(props){
@@ -13,6 +13,13 @@ class ForeignPassportsComponent extends React.Component{
         this.handleUpdatePassportSeria = this.updatePassportSeria.bind(this);
         this.handleUpdatePhotoId = this.updatePassportPhoto.bind(this);
         this.handleDeletePassport = this.deletePassport.bind(this);
+    }
+
+    componentDidUpdate(prevProps) {
+        if(this.props.passports != prevProps.passports) 
+        {
+               this.setState({passports: this.props.passports});
+        }
     }
 
     addPassport(){
@@ -56,7 +63,7 @@ class ForeignPassportsComponent extends React.Component{
     }
 
     renderPassports(){
-        return this.state.passports.map((passport, index) => <div>    
+        return this.state.passports.map((passport, index) => <div key={index}>    
             <span className="fa fa-close" onClick={(index) => this.handleDeletePassport(index)}></span>
             <div className="form-group">
                 <label>Серія та номер закордонного паспорту</label>

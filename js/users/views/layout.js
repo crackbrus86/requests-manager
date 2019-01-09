@@ -15,6 +15,7 @@ class UsersApp extends React.Component{
         this.state = {
             users: [],
             user: null,
+            passports: [],
             regions: [],
             paging: {
                 total: 0,
@@ -35,6 +36,7 @@ class UsersApp extends React.Component{
         this.onCancel = this.cancelDelete.bind(this);
         this.onConfirm = this.confirmDialog.bind(this);
         this.onDownload = this.getPhotos.bind(this);
+        this.onPassUpdate = this.updatePassports.bind(this);
         this.handleFilterTextChange = (text) => {
             this.setState({filterText: text});
         }
@@ -82,17 +84,23 @@ class UsersApp extends React.Component{
     editUser(id){
         this.setState({isLoading: true});
         services.getUser({id: id}).then(data => {
-            this.setUser(data);
+            var response = JSON.parse(data);
+            this.setUser(response.user);
+            this.setPassports(response.passports);
             this.setState({isLoading: false});
         })
     }
 
     setUser(data){
-        this.setState({user: JSON.parse(data)[0]});
+        this.setState({user: data[0]});
+    }
+
+    setPassports(data){
+        this.setState({passports: data});
     }
 
     closeUser(){
-        this.setState({user: null});
+        this.setState({user: null, passports: []});
     }
 
     changeUser(field, value){
@@ -181,6 +189,10 @@ class UsersApp extends React.Component{
         });
     }
 
+    updatePassports(passports){
+        this.setState({passports: passports});
+    }
+
     componentDidMount(){
         this.getRegions();
     }
@@ -211,7 +223,15 @@ class UsersApp extends React.Component{
                 <UsersGrid users={this.state.users} onEdit={this.onEdit} onDelete = {this.onDelete} />
                 {(!this.state.isFiltered) ? <Paging paging={this.state.paging} changePage={this.onPage} /> : null}
             </div>
-            <UserModal user={this.state.user} regions={this.state.regions} onClose={this.onClose} onChange={this.onChange} onUpdate={this.onUpdate} />
+            <UserModal 
+                user={this.state.user} 
+                regions={this.state.regions} 
+                onClose={this.onClose} 
+                onChange={this.onChange} 
+                onUpdate={this.onUpdate}
+                passports={this.state.passports}
+                onPassUpdate={this.onPassUpdate}
+                />
             <Dialog dialog={this.state.dialog} onClose={this.onCancel} onConfirm={this.onConfirm} />
             <Preloader loading={this.state.isLoading}/>
         </div>

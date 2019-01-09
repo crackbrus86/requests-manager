@@ -5,7 +5,7 @@ import Datetime from "react-datetime";
 import * as validation from "../../components/validation/validation";
 import PhotoLoader from "../../components/photo-loader/photo-loader";
 import VisaForm from "./visa-form";
-import ForeignPassportsComponent from "./for_passports";
+import ForeignPassportsComponent from "../../components/for_passports/for_passports";
 
 class PersonalForm extends React.Component{
 componentWillMount(){

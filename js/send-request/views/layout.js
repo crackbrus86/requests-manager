@@ -263,7 +263,7 @@ class RequestForm extends React.Component{
             code: this.state.verify.code
         }).then(data => {
             var userData = JSON.parse(data);
-            this.setState({userData: userData});
+            this.setState({userData: userData, passports: userData.passports});
             this.closeVerify();
             this.showUserData();
             this.showGameData();
@@ -477,7 +477,7 @@ class RequestForm extends React.Component{
     }
 
     updatePassports(passports){
-        this.setState({passports: passports}, () => console.log(this.state));
+        this.setState({passports: passports});
     }
 
     render(){

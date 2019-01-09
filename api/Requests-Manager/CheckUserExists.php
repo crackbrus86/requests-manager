@@ -17,11 +17,15 @@
 
     if($match){
         $tb_users = $wpdb->get_blog_prefix()."rm_users";
+        $tb_for_passports = $wpdb->get_blog_prefix() . "rm_for_passport";
         $getUser = $wpdb->prepare("SELECT  id, region, last_name_pass, first_name_pass, serial_number_pass, number_pass, 
         expiration_date_pass, individual_number, phone, email, photo_national_pass_id, 
         photo_international_pass_id, accreditation_photo_id FROM $tb_users WHERE id = %d", $userId);
         $user = $wpdb->get_row($getUser);
         $user->visa = $visa;
+        $sql = $wpdb->prepare("SELECT ForPassportId AS id, PassportNumber AS no, SerialNumber AS seria, PassportPhotoId AS photoId FROM $tb_for_passports WHERE UserId = %d", $userId);
+        $passports = $wpdb->get_results($sql);
+        if(count($passports)) $user->passports = $passports;
         $return = json_encode($user);
         echo $return;        
     }else{
