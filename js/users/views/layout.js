@@ -145,7 +145,8 @@ class UsersApp extends React.Component{
             email: user.email,
             pnpId: user.pnpId,
             pipId: user.pipId,
-            apId: user.apId
+            apId: user.apId,
+            passports: this.state.passports
         }).then(() => {
             this.closeUser();
             this.setState({isLoading: false});

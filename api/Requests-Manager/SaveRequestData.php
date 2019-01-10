@@ -1,5 +1,6 @@
 <?php
 include_once("../wpdb-connect.php");
+include_once("../functions.php");
 include_once("RequestModel.php");
 
 $user = esc_sql($_POST["user"]);
@@ -140,22 +141,6 @@ function saveVisa($table, $visa, $ownerType, $ownerId, $event, $year){
     }
     if($wpdb->query($sqlVisa)){
         echo "Visa is saved\n";
-    }
-}
-
-function savePassports($passports, $userId, $table){
-    global $wpdb;
-    if(!count($passports)) return;
-    for($i = 0; $i < count($passports); $i++)
-    {
-        $passport = $passports[$i];
-        if($passport->id)
-        {
-            $sql = $wpdb->prepare("UPDATE $table SET UserId = %d, SerialNumber = %s, PassportNumber = %s, PassportPhotoId = %d WHERE ForPassportId = %d", $userId, $passport["seria"], $passport["no"], $passport["photoId"], $passport["id"]);
-        }else{
-            $sql = $wpdb->prepare("INSERT INTO $table (UserId, SerialNumber, PassportNumber, PassportPhotoId) VALUES (%d, %s, %s, %d)", $userId, $passport["seria"], $passport["no"], $passport["photoId"]);
-        }
-        $wpdb->query($sql);
     }
 }
 

@@ -23,7 +23,8 @@
         photo_international_pass_id, accreditation_photo_id FROM $tb_users WHERE id = %d", $userId);
         $user = $wpdb->get_row($getUser);
         $user->visa = $visa;
-        $sql = $wpdb->prepare("SELECT ForPassportId AS id, PassportNumber AS no, SerialNumber AS seria, PassportPhotoId AS photoId FROM $tb_for_passports WHERE UserId = %d", $userId);
+        $sql = $wpdb->prepare("SELECT ForPassportId AS id, PassportNumber AS no, SerialNumber AS seria, 
+        PassportPhotoId AS photoId, ExpirationDate AS expireDate FROM $tb_for_passports WHERE UserId = %d", $userId);
         $passports = $wpdb->get_results($sql);
         if(count($passports)) $user->passports = $passports;
         $return = json_encode($user);

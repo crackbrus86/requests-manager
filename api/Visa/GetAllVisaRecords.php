@@ -31,6 +31,9 @@
             $result->visaType = ($visa) ? $visa->visaType : null;
             $result->visaExpires = ($visa) ? $visa->visaExpires : null;
         }
+        // echo "<pre>";
+        // print_r(appendVisaRecordsByForPassport($results));
+        // echo "</pre>";         
         $visaRecords = json_encode($results);
         echo $visaRecords;
     endif;
@@ -60,4 +63,43 @@
         owner_type = %s AND owner_id = %d AND event = %d AND year = %d", $person->role, $person->id, $event, $year);
         $visa = $wpdb->get_row($sql);
         return $visa;
+    }
+
+    function appendVisaRecordsByForPassport($records){
+        global $wpdb;
+        $tb_for_passport = $wpdb->get_blog_prefix() . "rm_for_passport";
+        if(!count($records)) return array();
+        $newRecords = array();
+        for($i = 0; $i < count($records); $i++)
+        {
+            $record = $records[$i];
+            if($record->role == "athlete")
+            {
+                $sql = $wpdb->prepare("SELECT PassportNumber AS no, PassportSerialNumber AS seria, ExpirationDate AS expireDate FROM $tb_for_passport WHERE UserId = %d", $record->id);
+                $passports = $wpdb->get_results($sql);
+
+                if(count($passports))
+                {
+                    for($j = 0; $j < count($passports); $j++)
+                    {
+                        $passport = $passports[$j];
+
+                        $newRecord = new stdClass();
+                        $newRecord->born = $record->born;
+                        $newRecord->fullName = $record->fullName;
+                        $newRecord->id = $record->id;
+                        $newRecord->passExpires = $passport->expireDate;
+                        $newRecord->passNo = $passport->seria . $passport->no;
+                        $newRecord->role = $record->role;
+                        $newRecord->visaExpires = $record->visaExpires;
+                        $newRecord->visaId = $record->visaId;
+                        $newRecord->visaType = $record->visaType;
+
+                        array_push($newRecords, $newRecord);
+                    }
+                }
+            }
+        }
+        $records = array_merge($records, $newRecords);
+        return $records;
     }
