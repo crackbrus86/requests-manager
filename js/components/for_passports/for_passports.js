@@ -1,7 +1,9 @@
 import React from "react";
 import PhotoLoader from "../photo-loader/photo-loader";
+require("../../../css/additional-passports.css");
 import Datetime from "react-datetime";
 import moment from "moment";
+import * as validation from "../../components/validation/validation";
 
 class ForeignPassportsComponent extends React.Component{
     constructor(props){
@@ -79,10 +81,10 @@ class ForeignPassportsComponent extends React.Component{
     }
 
     renderPassports(){
-        return this.state.passports.map((passport, index) => <div key={index}>    
+        return this.state.passports.map((passport, index) => <div key={index} className="passport-record">    
             <span className="fa fa-close" onClick={() => this.handleDeletePassport(index)}></span>
             <div className="form-group">
-                <label>Серія та номер закордонного паспорту</label>
+                <label>Серія {validation.isFieldValid(passport.seria, "Введіть серію")} та номер {validation.isFieldValid(passport.no, "Введіть номер")} закордонного паспорту </label>
                 <div className="row">
                     <div className="col-md-4">
                         <input value={passport.seria} onChange={(e) => this.handleUpdatePassportSeria(e.target.value, index)} type="text" className="form-control" placeholder="НН" maxLength="4" />
@@ -93,11 +95,11 @@ class ForeignPassportsComponent extends React.Component{
                 </div>
             </div> 
             <div className="form-group">
-                    <label>Термін дії паспорту</label>
+                    <label>Термін дії паспорту {validation.isFieldValid(passport.expireDate, "Це поле є обов'язковим")}</label>
                     <Datetime value={this.displayExpireDate(passport.expireDate)} dateFormat="DD-MM-YYYY" timeFormat={false} closeOnSelect={true} maxLength="10" onChange={(v) => this.handleUpdateExpirationDate(v.format("YYYY-MM-DD"), index)} />
                 </div>    
             <div className="form-group">
-                <label>Фото першої сторінки закордонного паспорту</label>
+                <label>Фото першої сторінки закордонного паспорту{validation.isFieldValid(+passport.photoId, "Немає фото")}</label>
                 <PhotoLoader 
                 value={passport.photoId} 
                 desc={"Фото першої сторінки закордонного паспорту"}  

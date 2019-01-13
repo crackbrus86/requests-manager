@@ -31,10 +31,12 @@
             $result->visaType = ($visa) ? $visa->visaType : null;
             $result->visaExpires = ($visa) ? $visa->visaExpires : null;
         }
-        // echo "<pre>";
-        // print_r(appendVisaRecordsByForPassport($results));
-        // echo "</pre>";         
-        $visaRecords = json_encode($results);
+        $records = appendVisaRecordsByForPassport($results);
+        usort($records, function($a, $b)
+        {
+            return strcmp($a->fullName, $b->fullName);
+        });
+        $visaRecords = json_encode($records);
         echo $visaRecords;
     endif;
 
@@ -75,9 +77,8 @@
             $record = $records[$i];
             if($record->role == "athlete")
             {
-                $sql = $wpdb->prepare("SELECT PassportNumber AS no, PassportSerialNumber AS seria, ExpirationDate AS expireDate FROM $tb_for_passport WHERE UserId = %d", $record->id);
+                $sql = $wpdb->prepare("SELECT PassportNumber AS no, SerialNumber AS seria, ExpirationDate AS expireDate FROM $tb_for_passport WHERE UserId = %d", $record->id);
                 $passports = $wpdb->get_results($sql);
-
                 if(count($passports))
                 {
                     for($j = 0; $j < count($passports); $j++)

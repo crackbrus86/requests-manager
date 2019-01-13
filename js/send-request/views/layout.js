@@ -491,7 +491,14 @@ class RequestForm extends React.Component{
             actualGames={this.state.actualGames} beforeGames={this.state.beforeGames} weightCategories={this.state.weightCategories} onChange={this.onGameChange} />
             <CoachesSection isVisible={this.state.showGameData} coaches={this.state.coaches} hasCoach={this.state.hasCoach} onChange={this.onCoachStatusChange} openCoachModal={this.openModal} editCoach={this.onCoachEdit} removeCoach={this.onCoachRemove} />
             <DopingControlForm isVisible={this.state.showUserData} data={this.state.dopingControl} onChange={this.onDopControlChange} />
-            <SendButton isVisible={this.state.showUserData} userData={this.state.userData} visa={this.state.userData.visa} doping={this.state.dopingControl} onSend={this.onSend} />
+            <SendButton 
+                isVisible={this.state.showUserData} 
+                userData={this.state.userData} 
+                visa={this.state.userData.visa} 
+                doping={this.state.dopingControl}
+                passports={this.state.passports} 
+                onSend={this.onSend} 
+            />
             <Modal target={this.state.modalCoach} onClose={this.onCloseModal} className="coachModal">
                 <h4>Введіть дані тренера</h4>
                 <div className="coach-wrap">
