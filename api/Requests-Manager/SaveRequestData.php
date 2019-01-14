@@ -14,7 +14,6 @@ $user["firstName"] = clearSlashes($user["firstName"]);
 $user["middleName"] = clearSlashes($user["middleName"]);
 
 $tb_users = $wpdb->get_blog_prefix()."rm_users";
-$tb_visa = $wpdb->get_blog_prefix()."rm_visa";
 $tb_others = $wpdb->get_blog_prefix()."rm_others";
 $tb_for_passport = $wpdb->get_blog_prefix() . "rm_for_passport";
 
@@ -33,8 +32,7 @@ if($user["id"]){
 
     if($wpdb->query($sql)){
         echo "Participant is updated";
-    }
-    saveVisa($tb_visa, $user["visa"], "athlete", $user["id"], $request["event"], $request["eventYear"]);    
+    }  
 }else{
     $sql = $wpdb->prepare("INSERT INTO $tb_users (region, last_name, first_name, middle_name, birth_date, last_name_pass, first_name_pass, 
         serial_number_pass, number_pass, expiration_date_pass, individual_number, phone, email, photo_national_pass_id, photo_international_pass_id, 
@@ -46,7 +44,6 @@ if($user["id"]){
     if($wpdb->query($sql)){
         echo "Participant is saved";
         $user["id"] = $wpdb->insert_id;
-        saveVisa($tb_visa, $user["visa"], "athlete", $user["id"], $request["event"], $request["eventYear"]);
     }    
 }
 
@@ -73,8 +70,7 @@ if($coaches){
             if($wpdb->query($sql)){
                 echo "Coach is updated";
             }
-            array_push($requestContent->coaches, array($coach["id"], $coach["isFollowing"]));
-            saveVisa($tb_visa, $coach["visa"], "coach", $coach["id"], $request["event"], $request["eventYear"]);            
+            array_push($requestContent->coaches, array($coach["id"], $coach["isFollowing"]));           
         }elseif($coach["id"] === "" || ($coach["id"] && $coach["isFollowing"] === "false")){
 
             $coach["lastName"] = clearSlashes($coach["lastName"]);
@@ -95,11 +91,9 @@ if($coaches){
                     echo "Coach is saved";
                     $coach["id"] = $wpdb->insert_id;
                     array_push($requestContent->coaches, array($coach["id"], $coach["isFollowing"]));
-                    if(isset($coach["visa"])) saveVisa($tb_visa, $coach["visa"], "coach", $coach["id"], $request["event"], $request["eventYear"]);
                 }
             }else{
                 array_push($requestContent->coaches, array($coachId, $coach["isFollowing"]));
-                if(isset($coach["visa"])) saveVisa($tb_visa, $coach["visa"], "coach", $coach["id"], $request["event"], $request["eventYear"]);
             }
         }
     }
@@ -123,25 +117,6 @@ if($wpdb->query($sql)){
     echo "Request has been sent successfully!";
     sendEmail($user["email"], getFullName($user));
     sendNotification($admEmail, getFullName($user));
-}
-
-function saveVisa($table, $visa, $ownerType, $ownerId, $event, $year){
-    global $wpdb;      
-    if($visa["hasVisa"] === "false") {
-        $sql = $wpdb->prepare("DELETE FROM $table WHERE owner_id = %d AND event = %d AND year = %s", $ownerId, $event, $year);
-        if($wpdb->query($sql)) echo "Now this person has not any visa";
-        return null;
-    }
-    $sql = $wpdb->prepare("SELECT id FROM $table WHERE owner_type = %s AND owner_id = %d AND type = %s AND event = %d AND year = %s", $ownerType, $ownerId, $visa["type"], $event, $year);
-    $visaId = $wpdb->get_var($sql);
-    if($visaId){
-        $sqlVisa = $wpdb->prepare("UPDATE $table SET owner_type = %s, owner_id = %d, type = %s, term = %s, event = %d, year = %s WHERE id = %d", $ownerType, $ownerId, $visa["type"], $visa["term"], $event, $year, $visaId );
-    }else{
-        $sqlVisa = $wpdb->prepare("INSERT INTO $table (owner_type, owner_id, type, term, event, year) VALUES (%s, %d, %s, %s, %d, %s)", $ownerType, $ownerId, $visa["type"], $visa["term"], $event, $year);
-    }
-    if($wpdb->query($sqlVisa)){
-        echo "Visa is saved\n";
-    }
 }
 
 function getFullName($user){

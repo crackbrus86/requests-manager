@@ -7,31 +7,6 @@ const VisaGrid = (props) => {
     if(!props.records.length && props.game) return <p>Немає жодного запису для цих змагань</p>;
     var columns = [
         {
-            title: "",
-            field: "visaId",
-            button: "edit",
-            hide: "hasVisa",
-            width: "80px",
-            action: (e) => {
-                props.onEdit(e.target.dataset["rel"]);
-            }            
-        },
-        {
-            title: "",
-            field: "visaId",
-            button: "delete",
-            hide: "hasVisa",
-            width: "80px",
-            action: (e) => {
-                props.onDelete(e.target.dataset["rel"]);
-            }            
-        },
-        {
-            title: "Тип візи",
-            field: "visaType",
-            width: "80px",
-        },
-        {
             title: "Прізвище, Ім'я",
             field: "fullName",
             width: "200px"
@@ -57,11 +32,6 @@ const VisaGrid = (props) => {
             width: "180px"
         },
         {
-            title: "Термін дії візи",
-            field: "visaExpires",
-            width: "150px"
-        },
-        {
             title: "",
             field: "",
             width: "*"
@@ -69,24 +39,13 @@ const VisaGrid = (props) => {
     ];
     var visaRecords = props.records.filter(x => !!x.fullName.trim());
     var rows = visaRecords.map(x => {
-        var visaT = "";
-        if(x.visaType){
-            visaT = (x.visaType === "0")? <div className="visa-type sheng" title="Шенген">{"Ш"}</div> : <div className="visa-type usa" title="США">{"С"}</div>
-        }
-        var visaE = "";
-        if(x.visaExpires){
-            visaE = moment(new Date(x.visaExpires)).format("DD/MM/YYYY");
-        }
         return {
-            visaId: x.visaId,
-            visaType: visaT,
             fullName: x.fullName,
             hasVisa: !!x.visaId ? false : true,
             role: x.role.replace(x.role[0], x.role[0].toUpperCase()),
             born: moment(new Date(x.born)).format("DD/MM/YYYY"),
             passNo: x.passNo,
-            passExpires: moment(new Date(x.passExpires)).format("DD/MM/YYYY"),
-            visaExpires: visaE
+            passExpires: moment(new Date(x.passExpires)).format("DD/MM/YYYY")
         }
     });
     return(<div id="visaGrid">

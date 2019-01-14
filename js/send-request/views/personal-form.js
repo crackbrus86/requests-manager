@@ -4,7 +4,6 @@ require("../../../css/react-datetime.css");
 import Datetime from "react-datetime";
 import * as validation from "../../components/validation/validation";
 import PhotoLoader from "../../components/photo-loader/photo-loader";
-import VisaForm from "./visa-form";
 import ForeignPassportsComponent from "../../components/for_passports/for_passports";
 
 class PersonalForm extends React.Component{
@@ -73,16 +72,6 @@ componentWillMount(){
                     <label>Фото для акредитації {validation.isFieldValid(this.props.person.accreditation_photo_id, "Це поле є обов'язковим")}</label>
                     <PhotoLoader value={this.props.person.accreditation_photo_id} desc={"Фото для акредитації"}  onRemove={() => this.props.onChange("accreditation_photo_id", "")} onUpdate={(id) => this.props.onChange("accreditation_photo_id", id)} /> 
                 </div>
-                <div className="form-group">
-                    <div><label>Чи маєте Ви діючу візу?</label></div>
-                    <label className="radio-inline">
-                        <input type="radio" value="false" checked={this.props.person.visa.hasVisa === "false"} onChange={e => this.props.onChange("hasVisa", e.target.value, "visa")} /> Ні
-                    </label>
-                    <label className="radio-inline">
-                        <input type="radio" value="true" checked={this.props.person.visa.hasVisa === "true"} onChange={e => this.props.onChange("hasVisa", e.target.value, "visa")} /> Так
-                    </label>
-                </div>
-                <VisaForm visa={this.props.person.visa} onChange={this.props.onChange} />
                 </fieldset>
             </form>
         </div>

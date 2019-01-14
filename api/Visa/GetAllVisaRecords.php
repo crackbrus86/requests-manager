@@ -25,12 +25,12 @@
         }
         $coaches = array_map("unserialize", array_unique(array_map("serialize", $coaches)));     
         $results = array_merge($users, $coaches);        
-        foreach($results as $result){
-            $visa = getVisaRecord($result, $event, $year);
-            $result->visaId = ($visa) ? $visa->visaId : null;
-            $result->visaType = ($visa) ? $visa->visaType : null;
-            $result->visaExpires = ($visa) ? $visa->visaExpires : null;
-        }
+        // foreach($results as $result){
+        //     $visa = getVisaRecord($result, $event, $year);
+        //     $result->visaId = ($visa) ? $visa->visaId : null;
+        //     $result->visaType = ($visa) ? $visa->visaType : null;
+        //     $result->visaExpires = ($visa) ? $visa->visaExpires : null;
+        // }
         $records = appendVisaRecordsByForPassport($results);
         usort($records, function($a, $b)
         {
@@ -58,14 +58,14 @@
         return $tmp;     
     }
 
-    function getVisaRecord($person, $event, $year){
-        global $wpdb;
-        $tb_visa = $wpdb->get_blog_prefix()."rm_visa";
-        $sql = $wpdb->prepare("SELECT id AS visaId, type AS visaType, term AS visaExpires FROM $tb_visa WHERE 
-        owner_type = %s AND owner_id = %d AND event = %d AND year = %d", $person->role, $person->id, $event, $year);
-        $visa = $wpdb->get_row($sql);
-        return $visa;
-    }
+    // function getVisaRecord($person, $event, $year){
+    //     global $wpdb;
+    //     $tb_visa = $wpdb->get_blog_prefix()."rm_visa";
+    //     $sql = $wpdb->prepare("SELECT id AS visaId, type AS visaType, term AS visaExpires FROM $tb_visa WHERE 
+    //     owner_type = %s AND owner_id = %d AND event = %d AND year = %d", $person->role, $person->id, $event, $year);
+    //     $visa = $wpdb->get_row($sql);
+    //     return $visa;
+    // }
 
     function appendVisaRecordsByForPassport($records){
         global $wpdb;
@@ -92,9 +92,9 @@
                         $newRecord->passExpires = $passport->expireDate;
                         $newRecord->passNo = $passport->seria . $passport->no;
                         $newRecord->role = $record->role;
-                        $newRecord->visaExpires = $record->visaExpires;
-                        $newRecord->visaId = $record->visaId;
-                        $newRecord->visaType = $record->visaType;
+                        // $newRecord->visaExpires = $record->visaExpires;
+                        // $newRecord->visaId = $record->visaId;
+                        // $newRecord->visaType = $record->visaType;
 
                         array_push($newRecords, $newRecord);
                     }

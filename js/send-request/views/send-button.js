@@ -4,12 +4,8 @@ import * as validation from "../../components/validation/validation";
 class SendButton extends React.Component{
     constructor(props){
         super(props);
-        this.validateVisa = this.isVisaValid.bind(this);
         this.validateDoping = this.isDopingControlValid.bind(this);
         this.validatePassports = this.isAdditionalPassportsValid.bind(this);
-    }
-    isVisaValid(){
-        return this.props.visa.hasVisa === "true" ? validation.isFormValid(this.props.visa, ["term"]) : false;
     }
     isDopingControlValid(){
         return this.props.doping.isPassed === "true" ? validation.isFormValid(this.props.doping, ["date"]) : false;
@@ -29,7 +25,7 @@ class SendButton extends React.Component{
             <button 
                 type="button" 
                 className="btn btn-success" 
-                disabled={validation.isFormValid(this.props.userData, requiredUserData) || this.validateVisa() || this.validateDoping() || this.validatePassports() } 
+                disabled={validation.isFormValid(this.props.userData, requiredUserData) || this.validateDoping() || this.validatePassports() } 
                 onClick={() => this.props.onSend()}
             >Подати заявку</button>
         </div>;

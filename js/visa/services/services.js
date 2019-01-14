@@ -15,27 +15,3 @@ export const getAllVisaRecords = (contract) => {
         data: contract
     })
 }
-
-export const updateVisa = (contract) => {
-    return jQuery.ajax({
-        url: visDir + "UpdateVisa.php",
-        type: "POST",
-        data: contract
-    })
-}
-
-export const deleteVisa = (contract) => {
-    return jQuery.ajax({
-        url: visDir + "DeleteVisa.php",
-        type: "POST",
-        data: contract
-    })
-}
-
-export const insertVisa = (contract) => {
-    return jQuery.ajax({
-        url: visDir + "InsertVisa.php",
-        type: "POST",
-        data: contract
-    })
-}
