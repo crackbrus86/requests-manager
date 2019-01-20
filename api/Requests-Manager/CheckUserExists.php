@@ -47,6 +47,7 @@
         $user->photo_international_pass_id = "";
         $user->accreditation_photo_id = "";
         $user->visa = $visa;
+        $user->passports = array();
         $return = json_encode($user);
         echo $return; 
     }

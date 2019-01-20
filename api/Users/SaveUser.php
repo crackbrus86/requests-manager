@@ -4,7 +4,6 @@ require_once("../functions.php");
 
 if(current_user_can("edit_others_pages")){
     $tb_users = $wpdb->get_blog_prefix()."rm_users";
-    $tb_for_passport = $wpdb->get_blog_prefix() . "rm_for_passport";
     $id = strip_tags(stripslashes(trim($_POST["id"])));
     $region = strip_tags(stripslashes(trim($_POST["region"])));
     $latLastName = strip_tags(stripslashes(trim($_POST["latLastName"])));
@@ -25,7 +24,7 @@ if(current_user_can("edit_others_pages")){
     accreditation_photo_id = %d WHERE id = %d", $region, $latLastName, $latFirstName, $passSeria, $passNo, $passExpire, $iin, $phone, $email, 
     $pnpId, $pipId, $apId, $id);
 
-    savePassports($passports, $id, $tb_for_passport);
+    savePassports($passports, $id);
 
     if($wpdb->query($sql)){
         echo "Athlete was updated";

@@ -38,6 +38,7 @@ class RequestForm extends React.Component{
         this.onReload = this.reloadPage.bind(this);
         this.verifyOff = this.closeVerify.bind(this);
         this.onPassportsUpdate = this.updatePassports.bind(this);
+        this.onCoachPassportsUpdate = this.updateCoachPassports.bind(this);
     }
 
     changeCoachStatus(value){
@@ -135,7 +136,8 @@ class RequestForm extends React.Component{
             photoInternationalPassId: this.state.coachData.photo_international_pass_id,
             photoNationalPassId: this.state.coachData.photo_national_pass_id,
             region: this.state.coachData.region,
-            serialNumberPass: this.state.coachData.serial_number_pass  
+            serialNumberPass: this.state.coachData.serial_number_pass,
+            passports: this.state.coachData.passports 
         }
         var coaches = this.state.coaches;
         if(this.state.coachData.update){
@@ -460,6 +462,12 @@ class RequestForm extends React.Component{
         this.setState({passports: passports});
     }
 
+    updateCoachPassports(passports){
+        var newCoachData = this.state.coachData;
+        newCoachData.passports = passports;
+        this.setState({coachData: newCoachData});
+    }
+
     render(){
         var requiredGeneral = ["firstName", "lastName", "middleName", "birthDate"];
         var required = ["accreditation_photo_id", "email", "expiration_date_pass", "first_name_pass", "individual_number", "last_name_pass", "number_pass",
@@ -493,6 +501,8 @@ class RequestForm extends React.Component{
                     isVisible={this.state.showCoachData} 
                     person={this.state.coachData} 
                     regions={this.state.regions} 
+                    passports={this.state.coachData.passports}
+                    onPassUpdate={this.onCoachPassportsUpdate}
                     onChange={this.onCoachDataChange} />
                 </div>
                 <div className="form-group coach-modal-footer">

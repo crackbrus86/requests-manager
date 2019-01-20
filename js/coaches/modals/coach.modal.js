@@ -5,6 +5,7 @@ require("../../../css/react-datetime.css");
 import Datetime from "react-datetime";
 import PhotoLoader from "../../components/photo-loader/photo-loader";
 import * as validation from "../../components/validation/validation";
+import ForeignPassportsComponent from "../../components/for_passports/for_passports";
 
 const CoachModal = (props) => {
     if(!props.coach) return null;
@@ -82,7 +83,8 @@ const CoachModal = (props) => {
                 <div className="form-group">
                     <label>Фото для акредитації{validation.isFieldValid(coach.apId, "Це поле є обов'язковим")}</label>
                     <PhotoLoader value={coach.apId} desc={"Фото для акредитації"} onRemove={e => props.onChange("apId", "")} onUpdate={id => props.onChange("apId", id)} />
-                </div>                                
+                </div>
+                <ForeignPassportsComponent passports={props.passports} onUpdate={props.onPassUpdate} />                                
             </div>
         </div>
         <div className="form-group text-right">

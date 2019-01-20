@@ -11,7 +11,7 @@ class SendButton extends React.Component{
         return this.props.doping.isPassed === "true" ? validation.isFormValid(this.props.doping, ["date"]) : false;
     }
     isAdditionalPassportsValid(){
-        if(!this.props.passports.length) return false;
+        if(!this.props.passports) return false;
         var invalidPassports = this.props.passports.filter(passport => !passport.no || !passport.seria || 
             !passport.expireDate || !parseInt(passport.photoId));
         return !!invalidPassports.length;

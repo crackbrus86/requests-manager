@@ -15,7 +15,6 @@ $user["middleName"] = clearSlashes($user["middleName"]);
 
 $tb_users = $wpdb->get_blog_prefix()."rm_users";
 $tb_others = $wpdb->get_blog_prefix()."rm_others";
-$tb_for_passport = $wpdb->get_blog_prefix() . "rm_for_passport";
 
 $sql = $wpdb->prepare("SELECT config_email AS email FROM $tb_others", "");
 $result = $wpdb->get_results($sql);
@@ -49,7 +48,7 @@ if($user["id"]){
 
 $requestContent->userId = $user["id"];
 $requestContent->coaches = array();
-savePassports($passports, $requestContent->userId, $tb_for_passport);
+savePassports($passports, $requestContent->userId);
 
 $coaches = ($_POST["coaches"]) ? esc_sql($_POST["coaches"]) : null;
 
@@ -70,7 +69,7 @@ if($coaches){
             if($wpdb->query($sql)){
                 echo "Coach is updated";
             }
-            array_push($requestContent->coaches, array($coach["id"], $coach["isFollowing"]));           
+            array_push($requestContent->coaches, array($coach["id"], $coach["isFollowing"]));         
         }elseif($coach["id"] === "" || ($coach["id"] && $coach["isFollowing"] === "false")){
 
             $coach["lastName"] = clearSlashes($coach["lastName"]);
@@ -96,6 +95,10 @@ if($coaches){
                 array_push($requestContent->coaches, array($coachId, $coach["isFollowing"]));
             }
         }
+        if($coach["passports"])
+        {
+            savePassports($coach["passports"], $coach["id"], FALSE);
+        }  
     }
 }
 

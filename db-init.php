@@ -149,6 +149,7 @@
             `SerialNumber` VARCHAR(4),
             `PassportNumber` VARCHAR(6),
             `PassportPhotoId` BIGINT(20),
-            `ExpirationDate` DATETIME
+            `ExpirationDate` DATETIME,
+            `UserRole` VARCHAR(10)
         ) {$charset_collate}";
         dbDelta($createForPassportTable);

@@ -16,6 +16,7 @@ class CoachesApp extends React.Component{
             coaches: [],
             coach: null,
             regions: [],
+            passports: [],
             paging: {
                 total: 0,
                 current: 1,
@@ -35,6 +36,7 @@ class CoachesApp extends React.Component{
         this.onCancel = this.cancelDelete.bind(this);
         this.onConfirm = this.confirmDelete.bind(this);
         this.onDownload = this.getPhotos.bind(this);
+        this.handlePassChanged = this.setPassports.bind(this);
         this.handleFilterTextChange = (text) => {
             this.setState({filterText: text});
         }
@@ -81,17 +83,23 @@ class CoachesApp extends React.Component{
     editCoach(id){
         this.setState({isLoading: true});
         services.getCoach({id: id}).then(data => {
-            this.setCoach(data);
+            var response = JSON.parse(data);
+            this.setCoach(response.coach);
+            this.setPassports(response.passports);
             this.setState({isLoading: false});
         })
     }
 
-    setCoach(data){
-        this.setState({coach: JSON.parse(data)[0]});
+    setCoach(coach){
+        this.setState({coach: coach});
+    }
+
+    setPassports(passports){
+        this.setState({passports: passports});
     }
 
     closeCoach(){
-        this.setState({coach: null});
+        this.setState({coach: null, passports: []});
     }
 
     changeCoach(field, value){
@@ -124,7 +132,8 @@ class CoachesApp extends React.Component{
             email: coach.email,
             pnpId: coach.pnpId,
             pipId: coach.pipId,
-            apId: coach.apId
+            apId: coach.apId,
+            passports: this.state.passports
         }).then(() => {
             this.closeCoach();
             this.setState({isLoading: false});
@@ -208,7 +217,15 @@ class CoachesApp extends React.Component{
                 </div>                
                 <CoachesGrid coaches={this.state.coaches} onEdit={this.onEdit} onDelete={this.onDelete} />
                 {!this.state.isFiltered && <Paging paging={this.state.paging} changePage={this.onPage} />}
-                <CoachModal coach={this.state.coach} regions={this.state.regions} onChange={this.onChange} onClose={this.onClose} onUpdate={this.onUpdate} />
+                <CoachModal 
+                coach={this.state.coach} 
+                regions={this.state.regions} 
+                onChange={this.onChange} 
+                onClose={this.onClose} 
+                onUpdate={this.onUpdate} 
+                passports={this.state.passports}
+                onPassUpdate={this.handlePassChanged}
+                />
                 <Dialog dialog={this.state.dialog} onClose={this.onCancel} onConfirm={this.onConfirm} />
                 <Preloader loading={this.state.isLoading} />
             </div>
