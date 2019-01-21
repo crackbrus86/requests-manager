@@ -39,6 +39,7 @@ class RequestForm extends React.Component{
         this.verifyOff = this.closeVerify.bind(this);
         this.onPassportsUpdate = this.updatePassports.bind(this);
         this.onCoachPassportsUpdate = this.updateCoachPassports.bind(this);
+        this.isCoachPassportsValid = this.isAllCoachPassportsValid.bind(this);
     }
 
     changeCoachStatus(value){
@@ -468,6 +469,14 @@ class RequestForm extends React.Component{
         this.setState({coachData: newCoachData});
     }
 
+    isAllCoachPassportsValid(){
+        var passports = this.state.coachData.passports;
+        if(!passports) return false;
+        var invalidPassports = passports.filter(passport => !passport.no || !passport.seria || 
+            !passport.expireDate || !parseInt(passport.photoId));
+        return !!invalidPassports.length;
+    }
+
     render(){
         var requiredGeneral = ["firstName", "lastName", "middleName", "birthDate"];
         var required = ["accreditation_photo_id", "email", "expiration_date_pass", "first_name_pass", "individual_number", "last_name_pass", "number_pass",
@@ -506,8 +515,11 @@ class RequestForm extends React.Component{
                     onChange={this.onCoachDataChange} />
                 </div>
                 <div className="form-group coach-modal-footer">
-                    <button type="button" className="btn btn-primary" disabled={this.state.modalCoach && ((validation.isFormValid(this.state.modalCoach, requiredGeneral) && !this.state.showCoachData) || 
-                    (validation.isFormValid(this.state.coachData, required) && !!this.state.showCoachData)) ? true : false } onClick={this.onCoachSet}>{(this.state.coachData.update)? "Зберегти" : "Додати"}</button>
+                    <button type="button" className="btn btn-primary" 
+                    disabled={this.state.modalCoach && ((validation.isFormValid(this.state.modalCoach, requiredGeneral) && !this.state.showCoachData) || 
+                    (!!this.state.showCoachData && 
+                        (validation.isFormValid(this.state.coachData, required) || this.isCoachPassportsValid()))
+                    ) ? true : false } onClick={this.onCoachSet}>{(this.state.coachData.update)? "Зберегти" : "Додати"}</button>
                 </div>                
             </Modal>
             <Modal target={this.state.sent} onClose={this.onReload}>
