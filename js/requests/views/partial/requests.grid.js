@@ -8,7 +8,7 @@ const ReqGrid = (props) => {
             title: "",
             field: "id",
             button: "edit",
-            width: "80px",
+            width: "60px",
             action: (e) => {
                 props.onEdit(e.target.dataset["rel"]);
             }            
@@ -21,6 +21,16 @@ const ReqGrid = (props) => {
             action: (e) => {
                 props.onDelete(e.target.dataset["rel"]);
             }            
+        },
+        {
+            title: "",
+            field: "id",
+            button: "photos",
+            color: "warning",
+            width: "80px",
+            action: (e) => {
+                props.onGetPhotos(e.target.dataset["rel"]);
+            }
         },
         {
             title: "Прізвище",

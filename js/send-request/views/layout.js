@@ -400,6 +400,7 @@ class RequestForm extends React.Component{
             photo_national_pass_id: coach.photoNationalPassId,
             region: coach.region,
             serial_number_pass: coach.serialNumberPass,
+            passports: coach.passports,
             update: {
                 index: key
             }                 

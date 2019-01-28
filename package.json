@@ -43,6 +43,7 @@
   },
   "devDependencies": {
     "node-sass": "^4.9.3",
+    "prop-types": "^15.6.2",
     "sass-loader": "^7.1.0",
     "source-map-loader": "^0.2.4",
     "webpack": "^4.16.5"

@@ -7,7 +7,8 @@ import moment from "moment";
 import Paging from "../../components/paging/paging";
 import ReqModal from "../modals/request.modal";
 import EmailsModal from "../modals/emails.modal";
-import PhoneNumbersModal from "../modals/phone.numbers.modal"
+import PhoneNumbersModal from "../modals/phone.numbers.modal";
+import RequestPhotosModal from "../modals/request.photos.modal";
 require("../../../css/requests.css");
 import Dialog from "../../components/modal/dialog";
 
@@ -23,6 +24,7 @@ class RequestsApp extends React.Component{
             preGames: [],
             coaches: [],
             emails: [],
+            requestPhotos: [],
             phoneNumbers: [],
             editRequest: null,
             dialog: null,
@@ -65,6 +67,8 @@ class RequestsApp extends React.Component{
         this.onCloseEmails = this.resetEmails.bind(this);
         this.onGetPhoneNumbers = this.getPhoneNumbers.bind(this);
         this.onClosePhoneNumbers = this.resetPhoneNumbers.bind(this);
+        this.onGetPhotosByRequest = this.getPhotosByRequest.bind(this);
+        this.onCloseRequestPhotos = this.clearRequestPhotos.bind(this);
     }
 
     changeCurrentPage(page){
@@ -307,6 +311,18 @@ class RequestsApp extends React.Component{
         }})
     }
 
+    getPhotosByRequest(id){
+        this.setState({isLoading: true});
+        services.getPhotosByRequest({id: id}).then((response) => {
+            let photos = JSON.parse(response);
+            this.setState({requestPhotos: photos, isLoading: false});
+        });
+    }
+
+    clearRequestPhotos(){
+        this.setState({requestPhotos: [] });
+    }
+
     cancelDelete(){
         this.setState({dialog: null});
     }
@@ -413,7 +429,7 @@ class RequestsApp extends React.Component{
                     </div>                    
                 </div>
             </div>
-            <ReqGrid data={this.state.requests} onEdit={this.onEdit} onDelete={this.onDelete} />
+            <ReqGrid data={this.state.requests} onEdit={this.onEdit} onDelete={this.onDelete} onGetPhotos={this.onGetPhotosByRequest} />
             <Paging paging={this.state.paging} changePage={this.changePage} />
             <ReqModal target={this.state.editRequest} regions={this.state.regions} ages={this.state.ageCat} weights={this.state.weightCat} 
             games={this.state.games} preGames={this.state.preGames} coaches={this.state.coaches} 
@@ -421,6 +437,7 @@ class RequestsApp extends React.Component{
             onAdd={this.onCoachAdd} onUpdate={this.onUpdate} />
             <EmailsModal emails={this.state.emails} onClose={this.onCloseEmails} />
             <PhoneNumbersModal numbers={this.state.phoneNumbers} onClose={this.onClosePhoneNumbers} />
+            <RequestPhotosModal photos={this.state.requestPhotos} onClose={this.onCloseRequestPhotos} />
             <Dialog dialog={this.state.dialog} onClose={this.onCancel} onConfirm={this.onConfirm} />
             <Preloader loading={this.state.isLoading} />
         </div>

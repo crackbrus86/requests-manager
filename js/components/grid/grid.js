@@ -8,6 +8,7 @@ class Grid extends React.Component{
             counter++;
             if(column.button) {
                 var color = (column.button === "edit")? "success" : "danger";
+                color = column.color || color;
                 var buttonTitle = column.button[0].toUpperCase() + column.button.slice(1);
                 var hide = (row[column.hide]) ? { display: "none" } : {};
                 cells.push(<td key={counter} width={column.width}>
