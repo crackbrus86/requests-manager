@@ -1,5 +1,7 @@
 <?php
 require_once("../wpdb-connect.php");
+require_once("../functions.php");
+
 if(current_user_can("edit_others_pages"))
 {
     $requestTable = $wpdb->get_blog_prefix() . "rm_requests";
@@ -39,24 +41,3 @@ if(current_user_can("edit_others_pages"))
     print_r($sources);
 }
 
-function populatePhotosSrc($object = NULL, $photoIds = NULL)
-{
-    global $sources;
-    if($object)
-    {
-        array_push($sources,
-            wp_get_attachment_url($object->nPassId),
-            wp_get_attachment_url($object->interPassId),
-            wp_get_attachment_url($object->aPhotoId)
-        );
-    }
-    if($photoIds)
-    {
-        for($i = 0; $i < count($photoIds); $i++)
-        {
-            array_push($sources, 
-                wp_get_attachment_url($photoIds[$i]->PassportPhotoId)
-            );
-        }
-    }
-}

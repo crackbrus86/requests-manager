@@ -8,7 +8,7 @@ import Paging from "../../components/paging/paging";
 import ReqModal from "../modals/request.modal";
 import EmailsModal from "../modals/emails.modal";
 import PhoneNumbersModal from "../modals/phone.numbers.modal";
-import RequestPhotosModal from "../modals/request.photos.modal";
+import ReviewPhotosModal from "../../shared/review.photos.modal";
 require("../../../css/requests.css");
 import Dialog from "../../components/modal/dialog";
 
@@ -437,7 +437,7 @@ class RequestsApp extends React.Component{
             onAdd={this.onCoachAdd} onUpdate={this.onUpdate} />
             <EmailsModal emails={this.state.emails} onClose={this.onCloseEmails} />
             <PhoneNumbersModal numbers={this.state.phoneNumbers} onClose={this.onClosePhoneNumbers} />
-            <RequestPhotosModal photos={this.state.requestPhotos} onClose={this.onCloseRequestPhotos} />
+            <ReviewPhotosModal photos={this.state.requestPhotos} title="Фото до заявки" onClose={this.onCloseRequestPhotos} />
             <Dialog dialog={this.state.dialog} onClose={this.onCancel} onConfirm={this.onConfirm} />
             <Preloader loading={this.state.isLoading} />
         </div>

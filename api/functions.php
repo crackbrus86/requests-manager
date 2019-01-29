@@ -37,3 +37,25 @@ function savePassports($passports, $userId, $isUser = TRUE){
 function getPassportNumbers($passport){
     return $passport["no"];
 }
+
+function populatePhotosSrc($object = NULL, $photoIds = NULL)
+{
+    global $sources;
+    if($object)
+    {
+        array_push($sources,
+            wp_get_attachment_url($object->nPassId),
+            wp_get_attachment_url($object->interPassId),
+            wp_get_attachment_url($object->aPhotoId)
+        );
+    }
+    if($photoIds)
+    {
+        for($i = 0; $i < count($photoIds); $i++)
+        {
+            array_push($sources, 
+                wp_get_attachment_url($photoIds[$i]->PassportPhotoId)
+            );
+        }
+    }
+}

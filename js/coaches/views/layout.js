@@ -7,6 +7,7 @@ import Paging from "../../components/paging/paging";
 import CoachModal from "../modals/coach.modal";
 import Dialog from "../../components/modal/dialog";
 import SharedFilter from "../../components/shared-filter/shared-filter";
+import ReviewPhotosModal from "../../shared/review.photos.modal";
 require("../../../css/coaches.css");
 
 class CoachesApp extends React.Component{
@@ -23,6 +24,7 @@ class CoachesApp extends React.Component{
                 perPage: 10,
                 offset: 0
             },
+            coachPhotos: [],
             isLoading: false,
             filterText: '',
             isFiltered: false
@@ -37,6 +39,9 @@ class CoachesApp extends React.Component{
         this.onConfirm = this.confirmDelete.bind(this);
         this.onDownload = this.getPhotos.bind(this);
         this.handlePassChanged = this.setPassports.bind(this);
+        this.onGetPhotos = this.getCoachPhotosById.bind(this);
+        this.onCloseCoachPhotos = this.clearCoachPhotos.bind(this);
+
         this.handleFilterTextChange = (text) => {
             this.setState({filterText: text});
         }
@@ -161,6 +166,18 @@ class CoachesApp extends React.Component{
         })
     }
 
+    getCoachPhotosById(id){
+        this.setState({isLoading: true});
+        services.getCoachPhotosById({coachId: id}).then(response => {
+            let photos = JSON.parse(response);
+            this.setState({ coachPhotos: photos, isLoading: false});
+        })
+    }
+
+    clearCoachPhotos(){
+        this.setState({ coachPhotos: [] });
+    }
+
     getRegions(){
         this.setState({isLoading: true});
         services.getRegions().then(data => {
@@ -215,7 +232,7 @@ class CoachesApp extends React.Component{
                     </div>
                     <div className="col-md-10"></div>
                 </div>                
-                <CoachesGrid coaches={this.state.coaches} onEdit={this.onEdit} onDelete={this.onDelete} />
+                <CoachesGrid coaches={this.state.coaches} onEdit={this.onEdit} onDelete={this.onDelete} onGetPhotos={this.onGetPhotos} />
                 {!this.state.isFiltered && <Paging paging={this.state.paging} changePage={this.onPage} />}
                 <CoachModal 
                 coach={this.state.coach} 
@@ -226,6 +243,7 @@ class CoachesApp extends React.Component{
                 passports={this.state.passports}
                 onPassUpdate={this.handlePassChanged}
                 />
+                <ReviewPhotosModal photos={this.state.coachPhotos} title="Фото тренера" onClose={this.onCloseCoachPhotos} />
                 <Dialog dialog={this.state.dialog} onClose={this.onCancel} onConfirm={this.onConfirm} />
                 <Preloader loading={this.state.isLoading} />
             </div>

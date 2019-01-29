@@ -7,6 +7,7 @@ import UsersGrid from "./partial/users.grid";
 import Paging from "../../components/paging/paging";
 import UserModal from "../modals/users.modal";
 import Dialog from "../../components/modal/dialog";
+import ReviewPhotosModal from "../../shared/review.photos.modal";
 require("../../../css/users.css");
 
 class UsersApp extends React.Component{
@@ -23,6 +24,7 @@ class UsersApp extends React.Component{
                 perPage: 10,
                 offset: 0
             },
+            userPhotos: [],
             isLoading: false,
             filterText: '' ,
             isFiltered: false          
@@ -37,6 +39,9 @@ class UsersApp extends React.Component{
         this.onConfirm = this.confirmDialog.bind(this);
         this.onDownload = this.getPhotos.bind(this);
         this.onPassUpdate = this.updatePassports.bind(this);
+        this.onGetPhotos = this.getUserPhotosById.bind(this);
+        this.onCloseUserPhotos = this.clearUserPhotos.bind(this);
+
         this.handleFilterTextChange = (text) => {
             this.setState({filterText: text});
         }
@@ -162,6 +167,18 @@ class UsersApp extends React.Component{
         })
     }
 
+    getUserPhotosById(id){
+        this.setState({isLoading: true});
+        services.getUserPhotosById({userId: id}).then((response) => {
+            let photos = JSON.parse(response);
+            this.setState({userPhotos: photos, isLoading: false});
+        });
+    }
+
+    clearUserPhotos(){
+        this.setState({ userPhotos: [] });
+    }
+
     cancelDelete(){
         this.setState({dialog: null})
     }
@@ -221,7 +238,7 @@ class UsersApp extends React.Component{
                     </div>
                     <div className="col-md-10"></div>
                 </div>
-                <UsersGrid users={this.state.users} onEdit={this.onEdit} onDelete = {this.onDelete} />
+                <UsersGrid users={this.state.users} onEdit={this.onEdit} onDelete = {this.onDelete} onGetPhotos={this.onGetPhotos} />
                 {(!this.state.isFiltered) ? <Paging paging={this.state.paging} changePage={this.onPage} /> : null}
             </div>
             <UserModal 
@@ -233,6 +250,7 @@ class UsersApp extends React.Component{
                 passports={this.state.passports}
                 onPassUpdate={this.onPassUpdate}
                 />
+            <ReviewPhotosModal photos={this.state.userPhotos} title="Фото користувача" onClose={this.onCloseUserPhotos}  />
             <Dialog dialog={this.state.dialog} onClose={this.onCancel} onConfirm={this.onConfirm} />
             <Preloader loading={this.state.isLoading}/>
         </div>

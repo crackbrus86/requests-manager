@@ -62,3 +62,11 @@ export const runFilter = (contract) => {
         data: contract
     })
 }
+
+export const getUserPhotosById = (contract) => {
+    return jQuery.ajax({
+        url: useDir + "GetUserPhotosById.php",
+        type: "GET",
+        data: contract
+    })
+}
