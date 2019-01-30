@@ -6,7 +6,10 @@ if(current_user_can("edit_others_pages")):
     $offset = $_GET["offset"];
     $game = $_GET["game"];
     $year = $_GET["year"];
-    $sql = $wpdb->prepare("SELECT user_id, coaches FROM $tb_requests WHERE current_competition = %d AND year = %d LIMIT %d OFFSET %d", $game, $year, $limit, $offset);
+    $sql = $wpdb->prepare("SELECT user_id, coaches FROM $tb_requests 
+    WHERE current_competition = %d AND year = %d 
+    ORDER BY create_date DESC
+    LIMIT %d OFFSET %d", $game, $year, $limit, $offset);
     $results = $wpdb->get_results($sql);      
     $usersId = Array();
     $coachesId = Array();
