@@ -130,7 +130,7 @@ export const getCoachesPhoneNumbers = (contract) => {
 
 export const getPhotosByRequest = (contract) => {
     return jQuery.ajax({
-        url: reqDir + "GetphotosById.php",
+        url: reqDir + "GetPhotosById.php",
         type: "POST",
         data: contract
     })

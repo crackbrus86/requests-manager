@@ -389,14 +389,15 @@ class RequestsApp extends React.Component{
         services.getPhotos({
             offset: this.state.paging.offset,
             limit: this.state.paging.perPage,
-            game: this.state.filter.currentGame
+            game: this.state.filter.currentGame,
+            year: this.state.filter.year.getFullYear()
         }).then(data => {
             this.setState({isLoading: false});
             if(data === "false"){
                 alert("Фото не знайдені");
             }else{
                 location.href = "../wp-content/plugins/requests-manager/api/Requests/GetPhotos.php?limit=" + 
-                this.state.paging.perPage + "&offset=" + this.state.paging.offset + "&game=" + this.state.filter.currentGame;
+                this.state.paging.perPage + "&offset=" + this.state.paging.offset + "&game=" + this.state.filter.currentGame + "&year=" + this.state.filter.year.getFullYear();
             }
         })
     }
