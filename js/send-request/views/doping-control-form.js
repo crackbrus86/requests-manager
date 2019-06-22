@@ -23,7 +23,16 @@ const DopingControlForm = (props) => {
                         <input type="radio" value="true" checked={props.data.isPassed === "true"} onChange={e => props.onChange("isPassed", e.target.value)} /> Так
                     </label>
                 </div> 
-                {dcDate}           
+                {dcDate} 
+                {
+                    !!props.isFormValid &&
+                    <div>
+                        <div><label>Антидопінгова заява</label></div>
+                        <div className="form-group">
+                            <button type="button" className="btn btn-info" onClick={() => props.showDoc("athleteNote")}>Заява спортсмена</button>
+                        </div> 
+                    </div>
+                }         
         </fieldset>
     </div>);
 }

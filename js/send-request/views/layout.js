@@ -12,12 +12,14 @@ require("../../../css/coach-modal.css");
 require("../../../css/request-form.css");
 import DopingControlForm from "./doping-control-form";
 import SendButton from "./send-button";
+import {TextDocModal} from "../modals/text.doc.modal"
 
 class RequestForm extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            verify: null
+            verify: null,
+            textDoc: null
         }
         this.onUserChange = this.changeUserField.bind(this);
         this.onUserDataChange = this.changeUserDataField.bind(this);
@@ -483,14 +485,20 @@ class RequestForm extends React.Component{
         return !!invalidPassports.length;
     }
 
-    loadDoc (){
-        services.getDocument("athleteNote").then(t => console.log(t));
+    loadDoc (docName){
+        services.getDocument(docName)
+            .then(doc => this.setState({textDoc: doc}));
+    }
+
+    closeDoc(){
+        this.setState({textDoc: null});
     }
 
     render(){
         var requiredGeneral = ["firstName", "lastName", "middleName", "birthDate"];
         var required = ["accreditation_photo_id", "email", "expiration_date_pass", "first_name_pass", "individual_number", "last_name_pass", "number_pass",
-                        "phone", "photo_international_pass_id", "photo_national_pass_id", "region", "serial_number_pass", "n_pass"];        
+                        "phone", "photo_international_pass_id", "photo_national_pass_id", "region", "serial_number_pass", "n_pass"];
+        var isFormValid = !validation.isFormValid(this.state.userData, required);
         return <div>
             <NameForm person={this.state.user} onChange={this.onUserChange} onNext={this.onNext} isReadOnly={this.state.showUserData} />
             <PersonalForm 
@@ -503,7 +511,7 @@ class RequestForm extends React.Component{
             <GameForm isVisible={this.state.showGameData} game={this.state.gameData} ageCategories={this.state.ageCategories} 
             actualGames={this.state.actualGames} beforeGames={this.state.beforeGames} weightCategories={this.state.weightCategories} onChange={this.onGameChange} />
             <CoachesSection isVisible={this.state.showGameData} coaches={this.state.coaches} hasCoach={this.state.hasCoach} onChange={this.onCoachStatusChange} openCoachModal={this.openModal} editCoach={this.onCoachEdit} removeCoach={this.onCoachRemove} />
-            <DopingControlForm isVisible={this.state.showUserData} data={this.state.dopingControl} onChange={this.onDopControlChange} />
+            <DopingControlForm isVisible={this.state.showUserData} data={this.state.dopingControl} isFormValid={isFormValid} onChange={this.onDopControlChange} showDoc={this.loadDoc.bind(this)} />
             <SendButton 
                 isVisible={this.state.showUserData} 
                 userData={this.state.userData}
@@ -548,6 +556,14 @@ class RequestForm extends React.Component{
                     <button type="button" className="btn btn-default reload-btn" onClick={this.checkUserExists.bind(this)}>Підтвердити</button>
                 </div>
             </Modal>
+            {!!this.state.textDoc && 
+                <TextDocModal 
+                textDoc={this.state.textDoc} 
+                onClose={this.closeDoc.bind(this)} 
+                user={Object.assign(this.state.user, this.state.userData)}
+                className="text-doc-modal" 
+                coach={this.state.coach} />
+            }
             <Preloader loading={this.state.loading} />
         </div>
     }
