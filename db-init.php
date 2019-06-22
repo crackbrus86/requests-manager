@@ -57,7 +57,8 @@
             `email` VARCHAR(50) NOT NULL,
             `photo_national_pass_id` BIGINT NOT NULL,
             `photo_international_pass_id` BIGINT NOT NULL,
-            `accreditation_photo_id` BIGINT NOT NULL
+            `accreditation_photo_id` BIGINT NOT NULL,
+            `n_pass` VARCHAR(12) NULL
         ) {$charset_collate}";
         dbDelta($createUsersTab);
         $tb_coaches = $wpdb->get_blog_prefix().'rm_coaches';
@@ -79,7 +80,8 @@
             `email` VARCHAR(50),
             `photo_national_pass_id` BIGINT,
             `photo_international_pass_id` BIGINT,
-            `accreditation_photo_id` BIGINT
+            `accreditation_photo_id` BIGINT,
+            `n_pass` VARCHAR(12) NULL
         ) {$charset_collate}";
         dbDelta($createCoachesTab);
         $tb_requests = $wpdb->get_blog_prefix().'rm_requests';

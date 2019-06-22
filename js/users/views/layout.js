@@ -151,6 +151,7 @@ class UsersApp extends React.Component{
             pnpId: user.pnpId,
             pipId: user.pipId,
             apId: user.apId,
+            n_pass: user.n_pass,
             passports: this.state.passports
         }).then(() => {
             this.closeUser();

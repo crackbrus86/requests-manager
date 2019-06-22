@@ -25,6 +25,10 @@ componentWillMount(){
                     <select value={region} className="form-control" onChange={e => this.props.onChange("region", e.target.value)}>{regionsList}</select>
                 </div>
                 <div className="form-group">
+                    <label>Серія та номер національного паспорту {validation.isFieldValid(this.props.person.n_pass, "Це поле є обов'язковим")}</label>
+                    <input value={this.props.person.n_pass} onChange={e => this.props.onChange("n_pass", e.target.value)} className="form-control" />
+                </div>
+                <div className="form-group">
                     <label>Прізвище як у закордонному паспорті {validation.isFieldValid(this.props.person.last_name_pass, "Це поле є обов'язковим")}</label>
                     <input value={this.props.person.last_name_pass} onChange={e => this.props.onChange("last_name_pass", e.target.value)} type="text" className="form-control" placeholder="Last Name" maxLength="50" />
                 </div>

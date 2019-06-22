@@ -20,7 +20,7 @@ class SendButton extends React.Component{
         if(!this.props.isVisible) return null;
         var requiredUserData = ["first_name_pass", "last_name_pass", "serial_number_pass", "number_pass",
                         "expiration_date_pass", "individual_number", "phone", "email",
-                        "photo_national_pass_id", "photo_international_pass_id", "accreditation_photo_id"];
+                        "photo_national_pass_id", "photo_international_pass_id", "accreditation_photo_id", "n_pass"];
         return <div className="form-group">
             <button 
                 type="button" 

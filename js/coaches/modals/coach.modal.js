@@ -36,6 +36,10 @@ const CoachModal = (props) => {
                     </select>
                 </div>
                 <div className="form-group">
+                    <label>Серія та номер національного паспорту {validation.isFieldValid(coach.n_pass, "Це поле є обов'язковим")}</label>
+                    <input value={coach.n_pass} onChange={e => props.onChange("n_pass", e.target.value)} className="form-control" />
+                </div>
+                <div className="form-group">
                     <label>Прізвище як у закордонному паспорті{validation.isFieldValid(coach.latSurname, "Це поле є обов'язковим")}</label>
                     <input type="text" value={coach.latSurname} className="form-control" onChange={e => props.onChange("latSurname", e.target.value)} />
                 </div>

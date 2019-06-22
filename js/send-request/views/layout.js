@@ -138,7 +138,8 @@ class RequestForm extends React.Component{
             photoNationalPassId: this.state.coachData.photo_national_pass_id,
             region: this.state.coachData.region,
             serialNumberPass: this.state.coachData.serial_number_pass,
-            passports: this.state.coachData.passports 
+            passports: this.state.coachData.passports,
+            n_pass: this.state.coachData.n_pass
         }
         var coaches = this.state.coaches;
         if(this.state.coachData.update){
@@ -283,7 +284,8 @@ class RequestForm extends React.Component{
             photo_international_pass_id: "",
             photo_national_pass_id: "",
             region: regionId,
-            serial_number_pass: ""
+            serial_number_pass: "",
+            n_pass: ""
         }})
     }
 
@@ -302,7 +304,8 @@ class RequestForm extends React.Component{
             photo_national_pass_id: "",
             region: regionId,
             serial_number_pass: "",
-            passports: []
+            passports: [],
+            n_pass: ""
         }})
     }    
 
@@ -341,7 +344,8 @@ class RequestForm extends React.Component{
                 photo_international_pass_id: this.state.userData.photo_international_pass_id,
                 photo_national_pass_id: this.state.userData.photo_national_pass_id,
                 region: this.state.userData.region,
-                serial_number_pass: this.state.userData.serial_number_pass           
+                serial_number_pass: this.state.userData.serial_number_pass,
+                n_pass: this.state.userData.n_pass          
             },
             coaches: this.state.coaches,
             passports: this.state.passports,
@@ -400,6 +404,7 @@ class RequestForm extends React.Component{
             photo_national_pass_id: coach.photoNationalPassId,
             region: coach.region,
             serial_number_pass: coach.serialNumberPass,
+            n_pass: coach.n_pass,
             passports: coach.passports,
             update: {
                 index: key
@@ -478,10 +483,14 @@ class RequestForm extends React.Component{
         return !!invalidPassports.length;
     }
 
+    loadDoc (){
+        services.getDocument("athleteNote").then(t => console.log(t));
+    }
+
     render(){
         var requiredGeneral = ["firstName", "lastName", "middleName", "birthDate"];
         var required = ["accreditation_photo_id", "email", "expiration_date_pass", "first_name_pass", "individual_number", "last_name_pass", "number_pass",
-                        "phone", "photo_international_pass_id", "photo_national_pass_id", "region", "serial_number_pass"];        
+                        "phone", "photo_international_pass_id", "photo_national_pass_id", "region", "serial_number_pass", "n_pass"];        
         return <div>
             <NameForm person={this.state.user} onChange={this.onUserChange} onNext={this.onNext} isReadOnly={this.state.showUserData} />
             <PersonalForm 

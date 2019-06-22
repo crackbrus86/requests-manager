@@ -2,6 +2,7 @@ var dir = "../wp-content/plugins/requests-manager/api/Requests-Manager/";
 var regionDir = "../wp-content/plugins/requests-manager/api/Regions-Manager/";
 var categoryDir = "../wp-content/plugins/requests-manager/api/Categories-Manager/";
 var gamesDir = "../wp-content/plugins/requests-manager/api/Games-Manager/";
+var contentDir = "../wp-content/plugins/requests-manager/content/";
 
 export const getAllRegions = () => {
     return jQuery.ajax({
@@ -77,4 +78,19 @@ export const checkUserExists = (contract) => {
         type: "POST",
         data: contract
     })
+}
+
+export const getDocument = (name) => {
+    const fileName = documentsDictionary[name];
+    if(!fileName) return;
+    const fileUrl = contentDir + fileName;
+
+    return fetch(fileUrl)
+        .then( r => r.text())
+}
+
+var documentsDictionary = {
+    athleteNote: "ath_note.txt",
+    coachNote: "coach_note.txt",
+    noteToTeam: "note_to_team.txt"
 }

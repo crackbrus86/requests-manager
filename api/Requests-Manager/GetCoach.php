@@ -7,7 +7,7 @@
     endforeach;
     $coach = $wpdb->get_row("SELECT id, region, last_name_pass, first_name_pass, serial_number_pass, number_pass, 
     expiration_date_pass, individual_number, phone, email, photo_national_pass_id, 
-    photo_international_pass_id, accreditation_photo_id FROM $tb_coaches WHERE last_name = '$data[lastName]' AND first_name = '$data[firstName]'
+    photo_international_pass_id, accreditation_photo_id, n_pass FROM $tb_coaches WHERE last_name = '$data[lastName]' AND first_name = '$data[firstName]'
     AND middle_name = '$data[middleName]' AND birth_date = '$data[birthDate]'");
     $sql = $wpdb->prepare("SELECT ForPassportId AS id, PassportNumber AS no, SerialNumber AS seria, 
     PassportPhotoId AS photoId, ExpirationDate AS expireDate FROM $tb_for_passports WHERE UserId = %d", $coach->id);
