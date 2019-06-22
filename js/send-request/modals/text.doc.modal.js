@@ -4,7 +4,7 @@ import moment from "moment";
 require("../../../css/text-doc-modal.css")
 
 export const TextDocModal = props => {
-    let text = parseText(props.textDoc, getTemplates(props.user, props.coach))
+    let text = parseText(props.textDoc, getTemplates(props.user, props.coach, props.event))
 
     const printDoc = () => {
         jQuery.print("#txtDoc");
@@ -23,7 +23,7 @@ function parseText(textStr, templates){
     return textStr;
 }
 
-function getTemplates(user, coach){
+function getTemplates(user, coach, event){
     return [
         {template: '[%last_name%]', value: user.lastName}, 
         {template: '[%first_name%]', value: user.firstName}, 
@@ -33,6 +33,15 @@ function getTemplates(user, coach){
         {template: '[%current_date%]', value: moment(new Date()).format("DD/MM/YYYY") }, 
         {template: '[%first_name_initial%]', value: user.firstName[0]}, 
         {template: '[%middle_name_initial%]', value: user.middleName[0]},
-        {template: '[%date_born%]', value: moment(user.birthDate).format("DD/MM/YYYY")}
+        {template: '[%date_born%]', value: moment(user.birthDate).format("DD/MM/YYYY")},
+        {template: '[%c_last_name%]', value: coach ? coach.lastName : ""}, 
+        {template: '[%c_first_name%]', value: coach ? coach.firstName : ""}, 
+        {template: '[%c_middle_name%]', value: coach ? coach.middleName : ""}, 
+        {template: '[%c_year_born%]', value: coach ? moment(coach.birthDate).format('YYYY') : ""},
+        {template: '[%c_n_pass%]', value: coach ? coach.n_pass  : ""}, 
+        {template: '[%c_first_name_initial%]', value: coach ? coach.firstName[0]  : ""}, 
+        {template: '[%c_middle_name_initial%]', value: coach ? coach.middleName[0] : ""},
+        {template: '[%c_date_born%]', value: coach ? moment(coach.birthDate).format("DD/MM/YYYY") : ""},
+        {template: '[%event%]', value: event || ""}
     ]
 };

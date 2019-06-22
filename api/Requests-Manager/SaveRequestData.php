@@ -92,6 +92,8 @@ if($coaches){
                     array_push($requestContent->coaches, array($coach["id"], $coach["isFollowing"]));
                 }
             }else{
+                $sql = $wpdb->prepare("UPDATE $tb_coaches SET n_pass = %s WHERE id = %d", $coach["n_pass"], $coachId);
+                $wpdb->query($sql);
                 array_push($requestContent->coaches, array($coachId, $coach["isFollowing"]));
             }
         }

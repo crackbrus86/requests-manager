@@ -2,6 +2,7 @@ import React from "react";
 require("../../../css/react-datetime.css");
 import Datetime from "react-datetime";
 import * as validation from "../../components/validation/validation";
+require("../../../css/text-doc-modal.css")
 import moment from "moment";
 
 const DopingControlForm = (props) => {
@@ -29,7 +30,15 @@ const DopingControlForm = (props) => {
                     <div>
                         <div><label>Антидопінгова заява</label></div>
                         <div className="form-group">
-                            <button type="button" className="btn btn-info" onClick={() => props.showDoc("athleteNote")}>Заява спортсмена</button>
+                            <button type="button" className="btn btn-info txt-btn" onClick={() => props.showDoc("athleteNote")}>Заява спортсмена</button>
+                            {
+                                !!props.isCoachValid &&
+                                    <span>
+                                        <button type="button" className="btn btn-info txt-btn" onClick={() => props.showDoc("coachNote")}>Заява тренера</button>
+                                        <button type="button" className="btn btn-info txt-btn" onClick={() => props.showDoc("noteToTeam")}>Заява в збірну</button>
+                                    </span>
+                                    
+                            }
                         </div> 
                     </div>
                 }         

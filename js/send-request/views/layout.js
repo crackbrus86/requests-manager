@@ -499,6 +499,9 @@ class RequestForm extends React.Component{
         var required = ["accreditation_photo_id", "email", "expiration_date_pass", "first_name_pass", "individual_number", "last_name_pass", "number_pass",
                         "phone", "photo_international_pass_id", "photo_national_pass_id", "region", "serial_number_pass", "n_pass"];
         var isFormValid = !validation.isFormValid(this.state.userData, required);
+        var isCoachValid = !!this.state.coaches.length && !validation.isFormValid(this.state.coaches[0], ["firstName", "lastName", "middleName", "birthDate", "n_pass"])
+        var actualGame = !!this.state.actualGames ? this.state.actualGames.find(game => game.id == this.state.gameData.aGame) : null;
+        var event = !!actualGame ? actualGame.name : "";
         return <div>
             <NameForm person={this.state.user} onChange={this.onUserChange} onNext={this.onNext} isReadOnly={this.state.showUserData} />
             <PersonalForm 
@@ -511,7 +514,14 @@ class RequestForm extends React.Component{
             <GameForm isVisible={this.state.showGameData} game={this.state.gameData} ageCategories={this.state.ageCategories} 
             actualGames={this.state.actualGames} beforeGames={this.state.beforeGames} weightCategories={this.state.weightCategories} onChange={this.onGameChange} />
             <CoachesSection isVisible={this.state.showGameData} coaches={this.state.coaches} hasCoach={this.state.hasCoach} onChange={this.onCoachStatusChange} openCoachModal={this.openModal} editCoach={this.onCoachEdit} removeCoach={this.onCoachRemove} />
-            <DopingControlForm isVisible={this.state.showUserData} data={this.state.dopingControl} isFormValid={isFormValid} onChange={this.onDopControlChange} showDoc={this.loadDoc.bind(this)} />
+            <DopingControlForm 
+                isVisible={this.state.showUserData} 
+                data={this.state.dopingControl} 
+                isFormValid={isFormValid} 
+                onChange={this.onDopControlChange} 
+                showDoc={this.loadDoc.bind(this)} 
+                isCoachValid={isCoachValid}
+            />
             <SendButton 
                 isVisible={this.state.showUserData} 
                 userData={this.state.userData}
@@ -524,6 +534,13 @@ class RequestForm extends React.Component{
                 <div className="coach-wrap">
                     <NameForm isCoach={true} person={this.state.modalCoach} onChange={this.onCoachChange} onNext={this.onCoachLoad} 
                         setFollowing={this.onSetCoachFollowing} isReadOnly={this.state.showCoachData} />
+                    {
+                        !this.state.showCoachData &&
+                        <div className="form-group">
+                            <label>Серія та номер національного паспорту {validation.isFieldValid(this.state.coachData.n_pass, "Це поле є обов'язковим")}</label>
+                            <input value={this.state.coachData.n_pass} onChange={e => this.onCoachDataChange("n_pass", e.target.value)} className="form-control" />
+                        </div>
+                    }
                     <PersonalForm 
                     isVisible={this.state.showCoachData} 
                     person={this.state.coachData} 
@@ -562,7 +579,8 @@ class RequestForm extends React.Component{
                 onClose={this.closeDoc.bind(this)} 
                 user={Object.assign(this.state.user, this.state.userData)}
                 className="text-doc-modal" 
-                coach={this.state.coach} />
+                event={event}
+                coach={this.state.coaches[0] || null} />
             }
             <Preloader loading={this.state.loading} />
         </div>
