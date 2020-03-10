@@ -4,6 +4,12 @@
     margin-left: -30%!important;    
 }
 
+.user-request-modal{
+    top: 10%!important;
+    width: 60%!important;
+    margin-left: -30%!important;    
+}
+
 .custom-modal h6{
     font-size: 25px;
 }

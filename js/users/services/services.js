@@ -70,3 +70,11 @@ export const getUserPhotosById = (contract) => {
         data: contract
     })
 }
+
+export const getUserRequests = (contract) => {
+    return jQuery.ajax({
+        url: useDir + "GetAllUserRequests.php",
+        type: "GET",
+        data: contract
+    })
+}

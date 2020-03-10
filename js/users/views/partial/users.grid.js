@@ -51,7 +51,17 @@ const UsersGrid = (props) => {
         {
             title: "Дата народження",
             field: "born",
-            width: "*"
+            width: "120px"
+        },
+        {
+            title: "",
+            field: "id",
+            button: "заявки",
+            color: "default",
+            width: "*",
+            action: (e) => {
+                props.onOpenRequests(e.target.dataset["rel"]);
+            }
         }
     ];
     var rows = props.users.map(user => {

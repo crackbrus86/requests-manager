@@ -6,6 +6,7 @@ import SharedFilter from "../../components/shared-filter/shared-filter";
 import UsersGrid from "./partial/users.grid";
 import Paging from "../../components/paging/paging";
 import UserModal from "../modals/users.modal";
+import UserRequests from "../modals/user.requests"
 import Dialog from "../../components/modal/dialog";
 import ReviewPhotosModal from "../../shared/review.photos.modal";
 require("../../../css/users.css");
@@ -27,7 +28,8 @@ class UsersApp extends React.Component{
             userPhotos: [],
             isLoading: false,
             filterText: '' ,
-            isFiltered: false          
+            isFiltered: false,
+            showRequestsForId: null         
         }
         this.onEdit = this.editUser.bind(this);
         this.onPage = this.goToPage.bind(this);
@@ -220,6 +222,14 @@ class UsersApp extends React.Component{
         if(props.update) this.getRegions();
     }
 
+    closeRequests(){
+        this.setState({showRequestsForId: null})
+    }
+
+    showRequests(id){
+        this.setState({showRequestsForId: id})
+    }
+
     render(){
         return <div className="row users-wrapper">
             <div className="col-md-12 users-content-section">
@@ -232,7 +242,7 @@ class UsersApp extends React.Component{
                         onFilterRun={this.handleFilterRun} />
                     </div>
                 </div>
-                <UsersGrid users={this.state.users} onEdit={this.onEdit} onDelete = {this.onDelete} onGetPhotos={this.onGetPhotos} />
+                <UsersGrid users={this.state.users} onEdit={this.onEdit} onDelete = {this.onDelete} onGetPhotos={this.onGetPhotos} onOpenRequests={this.showRequests.bind(this)} />
                 {(!this.state.isFiltered) ? <Paging paging={this.state.paging} changePage={this.onPage} /> : null}
             </div>
             <UserModal 
@@ -244,6 +254,7 @@ class UsersApp extends React.Component{
                 passports={this.state.passports}
                 onPassUpdate={this.onPassUpdate}
                 />
+            { this.state.showRequestsForId && <UserRequests userId={this.state.showRequestsForId} onClose={this.closeRequests.bind(this)} /> }
             <ReviewPhotosModal photos={this.state.userPhotos} title="Фото користувача" onClose={this.onCloseUserPhotos}  />
             <Dialog dialog={this.state.dialog} onClose={this.onCancel} onConfirm={this.onConfirm} />
             <Preloader loading={this.state.isLoading}/>
