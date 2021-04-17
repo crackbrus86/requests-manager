@@ -59,3 +59,22 @@ function populatePhotosSrc($object = NULL, $photoIds = NULL)
         }
     }
 }
+
+function sortByWeigth($a, $b)
+{
+    return $a->weight > $b->weight;
+}
+
+function getWeightValue($value)
+{
+    $nextValue = str_replace("до ", "", $value);
+    $nextValue = str_replace("понад ", "", $nextValue);
+    $nextValue = str_replace(" кг", "", $nextValue);
+    return (float) $nextValue;
+}
+
+function addWeightField($a)
+{
+    $a->weight = getWeightValue($a->title_w);
+    return $a;
+}
