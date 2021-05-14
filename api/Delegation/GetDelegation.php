@@ -33,7 +33,7 @@ if(current_user_can("edit_others_pages")):
         $result = $wpdb->get_results($sql_3);
         $user = $result[0];
         array_push($delegation, $user);
-        if(count($request->coaches)){
+        if(!!$request->coaches && !!count($request->coaches)){
             foreach($request->coaches as $coach){
                 if($coach[1] === "true"){
                     $coach_id = $coach[0];
