@@ -30,7 +30,7 @@ endif;
 
 function takeCoaches($coaches){
     global $coachesId;
-    if(count($coaches) > 0){
+    if(!!$coaches && count($coaches) > 0){
         foreach($coaches as $coach){
             if(checkBoolString($coach[1]) && !in_array($coach[0], $coachesId)) array_push($coachesId, $coach[0]);
         }
