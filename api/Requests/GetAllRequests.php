@@ -19,10 +19,10 @@ if(current_user_can('edit_others_pages')):
             ON $tb_request.user_id = $tb_user.id
         JOIN $tb_category_age
             ON $tb_request.age_category = $tb_category_age.id
-        JOIN $tb_category_weight
-            ON $tb_request.weight_category = $tb_category_weight.id
         JOIN $tb_games
-            ON $tb_request.current_competition = $tb_games.id 
+            ON $tb_request.current_competition = $tb_games.id
+        LEFT JOIN $tb_category_weight
+            ON $tb_request.weight_category = $tb_category_weight.id 
     WHERE $tb_request.year = $year AND $tb_request.current_competition IN ($games)
     ORDER BY $tb_request.create_date DESC
     LIMIT $limit OFFSET $offset");

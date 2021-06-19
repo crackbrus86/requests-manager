@@ -17,7 +17,7 @@ if(current_user_can("edit_others_posts")):
             ON $tb_requests.user_id = $tb_users.id
         JOIN $tb_divisions
             ON $tb_requests.age_category = $tb_divisions.id
-        JOIN $tb_weightClass
+        LEFT JOIN $tb_weightClass
             ON $tb_requests.weight_category = $tb_weightClass.id
         WHERE $tb_requests.current_competition = %d AND $tb_requests.year = %s ORDER BY $tb_requests.age_category", $game, $year);
 
