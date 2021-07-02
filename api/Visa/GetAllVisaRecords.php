@@ -17,7 +17,7 @@
             array_push($users, fillArray($tb_users, $record->user, 'athlete'));
             $coachesTmp = unserialize($record->coaches);  
             $filteredCoaches = filterCoaches($coachesTmp);         
-            if(count($filteredCoaches) > 0){
+            if(!!$filteredCoaches && count($filteredCoaches) > 0){
                 foreach($filteredCoaches as $coach){
                     array_push($coaches, fillArray($tb_coaches, $coach, 'coach'));
                 }
@@ -45,7 +45,7 @@
 
     function filterCoaches($coaches){
         $tmp = array();
-        if(count($coaches) > 0):
+        if(!!$coaches && count($coaches) > 0):
             foreach($coaches as $coach){
                 if($coach[1] === "true") array_push($tmp, $coach[0]);
             } 
@@ -56,14 +56,14 @@
     function appendVisaRecordsByForPassport($records){
         global $wpdb;
         $tb_for_passport = $wpdb->get_blog_prefix() . "rm_for_passport";
-        if(!count($records)) return array();
+        if(!!$records && !count($records)) return array();
         $newRecords = array();
         for($i = 0; $i < count($records); $i++)
         {
             $record = $records[$i];
                 $sql = $wpdb->prepare("SELECT PassportNumber AS no, SerialNumber AS seria, ExpirationDate AS expireDate FROM $tb_for_passport WHERE UserId = %d", $record->id);
                 $passports = $wpdb->get_results($sql);
-                if(count($passports))
+                if(!!$passport && count($passports))
                 {
                     for($j = 0; $j < count($passports); $j++)
                     {
