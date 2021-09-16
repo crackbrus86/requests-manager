@@ -34,6 +34,11 @@ const ReqModal = (props) => {
     
     var allCoaches = props.coaches.map(c => <option key={c.id} value={c.id}>{c.surname + " " + c.name + " " + c.mName}</option>);
     var area = props.games.filter(x => x.id == request.game)[0].area;
+
+    const onChangeExersiseValue = (field, value) => {
+        const strValue = !!value ? value.replace(",", ".") : 0;
+        props.onChange(field, strValue, "results")
+    }
     return (<div>
         <Modal target={props.target} onClose={props.onClose} className="request-edit-modal">
         <h3>{"Редагувати заявку"}</h3>
@@ -77,15 +82,15 @@ const ReqModal = (props) => {
                     <div className="row">
                         <div className="col-md-3">
                             <label>Присід.</label>
-                            <input value={request.results.squat} type="text" className="form-control" placeholder="00.00" disabled={type === "1"} onChange={e => props.onChange("squat", e.target.value, "results")} />
+                            <input value={request.results.squat} type="text" className="form-control" placeholder="00.00" disabled={type === "1"} onChange={e => onChangeExersiseValue("squat", e.target.value)} />
                         </div>
                         <div className="col-md-3">
                             <label>Жим</label>
-                            <input value={request.results.press} type="text" className="form-control" placeholder="00.00" onChange={e => props.onChange("press", e.target.value, "results")} />
+                            <input value={request.results.press} type="text" className="form-control" placeholder="00.00" onChange={e => onChangeExersiseValue("press", e.target.value)} />
                         </div>
                         <div className="col-md-3">
                             <label>Тяга</label>
-                            <input value={request.results.lift} type="text" className="form-control" placeholder="00.00" disabled={type === "1"} onChange={e => props.onChange("lift", e.target.value, "results")} />                                
+                            <input value={request.results.lift} type="text" className="form-control" placeholder="00.00" disabled={type === "1"} onChange={e => onChangeExersiseValue("lift", e.target.value)} />                                
                         </div>
                         <div className="col-md-3">
                             <label>Сума</label>

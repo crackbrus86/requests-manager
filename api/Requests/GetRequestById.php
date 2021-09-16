@@ -22,7 +22,7 @@ if(current_user_can("edit_others_pages")){
     $request[0]->results = unserialize($request[0]->results);
     $request[0]->coaches = unserialize($request[0]->coaches);
     $request[0]->coach_details = array();
-    if(count($request[0]->coaches) > 0){
+    if(!!$coaches && count($request[0]->coaches) > 0){
         $coaches = $request[0]->coaches;
         foreach($coaches as $coach){
             $coachSql = $wpdb->prepare("SELECT id, first_name AS name, last_name AS surname, middle_name AS mName FROM $tbCoa WHERE id = %d", $coach[0]);
