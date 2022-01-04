@@ -24,7 +24,7 @@ foreach($_FILES as $file) {
                 $file_url = ABSPATH .'/wp-content/uploads/pictures/'.$new_file_name;
                 $file_type = $file['type'];
                 $attachment_id = upload_user_file( $file_name, $file_url, $file_type);
-                $nonce = wp_nonce_url( admin_url( 'tools.php?page=regenerate-thumbnails&goback=1&ids=' . $attachment_id ), 'regenerate-thumbnails' );
+                // $nonce = wp_nonce_url( admin_url( 'tools.php?page=regenerate-thumbnails&goback=1&ids=' . $attachment_id ), 'regenerate-thumbnails' );
 				echo $attachment_id;
 		}
 	}	
@@ -39,9 +39,9 @@ function upload_user_file( $file, $file_url, $file_type) {
               'guid' => $file_url
           );
           $attachment_id = wp_insert_attachment( $attachment, $file_url );
-          require_once($_SERVER['DOCUMENT_ROOT'].'/wp-admin/includes/image.php');
-          $attachment_data = wp_generate_attachment_metadata( $attachment_id, $filename );
-          wp_update_attachment_metadata( $attachment_id, $attachment_data );
+        //   require_once($_SERVER['DOCUMENT_ROOT'].'/wp-admin/includes/image.php');
+        //   $attachment_data = wp_generate_attachment_metadata( $attachment_id, $filename );
+        //   wp_update_attachment_metadata( $attachment_id, $attachment_data );
           if( 0 < intval( $attachment_id ) ) {
                 return $attachment_id;
           }
