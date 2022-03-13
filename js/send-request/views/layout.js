@@ -25,7 +25,6 @@ class RequestForm extends React.Component{
         this.onUserDataChange = this.changeUserDataField.bind(this);
         this.onNext = this.getNext.bind(this);
         this.onGameChange = this.changeGameField.bind(this);
-        this.onCoachStatusChange = this.changeCoachStatus.bind(this);
         this.onCloseModal = this.closeCoachModal.bind(this);
         this.openModal = this.openCoachModal.bind(this);
         this.onCoachChange = this.changeCoachField.bind(this);
@@ -42,10 +41,6 @@ class RequestForm extends React.Component{
         this.onPassportsUpdate = this.updatePassports.bind(this);
         this.onCoachPassportsUpdate = this.updateCoachPassports.bind(this);
         this.isCoachPassportsValid = this.isAllCoachPassportsValid.bind(this);
-    }
-
-    changeCoachStatus(value){
-        this.setState({hasCoach: value});
     }
 
     changeCoachField(fieldName, value){
@@ -448,7 +443,7 @@ class RequestForm extends React.Component{
         sent: false, 
         showUserData: false, 
         showGameData: false, 
-        hasCoach: "false",
+        hasCoach: "true",
         modalCoach: null,
         showCoachData: false,
         coaches: [],
@@ -513,7 +508,7 @@ class RequestForm extends React.Component{
                 onChange={this.onUserDataChange} />
             <GameForm isVisible={this.state.showGameData} game={this.state.gameData} ageCategories={this.state.ageCategories} 
             actualGames={this.state.actualGames} beforeGames={this.state.beforeGames} weightCategories={this.state.weightCategories} onChange={this.onGameChange} />
-            <CoachesSection isVisible={this.state.showGameData} coaches={this.state.coaches} hasCoach={this.state.hasCoach} onChange={this.onCoachStatusChange} openCoachModal={this.openModal} editCoach={this.onCoachEdit} removeCoach={this.onCoachRemove} />
+            <CoachesSection isVisible={this.state.showGameData} coaches={this.state.coaches} hasCoach={this.state.hasCoach} openCoachModal={this.openModal} editCoach={this.onCoachEdit} removeCoach={this.onCoachRemove} />
             <DopingControlForm 
                 isVisible={this.state.showUserData} 
                 data={this.state.dopingControl} 
@@ -526,6 +521,7 @@ class RequestForm extends React.Component{
                 isVisible={this.state.showUserData} 
                 userData={this.state.userData}
                 doping={this.state.dopingControl}
+                coaches={this.state.coaches}
                 passports={this.state.passports} 
                 onSend={this.onSend} 
             />

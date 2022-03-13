@@ -1,5 +1,4 @@
 import React from "react";
-import moment from "moment";
 require("../../../css/react-datetime.css");
 import Datetime from "react-datetime";
 import * as validation from "../../components/validation/validation";

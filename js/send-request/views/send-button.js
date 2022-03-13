@@ -25,7 +25,7 @@ class SendButton extends React.Component{
             <button 
                 type="button" 
                 className="btn btn-success" 
-                disabled={validation.isFormValid(this.props.userData, requiredUserData) || this.validateDoping() || this.validatePassports() } 
+                disabled={validation.isFormValid(this.props.userData, requiredUserData) || this.validateDoping() || this.validatePassports() || !this.props.coaches.length } 
                 onClick={() => this.props.onSend()}
             >Подати заявку</button>
         </div>;
