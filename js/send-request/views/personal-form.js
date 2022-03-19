@@ -4,6 +4,7 @@ require("../../../css/react-datetime.css");
 import Datetime from "react-datetime";
 import * as validation from "../../components/validation/validation";
 import PhotoLoader from "../../components/photo-loader/photo-loader";
+import PDFLoader from "../../components/pdf-loader/pdf-loader";
 import ForeignPassportsComponent from "../../components/for_passports/for_passports";
 
 class PersonalForm extends React.Component{
@@ -75,6 +76,15 @@ componentWillMount(){
                 <div className="form-group">
                     <label>Фото для акредитації {validation.isFieldValid(this.props.person.accreditation_photo_id, "Це поле є обов'язковим")}</label>
                     <PhotoLoader value={this.props.person.accreditation_photo_id} desc={"Фото для акредитації"}  onRemove={() => this.props.onChange("accreditation_photo_id", "")} onUpdate={(id) => this.props.onChange("accreditation_photo_id", id)} /> 
+                </div>
+                <div className="form-group">
+                    <label>Сертифікат ADEL</label>
+                    <PDFLoader 
+                        value={this.props.person.certificate_adel}
+                        desc='Сертифікат ADEL'
+                        onRemove={() => this.props.onChange('certificate_adel', '')}
+                        onUpdate={(id) => this.props.onChange('certificate_adel', id)}
+                    /> 
                 </div>
                 </fieldset>
             </form>

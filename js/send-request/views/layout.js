@@ -282,7 +282,8 @@ class RequestForm extends React.Component{
             photo_national_pass_id: "",
             region: regionId,
             serial_number_pass: "",
-            n_pass: ""
+            n_pass: "",
+            certificate_adel: ""
         }})
     }
 
@@ -342,7 +343,8 @@ class RequestForm extends React.Component{
                 photo_national_pass_id: this.state.userData.photo_national_pass_id,
                 region: this.state.userData.region,
                 serial_number_pass: this.state.userData.serial_number_pass,
-                n_pass: this.state.userData.n_pass          
+                n_pass: this.state.userData.n_pass,
+                certificate_adel: this.state.userData.certificate_adel          
             },
             coaches: this.state.coaches,
             passports: this.state.passports,

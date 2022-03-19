@@ -58,7 +58,8 @@
             `photo_national_pass_id` BIGINT NOT NULL,
             `photo_international_pass_id` BIGINT NOT NULL,
             `accreditation_photo_id` BIGINT NOT NULL,
-            `n_pass` VARCHAR(12) NULL
+            `n_pass` VARCHAR(12) NULL,
+            `certificate_adel` BIGINT NOT NULL
         ) {$charset_collate}";
         dbDelta($createUsersTab);
         $tb_coaches = $wpdb->get_blog_prefix().'rm_coaches';

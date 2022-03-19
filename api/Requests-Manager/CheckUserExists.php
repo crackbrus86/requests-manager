@@ -20,7 +20,7 @@
         $tb_for_passports = $wpdb->get_blog_prefix() . "rm_for_passport";
         $getUser = $wpdb->prepare("SELECT  id, region, last_name_pass, first_name_pass, serial_number_pass, number_pass, 
         expiration_date_pass, individual_number, phone, email, photo_national_pass_id, 
-        photo_international_pass_id, accreditation_photo_id, n_pass FROM $tb_users WHERE id = %d", $userId);
+        photo_international_pass_id, accreditation_photo_id, n_pass, certificate_adel FROM $tb_users WHERE id = %d", $userId);
         $user = $wpdb->get_row($getUser);
         $user->visa = $visa;
         $sql = $wpdb->prepare("SELECT ForPassportId AS id, PassportNumber AS no, SerialNumber AS seria, 
@@ -47,6 +47,7 @@
         $user->photo_international_pass_id = "";
         $user->accreditation_photo_id = "";
         $user->n_pass = "";
+        $user->certificate_adel = "";
         $user->visa = $visa;
         $user->passports = array();
         $return = json_encode($user);
