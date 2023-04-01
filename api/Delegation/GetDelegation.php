@@ -12,7 +12,13 @@ if(current_user_can("edit_others_pages")):
 
     $delegation = Array();
 
-    $sql = $wpdb->prepare("SELECT $tb_others.president_name AS fullName, $tb_regions.region AS region, CONCAT('голова делегації') AS role
+    $sql = $wpdb->prepare("SELECT 
+        $tb_others.president_name AS fullName, 
+        $tb_regions.region AS region, 
+        CONCAT('головний тренер, керівник делегації') AS role,
+        $tb_others.president_name_latin AS fullNameLatin,
+        $tb_others.date_of_birth AS dateOfBirth,
+        CONCAT($tb_others.foreign_pass_no_prefix, $tb_others.foreign_pass_no) AS foreignPassData
     FROM $tb_others
         JOIN $tb_regions
         ON $tb_others.president_region = $tb_regions.id", "");
@@ -25,7 +31,10 @@ if(current_user_can("edit_others_pages")):
     foreach($requests as $request){
         $request->coaches = unserialize($request->coaches);
         $sql_3 = $wpdb->prepare("SELECT CONCAT($tb_users.last_name,' ',$tb_users.first_name,' ',$tb_users.middle_name) AS fullName,
-        $tb_regions.region AS region, CONCAT('спортсмен') AS role 
+        $tb_regions.region AS region, CONCAT('спортсмен') AS role,
+        CONCAT($tb_users.last_name_pass, ' ', $tb_users.first_name_pass) AS fullNameLatin,
+        $tb_users.birth_date AS dateOfBirth,
+        CONCAT($tb_users.serial_number_pass, $tb_users.number_pass) AS foreignPassData
         FROM $tb_users
             JOIN $tb_regions 
             ON $tb_users.region = $tb_regions.id
@@ -38,7 +47,10 @@ if(current_user_can("edit_others_pages")):
                 if($coach[1] === "true"){
                     $coach_id = $coach[0];
                     $sql_4 = $wpdb->prepare("SELECT CONCAT($tb_coaches.last_name,' ',$tb_coaches.first_name,' ',$tb_coaches.middle_name) AS fullName,
-                    $tb_regions.region AS region, CONCAT('тренер') AS role
+                    $tb_regions.region AS region, CONCAT('тренер') AS role,
+                    CONCAT($tb_coaches.last_name_pass, ' ', $tb_coaches.first_name_pass) AS fullNameLatin,
+                    $tb_coaches.birth_date AS dateOfBirth,
+                    CONCAT($tb_coaches.serial_number_pass, $tb_coaches.number_pass) AS foreignPassData
                     FROM $tb_coaches
                         JOIN $tb_regions
                         ON $tb_coaches.region = $tb_regions.id
