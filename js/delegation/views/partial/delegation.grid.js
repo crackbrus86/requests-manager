@@ -47,7 +47,7 @@ const DlgGrid = (props) => {
             region: x.region,
             role: x.role,
             nameLatin: x.fullNameLatin,
-            dateOfBirth: moment(new Date(x.dateOfBirth)).format("DD-MM-YYYY"),
+            dateOfBirth: !!x.dateOfBirth ? moment(new Date(x.dateOfBirth)).format("DD-MM-YYYY") : null,
             passNo: x.foreignPassData
         }
     })
