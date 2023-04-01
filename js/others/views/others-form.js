@@ -4,7 +4,7 @@ import * as validation from "../../components/validation/validation";
 
 class OthersForm extends React.Component{
     render(){
-        var required = ["name", "region", "email"];
+        var required = ["name", "region", "email", "nameLatin", "dateOfBirth", "foreignPassNoPrefix", "foreignPassNo"];
         var regionsList = this.props.regions.map(item => <option key={item.id} value={item.id}>{item.region}</option>);
         var adminEmail = (this.props.president.email)? this.props.president.email : "";
         const dateOfBirth = this.props.president.dateOfBirth ? new Date(this.props.president.dateOfBirth) : null;
