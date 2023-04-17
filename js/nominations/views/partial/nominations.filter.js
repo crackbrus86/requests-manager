@@ -1,8 +1,8 @@
 import React from "react";
 import Datetime from "react-datetime";
-import moment from "moment";
 require("../../../../css/react-datetime.css");
 require("../../../../css/filter.css");
+import { getDateValue } from '../../../shared/helpers';
 
 const NomFilter = (props) => {
     var filter = props.filter;
@@ -18,7 +18,16 @@ const NomFilter = (props) => {
             </div>
             <div className="form-group">
                 <label>Рік проведення</label>
-                <Datetime value={filter.year} dateFormat="YYYY" timeFormat={false} closeOnSelect={true} onChange={v => props.onChange("year", v.format("YYYY"))} />
+                <Datetime 
+                    value={filter.year} 
+                    dateFormat="YYYY" 
+                    inputProps={{
+                        placeholder: 'YYYY'
+                    }}
+                    timeFormat={false} 
+                    closeOnSelect={true} 
+                    onChange={v => props.onChange("year", getDateValue(v, 'YYYY'))} 
+                />
             </div>
             <div className="form-group">
                 <button type="button"  className="btn btn-info" onClick={() => props.onFilter()}>Фільтрувати</button>

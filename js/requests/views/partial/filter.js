@@ -1,8 +1,8 @@
 import React from "react";
 import Datetime from "react-datetime";
-import moment from "moment";
 require("../../../../css/react-datetime.css");
 require("../../../../css/filter.css");
+import { getDateValue } from '../../../shared/helpers';
 
 const Filter = (props) => {
     var gameList = props.filter.games.map(game => <option key={game.id} value={game.id}>{game.name}</option>)
@@ -35,7 +35,16 @@ const Filter = (props) => {
             </fieldset>
             <div className="form-group year-filter">
                 <label>Рік проведення</label>
-                <Datetime value={props.filter.year} dateFormat="YYYY" timeFormat={false} closeOnSelect={true} onChange={(v) => props.onChange("year", v.format("YYYY"))} />
+                <Datetime 
+                    value={props.filter.year} 
+                    dateFormat="YYYY" 
+                    inputProps={{
+                        placeholder: 'рррр'
+                    }}
+                    timeFormat={false} 
+                    closeOnSelect={true} 
+                    onChange={(v) => props.onChange("year", getDateValue(v, 'YYYY'))} 
+                />
             </div>
             <div className="form-group">
                 <button type="button" className="btn btn-info" onClick={() => props.onFilter()}>Фільтрувати</button>

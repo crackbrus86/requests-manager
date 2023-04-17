@@ -6,6 +6,7 @@ import Datetime from "react-datetime";
 import PhotoLoader from "../../components/photo-loader/photo-loader";
 import * as validation from "../../components/validation/validation";
 import ForeignPassportsComponent from "../../components/for_passports/for_passports";
+import { getDateValue } from '../../shared/helpers';
 
 const CoachModal = (props) => {
     if(!props.coach) return null;
@@ -60,7 +61,17 @@ const CoachModal = (props) => {
                 </div>
                 <div className="form-group">
                     <label>Термін дії закордонного паспорту</label>
-                    <Datetime value={expireDate} dateFormat="DD-MM-YYYY" timeFormat={false} closeOnSelect={true} maxLength="10" onChange={(v) => props.onChange("passExpire", v.format("YYYY-MM-DD"))} />
+                    <Datetime 
+                        value={expireDate} 
+                        dateFormat="DD-MM-YYYY" 
+                        timeFormat={false} 
+                        closeOnSelect={true} 
+                        maxLength="10" 
+                        inputProps={{
+                            placeholder: 'дд-мм-рррр'
+                        }}
+                        onChange={(v) => props.onChange("passExpire", getDateValue(v))} 
+                    />
                 </div>
             </div>
             <div className="col-md-6">

@@ -4,6 +4,7 @@ require("../../../css/additional-passports.css");
 import Datetime from "react-datetime";
 import moment from "moment";
 import * as validation from "../../components/validation/validation";
+import { getDateValue } from '../../shared/helpers';
 
 class ForeignPassportsComponent extends React.Component{
     constructor(props){
@@ -96,7 +97,15 @@ class ForeignPassportsComponent extends React.Component{
             </div> 
             <div className="form-group">
                     <label>Термін дії паспорту {validation.isFieldValid(passport.expireDate, "Це поле є обов'язковим")}</label>
-                    <Datetime value={this.displayExpireDate(passport.expireDate)} dateFormat="DD-MM-YYYY" timeFormat={false} closeOnSelect={true} maxLength="10" onChange={(v) => this.handleUpdateExpirationDate(v.format("YYYY-MM-DD"), index)} />
+                    <Datetime 
+                        value={this.displayExpireDate(passport.expireDate)}
+                        dateFormat="DD-MM-YYYY"
+                        inputProps={{placeholder: 'дд-мм-рррр'}}
+                        timeFormat={false}
+                        closeOnSelect={true}
+                        maxLength="10"
+                        onChange={(v) => this.handleUpdateExpirationDate(getDateValue(v), index)}
+                    />
                 </div>    
             <div className="form-group">
                 <label>Фото першої сторінки закордонного паспорту{validation.isFieldValid(+passport.photoId, "Немає фото")}</label>

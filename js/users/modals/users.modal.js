@@ -7,6 +7,7 @@ import PhotoLoader from "../../components/photo-loader/photo-loader";
 import PDFLoader from "../../components/pdf-loader/pdf-loader";
 import * as validation from "../../components/validation/validation";
 import ForeignPassportsComponent from "../../components//for_passports/for_passports";
+import { getDateValue } from '../../shared/helpers';
 
 const UserModal = (props) => {
     if(!props.user) return null;
@@ -58,7 +59,17 @@ const UserModal = (props) => {
                 </div>
                 <div className="form-group">
                     <label>Термін дії закордонного паспорту</label>
-                    <Datetime value={expireDate} dateFormat="DD-MM-YYYY" timeFormat={false} closeOnSelect={true} maxLength="10" onChange={(v) => props.onChange("passExpire", v.format("YYYY-MM-DD"))} />
+                    <Datetime 
+                        value={expireDate} 
+                        dateFormat="DD-MM-YYYY" 
+                        inputProps={{
+                            placeholder: 'дд-мм-рррр'
+                        }}
+                        timeFormat={false} 
+                        closeOnSelect={true} 
+                        maxLength="10" 
+                        onChange={(v) => props.onChange("passExpire", getDateValue(v))} 
+                    />
                 </div>
             </div>
             <div className="col-md-6">

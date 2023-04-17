@@ -2,13 +2,14 @@ import React from "react";
 require("../../../css/react-datetime.css");
 import Datetime from "react-datetime";
 import * as validation from "../../components/validation/validation";
+import { getDateValue } from '../../shared/helpers';
 
 class NameForm extends React.Component{
     render(){
         var required = ["firstName", "lastName", "middleName", "birthDate"];
         var birthDate = (this.props.person.birthDate)? new Date(this.props.person.birthDate) : null;
         var datetime = (this.props.isReadOnly)? <input type="text" value={this.props.person.birthDate} className="form-control" readOnly={true} /> :
-                                                <Datetime value={birthDate} dateFormat="DD-MM-YYYY" onChange={v => this.props.onChange("birthDate", v.format("YYYY-MM-DD"))} timeFormat={false} closeOnSelect={true} maxLength="10" />;
+                                                <Datetime value={birthDate} dateFormat="DD-MM-YYYY" inputProps={{ placeholder: 'дд-мм-рррр' }} onChange={v => this.props.onChange("birthDate", getDateValue(v))} timeFormat={false} closeOnSelect={true} maxLength="10" />;
         var footer = (this.props.isCoach)? 
             <div className="form-group">
                     <div><label>Чи супроводжує Вас на змагання?</label></div>

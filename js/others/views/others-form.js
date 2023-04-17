@@ -1,6 +1,7 @@
 import React from "react";
 import Datetime from "react-datetime";
 import * as validation from "../../components/validation/validation";
+import { getDateValue } from '../../shared/helpers';
 
 class OthersForm extends React.Component{
     render(){
@@ -36,10 +37,13 @@ class OthersForm extends React.Component{
                     <Datetime
                         value={dateOfBirth}
                         dateFormat="DD-MM-YYYY"
+                        inputProps={{
+                            placeholder: 'дд-мм-рррр'
+                        }}
                         timeFormat={false}
                         closeOnSelect={true}
                         maxLength={10}
-                        onChange={v => this.props.onChange("dateOfBirth", v.format("YYYY-MM-DD"))}
+                        onChange={v => this.props.onChange("dateOfBirth", getDateValue(v, 'YYYY-MM-DD'))}
                     />
                 </div>
                 <div className="form-group">

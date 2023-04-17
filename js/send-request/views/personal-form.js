@@ -6,6 +6,7 @@ import * as validation from "../../components/validation/validation";
 import PhotoLoader from "../../components/photo-loader/photo-loader";
 import PDFLoader from "../../components/pdf-loader/pdf-loader";
 import ForeignPassportsComponent from "../../components/for_passports/for_passports";
+import { getDateValue } from '../../shared/helpers';
 
 class PersonalForm extends React.Component{
 componentWillMount(){
@@ -50,7 +51,15 @@ componentWillMount(){
                 </div> 
                 <div className="form-group">
                     <label>Термін дії паспорту {validation.isFieldValid(expiration_pass, "Це поле є обов'язковим")}</label>
-                    <Datetime value={expiration_pass} dateFormat="DD-MM-YYYY" timeFormat={false} closeOnSelect={true} maxLength="10" onChange={(v) => this.props.onChange("expiration_date_pass", v.format("YYYY-MM-DD"))} />
+                    <Datetime 
+                        value={expiration_pass} 
+                        dateFormat="DD-MM-YYYY" 
+                        timeFormat={false} 
+                        closeOnSelect={true} 
+                        maxLength="10"
+                        inputProps={{ placeholder: 'дд-мм-рррр' }}
+                        onChange={(v) => this.props.onChange("expiration_date_pass", getDateValue(v))}
+                    />
                 </div>  
                 <div className="form-group">
                     <label>Фото першої сторінки закордонного паспорту {validation.isFieldValid(this.props.person.photo_international_pass_id, "Це поле є обов'язковим")}</label>

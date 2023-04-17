@@ -4,6 +4,7 @@ import moment from "moment";
 require("../../../css/react-datetime.css");
 import Datetime from "react-datetime";
 import "../../../css/profile.css";
+import { getDateValue } from '../../shared/helpers';
 
 const ReqModal = (props) => {
     if(!props.target) return null;
@@ -112,7 +113,17 @@ const ReqModal = (props) => {
                     </label>
                 </div>  
                 <div className="form-group" hidden={!JSON.parse(request.doping.isPassed)}>
-                    <Datetime value={dopingDate} dateFormat="DD-MM-YYYY" timeFormat={false} closeOnSelect={true} maxLength="10" onChange={(v) => props.onChange("date", v.format("YYYY-MM-DD"), "doping")} />
+                    <Datetime 
+                        value={dopingDate} 
+                        dateFormat="DD-MM-YYYY" 
+                        inputProps={{
+                            placeholder: 'дд-мм-рррр'
+                        }}
+                        timeFormat={false} 
+                        closeOnSelect={true} 
+                        maxLength="10" 
+                        onChange={(v) => props.onChange("date", getDateValue(v), "doping")} 
+                    />
                 </div>
             </div>
             </form>
