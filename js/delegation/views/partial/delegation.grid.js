@@ -2,6 +2,8 @@ import React from "react";
 import Grid from "../../../components/grid/grid";
 import moment from "moment";
 
+import { capitalizeFullName } from '../../../helpers';
+
 const DlgGrid = (props) => {
     if(!props.members.length) return null;
     var columns = [
@@ -46,8 +48,8 @@ const DlgGrid = (props) => {
             fullName: x.fullName,
             region: x.region,
             role: x.role,
-            nameLatin: x.fullNameLatin,
-            dateOfBirth: !!x.dateOfBirth ? moment(new Date(x.dateOfBirth)).format("DD-MM-YYYY") : null,
+            nameLatin: capitalizeFullName(x.fullNameLatin),
+            dateOfBirth: !!x.dateOfBirth ? moment(new Date(x.dateOfBirth)).format("DD.MM.YYYY") : null,
             passNo: x.foreignPassData
         }
     })

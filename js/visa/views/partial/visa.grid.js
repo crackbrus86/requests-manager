@@ -2,6 +2,8 @@ import React from "react";
 import moment from "moment";
 import Grid from "../../../components/grid/grid";
 
+import { capitalizeFullName } from '../../../helpers';
+
 const VisaGrid = (props) => {
     if(!props.game) return null;
     if(!props.records.length && props.game) return <p>Немає жодного запису для цих змагань</p>;
@@ -40,12 +42,12 @@ const VisaGrid = (props) => {
     var visaRecords = props.records.filter(x => !!x.fullName.trim());
     var rows = visaRecords.map(x => {
         return {
-            fullName: x.fullName,
+            fullName: capitalizeFullName(x.fullName),
             hasVisa: !!x.visaId ? false : true,
             role: x.role.replace(x.role[0], x.role[0].toUpperCase()),
-            born: moment(new Date(x.born)).format("DD/MM/YYYY"),
+            born: moment(new Date(x.born)).format("DD.MM.YYYY"),
             passNo: x.passNo,
-            passExpires: moment(new Date(x.passExpires)).format("DD/MM/YYYY")
+            passExpires: moment(new Date(x.passExpires)).format("DD.MM.YYYY")
         }
     });
     return(<div id="visaGrid">
