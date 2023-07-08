@@ -83,7 +83,7 @@ if($coaches){
             if(!$coachId){
                 $sql = $wpdb->prepare("INSERT INTO $tb_coaches (accompanies, region, last_name, first_name, middle_name, birth_date, last_name_pass, first_name_pass, 
                         serial_number_pass, number_pass, expiration_date_pass, individual_number, phone, email, photo_national_pass_id, photo_international_pass_id, 
-                        accreditation_photo_id, n_pass, foreign_pass_issued_by) VALUES (%s, %d, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %d, %d, %d, %s)", $coach["isFollowing"], $coach["region"], 
+                        accreditation_photo_id, n_pass, foreign_pass_issued_by) VALUES (%s, %d, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %d, %d, %d, %s, %s)", $coach["isFollowing"], $coach["region"], 
                         $coach["lastName"], $coach["firstName"], $coach["middleName"], $coach["birthDate"], $coach["lastNamePass"], $coach["firstNamePass"], 
                         $coach["serialNumberPass"], $coach["numberPass"], $coach["expirationDatePass"], $coach["individualNumber"], $coach["phone"], $coach["email"], 
                         $coach["photoNationalPassId"], $coach["photoInternationalPassId"], $coach["accreditationPhotoId"], $coach["n_pass"], clearSlashes($coach["foreign_pass_issued_by"]));

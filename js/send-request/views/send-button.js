@@ -13,7 +13,7 @@ class SendButton extends React.Component{
     isAdditionalPassportsValid(){
         if(!this.props.passports) return false;
         var invalidPassports = this.props.passports.filter(passport => !passport.no || !passport.seria || 
-            !passport.expireDate || !parseInt(passport.photoId) || !passport.foreign_pass_issued_by);
+            !passport.expireDate || !parseInt(passport.photoId) || !passport.issuedBy);
         return !!invalidPassports.length;
     }
     render(){
