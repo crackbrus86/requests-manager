@@ -19,7 +19,10 @@ class OthersView extends React.Component{
             nameLatin: this.state.president.nameLatin,
             dateOfBirth: this.state.president.dateOfBirth,
             foreignPassNoPrefix: this.state.president.foreignPassNoPrefix,
-            foreignPassNo: this.state.president.foreignPassNo
+            foreignPassNo: this.state.president.foreignPassNo,
+            foreignPassIssuedBy: this.state.president.foreignPassIssuedBy,
+            foreignPassExpirationDate: this.state.president.foreignPassExpirationDate,
+            individualNo: this.state.president.individualNo
         }
         if(this.state.president.id) contract.id = this.state.president.id;
         this.setState({loading: true});
@@ -48,7 +51,10 @@ class OthersView extends React.Component{
                 nameLatin: result.nameLatin,
                 dateOfBirth: result.dateOfBirth,
                 foreignPassNoPrefix: result.foreignPassNoPrefix,
-                foreignPassNo: result.foreignPassNo
+                foreignPassNo: result.foreignPassNo,
+                foreignPassIssuedBy: result.foreignPassIssuedBy,
+                foreignPassExpirationDate: result.foreignPassExpirationDate,
+                individualNo: result.individualNo
             }
             this.setState({president: president, loading: false});
         })

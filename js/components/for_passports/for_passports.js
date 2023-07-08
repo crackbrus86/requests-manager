@@ -20,6 +20,7 @@ class ForeignPassportsComponent extends React.Component{
         this.handleUpdateExpirationDate = this.updatePassportExpirationDate.bind(this);
         this.handleDeletePassport = this.deletePassport.bind(this);
         this.displayExpireDate = this.displayExpireDate.bind(this);
+        this.handleUpdateIssuedBy = this.updatePassportIssuedBy.bind(this);
     }
 
     componentDidUpdate(prevProps) {
@@ -36,7 +37,8 @@ class ForeignPassportsComponent extends React.Component{
             seria: "",
             no: "",
             photoId: null,
-            expireDate: null
+            expireDate: null,
+            issuedBy: null
         });
         this.setState({passports: passports});
         this.props.onUpdate(this.state.passports);
@@ -54,6 +56,13 @@ class ForeignPassportsComponent extends React.Component{
         passports[index].seria = seria;
         this.setState({passports: passports});
         this.props.onUpdate(this.state.passports);        
+    }
+
+    updatePassportIssuedBy(issuedBy, index){
+        var passports = this.state.passports;
+        passports[index].issuedBy = issuedBy;
+        this.setState({ passports });
+        this.props.onUpdate(this.state.passports);
     }
 
     updatePassportPhoto(photoId, index){
@@ -95,6 +104,16 @@ class ForeignPassportsComponent extends React.Component{
                     </div>                        
                 </div>
             </div> 
+            <div className="form-group">
+                <label>Орган що видав{validation.isFieldValid(passport.issuedBy, "Введіть ким виданий")}</label>
+                <textarea 
+                    value={passport.issuedBy}
+                    className="form-control" 
+                    maxLength={300} 
+                    rows={3}
+                    onChange={e => this.handleUpdateIssuedBy(e.target.value, index)}
+                ></textarea>
+            </div>
             <div className="form-group">
                     <label>Термін дії паспорту {validation.isFieldValid(passport.expireDate, "Це поле є обов'язковим")}</label>
                     <Datetime 

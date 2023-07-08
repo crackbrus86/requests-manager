@@ -155,7 +155,8 @@ class UsersApp extends React.Component{
             apId: user.apId,
             n_pass: user.n_pass,
             passports: this.state.passports,
-            certificate_adel: user.certificate_adel
+            certificate_adel: user.certificate_adel,
+            foreign_pass_issued_by: user.foreignPassIssuedBy
         }).then(() => {
             this.closeUser();
             this.setState({isLoading: false});

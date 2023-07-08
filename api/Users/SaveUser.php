@@ -19,12 +19,13 @@ if(current_user_can("edit_others_pages")){
     $apId = strip_tags(stripslashes(trim($_POST["apId"])));
     $n_pass = strip_tags(stripslashes(trim($_POST["n_pass"])));
     $certificate_adel = strip_tags(stripslashes(trim($_POST["certificate_adel"])));
+    $foreign_pass_issued_by = strip_tags(stripcslashes(trim($_POST["foreign_pass_issued_by"])));
     $passports = esc_sql($_POST["passports"]);
 
     $sql = $wpdb->prepare("UPDATE $tb_users SET region = %d, last_name_pass = %s, first_name_pass = %s, serial_number_pass = %s, number_pass = %s,
     expiration_date_pass = %s, individual_number = %s, phone = %s, email = %s, photo_national_pass_id = %d, photo_international_pass_id = %d,
-    accreditation_photo_id = %d, n_pass = %s, certificate_adel = %d WHERE id = %d", $region, $latLastName, $latFirstName, $passSeria, $passNo, $passExpire, $iin, $phone, $email, 
-    $pnpId, $pipId, $apId, $n_pass, $certificate_adel, $id);
+    accreditation_photo_id = %d, n_pass = %s, certificate_adel = %d, foreign_pass_issued_by = %s WHERE id = %d", $region, $latLastName, $latFirstName, $passSeria, $passNo, $passExpire, $iin, $phone, $email, 
+    $pnpId, $pipId, $apId, $n_pass, $certificate_adel, $foreign_pass_issued_by, $id);
 
     if($passports) savePassports($passports, $id);
 

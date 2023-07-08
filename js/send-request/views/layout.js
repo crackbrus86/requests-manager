@@ -136,7 +136,8 @@ class RequestForm extends React.Component{
             region: this.state.coachData.region,
             serialNumberPass: this.state.coachData.serial_number_pass,
             passports: this.state.coachData.passports,
-            n_pass: this.state.coachData.n_pass
+            n_pass: this.state.coachData.n_pass,
+            foreign_pass_issued_by: this.state.coachData.foreign_pass_issued_by
         }
         var coaches = this.state.coaches;
         if(this.state.coachData.update){
@@ -283,7 +284,8 @@ class RequestForm extends React.Component{
             region: regionId,
             serial_number_pass: "",
             n_pass: "",
-            certificate_adel: ""
+            certificate_adel: "",
+            foreign_pass_issued_by: null
         }})
     }
 
@@ -303,7 +305,8 @@ class RequestForm extends React.Component{
             region: regionId,
             serial_number_pass: "",
             passports: [],
-            n_pass: ""
+            n_pass: "",
+            foreign_pass_issued_by: null
         }})
     }    
 
@@ -344,7 +347,8 @@ class RequestForm extends React.Component{
                 region: this.state.userData.region,
                 serial_number_pass: this.state.userData.serial_number_pass,
                 n_pass: this.state.userData.n_pass,
-                certificate_adel: this.state.userData.certificate_adel          
+                certificate_adel: this.state.userData.certificate_adel,
+                foreign_pass_issued_by: this.state.userData.foreign_pass_issued_by          
             },
             coaches: this.state.coaches,
             passports: this.state.passports,
@@ -405,6 +409,7 @@ class RequestForm extends React.Component{
             serial_number_pass: coach.serialNumberPass,
             n_pass: coach.n_pass,
             passports: coach.passports,
+            foreign_pass_issued_by: coach.foreign_pass_issued_by,
             update: {
                 index: key
             }                 
@@ -478,7 +483,7 @@ class RequestForm extends React.Component{
         var passports = this.state.coachData.passports;
         if(!passports) return false;
         var invalidPassports = passports.filter(passport => !passport.no || !passport.seria || 
-            !passport.expireDate || !parseInt(passport.photoId));
+            !passport.expireDate || !parseInt(passport.photoId) || !passport.foreign_pass_issued_by);
         return !!invalidPassports.length;
     }
 
@@ -494,7 +499,7 @@ class RequestForm extends React.Component{
     render(){
         var requiredGeneral = ["firstName", "lastName", "middleName", "birthDate"];
         var required = ["accreditation_photo_id", "email", "expiration_date_pass", "first_name_pass", "individual_number", "last_name_pass", "number_pass",
-                        "phone", "photo_international_pass_id", "photo_national_pass_id", "region", "serial_number_pass", "n_pass"];
+                        "phone", "photo_international_pass_id", "photo_national_pass_id", "region", "serial_number_pass", "n_pass", "foreign_pass_issued_by"];
         var isFormValid = !validation.isFormValid(this.state.userData, required);
         var isCoachValid = !!this.state.coaches.length && !validation.isFormValid(this.state.coaches[0], ["firstName", "lastName", "middleName", "birthDate", "n_pass"])
         var actualGame = !!this.state.actualGames ? this.state.actualGames.find(game => game.id == this.state.gameData.aGame) : null;

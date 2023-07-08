@@ -10,7 +10,10 @@ $president = $wpdb->get_results("SELECT
     president_name_latin AS nameLatin,
     date_of_birth AS dateOfBirth,
     foreign_pass_no_prefix AS foreignPassNoPrefix,
-    foreign_pass_no AS foreignPassNo
+    foreign_pass_no AS foreignPassNo,
+    foreign_pass_issued_by AS foreignPassIssuedBy,
+    foreign_pass_expiration_date AS foreignPassExpirationDate,
+    individual_no AS individualNo
 FROM $tb_others");
 $return = json_encode($president);
 print_r($return);

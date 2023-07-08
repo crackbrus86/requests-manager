@@ -139,6 +139,7 @@ class CoachesApp extends React.Component{
             pipId: coach.pipId,
             apId: coach.apId,
             n_pass: coach.n_pass,
+            foreignPassIssuedBy: coach.foreignPassIssuedBy,
             passports: this.state.passports
         }).then(() => {
             this.closeCoach();

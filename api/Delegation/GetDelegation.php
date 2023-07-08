@@ -18,7 +18,10 @@ if(current_user_can("edit_others_pages")):
         CONCAT('головний тренер, керівник делегації') AS role,
         $tb_others.president_name_latin AS fullNameLatin,
         $tb_others.date_of_birth AS dateOfBirth,
-        CONCAT($tb_others.foreign_pass_no_prefix, $tb_others.foreign_pass_no) AS foreignPassData
+        CONCAT($tb_others.foreign_pass_no_prefix, $tb_others.foreign_pass_no) AS foreignPassData,
+        $tb_others.foreign_pass_issued_by AS foreignPassIssuedBy,
+        $tb_others.foreign_pass_expiration_date AS foreignPassExpirationDate,
+        $tb_others.individual_no AS individualNo
     FROM $tb_others
         JOIN $tb_regions
         ON $tb_others.president_region = $tb_regions.id", "");
@@ -34,7 +37,10 @@ if(current_user_can("edit_others_pages")):
         $tb_regions.region AS region, CONCAT('спортсмен') AS role,
         CONCAT($tb_users.last_name_pass, ' ', $tb_users.first_name_pass) AS fullNameLatin,
         $tb_users.birth_date AS dateOfBirth,
-        CONCAT($tb_users.serial_number_pass, $tb_users.number_pass) AS foreignPassData
+        CONCAT($tb_users.serial_number_pass, $tb_users.number_pass) AS foreignPassData,
+        $tb_users.foreign_pass_issued_by AS foreignPassIssuedBy,
+        $tb_users.expiration_date_pass AS foreignPassExpirationDate,
+        $tb_users.individual_number AS individualNo
         FROM $tb_users
             JOIN $tb_regions 
             ON $tb_users.region = $tb_regions.id
@@ -50,7 +56,10 @@ if(current_user_can("edit_others_pages")):
                     $tb_regions.region AS region, CONCAT('тренер') AS role,
                     CONCAT($tb_coaches.last_name_pass, ' ', $tb_coaches.first_name_pass) AS fullNameLatin,
                     $tb_coaches.birth_date AS dateOfBirth,
-                    CONCAT($tb_coaches.serial_number_pass, $tb_coaches.number_pass) AS foreignPassData
+                    CONCAT($tb_coaches.serial_number_pass, $tb_coaches.number_pass) AS foreignPassData,
+                    $tb_coaches.foreign_pass_issued_by AS foreignPassIssuedBy,
+                    $tb_coaches.expiration_date_pass AS foreignPassExpirationDate,
+                    $tb_coaches.individual_number AS individualNo
                     FROM $tb_coaches
                         JOIN $tb_regions
                         ON $tb_coaches.region = $tb_regions.id

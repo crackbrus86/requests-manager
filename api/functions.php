@@ -10,16 +10,20 @@ function savePassports($passports, $userId, $isUser = TRUE){
     {
         $passport = $passports[$i];
 
+        $issued_by = strip_tags(stripslashes(trim($passport["issuedBy"])));
+
+        $issued_by = stripslashes($issued_by);
+
         if($passport["id"])
         {
             $sql = $wpdb->prepare("UPDATE $table SET UserId = %d, SerialNumber = %s, PassportNumber = %s, PassportPhotoId = %d, ExpirationDate = %s, 
-                                        UserRole = %s       
+                                        UserRole = %s, IssuedBy = %s       
                                     WHERE ForPassportId = %d", 
-                    $userId, $passport["seria"], $passport["no"], $passport["photoId"], $passport['expireDate'], $role, $passport["id"]);
+                    $userId, $passport["seria"], $passport["no"], $passport["photoId"], $passport['expireDate'], $role, $issued_by, $passport["id"]);
         }else{
-            $sql = $wpdb->prepare("INSERT INTO $table (UserId, SerialNumber, PassportNumber, PassportPhotoId, ExpirationDate, UserRole) 
-                                        VALUES (%d, %s, %s, %d, %s, %s)", 
-                    $userId, $passport["seria"], $passport["no"], $passport["photoId"], $passport["expireDate"], $role);
+            $sql = $wpdb->prepare("INSERT INTO $table (UserId, SerialNumber, PassportNumber, PassportPhotoId, ExpirationDate, UserRole, IssuedBy) 
+                                        VALUES (%d, %s, %s, %d, %s, %s, %s)", 
+                    $userId, $passport["seria"], $passport["no"], $passport["photoId"], $passport["expireDate"], $role, $issued_by);
         }
         $wpdb->query($sql);
     }

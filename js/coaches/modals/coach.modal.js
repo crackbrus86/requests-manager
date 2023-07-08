@@ -16,7 +16,7 @@ const CoachModal = (props) => {
     var born = moment(new Date(coach.born)).format("DD-MM-YYYY");
     var regionsList = props.regions.map(r => <option key={r.id} value={r.id}>{r.region}</option>);
     var expireDate = (coach.passExpire)? new Date(coach.passExpire):null;
-    var required = ["latSurname", "latFirstName", "region", "passSeria", "passNo", "iin", "phone", "email", "pnpId", "pipId", "apId"];
+    var required = ["latSurname", "latFirstName", "region", "passSeria", "passNo", "iin", "phone", "email", "pnpId", "pipId", "apId", "n_pass", "foreignPassIssuedBy"];
     return(<Modal target={props.coach} onClose={props.onClose} className="coaches-edit-modal">
         <h3>{"Редагувати дані тренера"}</h3>
         <div className="row">
@@ -59,6 +59,17 @@ const CoachModal = (props) => {
                         </div>
                     </div>
                 </div>
+                <div className="form-group">
+                    <label>Орган що видав{validation.isFieldValid(coach.foreignPassIssuedBy, "Введіть ким виданий")}</label>
+                    <textarea 
+                        className="form-control" 
+                        value={coach.foreignPassIssuedBy} 
+                        rows={3} 
+                        maxLength={300} 
+                        style={{ resize: 'none' }}
+                        onChange={e => props.onChange("foreignPassIssuedBy", e.target.value)}
+                    ></textarea>
+                </div> 
                 <div className="form-group">
                     <label>Термін дії закордонного паспорту</label>
                     <Datetime 

@@ -48,6 +48,16 @@ componentWillMount(){
                             <input value={this.props.person.number_pass} onChange={e => this.props.onChange("number_pass", e.target.value)} type="text" className="form-control" placeholder="ХХХХХХ" maxLength="8" />
                         </div>                        
                     </div>
+                </div>
+                <div className="form-group">
+                    <label>Орган що видав{validation.isFieldValid(this.props.person.foreign_pass_issued_by, "Введіть ким виданий")}</label>
+                    <textarea 
+                        value={this.props.person.foreign_pass_issued_by} 
+                        className="form-control" 
+                        maxLength={300} 
+                        rows={3}
+                        onChange={e => this.props.onChange("foreign_pass_issued_by", e.target.value)}
+                    ></textarea>
                 </div> 
                 <div className="form-group">
                     <label>Термін дії паспорту {validation.isFieldValid(expiration_pass, "Це поле є обов'язковим")}</label>

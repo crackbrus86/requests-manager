@@ -10,22 +10,22 @@ const DlgGrid = (props) => {
         {
             title: "П.І.П.",
             field: "fullName",
-            width: "350px"
+            width: "250px"
         },
         {
             title: "Область",
             field: "region",
-            width: "250px"
+            width: "200px"
         },
         {
             title: "Роль",
             field: "role",
-            width: "250px"
+            width: "200px"
         },
         {
             title: "Прізвище, ім'я латиницею",
             field: "nameLatin",
-            width: "300px"
+            width: "250px"
         },
         {
             title: "Дата народження",
@@ -35,6 +35,21 @@ const DlgGrid = (props) => {
         {
             title: "Номер паспорта",
             field: "passNo",
+            width: "150px"
+        },
+        {
+            title: "Орган що видав",
+            field: "passIssuedBy",
+            width: "200px"
+        },
+        {
+            title: "Термін дії закордонного паспорту",
+            field: "passExpiredAt",
+            width: "150px"
+        },
+        {
+            title: "Ідентифікаційний номер",
+            field: "individualNo",
             width: "150px"
         },
         {
@@ -50,7 +65,10 @@ const DlgGrid = (props) => {
             role: x.role,
             nameLatin: capitalizeFullName(x.fullNameLatin),
             dateOfBirth: !!x.dateOfBirth ? moment(new Date(x.dateOfBirth)).format("DD.MM.YYYY") : null,
-            passNo: x.foreignPassData
+            passNo: x.foreignPassData,
+            passIssuedBy: x.foreignPassIssuedBy,
+            passExpiredAt: !!x.foreignPassExpirationDate ? moment(new Date(x.foreignPassExpirationDate)).format("DD.MM.YYYY") : null,
+            individualNo: x.individualNo
         }
     })
     return (<div id="dlgGrid">

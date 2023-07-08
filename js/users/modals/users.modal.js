@@ -17,7 +17,7 @@ const UserModal = (props) => {
     var born = moment(new Date(user.born)).format("DD-MM-YYYY");
     var regionsList = props.regions.map(r => <option key={r.id} value={r.id}>{r.region}</option>);
     var expireDate = (user.passExpire)? new Date(user.passExpire) : null;
-    var required = ["latLastName","latFirstName","passSeria","passNo","iin","phone","email","pnpId","pipId","apId"];
+    var required = ["latLastName","latFirstName","passSeria","passNo","iin","phone","email","pnpId","pipId","apId", "n_pass", "foreignPassIssuedBy"];
     return (<Modal target={props.user} onClose={props.onClose} className="users-edit-modal">
         <h3>{"Редагувати дані спортсмена"}</h3>
         <div className="row">
@@ -57,6 +57,17 @@ const UserModal = (props) => {
                         </div>
                     </div>
                 </div>
+                <div className="form-group">
+                    <label>Орган що видав{validation.isFieldValid(user.foreignPassIssuedBy, "Введіть ким виданий")}</label>
+                    <textarea 
+                        className="form-control" 
+                        value={user.foreignPassIssuedBy} 
+                        rows={3} 
+                        maxLength={300} 
+                        style={{ resize: 'none' }}
+                        onChange={e => props.onChange("foreignPassIssuedBy", e.target.value)}
+                    ></textarea>
+                </div> 
                 <div className="form-group">
                     <label>Термін дії закордонного паспорту</label>
                     <Datetime 

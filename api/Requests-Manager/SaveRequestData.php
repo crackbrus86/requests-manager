@@ -24,10 +24,11 @@ if($user["id"]){
     $sql = $wpdb->prepare("UPDATE $tb_users SET region = %d, last_name = %s, first_name = %s, middle_name = %s, birth_date = %s, 
         last_name_pass = %s, first_name_pass = %s, serial_number_pass = %s, number_pass = %s, expiration_date_pass = %s, 
         individual_number = %s, phone = %s, email = %s, photo_national_pass_id = %d, photo_international_pass_id = %d, 
-        accreditation_photo_id = %d, n_pass = %s, certificate_adel = %d WHERE id = %d", $user["region"], $user["lastName"], $user["firstName"], $user["middleName"], $user["birthDate"],
+        accreditation_photo_id = %d, n_pass = %s, certificate_adel = %d, foreign_pass_issued_by = %s 
+        WHERE id = %d", $user["region"], $user["lastName"], $user["firstName"], $user["middleName"], $user["birthDate"],
          $user["last_name_pass"], $user["first_name_pass"], $user["serial_number_pass"], $user["number_pass"], $user["expiration_date_pass"], 
          $user["individual_number"], $user["phone"], $user["email"], $user["photo_national_pass_id"], $user["photo_international_pass_id"], 
-         $user["accreditation_photo_id"], $user["n_pass"], $user["certificate_adel"], $user["id"]);
+         $user["accreditation_photo_id"], $user["n_pass"], $user["certificate_adel"], clearSlashes($user["foreign_pass_issued_by"]), $user["id"]);
 
     if($wpdb->query($sql)){
         echo "Participant is updated";
@@ -35,10 +36,10 @@ if($user["id"]){
 }else{
     $sql = $wpdb->prepare("INSERT INTO $tb_users (region, last_name, first_name, middle_name, birth_date, last_name_pass, first_name_pass, 
         serial_number_pass, number_pass, expiration_date_pass, individual_number, phone, email, photo_national_pass_id, photo_international_pass_id, 
-        accreditation_photo_id, n_pass, certificate_adel) VALUES (%d, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %d, %d, %d, %s, %d)", $user["region"], $user["lastName"], $user["firstName"], $user["middleName"], $user["birthDate"],
+        accreditation_photo_id, n_pass, certificate_adel, foreign_pass_issued_by) VALUES (%d, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %d, %d, %d, %s, %d, %s)", $user["region"], $user["lastName"], $user["firstName"], $user["middleName"], $user["birthDate"],
          $user["last_name_pass"], $user["first_name_pass"], $user["serial_number_pass"], $user["number_pass"], $user["expiration_date_pass"], 
          $user["individual_number"], $user["phone"], $user["email"], $user["photo_national_pass_id"], $user["photo_international_pass_id"], 
-         $user["accreditation_photo_id"], $user["n_pass"], $user["certificate_adel"]);
+         $user["accreditation_photo_id"], $user["n_pass"], $user["certificate_adel"], clearSlashes($user["foreign_pass_issued_by"]));
 
     if($wpdb->query($sql)){
         echo "Participant is saved";
@@ -63,9 +64,9 @@ if($coaches){
         if($coach["id"] !== "" && $coach["isFollowing"] === "true"){
             $sql = $wpdb->prepare("UPDATE $tb_coaches SET region = %d, last_name_pass = %s, first_name_pass = %s, serial_number_pass = %s, number_pass = %s, 
                     expiration_date_pass = %s, individual_number = %s, phone = %s, email = %s, photo_national_pass_id = %d, photo_international_pass_id = %d, 
-                    accreditation_photo_id = %d, n_pass = %s WHERE id = %d", $coach["region"], $coach["lastNamePass"], $coach["firstNamePass"], $coach["serialNumberPass"], 
+                    accreditation_photo_id = %d, n_pass = %s, foreign_pass_issued_by = %s WHERE id = %d", $coach["region"], $coach["lastNamePass"], $coach["firstNamePass"], $coach["serialNumberPass"], 
                     $coach["numberPass"], $coach["expirationDatePass"], $coach["individualNumber"], $coach["phone"], $coach["email"], $coach["photoNationalPassId"],
-                     $coach["photoInternationalPassId"], $coach["accreditationPhotoId"], $coach["n_pass"], $coach["id"]);
+                     $coach["photoInternationalPassId"], $coach["accreditationPhotoId"], $coach["n_pass"], clearSlashes($coach["foreign_pass_issued_by"]), $coach["id"]);
             if($wpdb->query($sql)){
                 echo "Coach is updated";
             }
@@ -82,10 +83,10 @@ if($coaches){
             if(!$coachId){
                 $sql = $wpdb->prepare("INSERT INTO $tb_coaches (accompanies, region, last_name, first_name, middle_name, birth_date, last_name_pass, first_name_pass, 
                         serial_number_pass, number_pass, expiration_date_pass, individual_number, phone, email, photo_national_pass_id, photo_international_pass_id, 
-                        accreditation_photo_id, n_pass) VALUES (%s, %d, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %d, %d, %d, %s)", $coach["isFollowing"], $coach["region"], 
+                        accreditation_photo_id, n_pass, foreign_pass_issued_by) VALUES (%s, %d, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %d, %d, %d, %s)", $coach["isFollowing"], $coach["region"], 
                         $coach["lastName"], $coach["firstName"], $coach["middleName"], $coach["birthDate"], $coach["lastNamePass"], $coach["firstNamePass"], 
                         $coach["serialNumberPass"], $coach["numberPass"], $coach["expirationDatePass"], $coach["individualNumber"], $coach["phone"], $coach["email"], 
-                        $coach["photoNationalPassId"], $coach["photoInternationalPassId"], $coach["accreditationPhotoId"], $coach["n_pass"]);
+                        $coach["photoNationalPassId"], $coach["photoInternationalPassId"], $coach["accreditationPhotoId"], $coach["n_pass"], clearSlashes($coach["foreign_pass_issued_by"]));
                 if($wpdb->query($sql)){
                     echo "Coach is saved";
                     $coach["id"] = $wpdb->insert_id;
