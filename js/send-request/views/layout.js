@@ -483,7 +483,7 @@ class RequestForm extends React.Component{
         var passports = this.state.coachData.passports;
         if(!passports) return false;
         var invalidPassports = passports.filter(passport => !passport.no || !passport.seria || 
-            !passport.expireDate || !parseInt(passport.photoId) || !passport.foreign_pass_issued_by);
+            !passport.expireDate || !parseInt(passport.photoId) || !passport.issuedBy);
         return !!invalidPassports.length;
     }
 
